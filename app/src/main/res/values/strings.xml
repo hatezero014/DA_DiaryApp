@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">DoAn_DiaryApp</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Library</string>
+    <string name="title_notifications">Analyze</string>
 </resources>
