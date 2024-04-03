@@ -37,7 +37,7 @@ public class changeReminderTime extends AppCompatActivity {
             return insets;
         });
     }
-
+    //hfgfghgfhgfhfggf
     private void openDiaLog()
     {
         TimePickerDialog dialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
