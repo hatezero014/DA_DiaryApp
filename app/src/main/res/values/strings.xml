@@ -2,6 +2,6 @@
     <string name="app_name">Pocket Diary</string>
     <string name="title_activity_main2">MainActivity2</string>
     <string name="title_home">Home</string>
-    <string name="title_album">Library</string>
+    <string name="title_collection">Collection</string>
     <string name="title_analyze">Analyze</string>
 </resources>

@@ -16,6 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:menu="@menu/bottom_nav_menu"
-        android:backgroundTint="@color/md_theme_surfaceContainer"/>
+        android:backgroundTint="@color/md_theme_surfaceContainer"
+        style="@style/Widget.Design.BottomNavigationView"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,6 @@
     <string name="app_name">Pocket Diary</string>
     <string name="title_activity_main2">MainActivity2</string>
     <string name="title_home">Trang chủ</string>
-    <string name="title_album">Thư viện</string>
+    <string name="title_collection">Thư viện</string>
     <string name="title_analyze">Thống kê</string>
 </resources>

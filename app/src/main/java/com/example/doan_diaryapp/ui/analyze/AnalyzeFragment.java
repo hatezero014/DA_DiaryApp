@@ -1,4 +1,4 @@
-package com.example.doan_diaryapp.ui.notifications;
+package com.example.doan_diaryapp.ui.analyze;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,18 +10,18 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.doan_diaryapp.databinding.FragmentNotificationsBinding;
+import com.example.doan_diaryapp.databinding.FragmentAnalyzeBinding;
 
-public class NotificationsFragment extends Fragment {
+public class AnalyzeFragment extends Fragment {
 
-    private FragmentNotificationsBinding binding;
+    private FragmentAnalyzeBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        NotificationsViewModel notificationsViewModel =
-                new ViewModelProvider(this).get(NotificationsViewModel.class);
+        AnalyzeViewModel notificationsViewModel =
+                new ViewModelProvider(this).get(AnalyzeViewModel.class);
 
-        binding = FragmentNotificationsBinding.inflate(inflater, container, false);
+        binding = FragmentAnalyzeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textNotifications;

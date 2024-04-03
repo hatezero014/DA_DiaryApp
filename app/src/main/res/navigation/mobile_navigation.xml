@@ -13,13 +13,13 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.doan_diaryapp.ui.dashboard.DashboardFragment"
-        android:label="@string/title_album"
-        tools:layout="@layout/fragment_dashboard" />
+        android:name="com.example.doan_diaryapp.ui.collection.CollectionFragment"
+        android:label="@string/title_collection"
+        tools:layout="@layout/fragment_collection" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.doan_diaryapp.ui.notifications.NotificationsFragment"
+        android:id="@+id/navigation_analyze"
+        android:name="com.example.doan_diaryapp.ui.analyze.AnalyzeFragment"
         android:label="@string/title_analyze"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_analyze" />
 </navigation>
