@@ -36,11 +36,11 @@ public class Language {
         isActive = active;
     }
 
-    public Language(int id, String code, String name, boolean isActive) {
+    public Language(int id, String name, String code,int isActive) {
         Id = id;
         Code = code;
         Name = name;
-        this.isActive = isActive;
+        this.isActive = (isActive != 0);
     }
 
     String Name;

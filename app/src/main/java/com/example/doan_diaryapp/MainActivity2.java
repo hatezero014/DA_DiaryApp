@@ -12,7 +12,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.doan_diaryapp.databinding.ActivityMain2Binding;
 
-public class MainActivity2 extends AppCompatActivity {
+public class MainActivity2 extends BaseActivity {
 
     private ActivityMain2Binding binding;
 

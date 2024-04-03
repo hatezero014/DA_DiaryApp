@@ -1,5 +1,12 @@
 package com.example.doan_diaryapp;
 
+import android.app.Activity;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,7 +19,6 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -20,8 +26,9 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.doan_diaryapp.Models.Language;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class ChangeLanguage extends AppCompatActivity {
+public class ChangeLanguage extends BaseActivity {
     ListView listViewLanguage;
     ArrayList<Language> listLanguage;
     LanguageListViewAdapter languageListViewAdapter;
@@ -39,6 +46,7 @@ public class ChangeLanguage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
+        loadLocale();
         setContentView(R.layout.activity_change_language);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -47,29 +55,71 @@ public class ChangeLanguage extends AppCompatActivity {
         });
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Thay đổi ngôn ngữ");
+        if (actionBar != null) {
+            actionBar.setTitle(getString(R.string.change_language));
+        }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        listLanguage = new ArrayList<>();
-        listLanguage.add(new Language(1, "vi-EN", "Vietnamese", true));
-        listLanguage.add(new Language(2, "en-EN", "English", false));
+        ArrayList<Language> listLanguage = new ArrayList<>();
+
+        Cursor c = database.query("Language",null,null,null,null,null,null);
+        c.moveToFirst();
+        while (!c.isAfterLast()) {
+            listLanguage.add(new Language(c.getInt(0),c.getString(1), c.getString(2), c.getInt(3)));
+            c.moveToNext();
+        }
 
         languageListViewAdapter = new LanguageListViewAdapter(listLanguage);
 
         listViewLanguage = findViewById(R.id.listView);
         listViewLanguage.setAdapter(languageListViewAdapter);
 
+        c.close();
+
         listViewLanguage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Language language = (Language) languageListViewAdapter.getItem(position);
-                    int _id = (id == 1) ? 2 : 1;
-                    Language _language = (Language) languageListViewAdapter.getItem(_id - 1);
-                    language.setActive(true);
-                    _language.setActive(false);
-                    languageListViewAdapter.setSelectedItemId(language.getId());
+                Language language = (Language) languageListViewAdapter.getItem(position);
+                int _id = (id == 1) ? 2 : 1;
+                Language _language = (Language) languageListViewAdapter.getItem(_id - 1);
+                language.setActive(true);
+                _language.setActive(false);
+
+                ContentValues values1 = new ContentValues();
+                values1.put("isActive", language.isActive() ? 1 : 0);
+
+                database.update("Language", values1, "id=?", new String[]{String.valueOf(language.getId())});
+
+                ContentValues values2 = new ContentValues();
+                values2.put("isActive", _language.isActive() ? 1 : 0);
+
+                database.update("Language", values2, "id=?", new String[]{String.valueOf(_language.getId())});
+
+                languageListViewAdapter.setSelectedItemId(language.getId());
+                setLocale(language.getCode());
+                recreateAllActivities(ChangeLanguage.this, ChangeLanguage.this);
             }
         });
+    }
+    void recreateAllActivities(Context context, Activity callerActivity) {
+        PackageManager packageManager = context.getPackageManager();
+        Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
+        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+
+        List<ResolveInfo> activities = packageManager.queryIntentActivities(mainIntent, 0);
+        for (ResolveInfo resolveInfo : activities) {
+            String packageName = resolveInfo.activityInfo.packageName;
+            Intent newIntent = packageManager.getLaunchIntentForPackage(packageName);
+            if (newIntent != null) {
+                newIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(newIntent);
+            }
+        }
+
+        if (callerActivity != null) {
+            callerActivity.finish();
+            context.startActivity(callerActivity.getIntent());
+        }
     }
 
     static class LanguageListViewAdapter extends BaseAdapter {
@@ -111,7 +161,7 @@ public class ChangeLanguage extends AppCompatActivity {
             ImageView imageView = viewLanguage.findViewById(R.id.imageView);
 
             nameTextView.setText(language.getName());
-            subTextView.setText("Tieng viet");
+            subTextView.setText(language.getName());
 
             if (language.isActive()) {
                 selectedItemId = language.getId();
