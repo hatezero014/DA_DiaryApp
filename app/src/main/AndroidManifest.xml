@@ -16,6 +16,9 @@
             android:name=".ActivityNam"
             android:exported="true" />
         <activity
+            android:name=".changeReminderTime"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity2"
             android:exported="true"
             android:label="@string/title_activity_main2" />
