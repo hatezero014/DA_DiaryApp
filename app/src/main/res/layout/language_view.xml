@@ -23,15 +23,15 @@
                 android:id="@+id/nameLanguage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#171D1A"
-                android:textSize="25sp" />
+                android:textColor="@color/md_theme_onSurface"
+                style="@style/TextAppearance.Material3.BodyLarge" />
 
             <TextView
                 android:id="@+id/subLanguage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#404943"
-                android:textSize="23sp" />
+                android:textColor="@color/md_theme_onSurfaceVariant"
+                style="@style/TextAppearance.Material3.BodyMedium" />
         </LinearLayout>
 
         <ImageView
