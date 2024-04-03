@@ -22,6 +22,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.activity.OnBackPressedCallback;
 
 import com.example.doan_diaryapp.Models.Language;
 
@@ -37,7 +38,8 @@ public class ChangeLanguage extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            // onBackPressed();
+            Intent intent = new Intent(ChangeLanguage.this, ActivityNam.class);
+            startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -46,7 +48,6 @@ public class ChangeLanguage extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        loadLocale();
         setContentView(R.layout.activity_change_language);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -122,7 +123,7 @@ public class ChangeLanguage extends BaseActivity {
         }
     }
 
-    static class LanguageListViewAdapter extends BaseAdapter {
+    class LanguageListViewAdapter extends BaseAdapter {
         private int selectedItemId = -1;
         final ArrayList<Language> listLanguage;
 
@@ -161,7 +162,11 @@ public class ChangeLanguage extends BaseActivity {
             ImageView imageView = viewLanguage.findViewById(R.id.imageView);
 
             nameTextView.setText(language.getName());
-            subTextView.setText(language.getName());
+            if (language.getCode().equals("vi")) {
+                subTextView.setText(getString(R.string.language_vi));
+            } else {
+                subTextView.setText(getString(R.string.language_en));
+            }
 
             if (language.isActive()) {
                 selectedItemId = language.getId();

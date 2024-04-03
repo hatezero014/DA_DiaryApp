@@ -1,6 +1,7 @@
 package com.example.doan_diaryapp;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -24,6 +26,8 @@ public class BaseActivity  extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         processCopy();
+        setDisplayMode();
+        loadLocale();
         database = openOrCreateDatabase("diary.db",MODE_PRIVATE, null);
     }
 
@@ -80,6 +84,21 @@ public class BaseActivity  extends AppCompatActivity {
             myInput.close();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void setDisplayMode() {
+        SharedPreferences sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE);
+        int displayMode = sharedPreferences.getInt("displayMode", 0);
+
+        if (displayMode == 0) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+        else if (displayMode == 1){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
+        else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         }
     }
 }

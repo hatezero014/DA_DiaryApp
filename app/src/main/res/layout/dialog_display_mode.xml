@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/md_theme_surfaceContainerHigh"
+    app:cardCornerRadius="30dp"
+    >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="9dp"
+        >
+
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/display_mode"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/md_theme_onPrimaryContainer"
+            style="@style/TextAppearance.Material3.TitleLarge"
+            />
+
+        <RadioGroup
+            android:id="@+id/radio_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/rbtnLight"
+                style="@style/TextAppearance.Material3.BodyLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/md_theme_onPrimaryContainer"
+                android:paddingLeft="10dp"
+                android:text="@string/display_mode_light" />
+
+            <RadioButton
+                android:id="@+id/rbtnDark"
+                style="@style/TextAppearance.Material3.BodyLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/md_theme_onPrimaryContainer"
+                android:paddingLeft="10dp"
+                android:paddingRight="220dp"
+                android:text="@string/display_mode_dark" />
+
+            <RadioButton
+                android:id="@+id/rbtnSystem"
+                style="@style/TextAppearance.Material3.BodyLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/md_theme_onPrimaryContainer"
+                android:paddingLeft="10dp"
+                android:text="@string/display_mode_system" />
+
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_cancel"
+            style="@style/TextAppearance.Material3.LabelLarge"
+            android:textColor="@color/md_theme_primary"
+            android:background="@android:color/transparent"
+            android:layout_gravity="end"/>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

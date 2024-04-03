@@ -8,4 +8,11 @@
     <string name="change_language">Change language</string>
     <string name="title_collection">Collection</string>
     <string name="title_analyze">Analyze</string>
+    <string name="display_mode">Choose display mode</string>
+    <string name="display_mode_light">Light</string>
+    <string name="display_mode_dark">Dark</string>
+    <string name="display_mode_system">Default of system</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="language_vi">Vietnamese</string>
+    <string name="language_en">English</string>
 </resources>
