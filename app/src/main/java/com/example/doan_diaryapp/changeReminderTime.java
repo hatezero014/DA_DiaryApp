@@ -12,6 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.FragmentManager;
+
+import com.google.android.material.timepicker.MaterialTimePicker;
+import com.google.android.material.timepicker.TimeFormat;
 
 public class changeReminderTime extends AppCompatActivity {
     private TextView textView;
@@ -37,15 +41,25 @@ public class changeReminderTime extends AppCompatActivity {
             return insets;
         });
     }
-    //hfgfghgfhgfhfggf
+
     private void openDiaLog()
     {
-        TimePickerDialog dialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+        // Material Design Timepicker
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        MaterialTimePicker picker = new MaterialTimePicker.Builder()
+                        .setTimeFormat(TimeFormat.CLOCK_12H)
+                        .setHour(12)
+                        .setMinute(10)
+                        .setTitleText("Select Appointment time")
+                        .setInputMode(MaterialTimePicker.INPUT_MODE_CLOCK)
+                        .build();
+        picker.show(fragmentManager, "tag");
+        /*   TimePickerDialog dialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 textView.setText(String.valueOf(hourOfDay) +"."+ String.valueOf(minute));
             }
         }, 15, 0, true);
-        dialog.show();
+        dialog.show();  */
     }
 }
