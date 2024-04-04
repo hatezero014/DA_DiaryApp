@@ -21,4 +21,7 @@
     <string name="display_mode_dark">Tối</string>
     <string name="display_mode_system">Mặc định hệ thống</string>
 
+    <string name="by_month_fragment">Tháng</string>
+    <string name="entire_year_fragment">Năm</string>
+
 </resources>
