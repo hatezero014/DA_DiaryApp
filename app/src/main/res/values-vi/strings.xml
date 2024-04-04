@@ -15,4 +15,6 @@
     <string name="button_cancel">Hủy</string>
     <string name="language_vi">Tiếng Việt</string>
     <string name="language_en">Tiếng Anh</string>
+    <string name="by_month_fragment">By Month</string>
+    <string name="entire_year_fragment">Entire Year</string>
 </resources>
