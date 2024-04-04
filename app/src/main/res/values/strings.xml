@@ -15,4 +15,7 @@
     <string name="button_cancel">Cancel</string>
     <string name="language_vi">Vietnamese</string>
     <string name="language_en">English</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="by_month_fragment">By Month fragment</string>
+    <string name="entire_year_fragment">Entire Year fragment</string>
 </resources>

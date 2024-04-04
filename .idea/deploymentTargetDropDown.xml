@@ -2,19 +2,10 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="ActivityNam">
-        <State />
-      </entry>
-      <entry key="BaseActivity">
-        <State />
-      </entry>
-      <entry key="ChangeLanguage">
+      <entry key="YearStatistic">
         <State />
       </entry>
       <entry key="app">
-        <State />
-      </entry>
-      <entry key="changeReminderTime">
         <State />
       </entry>
     </value>
