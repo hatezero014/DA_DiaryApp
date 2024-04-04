@@ -3,10 +3,8 @@ package com.example.doan_diaryapp;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -16,7 +14,6 @@ import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 
 public class ChangeReminderTime extends BaseActivity {
-    private TextView textView;
 
     private Button button;
     @Override
@@ -25,7 +22,6 @@ public class ChangeReminderTime extends BaseActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_change_reminder_time);
 
-        textView = findViewById(R.id.timeisSet);
         button = findViewById(R.id.btnShowDiaLog);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
