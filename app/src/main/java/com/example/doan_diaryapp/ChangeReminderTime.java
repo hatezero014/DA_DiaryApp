@@ -15,7 +15,7 @@ import androidx.fragment.app.FragmentManager;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 
-public class ChangeReminderTime extends AppCompatActivity {
+public class ChangeReminderTime extends BaseActivity {
     private TextView textView;
 
     private Button button;

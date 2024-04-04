@@ -125,7 +125,7 @@ public class ActivityNam extends BaseActivity {
                 SharedPreferences.Editor editor = getSharedPreferences("MODE", Context.MODE_PRIVATE).edit();
                 editor.putInt("displayMode", 2);
                 editor.apply();
-                // dialog.dismiss();
+                dialog.dismiss();
             }
         });
     }
