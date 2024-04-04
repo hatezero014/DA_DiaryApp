@@ -6,17 +6,54 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
-    <TextView
-        android:id="@+id/text_home"
-        android:layout_width="match_parent"
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/toggleGroup"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
+        app:checkedButton="@+id/firstButton"
+        app:layout_constraintBottom_toTopOf="@+id/calendarView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:singleSelection="true">
+
+        <Button
+            android:id="@+id/ButtonDay"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="Ngày" />
+
+        <Button
+            android:id="@+id/ButtonMonth"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="Tháng" />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="328dp"
+        android:layout_height="325dp"
+        android:background="@drawable/ic_rounded_calendar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.20" />
+
+    <Button
+        android:id="@+id/ButtonAddDiary"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginBottom="104dp"
+        android:text="+"
+        android:textSize="30dp"
+        android:textColor="#E4EAE4"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

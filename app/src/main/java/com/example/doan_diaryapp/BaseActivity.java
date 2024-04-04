@@ -20,7 +20,7 @@ import java.util.Locale;
 
 public class BaseActivity  extends AppCompatActivity {
     String DB_PATH_SUFFIX = "/databases/";
-    public SQLiteDatabase database=null;
+    public SQLiteDatabase database = null;
     String DATABASE_NAME="diary.db";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +28,7 @@ public class BaseActivity  extends AppCompatActivity {
         processCopy();
         setDisplayMode();
         loadLocale();
-        database = openOrCreateDatabase("diary.db",MODE_PRIVATE, null);
+        database = openOrCreateDatabase("diary.db", MODE_PRIVATE, null);
     }
 
     public void setLocale(String languageCode) {
@@ -52,7 +52,7 @@ public class BaseActivity  extends AppCompatActivity {
         File dbFile = getDatabasePath(DATABASE_NAME);
         if (!dbFile.exists())
         {
-            try{CopyDataBaseFromAsset();
+            try { CopyDataBaseFromAsset();
                 Toast.makeText(this, "Copying success from Assets folder",
                         Toast.LENGTH_LONG).show();
             }
@@ -63,7 +63,7 @@ public class BaseActivity  extends AppCompatActivity {
     }
 
     private String getDatabasePath() {
-        return getApplicationInfo().dataDir + DB_PATH_SUFFIX+ DATABASE_NAME;
+        return getApplicationInfo().dataDir + DB_PATH_SUFFIX + DATABASE_NAME;
     }
 
     public void CopyDataBaseFromAsset() {

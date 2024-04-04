@@ -68,7 +68,7 @@ public class ActivityNam extends BaseActivity {
         dialog.setContentView(R.layout.dialog_display_mode);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_display_mode));
-        dialog.setCancelable(false);
+        dialog.setCancelable(true); // hình như là true mới đúng?
 
         btnCancel = dialog.findViewById(R.id.btnCancel);
         btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +81,8 @@ public class ActivityNam extends BaseActivity {
         RadioButton rbtnLight = dialog.findViewById(R.id.rbtnLight);
         RadioButton rbtnDark = dialog.findViewById(R.id.rbtnDark);
         RadioButton rbtnSystem = dialog.findViewById(R.id.rbtnSystem);
+
+
         int displayMode = getSharedPreferences("MODE", Context.MODE_PRIVATE).getInt("displayMode", 0);
         if (displayMode == 0) {
             rbtnLight.setChecked(true);
@@ -123,7 +125,7 @@ public class ActivityNam extends BaseActivity {
                 SharedPreferences.Editor editor = getSharedPreferences("MODE", Context.MODE_PRIVATE).edit();
                 editor.putInt("displayMode", 2);
                 editor.apply();
-                dialog.dismiss();
+                // dialog.dismiss();
             }
         });
     }

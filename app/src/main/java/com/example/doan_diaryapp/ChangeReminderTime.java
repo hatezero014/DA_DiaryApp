@@ -1,19 +1,21 @@
 package com.example.doan_diaryapp;
 
-import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.FragmentManager;
 
-public class changeReminderTime extends AppCompatActivity {
+import com.google.android.material.timepicker.MaterialTimePicker;
+import com.google.android.material.timepicker.TimeFormat;
+
+public class ChangeReminderTime extends AppCompatActivity {
     private TextView textView;
 
     private Button button;
@@ -37,15 +39,25 @@ public class changeReminderTime extends AppCompatActivity {
             return insets;
         });
     }
-    //hfgfghgfhgfhfggf
+
     private void openDiaLog()
     {
-        TimePickerDialog dialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+        // Material Design Timepicker
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        MaterialTimePicker picker = new MaterialTimePicker.Builder()
+                        .setTimeFormat(TimeFormat.CLOCK_24H)
+                        .setHour(9)
+                        .setMinute(45)
+                        .setTitleText("Select Appointment time")
+                        .setInputMode(MaterialTimePicker.INPUT_MODE_CLOCK)
+                        .build();
+        picker.show(fragmentManager, "tag");
+        /*   TimePickerDialog dialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 textView.setText(String.valueOf(hourOfDay) +"."+ String.valueOf(minute));
             }
         }, 15, 0, true);
-        dialog.show();
+        dialog.show();  */
     }
 }

@@ -10,7 +10,7 @@ public class CollectionViewModel extends ViewModel {
 
     public CollectionViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is dashboard fragment");
+        mText.setValue("This is collection fragment");
     }
 
     public LiveData<String> getText() {
