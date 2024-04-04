@@ -17,7 +17,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class ActivityNam extends BaseActivity {
-    Button btnChangeLanguage, btnCancel, btnDisplayMode;
+    Button btnChangeLanguage, btnCancel, btnDisplayMode, btnShare;
 
     Dialog dialog;
 
@@ -33,6 +33,19 @@ public class ActivityNam extends BaseActivity {
         });
 
         customDialog();
+
+
+        btnDisplayMode = findViewById(R.id.btnDisplayMode);
+        btnChangeLanguage = findViewById(R.id.btnChangeLanguage);
+        btnShare = findViewById(R.id.btnShare);
+
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ActivityNam.this, ShareActivity.class);
+                startActivity(intent);
+            }
+        });
 
         btnDisplayMode.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,9 +69,6 @@ public class ActivityNam extends BaseActivity {
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_display_mode));
         dialog.setCancelable(false);
-
-        btnDisplayMode = findViewById(R.id.btnDisplayMode);
-        btnChangeLanguage = findViewById(R.id.btnChangeLanguage);
 
         btnCancel = dialog.findViewById(R.id.btnCancel);
         btnCancel.setOnClickListener(new View.OnClickListener() {

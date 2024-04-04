@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorIconDownload">#f7effd</color>
+    <color name="colorIconShare">#f7effd</color>
     <color name="md_theme_primary">#8DD5B2</color>
     <color name="md_theme_onPrimary">#003825</color>
     <color name="md_theme_primaryContainer">#005138</color>
