@@ -115,49 +115,6 @@ public class ShareActivity extends BaseActivity {
         return true;
     }
 
-    private void shareImageAndText(Bitmap bitmap) {
-        Uri uri = getImageToShare(bitmap);
-
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_STREAM, uri);
-        intent.putExtra(Intent.EXTRA_TEXT, "Image Text");
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Image Subject");
-        intent.setType("image/*");
-        startActivity(Intent.createChooser(intent, "Share via"));
-    }
-
-    private Uri getImageToShare(Bitmap bitmap) {
-        File folder = new File(getCacheDir(), "images");
-        Uri uri = null;
-        try {
-            folder.mkdirs();
-            File file = new File(folder, "image.jpg");
-            FileOutputStream fileOutputStream = new FileOutputStream(file);
-
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, fileOutputStream);
-
-            try {
-                fileOutputStream.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                fileOutputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            uri = FileProvider.getUriForFile(this, "com.example.doan_diaryapp", file);
-
-        }
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
-            //Toast.makeText(ShareActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-        return uri;
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_WRITE_EXTERNAL_STORAGE) {
@@ -196,26 +153,11 @@ public class ShareActivity extends BaseActivity {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
             Objects.requireNonNull(outputStream);
 
-            Toast.makeText(ShareActivity.this, "Images Saved Successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ShareActivity.this, R.string.saved_image, Toast.LENGTH_SHORT).show();
         }
         catch (Exception e) {
-            Toast.makeText(ShareActivity.this, "Images Not Saved", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ShareActivity.this, R.string.not_saved_image, Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-//            Uri uri = data.getData();
-//            try {
-//                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-//                img.setImageBitmap(bitmap);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
 }

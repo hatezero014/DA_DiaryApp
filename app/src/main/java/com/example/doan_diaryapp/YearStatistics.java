@@ -9,7 +9,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.doan_diaryapp.Adapter.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
-public class YearStatistics extends AppCompatActivity {
+public class YearStatistics extends BaseActivity {
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
 
