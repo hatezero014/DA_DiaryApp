@@ -1,18 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">Pocket Diary</string>
     <string name="title_activity_main2">MainActivity2</string>
+
+    <!-- Common strings  -->
+    <string name="button_cancel">Cancel</string>
+
+    <!-- MainActivity -->
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Library</string>
-    <string name="title_notifications">Analyze</string>
-    <string name="change_language">Change language</string>
     <string name="title_collection">Collection</string>
     <string name="title_analyze">Analyze</string>
+
+    <!--  ChangeLanguage   -->
+    <string name="change_language">Change language</string>
+    <string name="language_vi">Vietnamese</string>
+    <string name="language_en">English</string>
+
+    <!--  DisplayMode  -->
     <string name="display_mode">Choose display mode</string>
     <string name="display_mode_light">Light</string>
     <string name="display_mode_dark">Dark</string>
-    <string name="display_mode_system">Default of system</string>
-    <string name="button_cancel">Cancel</string>
-    <string name="language_vi">Vietnamese</string>
-    <string name="language_en">English</string>
+    <string name="display_mode_system">System default</string>
+
 </resources>

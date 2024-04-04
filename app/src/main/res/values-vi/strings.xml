@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Ứng dụng nhật ký</string>
-    <string name="title_activity_main2">MainActivity2</string>
+    <string name="app_name">Pocket Diary</string>
+
+    <!-- Common strings  -->
+    <string name="button_cancel">Hủy bỏ</string>
+
+    <!-- MainActivity -->
     <string name="title_home">Trang chủ</string>
-    <string name="title_dashboard">Thư viện</string>
-    <string name="title_notifications">Thống kê</string>
-    <string name="change_language">Thay đổi ngôn ngữ</string>
-    <string name="title_collection">Thư viện</string>
+    <string name="title_collection">Bộ sưu tập</string>
     <string name="title_analyze">Thống kê</string>
-    <string name="display_mode">Chọn giao diện</string>
-    <string name="display_mode_light">Sáng</string>
-    <string name="display_mode_dark">Tối</string>
-    <string name="display_mode_system">Mặc định của hệ thống</string>
-    <string name="button_cancel">Hủy</string>
+
+    <!--  ChangeLanguage   -->
+    <string name="change_language">Thay đổi ngôn ngữ</string>
     <string name="language_vi">Tiếng Việt</string>
     <string name="language_en">Tiếng Anh</string>
+
+    <!--  DisplayMode  -->
+    <string name="display_mode">Chế độ hiển thị</string>
+    <string name="display_mode_light">Sáng</string>
+    <string name="display_mode_dark">Tối</string>
+    <string name="display_mode_system">Mặc định hệ thống</string>
+
 </resources>

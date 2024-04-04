@@ -18,14 +18,14 @@ public class CollectionFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        CollectionViewModel dashboardViewModel =
+        CollectionViewModel collectionViewModel =
                 new ViewModelProvider(this).get(CollectionViewModel.class);
 
         binding = FragmentCollectionBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textDashboard;
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        collectionViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
