@@ -38,4 +38,21 @@
     <string name="share_image">Chia sẻ ảnh</string>
     <string name="download_image">Tải ảnh xuống</string>
 
+    <!--  Share  -->
+    <string name="saved_image">Lưu ảnh thành công!</string>
+    <string name="not_saved_image">Lưu ảnh không thành công!</string>
+
+    <!--  Contact  -->
+    <string name="contact_question_fi">Bạn muốn nói gì với chúng tôi?</string>
+    <string name="contact_rbtn_question">Câu hỏi</string>
+    <string name="contact_rbtn_report">Báo cáo lỗi</string>
+    <string name="contact_rbtn_suggestion">Gợi ý</string>
+    <string name="contact_rbtn_compliment">Lời khen</string>
+    <string name="contact_rbtn_others">Khác</string>
+    <string name="contact_question_se">Yêu cầu của bạn là gì?</string>
+    <string name="contact_rbtn_features">Tính năng</string>
+    <string name="contact_rbtn_supports">Hỗ trợ</string>
+    <string name="contact_text_notice">Chú ý</string>
+    <string name="contact_notice_content">• Có thể mất tới 7 ngày để nhóm hỗ trợ của chúng tôi liên hệ lại với bạn.\n• Ngôn ngữ lăng mạ hoặc thư rác sẽ không được chấp nhận.\n• Bằng cách nhấn [Gửi yêu cầu], bạn đồng ý với Điều khoản dịch vụ và Chính sách quyền riêng tư.</string>
+    <string name="contact_title">Liên hệ với chúng tôi</string>
 </resources>

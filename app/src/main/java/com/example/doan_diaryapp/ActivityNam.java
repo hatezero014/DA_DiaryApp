@@ -17,7 +17,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class ActivityNam extends BaseActivity {
-    Button btnChangeLanguage, btnCancel, btnDisplayMode, btnShare;
+    Button btnChangeLanguage, btnCancel, btnDisplayMode, btnShare, btnContact;
 
     Dialog dialog;
 
@@ -38,6 +38,7 @@ public class ActivityNam extends BaseActivity {
         btnDisplayMode = findViewById(R.id.btnDisplayMode);
         btnChangeLanguage = findViewById(R.id.btnChangeLanguage);
         btnShare = findViewById(R.id.btnShare);
+        btnContact = findViewById(R.id.btnContact);
 
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +62,14 @@ public class ActivityNam extends BaseActivity {
                 startActivity(intent);
             }
         });
+
+        btnContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ActivityNam.this, ContactActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void customDialog() {
@@ -68,7 +77,7 @@ public class ActivityNam extends BaseActivity {
         dialog.setContentView(R.layout.dialog_display_mode);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_display_mode));
-        dialog.setCancelable(true); // hình như là true mới đúng?
+        dialog.setCancelable(true);
 
         btnCancel = dialog.findViewById(R.id.btnCancel);
         btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -78,25 +87,25 @@ public class ActivityNam extends BaseActivity {
             }
         });
 
-        RadioButton rbtnLight = dialog.findViewById(R.id.rbtnLight);
-        RadioButton rbtnDark = dialog.findViewById(R.id.rbtnDark);
-        RadioButton rbtnSystem = dialog.findViewById(R.id.rbtnSystem);
+        RadioButton rBtnLight = dialog.findViewById(R.id.rBtnLight);
+        RadioButton rBtnDark = dialog.findViewById(R.id.rBtnDark);
+        RadioButton rBtnSystem = dialog.findViewById(R.id.rBtnSystem);
 
 
         int displayMode = getSharedPreferences("MODE", Context.MODE_PRIVATE).getInt("displayMode", 0);
         if (displayMode == 0) {
-            rbtnLight.setChecked(true);
+            rBtnLight.setChecked(true);
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
         else if (displayMode == 1){
-            rbtnDark.setChecked(true);
+            rBtnDark.setChecked(true);
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
         else {
-            rbtnSystem.setChecked(true);
+            rBtnSystem.setChecked(true);
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         }
-        rbtnLight.setOnClickListener(new View.OnClickListener() {
+        rBtnLight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -107,7 +116,7 @@ public class ActivityNam extends BaseActivity {
             }
         });
 
-        rbtnDark.setOnClickListener(new View.OnClickListener() {
+        rBtnDark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -118,7 +127,7 @@ public class ActivityNam extends BaseActivity {
             }
         });
 
-        rbtnSystem.setOnClickListener(new View.OnClickListener() {
+        rBtnSystem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);

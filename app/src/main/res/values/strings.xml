@@ -81,5 +81,26 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <!--  Share  -->
+    <string name="saved_image">Saved successfully!</string>
+    <string name="not_saved_image">Not saved!</string>
 
+    <!--  Contact  -->
+    <string name="contact_question_fi">What do you want to tell us?</string>
+    <string name="contact_rbtn_question">Question</string>
+    <string name="contact_rbtn_report">Bug report</string>
+    <string name="contact_rbtn_suggestion">Suggestion</string>
+    <string name="contact_rbtn_compliment">Compliment</string>
+    <string name="contact_rbtn_others">Other</string>
+    <string name="contact_question_se">What is your inquiry about?</string>
+    <string name="contact_rbtn_records">Records</string>
+    <string name="contact_rbtn_migration">Migration</string>
+    <string name="contact_rbtn_features">Features</string>
+    <string name="contact_rbtn_supports">Supports</string>
+    <string name="contact_inquiry">Inquiry</string>
+    <string name="contact_text_hint">Please be detailed in your inquiry</string>
+    <string name="contact_text_notice">Notice</string>
+    <string name="contact_notice_content">• It may take up to 7 days for our support team to get back to you.\n• Abusive language or spam will not be tolerated.\n• By pressing [Send inquiry], you agree to the Terms of Service and Privacy Policy.</string>
+    <string name="contact_rbtn_send">Send Inquiry</string>
+    <string name="contact_title">Contact us</string>
 </resources>
