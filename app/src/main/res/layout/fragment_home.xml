@@ -34,7 +34,7 @@
     <CalendarView
         android:id="@+id/calendarView"
         android:layout_width="328dp"
-        android:layout_height="325dp"
+        android:layout_height="340dp"
         android:background="@drawable/ic_rounded_calendar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,12 +46,11 @@
         android:id="@+id/ButtonAddDiary"
         android:layout_width="65dp"
         android:layout_height="65dp"
-        android:layout_marginEnd="44dp"
-        android:layout_marginBottom="104dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
         android:text="+"
-        android:textSize="30dp"
         android:textColor="#E4EAE4"
-
+        android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
