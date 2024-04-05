@@ -55,4 +55,6 @@
     <string name="contact_text_notice">Chú ý</string>
     <string name="contact_notice_content">• Có thể mất tới 7 ngày để nhóm hỗ trợ của chúng tôi liên hệ lại với bạn.\n• Ngôn ngữ lăng mạ hoặc thư rác sẽ không được chấp nhận.\n• Bằng cách nhấn [Gửi yêu cầu], bạn đồng ý với Điều khoản dịch vụ và Chính sách quyền riêng tư.</string>
     <string name="contact_title">Liên hệ với chúng tôi</string>
+    <string name="ShowDiaLog">Hiển thị</string>
+
 </resources>

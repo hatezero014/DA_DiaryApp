@@ -5,18 +5,21 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:layout_gravity="center"
+    android:orientation="vertical"
     tools:context=".ChangeReminderTime">
-    <TextView
-        android:id="@+id/timeisSet"
-        android:layout_gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+
+
     <Button
         android:id="@+id/btnShowDiaLog"
-        android:layout_gravity="center"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ShowDiaLog"/>
+        android:layout_height="81dp"
+        android:layout_gravity="center"
+        android:text="@string/ShowDiaLog" />
+
+    <TextView
+        android:id="@+id/timeisSet"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_gravity="center" />
 </LinearLayout>
