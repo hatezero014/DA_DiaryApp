@@ -32,4 +32,10 @@
 
     <string name="day_view">Ngày</string>
     <string name="month_view">Tháng</string>
+
+    <!-- Accessibility -->
+    <string name="add_record">Thêm bản ghi</string>
+    <string name="share_image">Chia sẻ ảnh</string>
+    <string name="download_image">Tải ảnh xuống</string>
+
 </resources>

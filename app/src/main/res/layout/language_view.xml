@@ -39,6 +39,6 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginEnd="16dp"
-            android:src="@drawable/ic_check" />
+            android:src="@drawable/common_check" />
     </LinearLayout>
 </LinearLayout>

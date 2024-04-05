@@ -6,12 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
-
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/toggleGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:checkedButton="@+id/firstButton"
+        app:checkedButton="@+id/ButtonDay"
         app:layout_constraintBottom_toTopOf="@+id/calendarView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,7 +19,7 @@
 
         <Button
             android:id="@+id/ButtonDay"
-            style="?attr/materialButtonOutlinedStyle"
+            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:text="@string/day_view"
@@ -28,7 +27,7 @@
 
         <Button
             android:id="@+id/ButtonMonth"
-            style="?attr/materialButtonOutlinedStyle"
+            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:text="@string/month_view"
@@ -37,19 +36,20 @@
 
     <CalendarView
         android:id="@+id/calendarView"
+        style="calendar"
         android:layout_width="328dp"
-        android:layout_height="325dp"
-        android:background="@drawable/ic_rounded_calendar"
+        android:layout_height="wrap_content"
+        android:background="@color/md_theme_surfaceContainer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.20" />
 
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/ButtonAdd"
         style="@style/ThemeOverlay.Material3.FloatingActionButton.Primary"
+        android:contentDescription="@string/add_record"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"

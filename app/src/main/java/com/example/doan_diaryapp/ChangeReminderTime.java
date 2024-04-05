@@ -38,7 +38,7 @@ public class ChangeReminderTime extends BaseActivity {
 
     private void openDiaLog()
     {
-        // Material Design Timepicker
+        // Material Design Timepicker (todo: change setHour and setMinute to user settings)
         FragmentManager fragmentManager = getSupportFragmentManager();
         MaterialTimePicker picker = new MaterialTimePicker.Builder()
                         .setTimeFormat(TimeFormat.CLOCK_24H)

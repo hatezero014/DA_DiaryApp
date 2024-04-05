@@ -27,10 +27,15 @@
     <string name="by_month_fragment">By Month fragment</string>
     <string name="entire_year_fragment">Entire Year fragment</string>
 
-    <string name="image_saved">Saved successfully</string>
-    <string name="image_not_saved">Not saved</string>
-
     <string name="day_view">Day</string>
     <string name="month_view">Month</string>
+
+    <string name="image_not_saved">Failed to save image</string>
+    <string name="image_saved">Image saved</string>
+
+    <!-- Accessibility -->
+    <string name="add_record">Add record</string>
+    <string name="share_image">Share image</string>
+    <string name="download_image">Download image</string>
 
 </resources>
