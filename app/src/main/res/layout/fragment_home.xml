@@ -34,17 +34,19 @@
             app:icon="@drawable/main_home_monthview"/>
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
+
     <CalendarView
         android:id="@+id/calendarView"
         style="calendar"
         android:layout_width="328dp"
-        android:layout_height="wrap_content"
-        android:background="@color/md_theme_surfaceContainer"
+        android:layout_height="340dp"
+        android:background="@drawable/ic_rounded_calendar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.20" />
+        app:layout_constraintVertical_bias="0.25" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/ButtonAdd"
