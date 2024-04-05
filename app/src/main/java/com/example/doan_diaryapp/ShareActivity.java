@@ -19,18 +19,14 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import android.util.Log;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import com.google.android.material.snackbar.Snackbar;
+
 import java.io.OutputStream;
 import java.util.Objects;
 
@@ -153,10 +149,10 @@ public class ShareActivity extends BaseActivity {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
             Objects.requireNonNull(outputStream);
 
-            Toast.makeText(ShareActivity.this, R.string.saved_image, Toast.LENGTH_SHORT).show();
+            Snackbar.make(findViewById(android.R.id.content), R.string.image_saved, 2).show();
         }
         catch (Exception e) {
-            Toast.makeText(ShareActivity.this, R.string.not_saved_image, Toast.LENGTH_SHORT).show();
+            Snackbar.make(findViewById(android.R.id.content), R.string.image_not_saved, 2).show();
             e.printStackTrace();
         }
     }

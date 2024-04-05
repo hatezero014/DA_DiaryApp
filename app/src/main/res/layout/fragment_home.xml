@@ -20,15 +20,19 @@
 
         <Button
             android:id="@+id/ButtonDay"
+            style="?attr/materialButtonOutlinedStyle"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:text="Ngày" />
+            android:text="@string/day_view"
+            app:icon="@drawable/main_home_dayview" />
 
         <Button
             android:id="@+id/ButtonMonth"
+            style="?attr/materialButtonOutlinedStyle"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:text="Tháng" />
+            android:text="@string/month_view"
+            app:icon="@drawable/main_home_monthview"/>
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <CalendarView
@@ -42,18 +46,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.20" />
 
-    <Button
-        android:id="@+id/ButtonAddDiary"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:layout_marginEnd="44dp"
-        android:layout_marginBottom="104dp"
-        android:text="+"
-        android:textSize="30dp"
-        android:textColor="#E4EAE4"
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/ButtonAdd"
+        style="@style/ThemeOverlay.Material3.FloatingActionButton.Primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@drawable/main_home_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

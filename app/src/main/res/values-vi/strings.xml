@@ -27,6 +27,9 @@
     <string name="by_month_fragment">Tháng</string>
     <string name="entire_year_fragment">Năm</string>
 
-    <string name="saved_image">Lưu ảnh thành công!</string>
-    <string name="not_saved_image">Lưu ảnh không thành công!</string>
+    <string name="image_saved">Lưu ảnh thành công!</string>
+    <string name="image_not_saved">Lưu ảnh không thành công!</string>
+
+    <string name="day_view">Ngày</string>
+    <string name="month_view">Tháng</string>
 </resources>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">Pocket Diary</string>
 
     <!-- Common strings  -->
@@ -28,7 +27,10 @@
     <string name="by_month_fragment">By Month fragment</string>
     <string name="entire_year_fragment">Entire Year fragment</string>
 
-    <string name="saved_image">Saved successfully!</string>
-    <string name="not_saved_image">Not saved!</string>
+    <string name="image_saved">Saved successfully</string>
+    <string name="image_not_saved">Not saved</string>
+
+    <string name="day_view">Day</string>
+    <string name="month_view">Month</string>
 
 </resources>
