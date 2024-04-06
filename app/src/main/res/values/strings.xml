@@ -103,4 +103,5 @@
     <string name="contact_notice_content">• It may take up to 7 days for our support team to get back to you.\n• Abusive language or spam will not be tolerated.\n• By pressing [Send inquiry], you agree to the Terms of Service and Privacy Policy.</string>
     <string name="contact_rbtn_send">Send Inquiry</string>
     <string name="contact_title">Contact us</string>
+    <string name="ShowDiaLog">Show DiaLog</string>
 </resources>
