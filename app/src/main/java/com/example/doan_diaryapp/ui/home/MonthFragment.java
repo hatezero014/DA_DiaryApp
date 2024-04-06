@@ -29,13 +29,6 @@ public class MonthFragment extends Fragment {
         return binding.getRoot();
 
     }
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        bindingHome.ButtonMonth.setOnClickListener(v ->
-                NavHostFragment.findNavController(MonthFragment.this)
-                        .navigate(R.id.action_dayFragment_to_monthFragment)
-        );
-    }
 
     @Override
     public void onDestroyView() {
