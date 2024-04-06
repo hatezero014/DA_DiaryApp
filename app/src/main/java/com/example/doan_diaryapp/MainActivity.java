@@ -14,12 +14,28 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.doan_diaryapp.databinding.ActivityMainBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import android.view.View;
 import android.widget.Toast;
+import androidx.appcompat.app.AlertDialog;
+
 
 public class MainActivity extends BaseActivity {
 
     private ActivityMainBinding binding;
+
+
+    private void showAlertDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Thông báo")
+                .setMessage("OK")
+                .setPositiveButton("OK", null);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,4 +82,5 @@ public class MainActivity extends BaseActivity {
         });
 
     }
+
 }
