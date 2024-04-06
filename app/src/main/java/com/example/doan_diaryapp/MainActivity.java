@@ -15,6 +15,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.doan_diaryapp.databinding.ActivityMainBinding;
 import android.view.View;
+import android.widget.Toast;
 
 public class MainActivity extends BaseActivity {
 
@@ -53,7 +54,6 @@ public class MainActivity extends BaseActivity {
         buttonFragmentDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.dayandmonth, fragmentDay).commit();
             }
