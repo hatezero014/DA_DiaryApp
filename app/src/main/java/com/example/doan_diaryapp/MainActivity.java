@@ -47,10 +47,10 @@ public class MainActivity extends BaseActivity {
                 .replace(R.id.dayandmonth, fragmentDay).commit();
 
 
-        Button buttonFragmentA = findViewById(R.id.ButtonDay);
-        Button buttonFragmentB = findViewById(R.id.ButtonMonth);
+        Button buttonFragmentDay = findViewById(R.id.ButtonDay);
+        Button buttonFragmentMonth = findViewById(R.id.ButtonMonth);
 
-        buttonFragmentA.setOnClickListener(new View.OnClickListener() {
+        buttonFragmentDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -59,7 +59,7 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        buttonFragmentB.setOnClickListener(new View.OnClickListener() {
+        buttonFragmentMonth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getSupportFragmentManager().beginTransaction()
