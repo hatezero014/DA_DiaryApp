@@ -20,8 +20,6 @@ import android.widget.Toast;
 public class MainActivity extends BaseActivity {
 
     private ActivityMainBinding binding;
-    Fragment fragmentDay;
-    Fragment fragmentMonth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +40,8 @@ public class MainActivity extends BaseActivity {
 
 
         // code Home
-        fragmentDay = new DayFragment();
-        fragmentMonth = new MonthFragment();
+        Fragment fragmentDay = new DayFragment();
+        Fragment fragmentMonth = new MonthFragment();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.dayandmonth, fragmentDay).commit();
 
