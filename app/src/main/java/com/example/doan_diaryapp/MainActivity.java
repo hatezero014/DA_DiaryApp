@@ -1,9 +1,15 @@
 package com.example.doan_diaryapp;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
+import com.example.doan_diaryapp.ui.home.DayFragment;
+import com.example.doan_diaryapp.ui.home.MonthFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -31,5 +37,32 @@ public class MainActivity extends BaseActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+
+
+        // Code Home
+        Fragment fragmentDay = new DayFragment();
+        Fragment fragmentMonth = new MonthFragment();
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.dayandmonth, fragmentDay).commit();
+
+        Button buttonFragmentA = findViewById(R.id.ButtonDay);
+        Button buttonFragmentB = findViewById(R.id.ButtonMonth);
+
+        buttonFragmentA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.dayandmonth, fragmentDay).commit();
+            }
+        });
+
+        buttonFragmentB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.dayandmonth, fragmentMonth).commit();
+            }
+        });
+
+
     }
 }
+

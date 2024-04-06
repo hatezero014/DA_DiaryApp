@@ -18,9 +18,8 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31" >
         <activity
-            android:name=".ui.home.HomeActivity"
-            android:exported="false"
-            android:theme="@style/AppTheme" />
+            android:name=".HomeActivity"
+            android:exported="true" />
         <activity
             android:name=".ShareActivity"
             android:exported="true" />
