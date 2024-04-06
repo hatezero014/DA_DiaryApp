@@ -12,32 +12,30 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
-
+        <activity
+            android:name=".ActivityPhong"
+            android:exported="true" />
         <activity
             android:name=".YearStatistics"
             android:exported="true" />
         <activity
             android:name=".ActivityNam"
             android:exported="true" />
-
         <activity
             android:name=".ChangeReminderTime"
             android:exported="true" />
-
         <activity
             android:name=".MainActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ChangeLanguage"
             android:exported="true" />
-
     </application>
 
 </manifest>

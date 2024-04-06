@@ -24,4 +24,8 @@
     <string name="by_month_fragment">Tháng</string>
     <string name="entire_year_fragment">Năm</string>
 
+    <string name="Go">Đi</string>
+    <string name="year_in_pocket">Một năm trong Pocket</string>
+
+
 </resources>
