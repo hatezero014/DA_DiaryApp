@@ -9,6 +9,10 @@
         <State />
       </entry>
       <entry key="YearStatistics">
+      <entry key="ChangeReminderTime">
+        <State />
+      </entry>
+      <entry key="app">
         <State />
       </entry>
     </value>

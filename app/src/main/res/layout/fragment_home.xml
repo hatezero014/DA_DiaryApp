@@ -6,18 +6,56 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
-    <TextView
-        android:id="@+id/text_home"
-        android:layout_width="match_parent"
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/toggleGroup"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
+        app:checkedButton="@+id/ButtonDay"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:singleSelection="true">
+
+        <Button
+            android:id="@+id/ButtonDay"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="@string/day_view"
+            app:icon="@drawable/main_home_dayview" />
+
+        <Button
+            android:id="@+id/ButtonMonth"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="@string/month_view"
+            app:icon="@drawable/main_home_monthview"/>
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/ButtonAdd"
+        style="@style/ThemeOverlay.Material3.FloatingActionButton.Primary"
+        android:contentDescription="@string/add_record"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@drawable/main_home_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <fragment
+        android:id="@+id/dayandmonth"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toggleGroup"
+        app:navGraph="@navigation/mobile_daymonth"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
