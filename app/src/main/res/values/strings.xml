@@ -27,6 +27,10 @@
     <string name="by_month_fragment">By Month fragment</string>
     <string name="entire_year_fragment">Entire Year fragment</string>
 
+    <string name="Go">Go</string>
+    <string name="year_in_pocket">Year in Pocket</string>
+
+
     <string name="day_view">Day</string>
     <string name="month_view">Month</string>
 

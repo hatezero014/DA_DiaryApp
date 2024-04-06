@@ -1,5 +1,6 @@
 package com.example.doan_diaryapp;
 
+import android.app.Fragment;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,4 +27,5 @@ public class YearStatistics extends BaseActivity {
         mViewPager.setAdapter(viewPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
     }
+
 }

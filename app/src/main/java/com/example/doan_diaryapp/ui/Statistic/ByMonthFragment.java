@@ -1,14 +1,19 @@
 package com.example.doan_diaryapp.ui.Statistic;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.doan_diaryapp.R;
+
+import java.util.Calendar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +30,8 @@ public class ByMonthFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+
 
     public ByMonthFragment() {
         // Required empty public constructor
@@ -60,7 +67,12 @@ public class ByMonthFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_by_month, container, false);
+        LayoutInflater lf = getActivity().getLayoutInflater();
+        View view =  lf.inflate(R.layout.fragment_by_month, container, false); //pass the correct layout name for the fragment
+
+        TextView text = (TextView) view.findViewById(R.id.yearCurrent);
+        text.setText("Just another sample");
+        return inflater.inflate(R.layout.fragment_by_month,container,false);
     }
+
 }
