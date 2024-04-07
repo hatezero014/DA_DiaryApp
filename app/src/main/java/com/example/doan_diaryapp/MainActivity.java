@@ -25,16 +25,6 @@ public class MainActivity extends BaseActivity {
 
     private ActivityMainBinding binding;
 
-    private void showAlertDialog() {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        builder.setTitle("Thông báo")
-                .setMessage("OK")
-                .setPositiveButton("OK", null);
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,42 +46,6 @@ public class MainActivity extends BaseActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
-
-
-        // code Home
-        Fragment fragmentDay = new DayFragment();
-        Fragment fragmentMonth = new MonthFragment();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.dayandmonth, fragmentDay).commit();
-
-
-        Button buttonFragmentDay = findViewById(R.id.ButtonDay);
-        Button buttonFragmentMonth = findViewById(R.id.ButtonMonth);
-
-        buttonFragmentDay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.dayandmonth, fragmentDay).commit();
-            }
-        });
-
-        buttonFragmentMonth.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.dayandmonth, fragmentMonth).commit();
-            }
-        });
-
-        FloatingActionButton buttonAddMonth = findViewById(R.id.ButtonAddDay);
-        buttonAddMonth.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showAlertDialog();
-            }
-        });
-
 
     }
 }
