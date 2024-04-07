@@ -80,5 +80,15 @@ public class MainActivity extends BaseActivity {
                         .replace(R.id.dayandmonth, fragmentMonth).commit();
             }
         });
+
+        FloatingActionButton buttonAddMonth = findViewById(R.id.ButtonAddDay);
+        buttonAddMonth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAlertDialog();
+            }
+        });
+
+
     }
 }
