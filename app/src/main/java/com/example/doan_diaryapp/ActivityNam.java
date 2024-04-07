@@ -1,7 +1,9 @@
 package com.example.doan_diaryapp;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,12 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class ActivityNam extends BaseActivity {
     Button btnChangeLanguage, btnCancel, btnDisplayMode, btnShare, btnContact;
@@ -32,8 +38,7 @@ public class ActivityNam extends BaseActivity {
             return insets;
         });
 
-        customDialog();
-
+        // customDialog();
 
         btnDisplayMode = findViewById(R.id.btnDisplayMode);
         btnChangeLanguage = findViewById(R.id.btnChangeLanguage);
@@ -51,7 +56,8 @@ public class ActivityNam extends BaseActivity {
         btnDisplayMode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.show();
+                // dialog.show();
+                testCustomDialog(ActivityNam.this);
             }
         });
 
@@ -72,7 +78,52 @@ public class ActivityNam extends BaseActivity {
         });
     }
 
+    private void testCustomDialog(Context context) {
+
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
+        String[] choices = {"Light", "Dark", "System default"};
+
+        // Retrieve selected index from preferences
+        int selectedIndex = getSelectedIndexFromPreferences();
+
+        builder
+                .setTitle(R.string.display_mode)
+                .setNegativeButton(R.string.button_cancel, (dialog, which) -> dialog.dismiss())
+                .setSingleChoiceItems(choices, selectedIndex, (dialog, which) -> {
+                    dialog.dismiss();
+                    setNightModeAndRecreate(which);
+                });
+
+        builder.create().show();
+    }
+
+    private int getSelectedIndexFromPreferences() {
+        // Retrieve stored index from SharedPreferences
+        return getSharedPreferences("MODE", Context.MODE_PRIVATE).getInt("displayMode", 0);
+    }
+
+    private void setNightModeAndRecreate(int which) {
+        AppCompatDelegate.setDefaultNightMode(getNightModeForIndex(which));
+
+        // Refresh UI
+        this.recreate();
+
+        // Store selected index in SharedPreferences
+        getSharedPreferences("MODE", Context.MODE_PRIVATE).edit()
+                .putInt("displayMode", which)
+                .apply();
+    }
+
+    private int getNightModeForIndex(int which) {
+        switch (which) {
+            case 0: return AppCompatDelegate.MODE_NIGHT_NO;
+            case 1: return AppCompatDelegate.MODE_NIGHT_YES;
+            default: return AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
+        }
+    }
+
     public void customDialog() {
+        
         dialog = new Dialog(ActivityNam.this);
         dialog.setContentView(R.layout.dialog_display_mode);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -92,7 +143,7 @@ public class ActivityNam extends BaseActivity {
         RadioButton rBtnSystem = dialog.findViewById(R.id.rBtnSystem);
 
 
-        int displayMode = getSharedPreferences("MODE", Context.MODE_PRIVATE).getInt("displayMode", 0);
+        int displayMode = getSharedPreferences("MODE", Context.MODE_PRIVATE).getInt("displayMode", 2);
         if (displayMode == 0) {
             rBtnLight.setChecked(true);
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
