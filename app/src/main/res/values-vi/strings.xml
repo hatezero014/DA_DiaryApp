@@ -8,7 +8,6 @@
     <!-- MainActivity -->
     <string name="title_home">Trang chủ</string>
     <string name="title_dashboard">Thư viện</string>
-    <string name="title_notifications">Thống kê</string>
     <string name="title_share">Chia sẻ</string>
     <string name="title_collection">Bộ sưu tập</string>
     <string name="title_analyze">Thống kê</string>
@@ -53,6 +52,7 @@
     <string name="contact_rbtn_compliment">Lời khen</string>
     <string name="contact_rbtn_others">Khác</string>
     <string name="contact_question_se">Yêu cầu của bạn là gì?</string>
+    <string name="contact_rbtn_records">Bản ghi</string>
     <string name="contact_rbtn_features">Tính năng</string>
     <string name="contact_rbtn_supports">Hỗ trợ</string>
     <string name="contact_text_notice">Chú ý</string>

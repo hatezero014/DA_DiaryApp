@@ -55,7 +55,7 @@ public class ShareActivity extends BaseActivity {
     }
 
     @Override
-    public  boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_share_menu, menu);
         return true;
     }

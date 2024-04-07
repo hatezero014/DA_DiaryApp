@@ -56,7 +56,7 @@ public class ChangeReminderTime extends BaseActivity {
                 .setTimeFormat(TimeFormat.CLOCK_24H)
                 .setHour(currentHour)
                 .setMinute(currentMinute)
-                .setTitleText("Select Appointment time")
+                .setTitleText(R.string.select_reminder_time)
                 .setInputMode(MaterialTimePicker.INPUT_MODE_CLOCK)
                 .build();
 
@@ -79,7 +79,6 @@ public class ChangeReminderTime extends BaseActivity {
     private void playAlarmSound() {
         MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.alarm_sound);
         mediaPlayer.start();
-
     }
 
     private void handleSelectedTime(int hour, int minute) {

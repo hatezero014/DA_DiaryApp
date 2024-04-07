@@ -21,10 +21,9 @@
         <activity
             android:name=".ActivityPhong"
             android:exported="true" />
-
         <activity
             android:name=".ContactActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".ShareActivity"
             android:exported="true" />
@@ -47,10 +46,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ChangeLanguage"
-            android:exported="true" />
-
     </application>
 
 </manifest>

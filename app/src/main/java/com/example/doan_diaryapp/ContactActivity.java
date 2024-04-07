@@ -141,21 +141,18 @@ public class ContactActivity extends BaseActivity {
     protected void sendEmail() {
         Log.i("Send email", "");
 
-        String[] TO = {"someone@gmail.com"};
-        String[] CC = {"xyz@gmail.com"};
-        Intent emailIntent = new Intent(Intent.ACTION_SEND);
-        emailIntent.setData(Uri.parse("mailto:"));
-        emailIntent.setType("text/plain");
+        String TO = "22520912@gm.uit.edu.vn";
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + TO));
+        // emailIntent.setData(Uri.parse("mailto:"));
+        // emailIntent.setType("text/plain");
 
-
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
-        emailIntent.putExtra(Intent.EXTRA_CC, CC);
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Your subject");
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "Email message goes here");
+        // emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Pocket Diary - Bug report");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Hello Pocket Diary");
 
         try {
             startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-            finish();
+            // finish();
             Log.i("Finished sending email...", "");
         } catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(ContactActivity.this,
