@@ -81,7 +81,7 @@ public class ActivityNam extends BaseActivity {
     private void testCustomDialog(Context context) {
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
-        String[] choices = {"Light", "Dark", "System default"};
+        String[] choices = {String.valueOf(R.string.display_mode_light), String.valueOf(R.string.display_mode_dark), String.valueOf(R.string.display_mode_system)};
 
         // Retrieve selected index from preferences
         int selectedIndex = getSelectedIndexFromPreferences();

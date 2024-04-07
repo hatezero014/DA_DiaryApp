@@ -22,7 +22,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import android.widget.Toast;
 
 
-
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
@@ -32,8 +31,9 @@ public class HomeFragment extends Fragment {
         HomeViewModel homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
         binding = FragmentHomeBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
 
-        return binding.getRoot();
+        return root;
 
     }
 

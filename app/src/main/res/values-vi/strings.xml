@@ -7,13 +7,11 @@
 
     <!-- MainActivity -->
     <string name="title_home">Trang chủ</string>
-    <string name="title_dashboard">Thư viện</string>
-    <string name="title_share">Chia sẻ</string>
     <string name="title_collection">Bộ sưu tập</string>
     <string name="title_analyze">Thống kê</string>
 
     <!--  ChangeLanguage   -->
-    <string name="change_language">Thay đổi ngôn ngữ</string>
+    <string name="change_language">Ngôn ngữ ứng dụng</string>
     <string name="language_vi">Tiếng Việt</string>
     <string name="language_en">Tiếng Anh</string>
 
@@ -36,9 +34,11 @@
     <string name="month_view">Tháng</string>
 
     <!-- Accessibility -->
+    <string name="title_share">Chia sẻ</string>
     <string name="add_record">Thêm bản ghi</string>
     <string name="share_image">Chia sẻ ảnh</string>
     <string name="download_image">Tải ảnh xuống</string>
+    <string name="new_record">Bản ghi mới</string>
 
     <!--  Share  -->
     <string name="saved_image">Lưu ảnh thành công!</string>

@@ -7,18 +7,16 @@
 
     <!-- MainActivity -->
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Library</string>
-    <string name="title_share">Share</string>
     <string name="title_collection">Collection</string>
     <string name="title_analyze">Analyze</string>
 
     <!--  ChangeLanguage   -->
-    <string name="change_language">Change language</string>
+    <string name="change_language">App language</string>
     <string name="language_vi">Vietnamese</string>
     <string name="language_en">English</string>
 
     <!--  DisplayMode  -->
-    <string name="display_mode">Choose display mode</string>
+    <string name="display_mode">Choose a display mode</string>
     <string name="display_mode_light">Light</string>
     <string name="display_mode_dark">Dark</string>
     <string name="display_mode_system">System default</string>
@@ -32,18 +30,18 @@
     <string name="day_view">Day</string>
     <string name="month_view">Month</string>
 
-    <string name="image_not_saved">Failed to save image</string>
-    <string name="image_saved">Image saved</string>
 
     <!-- Accessibility -->
+    <string name="title_share">Share</string>
     <string name="add_record">Add record</string>
     <string name="share_image">Share image</string>
     <string name="download_image">Download image</string>
+    <string name="new_record">New record</string>
 
 
     <!--  Share  -->
-    <string name="saved_image">Saved successfully!</string>
-    <string name="not_saved_image">Not saved!</string>
+    <string name="image_not_saved">Failed to save image</string>
+    <string name="image_saved">Image saved</string>
 
     <!--  Contact  -->
     <string name="contact_question_fi">What do you want to tell us?</string>

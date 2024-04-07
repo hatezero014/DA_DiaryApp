@@ -6,6 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/home_TopAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            app:title="@string/title_home"
+            app:navigationIcon="@drawable/common_settings"
+            app:menu="@menu/toolbar_home"
+            app:titleCentered="true"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/toggleGroup"
         android:layout_width="wrap_content"
@@ -14,7 +31,7 @@
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_TopAppBar"
         app:singleSelection="true">
 
         <Button

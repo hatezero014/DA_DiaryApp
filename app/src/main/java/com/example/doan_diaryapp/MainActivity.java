@@ -25,7 +25,6 @@ public class MainActivity extends BaseActivity {
 
     private ActivityMainBinding binding;
 
-
     private void showAlertDialog() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -43,6 +42,10 @@ public class MainActivity extends BaseActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
