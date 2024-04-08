@@ -25,6 +25,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.OutputStream;
@@ -149,10 +150,10 @@ public class ShareActivity extends BaseActivity {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
             Objects.requireNonNull(outputStream);
 
-            Snackbar.make(findViewById(android.R.id.content), R.string.image_saved, 2).show();
+            Snackbar.make(findViewById(android.R.id.content), R.string.image_saved, BaseTransientBottomBar.LENGTH_SHORT).show();
         }
         catch (Exception e) {
-            Snackbar.make(findViewById(android.R.id.content), R.string.image_not_saved, 2).show();
+            Snackbar.make(findViewById(android.R.id.content), R.string.image_not_saved, BaseTransientBottomBar.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }

@@ -38,7 +38,7 @@ public class ActivityNam extends BaseActivity {
             return insets;
         });
 
-        // customDialog();
+        customDialog();
 
         btnDisplayMode = findViewById(R.id.btnDisplayMode);
         btnChangeLanguage = findViewById(R.id.btnChangeLanguage);
@@ -56,8 +56,7 @@ public class ActivityNam extends BaseActivity {
         btnDisplayMode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // dialog.show();
-                testCustomDialog(ActivityNam.this);
+                dialog.show();
             }
         });
 
@@ -76,50 +75,6 @@ public class ActivityNam extends BaseActivity {
                 startActivity(intent);
             }
         });
-    }
-
-    private void testCustomDialog(Context context) {
-
-        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
-        String[] choices = {String.valueOf(R.string.display_mode_light), String.valueOf(R.string.display_mode_dark), String.valueOf(R.string.display_mode_system)};
-
-        // Retrieve selected index from preferences
-        int selectedIndex = getSelectedIndexFromPreferences();
-
-        builder
-                .setTitle(R.string.display_mode)
-                .setNegativeButton(R.string.button_cancel, (dialog, which) -> dialog.dismiss())
-                .setSingleChoiceItems(choices, selectedIndex, (dialog, which) -> {
-                    dialog.dismiss();
-                    setNightModeAndRecreate(which);
-                });
-
-        builder.create().show();
-    }
-
-    private int getSelectedIndexFromPreferences() {
-        // Retrieve stored index from SharedPreferences
-        return getSharedPreferences("MODE", Context.MODE_PRIVATE).getInt("displayMode", 0);
-    }
-
-    private void setNightModeAndRecreate(int which) {
-        AppCompatDelegate.setDefaultNightMode(getNightModeForIndex(which));
-
-        // Refresh UI
-        this.recreate();
-
-        // Store selected index in SharedPreferences
-        getSharedPreferences("MODE", Context.MODE_PRIVATE).edit()
-                .putInt("displayMode", which)
-                .apply();
-    }
-
-    private int getNightModeForIndex(int which) {
-        switch (which) {
-            case 0: return AppCompatDelegate.MODE_NIGHT_NO;
-            case 1: return AppCompatDelegate.MODE_NIGHT_YES;
-            default: return AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
-        }
     }
 
     public void customDialog() {

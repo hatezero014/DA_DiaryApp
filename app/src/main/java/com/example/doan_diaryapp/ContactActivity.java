@@ -19,6 +19,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 public class ContactActivity extends BaseActivity {
@@ -123,7 +124,7 @@ public class ContactActivity extends BaseActivity {
                 }
 
                 if (countImagesWithoutImage == 0) {
-                    Snackbar.make(findViewById(android.R.id.content), "You have already selected maximum images", 3000).show();
+                    Toast.makeText(ContactActivity.this, "You selected the maximum number of images", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 Toast.makeText(ContactActivity.this, "You can only select up to " + countImagesWithoutImage + " images", Toast.LENGTH_SHORT).show();
@@ -182,7 +183,9 @@ public class ContactActivity extends BaseActivity {
                     int count = clipData.getItemCount();
                     if (count > countImagesWithoutImage) {
                         Snackbar.make(findViewById(android.R.id.content),
-                                "You can only select up to " + countImagesWithoutImage + " images", 3000).show();
+                                "You can only select up to " + countImagesWithoutImage + " images", 3000)
+                                .setAnchorView(R.id.main)
+                                .show();
                         return;
                     }
                     for (int i = 0; i < count; i++) {
