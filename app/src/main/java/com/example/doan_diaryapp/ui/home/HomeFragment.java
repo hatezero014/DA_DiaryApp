@@ -30,6 +30,7 @@ import android.widget.Toast;
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
+    int d=0;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -39,10 +40,13 @@ public class HomeFragment extends Fragment {
 
         MaterialButtonToggleGroup DayMonth = view.findViewById(R.id.toggleGroup);
 
+        if (d == 0) {
+            getChildFragmentManager().beginTransaction()
+                    .replace(R.id.dayandmonth, new DayFragment()).commit();
+            d=1;
+        }
+
         Button buttonFragmentDay = view.findViewById(R.id.ButtonDay);
-
-
-
         buttonFragmentDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,7 +69,6 @@ public class HomeFragment extends Fragment {
         return view;
 
     }
-
 
 
     @Override
