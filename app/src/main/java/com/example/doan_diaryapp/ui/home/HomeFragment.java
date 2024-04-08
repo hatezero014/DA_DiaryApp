@@ -8,8 +8,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -19,6 +21,9 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.doan_diaryapp.R;
 import com.example.doan_diaryapp.databinding.FragmentHomeBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.button.MaterialButtonToggleGroup;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import android.widget.Toast;
 
 
@@ -28,18 +33,47 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
 
-        View root = binding.getRoot();
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        return root;
+
+        MaterialButtonToggleGroup DayMonth = view.findViewById(R.id.toggleGroup);
+
+        Button buttonFragmentDay = view.findViewById(R.id.ButtonDay);
+
+
+
+        buttonFragmentDay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DayMonth.check(R.id.ButtonDay);
+                getChildFragmentManager().beginTransaction()
+                        .replace(R.id.dayandmonth, new DayFragment()).commit();
+            }
+        });
+
+        Button buttonFragmentMonth = view.findViewById(R.id.ButtonMonth);
+        buttonFragmentMonth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DayMonth.check(R.id.ButtonMonth);
+                getChildFragmentManager().beginTransaction()
+                        .replace(R.id.dayandmonth, new MonthFragment()).commit();
+            }
+        });
+
+        return view;
+
     }
+
+
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
     }
+
 
 }
 

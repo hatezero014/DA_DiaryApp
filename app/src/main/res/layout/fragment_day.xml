@@ -6,18 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.DayFragment">
 
+
     <ListView
-        android:id="@+id/listday"
+        android:id="@+id/ListDay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
-
-
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/ButtonAddDay"
+        style="@style/ThemeOverlay.Material3.FloatingActionButton.Primary"
+        android:contentDescription="@string/add_record"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@drawable/main_home_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

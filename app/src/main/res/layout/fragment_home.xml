@@ -28,7 +28,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:checkedButton="@+id/ButtonDay"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/home_TopAppBar"
@@ -51,7 +50,7 @@
             app:icon="@drawable/main_home_monthview"/>
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
-    <fragment
+    <FrameLayout
         android:id="@+id/dayandmonth"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
@@ -61,18 +60,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toggleGroup"
-        app:navGraph="@navigation/mobile_daymonth"
         />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/ButtonAddDay"
-        style="@style/ThemeOverlay.Material3.FloatingActionButton.Primary"
-        android:contentDescription="@string/add_record"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:src="@drawable/main_home_add"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

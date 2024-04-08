@@ -7,8 +7,6 @@
     tools:context=".ui.home.MonthFragment">
 
 
-
-
     <CalendarView
         android:id="@+id/calendarView"
         style="calendar"
@@ -21,7 +19,37 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/ButtonAddMonth"
+        style="@style/ThemeOverlay.Material3.FloatingActionButton.Primary"
+        android:contentDescription="@string/add_record"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@drawable/main_home_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/CardViewDiary"
+        android:layout_width="328dp"
+        android:layout_height="186dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calendarView">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
+            <TextView
+                android:id="@+id/CardViewDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
