@@ -50,7 +50,7 @@
             app:icon="@drawable/main_home_monthview"/>
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
-    <fragment
+    <FrameLayout
         android:id="@+id/dayandmonth"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
@@ -60,8 +60,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toggleGroup"
-        app:navGraph="@navigation/mobile_daymonth"
         />
+
 
 
 
