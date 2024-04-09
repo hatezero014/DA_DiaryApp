@@ -42,10 +42,8 @@ public class HomeFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-
         DayMonthTab = view.findViewById(R.id.TabBar);
         viewPager = view.findViewById(R.id.ViewPager);
-        // DayMonthTab.addOnTabSelectedListener(TabBarSelectedListener);
 
         viewPagerAdapter = new ViewPagerAdapter(this);
         viewPager.setAdapter(viewPagerAdapter);
@@ -65,28 +63,4 @@ public class HomeFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-
-    TabLayout.OnTabSelectedListener TabBarSelectedListener = new TabLayout.OnTabSelectedListener() {
-        @Override
-        public void onTabSelected(TabLayout.Tab tab) {
-            switch (tab.getPosition()) {
-                case 0:
-                    getChildFragmentManager().beginTransaction().replace(R.id.dayandmonth, new DayFragment()).commit();
-                    break;
-                case 1:
-                    getChildFragmentManager().beginTransaction().replace(R.id.dayandmonth, new MonthFragment()).commit();
-                    break;
-            }
-        }
-
-        @Override
-        public void onTabUnselected(TabLayout.Tab tab) {
-            return;
-        }
-
-        @Override
-        public void onTabReselected(TabLayout.Tab tab) {
-            return;
-        }
-    };
 }

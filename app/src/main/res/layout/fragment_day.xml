@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.DayFragment">
 
-
     <ListView
         android:id="@+id/ListDay"
         android:layout_width="match_parent"
@@ -26,6 +25,5 @@
         android:src="@drawable/main_home_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
