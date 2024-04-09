@@ -298,7 +298,7 @@
                     android:layout_gravity="top|end"
                     android:visibility="gone"
                     android:background="@android:color/transparent"
-                    android:src="@drawable/ic_cancel" /> <!-- Thay đổi drawable của button close tùy ý -->
+                    android:src="@drawable/ic_cancel" />
             </FrameLayout>
 
         </LinearLayout>
