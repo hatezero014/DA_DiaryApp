@@ -32,12 +32,13 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
     TabLayout DayMonthTab;
+    int d=0;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-
+        getChildFragmentManager().beginTransaction().replace(R.id.dayandmonth, new DayFragment()).commit();
         DayMonthTab = view.findViewById(R.id.TabBar);
         DayMonthTab.addOnTabSelectedListener(TabBarSelectedListener);
 
