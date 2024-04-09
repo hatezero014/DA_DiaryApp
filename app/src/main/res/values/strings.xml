@@ -65,5 +65,6 @@
 
     <!--  Reminder  -->
     <string name="select_reminder_time">Change reminder time</string>
+    <string name="title_settings">Settings</string>
 
 </resources>

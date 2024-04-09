@@ -33,9 +33,8 @@ public class DayFragment extends Fragment {
 
     private FragmentDayBinding binding;
 
-
     @Override
-    public View onCreateView( @NonNull LayoutInflater inflater,
+    public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_day, container, false);
 
@@ -52,8 +51,6 @@ public class DayFragment extends Fragment {
         }
         return itemList;
     }
-
-
 
     @Override
     public void onDestroyView() {
