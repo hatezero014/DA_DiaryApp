@@ -39,10 +39,10 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         DayMonthTab = view.findViewById(R.id.TabBar);
-
         DayMonthTab.addOnTabSelectedListener(TabBarSelectedListener);
+
         return view;
-    };
+    }
 
     @Override
     public void onDestroyView() {
@@ -65,12 +65,12 @@ public class HomeFragment extends Fragment {
 
         @Override
         public void onTabUnselected(TabLayout.Tab tab) {
-        return;
-    }
+            return;
+        }
 
         @Override
         public void onTabReselected(TabLayout.Tab tab) {
-        return;
-    }
+            return;
+        }
     };
 }

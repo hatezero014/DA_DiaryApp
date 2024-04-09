@@ -11,6 +11,7 @@
         style="calendar"
         android:layout_width="328dp"
         android:layout_height="340dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/ic_rounded_calendar"
         android:firstDayOfWeek="2"
         app:layout_constraintEnd_toEndOf="parent"
