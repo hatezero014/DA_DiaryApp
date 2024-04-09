@@ -45,27 +45,16 @@
             android:text="@string/month_view"/>
         
     </com.google.android.material.tabs.TabLayout>
-    
+
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/ViewPager"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/TabBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <FrameLayout
-        android:id="@+id/dayandmonth"
-        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-
-        app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TabBar"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/TabBar" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
