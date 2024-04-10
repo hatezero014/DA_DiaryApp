@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/main"
@@ -19,9 +20,8 @@
             android:id="@+id/textView_question"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/contact_question_fi"
-            android:textSize="19sp"
-            android:textStyle="bold"/>
+            android:text="@string/contact_question_general"
+            style="@style/TextAppearance.Material3.TitleMedium"/>
 
         <RadioGroup
             android:id="@+id/radioGroup_type"
@@ -31,6 +31,7 @@
             android:background="@drawable/custom_text_contact"
             android:layout_below="@id/textView_question"
             android:orientation="vertical">
+
             <RadioButton
                 android:id="@+id/rBtnQuestion"
                 android:layout_width="match_parent"
@@ -42,12 +43,11 @@
                 android:layout_marginBottom="4dp"
                 android:text="@string/contact_rbtn_question" />
 
-            <View
+            <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:background="@drawable/divider_line"/>
+                android:layout_height="wrap_content"
+                app:dividerInsetStart="16dp"
+                app:dividerInsetEnd="16dp"/>
 
             <RadioButton
                 android:id="@+id/rBtnBugReportFi"
@@ -78,12 +78,11 @@
                 android:layout_marginBottom="4dp"
                 android:text="@string/contact_rbtn_suggestion" />
 
-            <View
+            <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:background="@drawable/divider_line"/>
+                android:layout_height="wrap_content"
+                app:dividerInsetStart="16dp"
+                app:dividerInsetEnd="16dp"/>
 
             <RadioButton
                 android:id="@+id/rBtnCompliment"
@@ -96,12 +95,11 @@
                 android:layout_marginBottom="4dp"
                 android:text="@string/contact_rbtn_compliment" />
 
-            <View
+            <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:background="@drawable/divider_line"/>
+                android:layout_height="wrap_content"
+                app:dividerInsetStart="16dp"
+                app:dividerInsetEnd="16dp"/>
 
             <RadioButton
                 android:id="@+id/rBtnOtherFi"
@@ -146,12 +144,11 @@
                 android:layout_marginBottom="4dp"
                 android:text="@string/contact_rbtn_records" />
 
-            <View
+            <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:background="@drawable/divider_line"/>
+                android:layout_height="wrap_content"
+                app:dividerInsetStart="16dp"
+                app:dividerInsetEnd="16dp"/>
 
             <RadioButton
                 android:id="@+id/rBtnMigration"
@@ -164,12 +161,11 @@
                 android:layout_marginBottom="4dp"
                 android:text="@string/contact_rbtn_migration" />
 
-            <View
+            <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:background="@drawable/divider_line"/>
+                android:layout_height="wrap_content"
+                app:dividerInsetStart="16dp"
+                app:dividerInsetEnd="16dp"/>
 
             <RadioButton
                 android:id="@+id/rBtnFeatures"
@@ -182,12 +178,11 @@
                 android:layout_marginBottom="4dp"
                 android:text="@string/contact_rbtn_features" />
 
-            <View
+            <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:background="@drawable/divider_line"/>
+                android:layout_height="wrap_content"
+                app:dividerInsetStart="16dp"
+                app:dividerInsetEnd="16dp"/>
 
             <RadioButton
                 android:id="@+id/rBtnBugReportSe"
@@ -262,7 +257,6 @@
             android:paddingEnd="13dp"
             android:paddingBottom="15dp"
             android:inputType="textMultiLine" />
-
 
         <LinearLayout
             android:id="@+id/layout_images"

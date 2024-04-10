@@ -44,7 +44,7 @@
     <string name="image_saved">Image saved</string>
 
     <!--  Contact  -->
-    <string name="contact_question_fi">What do you want to tell us?</string>
+    <string name="contact_question_general">What do you want to tell us?</string>
     <string name="contact_rbtn_question">Question</string>
     <string name="contact_rbtn_report">Bug report</string>
     <string name="contact_rbtn_suggestion">Suggestion</string>
@@ -56,17 +56,17 @@
     <string name="contact_rbtn_features">Features</string>
     <string name="contact_rbtn_supports">Supports</string>
     <string name="contact_content">Content</string>
-    <string name="contact_text_hint">Please enter the content you want to send!</string>
     <string name="contact_text_notice">Notice</string>
     <string name="contact_notice_content">• It may take up to 7 days for our support team to get back to you.\n• Abusive language or spam will not be tolerated.\n• By pressing [Send], you agree to the Terms of Service and Privacy Policy.</string>
     <string name="contact_rbtn_send">Send</string>
     <string name="contact_title">Contact us</string>
-    <string name="ShowDiaLog">Show DiaLog</string>
+    <string name="ShowDiaLog">Show Dialog</string>
     <string name="contact_max_image">You selected the maximum number of images!"</string>
-    <string name="contact_allow_image">You can only select up to 1 images!"</string>
+    <string name="contact_allow_image">You can only select up to 1 images</string>
 
     <!--  Reminder  -->
     <string name="select_reminder_time">Change reminder time</string>
     <string name="title_settings">Settings</string>
+    <string name="contact_text_hint">Your message</string>
 
 </resources>

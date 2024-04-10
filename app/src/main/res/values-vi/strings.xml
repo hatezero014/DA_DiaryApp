@@ -42,7 +42,7 @@
     <string name="image_not_saved">Lưu ảnh không thành công!</string>
 
     <!--  Contact  -->
-    <string name="contact_question_fi">Bạn muốn nói gì với chúng tôi?</string>
+    <string name="contact_question_general">Bạn muốn nói gì với chúng tôi?</string>
     <string name="contact_rbtn_question">Câu hỏi</string>
     <string name="contact_rbtn_report">Báo cáo lỗi</string>
     <string name="contact_rbtn_suggestion">Gợi ý</string>
@@ -52,15 +52,17 @@
     <string name="contact_rbtn_records">Bản ghi</string>
     <string name="contact_rbtn_features">Tính năng</string>
     <string name="contact_rbtn_supports">Hỗ trợ</string>
+    <string name="contact_text_hint">Lời nhắn của bạn</string>
     <string name="contact_text_notice">Chú ý</string>
     <string name="contact_notice_content">• Có thể mất tới 7 ngày để nhóm hỗ trợ của chúng tôi liên hệ lại với bạn.\n• Ngôn ngữ lăng mạ hoặc thư rác sẽ không được chấp nhận.\n• Bằng cách nhấn [Gửi], bạn đồng ý với Điều khoản dịch vụ và Chính sách quyền riêng tư.</string>
     <string name="contact_title">Liên hệ với chúng tôi</string>
     <string name="ShowDiaLog">Hiển thị</string>
     <string name="contact_content">Nội dung</string>
     <string name="contact_rbtn_send">Gửi</string>
-    <string name="contact_text_hint">Vui lòng nhập nội dung bạn muốn gửi!</string>
     <string name="contact_max_image">Bạn đã chọn số ảnh tối đa!"</string>
     <string name="contact_allow_image">Bạn chỉ có thể chọn tối đa 1 ảnh!"</string>
     <string name="contact_rbtn_migration">Di chuyển dữ liệu</string>
+    <string name="select_reminder_time">Thay đổi thời gian nhắc nhở</string>
+    <string name="title_settings">Cài đặt</string>
 
 </resources>

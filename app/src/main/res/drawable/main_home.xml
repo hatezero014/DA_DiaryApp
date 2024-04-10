@@ -3,5 +3,5 @@
     <item android:state_selected="true"
         android:drawable="@drawable/state_filled_main_home" />
     <item android:state_selected="false"
-        android:drawable="@drawable/state_outline_main_home" />
+        android:drawable="@drawable/state_outlined_main_home" />
 </selector>
