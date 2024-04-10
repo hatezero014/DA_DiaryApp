@@ -7,6 +7,9 @@ android {
     compileSdk = 34
 
     defaultConfig {
+        buildFeatures{
+            viewBinding=true;
+        }
         applicationId = "com.example.doan_diaryapp"
         minSdk = 24
         targetSdk = 34
@@ -48,4 +51,5 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation("androidx.cardview:cardview:1.0.0")
+    implementation("com.google.android.material:material:1.11.0")
 }
