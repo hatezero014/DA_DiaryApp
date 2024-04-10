@@ -4,12 +4,17 @@ import android.content.ClipData;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.RadioButton;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -19,13 +24,15 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 public class ContactActivity extends BaseActivity {
-    private ImageView imgFirst, imgSecond, imgThird;
+    private ImageView imgFirst;
+    Uri imgFiUri = null;
+    RadioGroup radioGroupType, radioGroupCategory;
     int countImagesWithoutImage;
-    private ImageButton btnDeImgFi, btnDeImgSe, btnDeImgTh;
+    private TextView textViewCategory;
+    private ImageButton btnDeImgFi;
     private static final int PICK_IMAGES_REQUEST = 1;
     Button btnSend;
     @Override
@@ -45,13 +52,29 @@ public class ContactActivity extends BaseActivity {
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        radioGroupType = findViewById(R.id.radioGroup_type);
+        radioGroupCategory = findViewById(R.id.radioGroup_category);
+        textViewCategory = findViewById(R.id.textView_category);
+
         imgFirst = findViewById(R.id.imgFi);
-        imgSecond = findViewById(R.id.imgSe);
-        imgThird = findViewById(R.id.imgTh);
         btnDeImgFi = findViewById(R.id.btnDeImgFi);
-        btnDeImgSe = findViewById(R.id.btnDeImgSe);
-        btnDeImgTh = findViewById(R.id.btnDeImgTh);
         btnSend = findViewById(R.id.btnSendInquiry);
+
+        radioGroupType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton radioButton = findViewById(checkedId);
+                if (radioButton == findViewById(R.id.rBtnQuestion) || radioButton == findViewById(R.id.rBtnBugReportFi)) {
+                    textViewCategory.setVisibility(View.VISIBLE);
+                    radioGroupCategory.setVisibility(View.VISIBLE);
+                }
+                else {
+                    radioGroupCategory.clearCheck();
+                    textViewCategory.setVisibility(View.GONE);
+                    radioGroupCategory.setVisibility(View.GONE);
+                }
+            }
+        });
 
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,45 +88,7 @@ public class ContactActivity extends BaseActivity {
             public void onClick(View v) {
                 imgFirst.setImageDrawable(null);
                 btnDeImgFi.setVisibility(View.GONE);
-
-                if (imgSecond.getDrawable() != null) {
-                    imgFirst.setImageDrawable(imgSecond.getDrawable());
-                    imgSecond.setImageDrawable(null);
-                    btnDeImgSe.setVisibility(View.GONE);
-                    btnDeImgFi.setVisibility(View.VISIBLE);
-                }
-
-                if (imgThird.getDrawable() != null) {
-                    imgSecond.setImageDrawable(imgThird.getDrawable());
-                    imgThird.setImageDrawable(null);
-                    btnDeImgTh.setVisibility(View.GONE);
-                    btnDeImgSe.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-
-        btnDeImgSe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Xóa imageSe và ẩn ImageButton của nó
-                imgSecond.setImageDrawable(null);
-                btnDeImgSe.setVisibility(View.GONE);
-
-                if (imgThird.getDrawable() != null) {
-                    imgSecond.setImageDrawable(imgThird.getDrawable());
-                    imgThird.setImageDrawable(null);
-                    btnDeImgTh.setVisibility(View.GONE);
-                    btnDeImgSe.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-
-        btnDeImgTh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Xóa imageTh và ẩn ImageButton của nó
-                imgThird.setImageDrawable(null);
-                btnDeImgTh.setVisibility(View.GONE);
+                imgFiUri = null;
             }
         });
 
@@ -116,19 +101,12 @@ public class ContactActivity extends BaseActivity {
                 if (imgFirst.getDrawable() == null) {
                     countImagesWithoutImage++;
                 }
-                if (imgSecond.getDrawable() == null) {
-                    countImagesWithoutImage++;
-                }
-                if (imgThird.getDrawable() == null) {
-                    countImagesWithoutImage++;
-                }
 
                 if (countImagesWithoutImage == 0) {
-                    Toast.makeText(ContactActivity.this, "You selected the maximum number of images", Toast.LENGTH_SHORT).show();
+                    showSnackbar(getString(R.string.contact_max_image));
                     return;
                 }
-                Toast.makeText(ContactActivity.this, "You can only select up to " + countImagesWithoutImage + " images", Toast.LENGTH_SHORT).show();
-
+                showSnackbar(getString(R.string.contact_allow_image));
 
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/*");
@@ -139,25 +117,58 @@ public class ContactActivity extends BaseActivity {
         });
     }
 
+    void showSnackbar(String content) {
+        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),
+                content, 2000);
+
+        View snackbarView = snackbar.getView();
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) snackbarView.getLayoutParams();
+        params.gravity = Gravity.BOTTOM;
+        snackbarView.setLayoutParams(params);
+        snackbar.show();
+    }
+
     protected void sendEmail() {
-        Log.i("Send email", "");
+        EditText editTextInquiry = findViewById(R.id.editText_inquiry);
 
-        String TO = "22520912@gm.uit.edu.vn";
-        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + TO));
-        // emailIntent.setData(Uri.parse("mailto:"));
-        // emailIntent.setType("text/plain");
+        int selectedTypeId = radioGroupType.getCheckedRadioButtonId();
+        RadioButton selectedTypeButton = findViewById(selectedTypeId);
+        String subject = "";
+        if (selectedTypeButton != null) {
+            subject = selectedTypeButton.getText().toString();
+        }
 
-        // emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Pocket Diary - Bug report");
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "Hello Pocket Diary");
+        int selectedCategoryId = radioGroupCategory.getCheckedRadioButtonId();
+        RadioButton selectedCategoryButton = findViewById(selectedCategoryId);
+        if (selectedCategoryButton != null) {
+            if (!subject.isEmpty())
+            {
+                subject = subject + " - " + selectedCategoryButton.getText().toString();
+            }
+            else {
+                subject = selectedCategoryButton.getText().toString();
+            }
+        }
+
+        String inquiryText = editTextInquiry.getText().toString();
+
+        String TO = "diaryappuit@gmail.com";
+        Intent selectorIntent = new Intent(Intent.ACTION_SENDTO);
+        selectorIntent.setData(Uri.parse("mailto:"));
+
+        final Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{TO});
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        emailIntent.putExtra(Intent.EXTRA_TEXT, inquiryText);
+        emailIntent.setSelector( selectorIntent );
+
+        if (imgFiUri != null)
+            emailIntent.putExtra(Intent.EXTRA_STREAM, imgFiUri);
 
         try {
             startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-            // finish();
-            Log.i("Finished sending email...", "");
         } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(ContactActivity.this,
-                    "There is no email client installed.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ContactActivity.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -181,28 +192,16 @@ public class ContactActivity extends BaseActivity {
                 ClipData clipData = data.getClipData();
                 if (clipData != null) {
                     int count = clipData.getItemCount();
-                    if (count > countImagesWithoutImage) {
-                        Snackbar.make(findViewById(android.R.id.content),
-                                "You can only select up to " + countImagesWithoutImage + " images", 3000)
-                                .setAnchorView(R.id.main)
-                                .show();
+                    if (count > 1) {
+                        showSnackbar(getString(R.string.contact_allow_image));
                         return;
                     }
-                    for (int i = 0; i < count; i++) {
-                        // Lấy URI của từng ảnh
-                        Uri imageUri = clipData.getItemAt(i).getUri();
-                        // Gán ảnh vào ImageView theo thứ tự
+                    Uri imageUri = clipData.getItemAt(0).getUri();
+                    if (imageUri != null) {
                         if (imgFirst.getDrawable() == null) {
                             imgFirst.setImageURI(imageUri);
+                            imgFiUri = imageUri;
                             btnDeImgFi.setVisibility(View.VISIBLE);
-                        } else if (imgSecond.getDrawable() == null) {
-                            imgSecond.setImageURI(imageUri);
-                            btnDeImgSe.setVisibility(View.VISIBLE);
-                        } else if (imgThird.getDrawable() == null) {
-                            imgThird.setImageURI(imageUri);
-                            btnDeImgTh.setVisibility(View.VISIBLE);
-                        } else {
-                            break;
                         }
                     }
                 }
