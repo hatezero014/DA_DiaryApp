@@ -19,9 +19,6 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31" >
         <activity
-            android:name=".MainActivityTest"
-            android:exported="true" />
-        <activity
             android:name=".ActivityPhong"
             android:exported="true" />
         <activity
