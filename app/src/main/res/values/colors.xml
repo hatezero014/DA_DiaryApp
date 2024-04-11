@@ -2,8 +2,11 @@
 <resources>
     <color name="colorIconDownload">#34343e</color>
     <color name="colorIconShare">#34343e</color>
+    <color name="colorShareText">#70716d</color>
+    <color name="colorShareBackground">#f3f4ef</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="gray">#7b7979</color>
     <color name="md_theme_primary">#206A4E</color>
     <color name="md_theme_onPrimary">#FFFFFF</color>
     <color name="md_theme_primaryContainer">#A9F2CD</color>

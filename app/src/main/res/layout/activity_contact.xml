@@ -269,7 +269,7 @@
             <Button
                 android:id="@+id/btnAttach"
                 android:layout_width="80dp"
-                android:drawableLeft="@drawable/ic_camera"
+                android:drawableStart="@drawable/ic_camera"
                 android:paddingStart="27dp"
                 android:layout_height="80dp"
                 android:background="@drawable/custom_text_contact"/>
