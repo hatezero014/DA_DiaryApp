@@ -1,6 +1,8 @@
 package com.example.doan_diaryapp;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,6 +19,9 @@ import com.google.android.material.timepicker.TimeFormat;
 import android.media.MediaPlayer;
 import java.util.Calendar;
 public class ChangeReminderTime extends BaseActivity {
+
+    private SharedPreferences sharedPreferences;
+
     private TextView textView;
     private Button button;
 
@@ -31,6 +36,23 @@ public class ChangeReminderTime extends BaseActivity {
         setContentView(R.layout.activity_change_reminder_time);
         textView = findViewById(R.id.timeisSet);
         button = findViewById(R.id.btnShowDiaLog);
+
+
+
+        //sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreferences = getSharedPreferences("com.example.doan_diaryapp.PREFERENCE_FILE_KEY", MODE_PRIVATE);
+
+        NotificationHelper.createNotificationChannel(this);
+
+        if (sharedPreferences.contains("hour") && sharedPreferences.contains("minute")) {
+            // Nếu có, đặt thời gian báo thức tương ứng
+            selectedHour = sharedPreferences.getInt("hour", 0);
+            selectedMinute = sharedPreferences.getInt("minute", 0);
+            handleSelectedTime(selectedHour, selectedMinute);
+            startAlarmCheck();
+        }
+
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,8 +88,13 @@ public class ChangeReminderTime extends BaseActivity {
                 selectedHour = picker.getHour();
                 selectedMinute = picker.getMinute();
 
-                startAlarmCheck();
+                // Lưu thời gian báo thức vào SharedPreferences
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt("hour", selectedHour);
+                editor.putInt("minute", selectedMinute);
+                editor.apply();
 
+                startAlarmCheck();
                 handleSelectedTime(selectedHour, selectedMinute);
             }
         });
@@ -95,6 +122,8 @@ public class ChangeReminderTime extends BaseActivity {
                 int currentMinute = calendar.get(Calendar.MINUTE);
 
                 if (selectedHour == currentHour && selectedMinute == currentMinute) {
+                    NotificationHelper.showNotification(ChangeReminderTime.this, "Báo thức", "Đã đến giờ báo thức");
+
                     playAlarmSound();
                 }
 
