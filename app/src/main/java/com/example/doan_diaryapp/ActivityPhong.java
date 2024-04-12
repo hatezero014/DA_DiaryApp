@@ -2,75 +2,39 @@ package com.example.doan_diaryapp;
 
 import android.os.Bundle;
 
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.doan_diaryapp.Adapter.CirclesAdapter;
+import com.example.doan_diaryapp.Adapter.ViewPagerAdapter;
 import com.example.doan_diaryapp.Models.Circle;
 import com.example.doan_diaryapp.Models.Circles;
+import com.example.doan_diaryapp.ui.Statistic.ByMonthFragment;
+import com.example.doan_diaryapp.ui.Statistic.EntireYearFragment;
+import com.google.android.material.tabs.TabLayout;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class ActivityPhong extends BaseActivity {
 
-    private RecyclerView listCircle;
-    private CirclesAdapter circlesAdapter;
+    private TabLayout mTablayout;
+    private ViewPager viewPager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phong);
 
-        listCircle = findViewById(R.id.list_circle);
+        mTablayout = findViewById(R.id.tb_thongke);
+        viewPager = findViewById(R.id.vp_thongke);
 
-        circlesAdapter = new CirclesAdapter(this);
+        mTablayout.setupWithViewPager(viewPager);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
-        listCircle.setLayoutManager(linearLayoutManager);
-
-        listCircle.setNestedScrollingEnabled(false);
-
-        circlesAdapter.setData(getListCircles());
-
-        listCircle.setAdapter(circlesAdapter);
-
-    }
-
-    private List<Circles> getListCircles() {
-        List<Circles> list = new ArrayList<>();
-
-        for(int i=0;i<5;i++){
-            List<Circle> listCircle = new ArrayList<>();
-            switch (i){
-                case 0:
-                    for(int j=0;j<12;j++){
-                        listCircle.add(new Circle(R.drawable.ic_circle1));
-                    }
-                    break;
-                case 1:
-                    for(int j=0;j<12;j++){
-                        listCircle.add(new Circle(R.drawable.ic_circle2));
-                    }
-                    break;
-                case 2:
-                    for(int j=0;j<12;j++){
-                        listCircle.add(new Circle(R.drawable.ic_circle3));
-                    }
-                    break;
-                case 3:
-                    for(int j=0;j<12;j++){
-                        listCircle.add(new Circle(R.drawable.ic_circle4));
-                    }
-                    break;
-                default:
-                    for(int j=0;j<12;j++){
-                        listCircle.add(new Circle(R.drawable.ic_circle5));
-                    }
-                    break;
-            }
-            list.add(new Circles(listCircle));
-        }
-        return list;
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        viewPagerAdapter.addFragment(new ByMonthFragment(), getResources().getString(R.string.by_month_fragment));
+        viewPagerAdapter.addFragment(new EntireYearFragment(), getResources().getString(R.string.entire_year_fragment));
+        viewPager.setAdapter(viewPagerAdapter);
     }
 }

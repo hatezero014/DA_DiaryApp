@@ -2,13 +2,16 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="ChangeReminderTime">
+      <entry key="ActivityNam">
+        <State />
+      </entry>
+      <entry key="ActivityPhong">
+        <State />
+      </entry>
+      <entry key="MainActivity">
         <State />
       </entry>
       <entry key="app">
-        <State />
-      </entry>
-      <entry key="MainActivityTest">
         <State />
       </entry>
     </value>

@@ -4,12 +4,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.example.doan_diaryapp.ui.Statistic.ByMonthFragment;
 import com.example.doan_diaryapp.ui.Statistic.EntireYearFragment;
 
-public class ViewPagerAdapter extends FragmentStatePagerAdapter {
+import java.util.ArrayList;
+
+public class ViewPagerAdapter extends FragmentPagerAdapter {
+
+    private final ArrayList<Fragment> fragmentArrayList = new ArrayList<>();
+    private final ArrayList<String> fragmentTitle = new ArrayList<>();
     public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
     }
@@ -17,33 +23,25 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        switch (position){
-            case 0:
-                return new EntireYearFragment();
-            case 1:
-                return  new ByMonthFragment();
-            default:
-                return new EntireYearFragment();
-        }
+        return fragmentArrayList.get(position);
     }
 
     @Override
     public int getCount() {
-        return 2;
+        return fragmentArrayList.size();
     }
 
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        String title = "";
-        switch (position){
-            case 0:
-                title = "Entire Year";
-                break;
-            case 1:
-                title = "By Month";
-                break;
-        }
-        return title;
+        return fragmentTitle.get(position);
     }
+
+    public void addFragment(Fragment fragment, String title)
+    {
+        fragmentArrayList.add(fragment);
+        fragmentTitle.add(title);
+    }
+
+
 }

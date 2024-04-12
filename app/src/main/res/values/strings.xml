@@ -69,4 +69,6 @@
     <string name="title_settings">Settings</string>
     <string name="contact_text_hint">Your message</string>
 
+    <string name="your_mood_chart">Your mood chart</string>
+
 </resources>
