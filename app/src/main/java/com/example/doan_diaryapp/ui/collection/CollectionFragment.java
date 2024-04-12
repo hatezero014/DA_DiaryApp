@@ -28,7 +28,12 @@ public class CollectionFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCollectionBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
         RecyclerView recyclerView = view.findViewById(R.id.carousel_recycler_view);
+        ViewGroup.LayoutParams layoutParams = recyclerView.getLayoutParams();
+        layoutParams.height = (int) getResources().getDimension(R.dimen.recyclerview_height);
+        recyclerView.setLayoutParams(layoutParams);
+
         carouselAdapter = new CarouselAdapter(list, requireContext());
         recyclerView.setAdapter(carouselAdapter);
 
