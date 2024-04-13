@@ -43,6 +43,9 @@ public class ByMonthFragment extends Fragment {
         // Required empty public constructor
     }
 
+    ImageView imageView1, imageView2;
+    TextView title_month, tb_month;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
