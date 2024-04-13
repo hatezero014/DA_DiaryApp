@@ -7,30 +7,14 @@
     android:orientation="vertical"
     tools:context=".ActivityPhong">
 
-    <TextView
-        android:id="@+id/txt_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:text="@string/year_in_pocket"
-        android:layout_marginBottom="10dp"/>
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list_circle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </RelativeLayout>
-
-    <Button
-        android:id="@+id/btn_go"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tb_thongke"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/Go"
-        android:textSize="16sp"/>
+        android:layout_height="wrap_content" />
 
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vp_thongke"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
