@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -7,27 +7,143 @@
     android:layout_height="match_parent"
     tools:context=".RecordActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
+<!--    <com.google.android.material.appbar.AppBarLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:fitsSystemWindows="true"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
+
+<!--        <com.google.android.material.appbar.CollapsingToolbarLayout-->
+<!--            style="?attr/collapsingToolbarLayoutMediumStyle"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="?attr/collapsingToolbarLayoutMediumSize">-->
+
+<!--            <com.google.android.material.appbar.MaterialToolbar-->
+<!--                android:layout_width="match_parent"-->
+<!--                app:navigationIcon="@drawable/common_arrowback"-->
+<!--                app:title="Test ngày tháng"-->
+<!--                app:menu="@menu/toolbar_record"-->
+<!--                android:layout_height="?attr/actionBarSize"-->
+<!--                android:elevation="0dp" />-->
+
+<!--        </com.google.android.material.appbar.CollapsingToolbarLayout>-->
+
+<!--    </com.google.android.material.appbar.AppBarLayout>-->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        app:layout_constraintTop_toTopOf="parent">
+        android:padding="16dp"
+        android:orientation="vertical">
 
-    <com.google.android.material.appbar.CollapsingToolbarLayout
-        style="?attr/collapsingToolbarLayoutMediumStyle"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/collapsingToolbarLayoutMediumSize">
-
-        <com.google.android.material.appbar.MaterialToolbar
+        <LinearLayout
             android:layout_width="match_parent"
-            app:navigationIcon="@drawable/common_arrowback"
-            app:title="Test ngày tháng"
-            app:menu="@menu/toolbar_record"
-            android:layout_height="?attr/actionBarSize"
-            android:elevation="0dp" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Điểm tâm trạng"
+                android:textColor="@color/md_theme_onSecondaryContainer"
+                style="@style/TextAppearance.Material3.TitleMedium"
+                android:textSize="18sp"/>
 
-    </com.google.android.material.appbar.CollapsingToolbarLayout>
+            <com.google.android.material.slider.Slider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:valueFrom="0"
+                android:valueTo="10"
+                android:stepSize="1"
+                android:value="5"
+                app:trackHeight="10dp"
+                app:thumbRadius="13dp"
+                app:tickRadiusActive="1.5dp"
+                app:tickColorActive="@color/md_theme_primaryContainer"
+                app:tickRadiusInactive="1.5dp"
+                app:thumbElevation="2dp"
+                app:haloColor="@android:color/transparent"/>
 
-</com.google.android.material.appbar.AppBarLayout>
+        </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Danh sách 1 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp"
+            android:padding="20dp"
+            android:background="@drawable/custom_background_diary">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trạng thái"
+                android:textColor="@color/md_theme_onSecondaryContainer"
+                style="@style/TextAppearance.Material3.TitleMedium"
+                android:textSize="18sp"
+                android:paddingBottom="20dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView1"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="4" />
+        </LinearLayout>
+
+        <!-- Danh sách 2 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:background="@drawable/custom_background_diary">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/md_theme_onSecondaryContainer"
+                style="@style/TextAppearance.Material3.TitleMedium"
+                android:text="Hoạt động"
+                android:textSize="18sp"
+                android:paddingBottom="20dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView2"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:nestedScrollingEnabled="false"
+                android:layout_height="395dp"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="4" />
+        </LinearLayout>
+
+        <!-- Danh sách 3 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:background="@drawable/custom_background_diary">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bạn đồng hành"
+                android:textColor="@color/md_theme_onSecondaryContainer"
+                style="@style/TextAppearance.Material3.TitleMedium"
+                android:textSize="18sp"
+                android:paddingBottom="20dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView3"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:nestedScrollingEnabled="false"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="4" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView >

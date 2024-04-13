@@ -23,6 +23,7 @@
         android:textSize="24sp"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/myImageView"
+        android:visibility="invisible"
         android:layout_marginBottom="9dp"
         android:layout_marginTop="16dp"
         />
@@ -31,6 +32,7 @@
         android:id="@+id/calendarGrid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="invisible"
         android:columnCount="7"
         android:layout_below="@id/monthYearTextView"
         android:padding="8dp"/>
