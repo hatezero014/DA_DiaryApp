@@ -21,7 +21,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="24sp"
-        android:visibility="invisible"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/myImageView"
         android:layout_marginBottom="9dp"
@@ -33,7 +32,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:columnCount="7"
-        android:visibility="invisible"
         android:layout_below="@id/monthYearTextView"
         android:padding="8dp"/>
 

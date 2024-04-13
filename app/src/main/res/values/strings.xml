@@ -3,6 +3,8 @@
     <string name="app_name">Pocket Diary</string>
 
     <!-- Common strings  -->
+    <string name="day_view">Day</string>
+    <string name="month_view">Month</string>
     <string name="button_cancel">Cancel</string>
 
     <!-- MainActivity -->
@@ -21,35 +23,25 @@
     <string name="display_mode_dark">Dark</string>
     <string name="display_mode_system">System default</string>
 
-    <string name="by_month_fragment">By Month fragment</string>
-    <string name="entire_year_fragment">Entire Year fragment</string>
-
-    <string name="Go">Go</string>
-    <string name="year_in_pocket">Year in Pocket</string>
-
-    <string name="day_view">Day</string>
-    <string name="month_view">Month</string>
-
-
     <!-- Accessibility -->
     <string name="title_share">Share</string>
     <string name="add_record">Add record</string>
     <string name="share_image">Share image</string>
     <string name="download_image">Download image</string>
     <string name="new_record">New record</string>
-
+    <string name="title_settings">Settings</string>
 
     <!--  Share  -->
-    <string name="image_not_saved">Failed to save image</string>
     <string name="image_saved">Image saved</string>
+    <string name="image_not_saved">Failed to save image</string>
 
     <!--  Contact  -->
-    <string name="contact_question_general">What do you want to tell us?</string>
-    <string name="contact_rbtn_question">Question</string>
-    <string name="contact_rbtn_report">Bug report</string>
-    <string name="contact_rbtn_suggestion">Suggestion</string>
-    <string name="contact_rbtn_compliment">Compliment</string>
-    <string name="contact_rbtn_others">Other</string>
+    <string name="question_general">What do you want to tell us?</string>
+    <string name="rbtn_question">Question</string>
+    <string name="rbtn_report">Bug report</string>
+    <string name="rbtn_suggestion">Suggestion</string>
+    <string name="rbtn_compliment">Compliment</string>
+    <string name="rbtn_others">Other</string>
     <string name="contact_question_se">What is your inquiry about?</string>
     <string name="contact_rbtn_records">Records</string>
     <string name="contact_rbtn_migration">Migration</string>
@@ -60,13 +52,23 @@
     <string name="contact_notice_content">• It may take up to 7 days for our support team to get back to you.\n• Abusive language or spam will not be tolerated.\n• By pressing [Send], you agree to the Terms of Service and Privacy Policy.</string>
     <string name="contact_rbtn_send">Send</string>
     <string name="contact_title">Contact us</string>
-    <string name="ShowDiaLog">Show Dialog</string>
-    <string name="contact_max_image">You selected the maximum number of images!"</string>
+    <string name="contact_text_hint">Your message</string>
+    <string name="contact_max_image">You selected the maximum number of images"</string>
     <string name="contact_allow_image">You can only select up to 1 images</string>
 
     <!--  Reminder  -->
     <string name="select_reminder_time">Change reminder time</string>
-    <string name="title_settings">Settings</string>
-    <string name="contact_text_hint">Your message</string>
+
+    <!--  Collection-->
+    <string name="recent_photos">Recent photos</string>
+    <string name="see_more_photos">See more</string>
+    <string name="important_days">Important days</string>
+
+    <!--Other (remove)-->
+    <string name="by_month_fragment">By Month fragment</string>
+    <string name="entire_year_fragment">Entire Year fragment</string>
+    <string name="Go">Go</string>
+    <string name="year_in_pocket">Year in Pocket</string>
+    <string name="ShowDiaLog">Show Dialog</string>
 
 </resources>

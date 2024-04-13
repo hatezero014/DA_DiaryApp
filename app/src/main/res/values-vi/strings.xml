@@ -3,6 +3,8 @@
     <string name="app_name">Pocket Diary</string>
 
     <!-- Common strings  -->
+    <string name="day_view">Ngày</string>
+    <string name="month_view">Tháng</string>
     <string name="button_cancel">Hủy bỏ</string>
 
     <!-- MainActivity -->
@@ -21,48 +23,52 @@
     <string name="display_mode_dark">Tối</string>
     <string name="display_mode_system">Mặc định hệ thống</string>
 
-    <string name="by_month_fragment">Tháng</string>
-    <string name="entire_year_fragment">Năm</string>
-
-    <string name="Go">Đi</string>
-    <string name="year_in_pocket">Một năm trong Pocket</string>
-
-    <string name="day_view">Ngày</string>
-    <string name="month_view">Tháng</string>
-
     <!-- Accessibility -->
     <string name="title_share">Chia sẻ</string>
     <string name="add_record">Thêm bản ghi</string>
     <string name="share_image">Chia sẻ ảnh</string>
     <string name="download_image">Tải ảnh xuống</string>
     <string name="new_record">Bản ghi mới</string>
+    <string name="title_settings">Cài đặt</string>
 
     <!--  Share  -->
-    <string name="image_saved">Lưu ảnh thành công!</string>
-    <string name="image_not_saved">Lưu ảnh không thành công!</string>
+    <string name="image_saved">Lưu ảnh thành công</string>
+    <string name="image_not_saved">Lưu ảnh không thành công</string>
 
     <!--  Contact  -->
-    <string name="contact_question_general">Bạn muốn nói gì với chúng tôi?</string>
-    <string name="contact_rbtn_question">Câu hỏi</string>
-    <string name="contact_rbtn_report">Báo cáo lỗi</string>
-    <string name="contact_rbtn_suggestion">Gợi ý</string>
-    <string name="contact_rbtn_compliment">Lời khen</string>
-    <string name="contact_rbtn_others">Khác</string>
+    <string name="question_general">Bạn muốn nói gì với chúng tôi?</string>
+    <string name="rbtn_question">Câu hỏi</string>
+    <string name="rbtn_report">Báo cáo lỗi</string>
+    <string name="rbtn_suggestion">Gợi ý</string>
+    <string name="rbtn_compliment">Lời khen</string>
+    <string name="rbtn_others">Khác</string>
     <string name="contact_question_se">Yêu cầu của bạn là gì?</string>
     <string name="contact_rbtn_records">Bản ghi</string>
+    <string name="contact_rbtn_migration">Di chuyển dữ liệu</string>
     <string name="contact_rbtn_features">Tính năng</string>
     <string name="contact_rbtn_supports">Hỗ trợ</string>
     <string name="contact_text_hint">Lời nhắn của bạn</string>
+    <string name="contact_content">Nội dung</string>
     <string name="contact_text_notice">Chú ý</string>
     <string name="contact_notice_content">• Có thể mất tới 7 ngày để nhóm hỗ trợ của chúng tôi liên hệ lại với bạn.\n• Ngôn ngữ lăng mạ hoặc thư rác sẽ không được chấp nhận.\n• Bằng cách nhấn [Gửi], bạn đồng ý với Điều khoản dịch vụ và Chính sách quyền riêng tư.</string>
-    <string name="contact_title">Liên hệ với chúng tôi</string>
-    <string name="ShowDiaLog">Hiển thị</string>
-    <string name="contact_content">Nội dung</string>
     <string name="contact_rbtn_send">Gửi</string>
-    <string name="contact_max_image">Bạn đã chọn số ảnh tối đa!"</string>
-    <string name="contact_allow_image">Bạn chỉ có thể chọn tối đa 1 ảnh!"</string>
-    <string name="contact_rbtn_migration">Di chuyển dữ liệu</string>
+    <string name="contact_title">Liên hệ với chúng tôi</string>
+    <string name="contact_max_image">Bạn đã chọn số ảnh tối đa"</string>
+    <string name="contact_allow_image">Bạn chỉ có thể chọn tối đa 1 ảnh"</string>
+
+    <!--  Reminder  -->
     <string name="select_reminder_time">Thay đổi thời gian nhắc nhở</string>
-    <string name="title_settings">Cài đặt</string>
+
+    <!--  Collection-->
+    <string name="recent_photos">Ảnh gần đây</string>
+    <string name="see_more_photos">Xem thêm</string>
+    <string name="important_days">Ngày quan trọng</string>
+
+    <!--Other (remove)-->
+    <string name="by_month_fragment">Tháng</string>
+    <string name="entire_year_fragment">Năm</string>
+    <string name="Go">Đi</string>
+    <string name="year_in_pocket">Một năm trong Pocket</string>
+    <string name="ShowDiaLog">Hiển thị</string>
 
 </resources>

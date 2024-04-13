@@ -4,8 +4,8 @@
 
     <item
         android:id="@+id/action_new_record"
-        android:title="@string/new_record"
-        android:icon="@drawable/common_add_or_edit"
+        android:title="@string/title_settings"
+        android:icon="@drawable/common_settings"
         app:showAsAction="ifRoom"/>
 
 </menu>

@@ -32,7 +32,6 @@ public class ByMonthFragment extends Fragment {
     private String mParam2;
 
 
-
     public ByMonthFragment() {
         // Required empty public constructor
     }

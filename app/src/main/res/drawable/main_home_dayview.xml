@@ -3,5 +3,5 @@
     <item android:state_checked="true"
         android:drawable="@drawable/common_check" />
     <item android:state_checked="false"
-        android:drawable="@drawable/state_normal_main_home_dayview" />
+        android:drawable="@drawable/state_outlined_main_home_dayview" />
 </selector>

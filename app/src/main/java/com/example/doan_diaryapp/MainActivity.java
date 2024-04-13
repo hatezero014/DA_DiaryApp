@@ -32,9 +32,9 @@ public class MainActivity extends BaseActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
-        }
+//        if (getSupportActionBar() != null) {
+//            getSupportActionBar();
+//        }
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each

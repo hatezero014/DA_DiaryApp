@@ -20,7 +20,7 @@
             android:id="@+id/textView_question"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/contact_question_general"
+            android:text="@string/question_general"
             style="@style/TextAppearance.Material3.TitleMedium"/>
 
         <RadioGroup
@@ -41,7 +41,7 @@
                 android:layout_marginEnd="4dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="4dp"
-                android:text="@string/contact_rbtn_question" />
+                android:text="@string/rbtn_question" />
 
             <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
@@ -58,7 +58,7 @@
                 android:layout_marginEnd="4dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="4dp"
-                android:text="@string/contact_rbtn_report" />
+                android:text="@string/rbtn_report" />
 
             <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
@@ -75,7 +75,7 @@
                 android:layout_marginEnd="4dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="4dp"
-                android:text="@string/contact_rbtn_suggestion" />
+                android:text="@string/rbtn_suggestion" />
 
             <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
@@ -92,7 +92,7 @@
                 android:layout_marginEnd="4dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="4dp"
-                android:text="@string/contact_rbtn_compliment" />
+                android:text="@string/rbtn_compliment" />
 
             <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
@@ -109,7 +109,7 @@
                 android:layout_marginEnd="4dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="4dp"
-                android:text="@string/contact_rbtn_others" />
+                android:text="@string/rbtn_others" />
         </RadioGroup>
 
         <TextView
@@ -192,7 +192,7 @@
                 android:layout_marginEnd="4dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="4dp"
-                android:text="@string/contact_rbtn_report" />
+                android:text="@string/rbtn_report" />
 
             <View
                 android:layout_width="match_parent"
@@ -228,7 +228,7 @@
                 android:layout_marginEnd="4dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="4dp"
-                android:text="@string/contact_rbtn_others" />
+                android:text="@string/rbtn_others" />
         </RadioGroup>
 
         <TextView
