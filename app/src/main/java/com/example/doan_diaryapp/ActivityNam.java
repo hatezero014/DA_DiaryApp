@@ -23,7 +23,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class ActivityNam extends BaseActivity {
-    Button btnChangeLanguage, btnCancel, btnDisplayMode, btnShare, btnContact;
+    Button btnChangeLanguage, btnCancel, btnDisplayMode, btnShare, btnContact, btnRecord;
 
     Dialog dialog;
 
@@ -44,6 +44,15 @@ public class ActivityNam extends BaseActivity {
         btnChangeLanguage = findViewById(R.id.btnChangeLanguage);
         btnShare = findViewById(R.id.btnShare);
         btnContact = findViewById(R.id.btnContact);
+        btnRecord = findViewById(R.id.btnRecord);
+
+        btnRecord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ActivityNam.this, RecordActivity.class);
+                startActivity(intent);
+            }
+        });
 
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override

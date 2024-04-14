@@ -64,6 +64,18 @@
     <string name="see_more_photos">Xem thêm</string>
     <string name="important_days">Ngày quan trọng</string>
 
+    <!--  Record  -->
+    <string name="record">Nhật ký</string>
+    <string name="record_status">Trạng thái</string>
+    <string name="record_mood_score">Điểm tâm trạng</string>
+    <string name="record_activity">Hoạt động</string>
+    <string name="record_partner">Bạn đồng hành</string>
+    <string name="record_sleep">Giấc ngủ</string>
+    <string name="record_go_bed">Đi ngủ</string>
+    <string name="record_wake_up">Thức dậy</string>
+    <string name="record_note">Ghi chú của bạn</string>
+    <string name="record_allow_image">Bạn chỉ có thể chọn tối đa 3 ảnh</string>
+
     <!--Other (remove)-->
     <string name="by_month_fragment">Tháng</string>
     <string name="entire_year_fragment">Năm</string>

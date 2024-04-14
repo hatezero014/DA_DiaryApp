@@ -1,4 +1,8 @@
 <resources>
+
+    <style name="MyTimePickerDialog" parent="@android:style/Theme.Holo.Dialog.MinWidth">
+    </style>
+
     <style name="AppTheme" parent="Theme.Material3.Dark">
         <item name="colorPrimary">@color/md_theme_primary</item>
         <item name="colorOnPrimary">@color/md_theme_onPrimary</item>

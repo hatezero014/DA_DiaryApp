@@ -4,11 +4,13 @@
 
     <item
         android:id="@+id/action_addphoto"
+        android:title=""
         android:icon="@drawable/record_addphoto"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/action_favorite"
+        android:title=""
         android:icon="@drawable/record_star"
         app:showAsAction="ifRoom"/>
 

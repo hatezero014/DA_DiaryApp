@@ -64,6 +64,18 @@
     <string name="see_more_photos">See more</string>
     <string name="important_days">Important days</string>
 
+    <!--  Record  -->
+    <string name="record">Record</string>
+    <string name="record_allow_image">You can only select up to 3 images</string>
+    <string name="record_status">Status</string>
+    <string name="record_mood_score">Mood score</string>
+    <string name="record_activity">Activity</string>
+    <string name="record_partner">Partner</string>
+    <string name="record_sleep">Sleep</string>
+    <string name="record_go_bed">Go bed</string>
+    <string name="record_wake_up">Wake up</string>
+    <string name="record_note">Your notes</string>
+
     <!--Other (remove)-->
     <string name="by_month_fragment">By Month fragment</string>
     <string name="entire_year_fragment">Entire Year fragment</string>

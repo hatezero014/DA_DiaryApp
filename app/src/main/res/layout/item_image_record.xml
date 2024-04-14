@@ -5,7 +5,7 @@
     android:layout_height="60dp"
     app:cardCornerRadius="30dp"
     app:cardElevation="0dp"
-    app:cardBackgroundColor="#CFE9D9">
+    app:cardBackgroundColor="@color/md_theme_secondaryContainer">
 
     <ImageView
         android:id="@+id/imageView"

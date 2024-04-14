@@ -7,6 +7,9 @@
 
     <style name="Theme.DoAn_DiaryApp" parent="Base.Theme.DoAn_DiaryApp" />
 
+    <style name="MyTimePickerDialog" parent="@android:style/Theme.Holo.Light.Dialog.MinWidth">
+    </style>
+
     <style name="AppTheme" parent="Theme.Material3.Light">
         <item name="colorPrimary">@color/md_theme_primary</item>
         <item name="colorOnPrimary">@color/md_theme_onPrimary</item>

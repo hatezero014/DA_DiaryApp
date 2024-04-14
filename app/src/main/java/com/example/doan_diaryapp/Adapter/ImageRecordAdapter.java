@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.doan_diaryapp.R;
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.ImageViewHolder> {
     private List<Integer> imageList;
@@ -53,5 +54,15 @@ public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView);
         }
+    }
+
+    public List<Integer> getSelectedItems() {
+        List<Integer> result = new ArrayList<>();
+        for (int i = 0; i < imageList.size(); i++) {
+            if (selectedItems.get(i)) {
+                result.add(i);
+            }
+        }
+        return result;
     }
 }
