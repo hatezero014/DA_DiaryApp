@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -20,6 +22,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.doan_diaryapp.Models.Language;
+import com.example.doan_diaryapp.Service.LanguageService;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class ActivityNam extends BaseActivity {
@@ -37,6 +41,20 @@ public class ActivityNam extends BaseActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+
+        LanguageService languageService = new LanguageService(this);
+
+        Language language = new Language(3, "China", "Ch", 0);
+
+        languageService.Add(language);
+
+        Cursor c = database.query("Language",null,null,null,null,null,null);
+        c.moveToFirst();
+        while (!c.isAfterLast()) {
+            Log.i(c.getString(1), String.valueOf(c.getInt(3)));
+            c.moveToNext();
+        }
 
         customDialog();
 
