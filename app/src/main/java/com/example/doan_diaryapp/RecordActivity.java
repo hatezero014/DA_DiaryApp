@@ -41,11 +41,11 @@ import java.util.List;
 public class RecordActivity extends BaseActivity {
 
     private final List<Integer> imageMoodList = Arrays.asList(
-            R.drawable.emoji_mood_joyful, R.drawable.emoji_mood_cool, R.drawable.emoji_mood_melting, R.drawable.emoji_mood_pleased,
-            R.drawable.emoji_mood_happy, R.drawable.emoji_mood_surprise, R.drawable.emoji_mood_embarrassed, R.drawable.emoji_mood_normal,
-            R.drawable.emoji_mood_fearful, R.drawable.emoji_mood_tired, R.drawable.emoji_mood_worried, R.drawable.emoji_mood_sad,
-            R.drawable.emoji_mood_tired, R.drawable.emoji_mood_sleepy, R.drawable.emoji_mood_sick, R.drawable.emoji_mood_bored,
-            R.drawable.emoji_mood_annoyed, R.drawable.emoji_mood_angry
+            R.drawable.emoji_emotion_joyful, R.drawable.emoji_emotion_cool, R.drawable.emoji_emotion_melting, R.drawable.emoji_emotion_pleased,
+            R.drawable.emoji_emotion_happy, R.drawable.emoji_emotion_surprise, R.drawable.emoji_emotion_embarrassed, R.drawable.emoji_emotion_normal,
+            R.drawable.emoji_emotion_fearful, R.drawable.emoji_emotion_tired, R.drawable.emoji_emotion_worried, R.drawable.emoji_emotion_sad,
+            R.drawable.emoji_emotion_tired, R.drawable.emoji_emotion_sleepy, R.drawable.emoji_emotion_sick, R.drawable.emoji_emotion_bored,
+            R.drawable.emoji_emotion_annoyed, R.drawable.emoji_emotion_angry
     );
 
     private final List<Integer> imageActivityList = Arrays.asList(

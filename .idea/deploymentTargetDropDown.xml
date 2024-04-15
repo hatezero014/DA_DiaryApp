@@ -5,6 +5,22 @@
       <entry key="ActivityNam">
         <State />
       </entry>
+      <entry key="MainActivity">
+        <State>
+          <runningDeviceTargetSelectedWithDropDown>
+            <Target>
+              <type value="RUNNING_DEVICE_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="SERIAL_NUMBER" />
+                  <value value="RF8R908N65R" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </runningDeviceTargetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-04-15T14:11:03.837969300Z" />
+        </State>
+      </entry>
       <entry key="app">
         <State />
       </entry>
