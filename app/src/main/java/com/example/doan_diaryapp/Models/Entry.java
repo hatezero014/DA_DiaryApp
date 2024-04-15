@@ -4,6 +4,9 @@ public class Entry {
     int Id;
     String Note;
 
+    public Entry() {
+    }
+
     public int getId() {
         return Id;
     }

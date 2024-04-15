@@ -23,8 +23,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.doan_diaryapp.Models.Language;
+import com.example.doan_diaryapp.Service.BaseService;
 import com.example.doan_diaryapp.Service.LanguageService;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
+import java.util.Calendar;
 
 public class ActivityNam extends BaseActivity {
     Button btnChangeLanguage, btnCancel, btnDisplayMode, btnShare, btnContact, btnRecord;
@@ -42,20 +45,6 @@ public class ActivityNam extends BaseActivity {
             return insets;
         });
 
-
-        LanguageService languageService = new LanguageService(this);
-
-        Language language = new Language(3, "China", "Ch", 0);
-
-        languageService.Add(language);
-
-        Cursor c = database.query("Language",null,null,null,null,null,null);
-        c.moveToFirst();
-        while (!c.isAfterLast()) {
-            Log.i(c.getString(1), String.valueOf(c.getInt(3)));
-            c.moveToNext();
-        }
-
         customDialog();
 
         btnDisplayMode = findViewById(R.id.btnDisplayMode);
@@ -68,6 +57,13 @@ public class ActivityNam extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ActivityNam.this, RecordActivity.class);
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cần cộng thêm 1
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                String currentDate = day + "-" + month + "-" + year;
+                intent.putExtra("Date", String.format("%02d-%02d-%04d", day, month, year));
                 startActivity(intent);
             }
         });

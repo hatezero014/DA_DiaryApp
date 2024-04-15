@@ -69,6 +69,7 @@ public class RecordActivity extends BaseActivity {
     int hourWakeUp, hourBed, minWakeUp, minBed;
     int countImagesWithoutImage = 0;
     Drawable targetDrawable;
+    String date;
     private static final int PICK_IMAGES_REQUEST = 1;
 
     @Override
@@ -82,9 +83,12 @@ public class RecordActivity extends BaseActivity {
             return insets;
         });
 
+        Intent intent = getIntent();
+        date = intent.getStringExtra("Date");
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle(getString(R.string.title_share));
+            actionBar.setTitle(date);
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

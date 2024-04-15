@@ -9,6 +9,9 @@ public class Emotion {
         Id = id;
     }
 
+    public Emotion() {
+    }
+
     public String getIcon() {
         return Icon;
     }

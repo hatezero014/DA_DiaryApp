@@ -4,6 +4,9 @@ public class EntryActivity {
     int EntryId;
     int ActivityId;
 
+    public EntryActivity() {
+    }
+
     public int getEntryId() {
         return EntryId;
     }

@@ -5,16 +5,7 @@
       <entry key="ActivityNam">
         <State />
       </entry>
-      <entry key="ActivityPhong">
-        <State />
-      </entry>
-      <entry key="ChangeReminderTime">
-        <State />
-      </entry>
-      <entry key="MainActivity">
-        <State />
-      </entry>
-      <entry key="RecordActivity">
+      <entry key="app">
         <State />
       </entry>
     </value>

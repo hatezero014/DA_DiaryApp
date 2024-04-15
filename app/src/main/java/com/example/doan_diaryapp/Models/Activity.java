@@ -13,6 +13,9 @@ public class Activity {
         Id = id;
     }
 
+    public Activity() {
+    }
+
     public String getIcon() {
         return Icon;
     }

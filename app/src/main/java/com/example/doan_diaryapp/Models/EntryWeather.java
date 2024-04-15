@@ -4,6 +4,9 @@ public class EntryWeather {
     int EntryId;
     int WeatherId;
 
+    public EntryWeather() {
+    }
+
     public int getEntryId() {
         return EntryId;
     }

@@ -5,6 +5,9 @@ public class Partner {
     String Icon;
     String Description;
 
+    public Partner() {
+    }
+
     public int getId() {
         return Id;
     }

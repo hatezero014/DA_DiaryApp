@@ -4,6 +4,9 @@ public class EntryEmotion {
     int EntryId;
     int EmotionId;
 
+    public EntryEmotion() {
+    }
+
     public EntryEmotion(int entryId, int emotionId) {
         EntryId = entryId;
         EmotionId = emotionId;

@@ -8,6 +8,9 @@ public class Setting {
         return RemindStatus;
     }
 
+    public Setting() {
+    }
+
     public void setRemindStatus(int remindStatus) {
         RemindStatus = remindStatus;
     }

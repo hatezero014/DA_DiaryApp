@@ -4,6 +4,9 @@ public class EntryPeople {
     int PeopleId;
     int EntryId;
 
+    public EntryPeople() {
+    }
+
     public int getPeopleId() {
         return PeopleId;
     }

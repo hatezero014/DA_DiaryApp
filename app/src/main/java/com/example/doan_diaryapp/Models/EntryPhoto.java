@@ -4,6 +4,9 @@ public class EntryPhoto {
     int EntryId;
     byte[] Photo;
 
+    public EntryPhoto() {
+    }
+
     public int getEntryId() {
         return EntryId;
     }

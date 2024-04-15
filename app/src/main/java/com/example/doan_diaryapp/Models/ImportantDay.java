@@ -4,6 +4,9 @@ public class ImportantDay {
     int Id;
     int EntryId;
 
+    public ImportantDay() {
+    }
+
     public int getId() {
         return Id;
     }

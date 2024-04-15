@@ -36,6 +36,10 @@ public class Language {
         isActive = active;
     }
 
+    public  Language() {
+
+    }
+
     public Language(int id, String name, String code,int isActive) {
         Id = id;
         Code = code;

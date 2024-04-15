@@ -17,6 +17,9 @@ public class Weather {
         Icon = icon;
     }
 
+    public Weather() {
+    }
+
     public String getDescription() {
         return Description;
     }
