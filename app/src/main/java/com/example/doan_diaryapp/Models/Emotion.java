@@ -20,21 +20,10 @@ public class Emotion {
         Icon = icon;
     }
 
-    public String getDescription() {
-        return Description;
-    }
-
-    public void setDescription(String description) {
-        Description = description;
-    }
-
-    public Emotion(int id, String icon, String description) {
-        Id = id;
+    public Emotion(String icon) {
         Icon = icon;
-        Description = description;
     }
 
     int Id;
     String Icon;
-    String Description;
 }

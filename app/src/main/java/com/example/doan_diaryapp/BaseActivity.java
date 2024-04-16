@@ -26,12 +26,13 @@ import java.io.OutputStream;
 import java.util.Locale;
 
 public class BaseActivity  extends AppCompatActivity {
+    BaseService baseService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setDisplayMode();
         loadLocale();
-        BaseService baseService = new BaseService(this);
+        baseService = new BaseService(this);
         baseService.copyDatabase();
     }
 
@@ -54,7 +55,7 @@ public class BaseActivity  extends AppCompatActivity {
 
     public void setDisplayMode() {
         SharedPreferences sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE);
-        int displayMode = sharedPreferences.getInt("displayMode", 0);
+        int displayMode = sharedPreferences.getInt("displayMode", 3);
 
         if (displayMode == 0) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);

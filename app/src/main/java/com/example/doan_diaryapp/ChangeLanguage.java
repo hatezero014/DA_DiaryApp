@@ -26,6 +26,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.activity.OnBackPressedCallback;
 
 import com.example.doan_diaryapp.Models.Language;
+import com.example.doan_diaryapp.Service.BaseService;
 import com.example.doan_diaryapp.Service.LanguageService;
 
 import java.util.ArrayList;
@@ -34,7 +35,6 @@ import java.util.List;
 public class ChangeLanguage extends BaseActivity {
     ListView listViewLanguage;
     LanguageListViewAdapter languageListViewAdapter;
-    LanguageService languageService;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -63,31 +63,25 @@ public class ChangeLanguage extends BaseActivity {
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        languageService = new LanguageService(this);
-
-        ArrayList<Language> listLanguage = languageService.getAll(Language.class);
+        LanguageService languageService = new LanguageService(this);
+        ArrayList<Language> listLanguage = languageService.GetAll(Language.class);
 
         languageListViewAdapter = new LanguageListViewAdapter(listLanguage);
 
         listViewLanguage = findViewById(R.id.listView);
         listViewLanguage.setAdapter(languageListViewAdapter);
 
-        //c.close();
-
         listViewLanguage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("Thong bao", String.valueOf(id));
-                Language language = languageService.FindById(Language.class, (int)id);
+                Language language = (Language) languageListViewAdapter.getItem(position);
                 int _id = (id == 1) ? 2 : 1;
-                Language _language = languageService.FindById(Language.class, _id);
-                language.setActive(true);
-                _language.setActive(false);
+                Language _language = (Language) languageListViewAdapter.getItem(_id - 1);
 
-                languageService.UpdateById(language, language.getId());
-                languageService.UpdateById(_language, _language.getId());
+                languageService.UpdateById(new Language(language.getName(), language.getCode(), 1), (int)id);
+                languageService.UpdateById(new Language(_language.getName(), _language.getCode(), 0), (int)_id);
 
-                languageListViewAdapter.setSelectedItemId(position);
+                languageListViewAdapter.setSelectedItemId(language.getId());
                 setLocale(language.getCode());
                 recreateAllActivities(ChangeLanguage.this, ChangeLanguage.this);
             }
@@ -116,7 +110,7 @@ public class ChangeLanguage extends BaseActivity {
 
     class LanguageListViewAdapter extends BaseAdapter {
         private int selectedItemId = -1;
-        final ArrayList<Language> listLanguage;
+        ArrayList<Language> listLanguage;
 
         LanguageListViewAdapter(ArrayList<Language> listProduct) {
             this.listLanguage = listProduct;
@@ -141,13 +135,11 @@ public class ChangeLanguage extends BaseActivity {
         }
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-
             View viewLanguage;
             if (convertView == null) {
                 viewLanguage = View.inflate(parent.getContext(), R.layout.language_view, null);
             } else viewLanguage = convertView;
-
-            Language language = languageService.FindById(Language.class,position + 1);
+            Language language = (Language) getItem(position);
             TextView nameTextView = viewLanguage.findViewById(R.id.nameLanguage);
             TextView subTextView = viewLanguage.findViewById(R.id.subLanguage);
             ImageView imageView = viewLanguage.findViewById(R.id.imageView);
@@ -159,15 +151,12 @@ public class ChangeLanguage extends BaseActivity {
                 subTextView.setText(getString(R.string.language_en));
             }
 
-            Log.i("Thong bao", String.valueOf(language.isActive()));
-
-            if (language.isActive()) {
+            if (language.getIsActive() == 1) {
                 selectedItemId = language.getId();
                 imageView.setVisibility(View.VISIBLE);
             } else {
                 imageView.setVisibility(View.GONE);
             }
-
             return viewLanguage;
         }
     }

@@ -20,21 +20,10 @@ public class Weather {
     public Weather() {
     }
 
-    public String getDescription() {
-        return Description;
-    }
-
-    public void setDescription(String description) {
-        Description = description;
-    }
-
-    public Weather(int id, String icon, String description) {
-        Id = id;
+    public Weather(String icon) {
         Icon = icon;
-        Description = description;
     }
 
     int Id;
     String Icon;
-    String Description;
 }

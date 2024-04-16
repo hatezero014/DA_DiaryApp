@@ -55,8 +55,7 @@ public class Entry {
         Sleep = sleep;
     }
 
-    public Entry(int id, String note, String date, int overallScore, String wakeUp, String sleep) {
-        Id = id;
+    public Entry(String note, String date, int overallScore, String wakeUp, String sleep) {
         Note = note;
         Date = date;
         OverallScore = overallScore;

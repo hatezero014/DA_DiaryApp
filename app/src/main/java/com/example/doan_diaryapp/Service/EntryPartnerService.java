@@ -3,11 +3,11 @@ package com.example.doan_diaryapp.Service;
 import android.content.Context;
 import android.database.Cursor;
 
-import com.example.doan_diaryapp.Models.EntryActivity;
 import com.example.doan_diaryapp.Models.EntryEmotion;
+import com.example.doan_diaryapp.Models.EntryPartner;
 
-public class EntryEmotionService extends BaseService {
-    public EntryEmotionService(Context context) {
+public class EntryPartnerService extends BaseService {
+    public EntryPartnerService(Context context) {
         super(context);
     }
 }

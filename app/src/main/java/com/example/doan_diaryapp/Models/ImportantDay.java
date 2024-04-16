@@ -2,7 +2,7 @@ package com.example.doan_diaryapp.Models;
 
 public class ImportantDay {
     int Id;
-    int EntryId;
+    String Date;
 
     public ImportantDay() {
     }
@@ -15,16 +15,15 @@ public class ImportantDay {
         Id = id;
     }
 
-    public int getEntryId() {
-        return EntryId;
+    public String getDate() {
+        return Date;
     }
 
-    public void setEntryId(int entryId) {
-        EntryId = entryId;
+    public void setDate(String date) {
+        Date = date;
     }
 
-    public ImportantDay(int id, int entryId) {
-        Id = id;
-        EntryId = entryId;
+    public ImportantDay(String date) {
+        Date = date;
     }
 }

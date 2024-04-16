@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_diaryapp.R;
@@ -15,12 +16,17 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.ImageViewHolder> {
-    private List<Integer> imageList;
+    private final  List<Integer> imageList;
     private SparseBooleanArray selectedItems;
 
-    public ImageRecordAdapter(List<Integer> imageList) {
+    public ImageRecordAdapter(List<Integer> imageList, @Nullable List<Integer> imageSelectedList) {
         this.imageList = imageList;
         this.selectedItems = new SparseBooleanArray();
+        if (imageSelectedList != null) {
+            for (int index : imageSelectedList) {
+                selectedItems.put(index, true);
+            }
+        }
     }
 
     @NonNull

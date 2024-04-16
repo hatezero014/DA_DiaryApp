@@ -3,7 +3,6 @@ package com.example.doan_diaryapp.Models;
 public class Activity {
     int Id;
     String Icon;
-    String Description;
 
     public int getId() {
         return Id;
@@ -24,17 +23,7 @@ public class Activity {
         Icon = icon;
     }
 
-    public String getDescription() {
-        return Description;
-    }
-
-    public void setDescription(String description) {
-        Description = description;
-    }
-
-    public Activity(int id, String icon, String description) {
-        Id = id;
+    public Activity(String icon) {
         Icon = icon;
-        Description = description;
     }
 }

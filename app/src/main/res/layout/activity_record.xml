@@ -1,325 +1,368 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    tools:context=".RecordActivity"
     style="@style/AppTheme"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".RecordActivity">
+    android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-<!--    <com.google.android.material.appbar.AppBarLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:fitsSystemWindows="true"-->
-<!--        app:layout_constraintTop_toTopOf="parent">-->
+    <!--    <com.google.android.material.appbar.AppBarLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:fitsSystemWindows="true"-->
+    <!--        app:layout_constraintTop_toTopOf="parent">-->
 
-<!--        <com.google.android.material.appbar.CollapsingToolbarLayout-->
-<!--            style="?attr/collapsingToolbarLayoutMediumStyle"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="?attr/collapsingToolbarLayoutMediumSize">-->
+    <!--        <com.google.android.material.appbar.CollapsingToolbarLayout-->
+    <!--            style="?attr/collapsingToolbarLayoutMediumStyle"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="?attr/collapsingToolbarLayoutMediumSize">-->
 
-<!--            <com.google.android.material.appbar.MaterialToolbar-->
-<!--                android:layout_width="match_parent"-->
-<!--                app:navigationIcon="@drawable/common_arrowback"-->
-<!--                app:title="Test ngày tháng"-->
-<!--                app:menu="@menu/toolbar_record"-->
-<!--                android:layout_height="?attr/actionBarSize"-->
-<!--                android:elevation="0dp" />-->
+    <!--            <com.google.android.material.appbar.MaterialToolbar-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                app:navigationIcon="@drawable/common_arrowback"-->
+    <!--                app:title="Test ngày tháng"-->
+    <!--                app:menu="@menu/toolbar_record"-->
+    <!--                android:layout_height="?attr/actionBarSize"-->
+    <!--                android:elevation="0dp" />-->
 
-<!--        </com.google.android.material.appbar.CollapsingToolbarLayout>-->
+    <!--        </com.google.android.material.appbar.CollapsingToolbarLayout>-->
 
-<!--    </com.google.android.material.appbar.AppBarLayout>-->
-    <LinearLayout
-        android:id="@+id/layout_parent"
-        android:layout_marginTop="50dp"
+    <!--    </com.google.android.material.appbar.AppBarLayout>-->
+        <LinearLayout
+            android:id="@+id/layout_parent"
+            android:layout_marginTop="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/record_mood_score"
+                    android:textColor="@color/md_theme_onSecondaryContainer"
+                    style="@style/TextAppearance.Material3.TitleMedium"
+                    android:textSize="18sp"/>
+
+                <com.google.android.material.slider.Slider
+                    android:id="@+id/slider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:valueFrom="0"
+                    android:valueTo="10"
+                    android:stepSize="1"
+                    android:value="5"
+                    app:trackHeight="10dp"
+                    app:thumbRadius="13dp"
+                    app:tickRadiusActive="1.5dp"
+                    app:tickColorActive="@color/md_theme_primaryContainer"
+                    app:tickRadiusInactive="1.5dp"
+                    app:thumbElevation="2dp"
+                    app:haloColor="@android:color/transparent"/>
+
+            </LinearLayout>
+
+            <!-- Danh sách 1 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="8dp"
+                android:padding="20dp"
+                android:background="@drawable/custom_background_diary">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/record_status"
+                    android:textColor="@color/md_theme_onSecondaryContainer"
+                    style="@style/TextAppearance.Material3.TitleMedium"
+                    android:textSize="18sp"
+                    android:paddingBottom="20dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView1"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="4" />
+            </LinearLayout>
+
+            <!-- Danh sách 2 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:background="@drawable/custom_background_diary">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/md_theme_onSecondaryContainer"
+                    style="@style/TextAppearance.Material3.TitleMedium"
+                    android:text="@string/record_activity"
+                    android:textSize="18sp"
+                    android:paddingBottom="20dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView2"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_height="395dp"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="4" />
+            </LinearLayout>
+
+            <!-- Danh sách 3 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:background="@drawable/custom_background_diary">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/record_partner"
+                    android:textColor="@color/md_theme_onSecondaryContainer"
+                    style="@style/TextAppearance.Material3.TitleMedium"
+                    android:textSize="18sp"
+                    android:paddingBottom="20dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView3"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="4" />
+            </LinearLayout>
+
+            <!-- Danh sách 4 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:background="@drawable/custom_background_diary">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/record_weather"
+                    android:textColor="@color/md_theme_onSecondaryContainer"
+                    style="@style/TextAppearance.Material3.TitleMedium"
+                    android:textSize="18sp"
+                    android:paddingBottom="20dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView4"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="4" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:background="@drawable/custom_background_diary">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/record_sleep"
+                    android:textColor="@color/md_theme_onSecondaryContainer"
+                    style="@style/TextAppearance.Material3.TitleMedium"
+                    android:textSize="18sp" />
+
+                <GridLayout
+                    android:id="@+id/gridLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:columnCount="2"
+                    android:alignmentMode="alignMargins"
+                    android:columnOrderPreserved="true">
+
+                    <!-- Cột 1: Đi Ngủ -->
+                    <Button
+                        android:id="@+id/bedtimeButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/TextAppearance.Material3.DisplayMedium"
+                        android:text="22:30"
+                        android:textColor="@color/md_theme_onSurfaceVariant"
+                        android:background="#00000000"
+                        android:layout_gravity="start"/>
+
+
+                    <!-- Cột 2: Thức Dậy -->
+                    <Button
+                        android:id="@+id/wakeupButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/TextAppearance.Material3.DisplayMedium"
+                        android:text="07:30"
+                        android:background="#00000000"
+                        android:textColor="@color/md_theme_onSurfaceVariant"
+                        android:layout_gravity="end"/>
+
+                    <!-- TextView 1: Hiển thị thời gian đi ngủ -->
+                    <TextView
+                        android:id="@+id/bedtimeTimeView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/record_go_bed"
+                        android:textColor="@color/md_theme_onSurfaceVariant"
+                        android:textSize="18sp"
+                        android:layout_gravity="center"/>
+
+                    <!-- TextView 2: Hiển thị thời gian thức dậy -->
+                    <TextView
+                        android:id="@+id/wakeupTimeView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/record_wake_up"
+                        android:textColor="@color/md_theme_onSurfaceVariant"
+                        android:textSize="18sp"
+                        android:layout_gravity="center"/>
+
+                </GridLayout>
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/outlinedTextField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:boxBackgroundMode="outline"
+                android:hint="@string/record_note"
+                android:textColorHint="@color/md_theme_onSecondaryContainer"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textNote"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/md_theme_onSurfaceVariant"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:id="@+id/verticalLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="100dp"
+                android:orientation="vertical"
+                android:background="@drawable/custom_background_image_record"
+                android:padding="16dp">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/imageFirst"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/record_image"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="@string/app_name" />
+
+                    <ImageButton
+                        android:id="@+id/btnDeImgFi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|end"
+                        android:visibility="gone"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_cancel" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <ImageView
+                        android:id="@+id/imageSecond"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/app_name"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone" />
+
+                    <ImageButton
+                        android:id="@+id/btnDeImgSe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_gravity="top|end"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_cancel"
+                        android:visibility="gone" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/imageThird"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="16dp"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:visibility="gone"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="@string/app_name" />
+
+                    <ImageButton
+                        android:id="@+id/btnDeImgTh"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|end"
+                        android:visibility="gone"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_cancel" />
+                </FrameLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView >
+    <Button
+        android:id="@+id/btnDone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:orientation="vertical">
+        android:text="@string/record_done"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/button_background_record"
+        android:layout_alignParentBottom="true"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/record_mood_score"
-                android:textColor="@color/md_theme_onSecondaryContainer"
-                style="@style/TextAppearance.Material3.TitleMedium"
-                android:textSize="18sp"/>
-
-            <com.google.android.material.slider.Slider
-                android:id="@+id/slider"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:valueFrom="0"
-                android:valueTo="10"
-                android:stepSize="1"
-                android:value="5"
-                app:trackHeight="10dp"
-                app:thumbRadius="13dp"
-                app:tickRadiusActive="1.5dp"
-                app:tickColorActive="@color/md_theme_primaryContainer"
-                app:tickRadiusInactive="1.5dp"
-                app:thumbElevation="2dp"
-                app:haloColor="@android:color/transparent"/>
-
-        </LinearLayout>
-
-        <!-- Danh sách 1 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="8dp"
-            android:padding="20dp"
-            android:background="@drawable/custom_background_diary">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/record_status"
-                android:textColor="@color/md_theme_onSecondaryContainer"
-                style="@style/TextAppearance.Material3.TitleMedium"
-                android:textSize="18sp"
-                android:paddingBottom="20dp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView1"
-                android:layout_width="wrap_content"
-                android:layout_gravity="center"
-                android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="4" />
-        </LinearLayout>
-
-        <!-- Danh sách 2 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="vertical"
-            android:padding="20dp"
-            android:background="@drawable/custom_background_diary">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/md_theme_onSecondaryContainer"
-                style="@style/TextAppearance.Material3.TitleMedium"
-                android:text="@string/record_activity"
-                android:textSize="18sp"
-                android:paddingBottom="20dp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView2"
-                android:layout_width="wrap_content"
-                android:layout_gravity="center"
-                android:nestedScrollingEnabled="false"
-                android:layout_height="395dp"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="4" />
-        </LinearLayout>
-
-        <!-- Danh sách 3 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp"
-            android:background="@drawable/custom_background_diary">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/record_partner"
-                android:textColor="@color/md_theme_onSecondaryContainer"
-                style="@style/TextAppearance.Material3.TitleMedium"
-                android:textSize="18sp"
-                android:paddingBottom="20dp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView3"
-                android:layout_width="wrap_content"
-                android:layout_gravity="center"
-                android:nestedScrollingEnabled="false"
-                android:layout_height="wrap_content"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="4" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp"
-            android:background="@drawable/custom_background_diary">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/record_sleep"
-                android:textColor="@color/md_theme_onSecondaryContainer"
-                style="@style/TextAppearance.Material3.TitleMedium"
-                android:textSize="18sp" />
-
-            <GridLayout
-                android:id="@+id/gridLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:columnCount="2"
-                android:alignmentMode="alignMargins"
-                android:columnOrderPreserved="true">
-
-                <!-- Cột 1: Đi Ngủ -->
-                <Button
-                    android:id="@+id/bedtimeButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/TextAppearance.Material3.DisplayMedium"
-                    android:text="22:30"
-                    android:textColor="@color/md_theme_onSurfaceVariant"
-                    android:background="#00000000"
-                    android:layout_gravity="start"/>
-
-
-                <!-- Cột 2: Thức Dậy -->
-                <Button
-                    android:id="@+id/wakeupButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/TextAppearance.Material3.DisplayMedium"
-                    android:text="07:30"
-                    android:background="#00000000"
-                    android:textColor="@color/md_theme_onSurfaceVariant"
-                    android:layout_gravity="end"/>
-
-                <!-- TextView 1: Hiển thị thời gian đi ngủ -->
-                <TextView
-                    android:id="@+id/bedtimeTimeView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/record_go_bed"
-                    android:textColor="@color/md_theme_onSurfaceVariant"
-                    android:textSize="18sp"
-                    android:layout_gravity="center"/>
-
-                <!-- TextView 2: Hiển thị thời gian thức dậy -->
-                <TextView
-                    android:id="@+id/wakeupTimeView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/record_wake_up"
-                    android:textColor="@color/md_theme_onSurfaceVariant"
-                    android:textSize="18sp"
-                    android:layout_gravity="center"/>
-
-            </GridLayout>
-        </LinearLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/outlinedTextField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            app:boxBackgroundMode="outline"
-            android:hint="@string/record_note"
-            android:textColorHint="@color/md_theme_onSecondaryContainer"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textInputEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/md_theme_onSurfaceVariant"
-                />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <LinearLayout
-            android:id="@+id/verticalLinearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="80dp"
-            android:orientation="vertical"
-            android:background="@drawable/custom_background_image_record"
-            android:padding="16dp">
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/imageFirst"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/record_image"
-                    android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"
-                    android:contentDescription="@string/app_name" />
-
-                <ImageButton
-                    android:id="@+id/btnDeImgFi"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="top|end"
-                    android:visibility="gone"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/ic_cancel" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-
-                <ImageView
-                    android:id="@+id/imageSecond"
-                    android:layout_marginTop="16dp"
-                    android:layout_width="match_parent"
-                    android:visibility="gone"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"
-                    android:contentDescription="@string/app_name" />
-
-                <ImageButton
-                    android:id="@+id/btnDeImgSe"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="top|end"
-                    android:visibility="gone"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/ic_cancel" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/imageThird"
-                    android:layout_marginTop="16dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:visibility="gone"
-                    android:scaleType="centerCrop"
-                    android:contentDescription="@string/app_name" />
-
-                <ImageButton
-                    android:id="@+id/btnDeImgTh"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="top|end"
-                    android:visibility="gone"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/ic_cancel" />
-            </FrameLayout>
-
-        </LinearLayout>
-
-    </LinearLayout>
-</ScrollView >
+</RelativeLayout>

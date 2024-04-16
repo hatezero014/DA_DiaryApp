@@ -71,10 +71,14 @@
     <string name="record_mood_score">Mood score</string>
     <string name="record_activity">Activity</string>
     <string name="record_partner">Partner</string>
+    <string name="record_weather">Weather</string>
     <string name="record_sleep">Sleep</string>
     <string name="record_go_bed">Go bed</string>
     <string name="record_wake_up">Wake up</string>
     <string name="record_note">Your notes</string>
+    <string name="record_done">Done</string>
+    <string name="record_toast_fail">Record failed!</string>
+    <string name="record_toast_success">Record successful!</string>
 
     <!--Other (remove)-->
     <string name="by_month_fragment">By Month fragment</string>
