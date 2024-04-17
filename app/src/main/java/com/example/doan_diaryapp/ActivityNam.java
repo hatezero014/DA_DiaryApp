@@ -17,12 +17,14 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.doan_diaryapp.Models.Emotion;
 import com.example.doan_diaryapp.Models.Entry;
 import com.example.doan_diaryapp.Models.EntryActivity;
 import com.example.doan_diaryapp.Models.EntryEmotion;
 import com.example.doan_diaryapp.Models.EntryPartner;
 import com.example.doan_diaryapp.Models.EntryPhoto;
 import com.example.doan_diaryapp.Models.EntryWeather;
+import com.example.doan_diaryapp.Service.EmotionService;
 import com.example.doan_diaryapp.Service.EntryActivityService;
 import com.example.doan_diaryapp.Service.EntryEmotionService;
 import com.example.doan_diaryapp.Service.EntryPartnerService;
@@ -52,6 +54,7 @@ public class ActivityNam extends BaseActivity {
 
 //        EntryService entryService = new EntryService(this);
 //        Entry entry = entryService.FindByDate(new Entry(),"16-04-2024");
+//
 //        if (entry != null) {
 //            Log.i("Entry Id:", String.valueOf(entry.getId()));
 //            Log.i("Entry Note:", entry.getNote());
@@ -69,8 +72,15 @@ public class ActivityNam extends BaseActivity {
 //                Log.i("Photo", entryPhoto.getPhoto());
 //            }
 //        }
-//
-//
+
+//        EmotionService emotionService = new EmotionService(this);
+//        ArrayList<Emotion> list = emotionService.GetAll(Emotion.class);
+//        for (Emotion emotion : list) {
+//            Log.i("Emotion Id:", String.valueOf(emotion.getId()));
+//            Log.i("Icon Id", String.valueOf(emotion.getIcon()));
+//        }
+
+
 //        EntryEmotionService entryEmotionService = new EntryEmotionService(this);
 //        ArrayList<EntryEmotion> entryEmotions = entryEmotionService.GetAllByEntryId(EntryEmotion.class, 1);
 //        for (EntryEmotion entryEmotion : entryEmotions) {

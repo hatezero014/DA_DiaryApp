@@ -181,6 +181,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layoutIcon"
                 android:layout_width="match_parent"
                 android:layout_marginTop="20dp"
                 android:layout_height="wrap_content"
@@ -276,7 +277,20 @@
                 android:layout_marginBottom="100dp"
                 android:orientation="vertical"
                 android:background="@drawable/custom_background_image_record"
-                android:padding="16dp">
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="16dp">
+
+                <TextView
+                    android:id="@+id/txtCountImage"
+                    android:paddingTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|end"
+                    android:textSize="16sp"
+                    android:text="0/3"
+                    android:textColor="@color/md_theme_onSurfaceVariant"
+                    />
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -351,7 +365,6 @@
                         android:background="@android:color/transparent"
                         android:src="@drawable/ic_cancel" />
                 </FrameLayout>
-
             </LinearLayout>
         </LinearLayout>
     </ScrollView >

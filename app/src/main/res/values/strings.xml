@@ -78,6 +78,8 @@
     <string name="record_note">Your notes</string>
     <string name="record_done">Done</string>
     <string name="record_toast_fail">Record failed!</string>
+    <string name="record_alert_title">Alert!</string>
+    <string name="record_alert_message">Are you sure you want to exit?</string>
     <string name="record_toast_success">Record successful!</string>
 
     <!--Other (remove)-->
