@@ -29,9 +29,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.doan_diaryapp.Models.Entry;
 import com.example.doan_diaryapp.Service.EntryService;
@@ -44,8 +41,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
-import java.util.Random;
 
 public class ShareActivity extends BaseActivity {
 
@@ -297,7 +292,7 @@ public class ShareActivity extends BaseActivity {
         EntryService entryService = new EntryService(this);
 
         for (int i = 1; i <= daysInMonth; i++) {
-            String date = String.format("%02d-%02d-%04d", i, month, year);
+            String date = String.format(Locale.ENGLISH, "%02d-%02d-%04d", i, month, year);
             Entry entry = entryService.FindByDate(new Entry(),date);
             if (entry != null) {
                 imagesList.add(dayImages[(int)((entry.getOverallScore() + 1) / 2)]);

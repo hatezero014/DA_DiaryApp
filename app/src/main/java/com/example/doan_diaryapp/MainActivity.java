@@ -1,24 +1,14 @@
 package com.example.doan_diaryapp;
 
 import android.os.Bundle;
-import android.widget.Button;
-
-import com.example.doan_diaryapp.ui.home.DayFragment;
-import com.example.doan_diaryapp.ui.home.MonthFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.doan_diaryapp.databinding.ActivityMainBinding;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import android.view.View;
-import android.widget.Toast;
-import androidx.appcompat.app.AlertDialog;
 
 
 public class MainActivity extends BaseActivity {

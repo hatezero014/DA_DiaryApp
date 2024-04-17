@@ -1,22 +1,17 @@
 package com.example.doan_diaryapp;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -28,16 +23,12 @@ import com.example.doan_diaryapp.Models.EntryEmotion;
 import com.example.doan_diaryapp.Models.EntryPartner;
 import com.example.doan_diaryapp.Models.EntryPhoto;
 import com.example.doan_diaryapp.Models.EntryWeather;
-import com.example.doan_diaryapp.Models.Language;
-import com.example.doan_diaryapp.Service.BaseService;
 import com.example.doan_diaryapp.Service.EntryActivityService;
 import com.example.doan_diaryapp.Service.EntryEmotionService;
 import com.example.doan_diaryapp.Service.EntryPartnerService;
 import com.example.doan_diaryapp.Service.EntryPhotoService;
 import com.example.doan_diaryapp.Service.EntryService;
 import com.example.doan_diaryapp.Service.EntryWeatherService;
-import com.example.doan_diaryapp.Service.LanguageService;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -74,7 +65,7 @@ public class ActivityNam extends BaseActivity {
         for (EntryPhoto entryPhoto : entryPhotos) {
             if (entryPhoto != null) {
                 Log.i("Entry Id:", String.valueOf(entryPhoto.getEntryId()));
-                Log.i("Photo", entryPhoto.getPhoto().toString());
+                Log.i("Photo", entryPhoto.getPhoto());
             }
         }
 

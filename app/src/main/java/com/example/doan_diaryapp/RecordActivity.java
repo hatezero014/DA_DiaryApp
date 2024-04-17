@@ -5,12 +5,13 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,8 +39,11 @@ import com.example.doan_diaryapp.Adapter.ImageRecordAdapter;
 import com.example.doan_diaryapp.Decorator.GridSpacingItemDecoration;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -67,8 +71,10 @@ import com.example.doan_diaryapp.Service.PartnerService;
 import com.example.doan_diaryapp.Service.WeatherService;
 import com.google.android.material.slider.Slider;
 import com.google.android.material.snackbar.Snackbar;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
+import java.util.Locale;
 
 public class RecordActivity extends BaseActivity {
 
@@ -104,6 +110,7 @@ public class RecordActivity extends BaseActivity {
     int hourWakeUp, hourBed, minWakeUp, minBed;
     Boolean isCheckFavorite = false;
     Drawable targetDrawable;
+    Uri imgFiUri = null, imgSeUri = null, imgThUri = null;
     String date;
     private static final int PICK_IMAGES_REQUEST = 1;
     Slider slider;
@@ -234,17 +241,22 @@ public class RecordActivity extends BaseActivity {
 
             for (int i = 0; i < entryPhotos.size(); i++) {
                 EntryPhoto entryPhoto = entryPhotos.get(i);
-                Bitmap bitmap = BitmapFactory.decodeByteArray(entryPhoto.getPhoto(), 0, entryPhoto.getPhoto().length);
+                String relativePath = entryPhoto.getPhoto();
+                File file = new File(this.getFilesDir(), relativePath);
+                String absolutePath = file.getAbsolutePath();
+
                 if (i == 0) {
-                    imgFirst.setImageBitmap(bitmap);
+                    Picasso.get().load(new File(absolutePath)).into(imgFirst);
                     btnDeImgFi.setVisibility(View.VISIBLE);
                 }
                 if (i == 1) {
-                    imgSecond.setImageBitmap(bitmap);
+                    Picasso.get().load(new File(absolutePath)).into(imgSecond);
+                    imgSecond.setVisibility(View.VISIBLE);
                     btnDeImgSe.setVisibility(View.VISIBLE);
                 }
                 if (i == 2) {
-                    imgThird.setImageBitmap(bitmap);
+                    Picasso.get().load(new File(absolutePath)).into(imgThird);
+                    imgThird.setVisibility(View.VISIBLE);
                     btnDeImgTh.setVisibility(View.VISIBLE);
                 }
             }
@@ -293,6 +305,7 @@ public class RecordActivity extends BaseActivity {
             public void onClick(View v) {
                 imgFirst.setImageDrawable(null);
                 btnDeImgFi.setVisibility(View.GONE);
+                imgFiUri = null;
 
                 if (imgSecond.getDrawable() != null) {
                     imgFirst.setImageDrawable(imgSecond.getDrawable());
@@ -300,6 +313,8 @@ public class RecordActivity extends BaseActivity {
                     btnDeImgFi.setVisibility(View.VISIBLE);
                     btnDeImgSe.setVisibility(View.GONE);
                     imgSecond.setVisibility(View.GONE);
+                    imgFiUri = imgSeUri;
+                    imgSeUri = null;
                 }
 
                 if (imgThird.getDrawable() != null) {
@@ -309,6 +324,8 @@ public class RecordActivity extends BaseActivity {
                     btnDeImgSe.setVisibility(View.VISIBLE);
                     btnDeImgTh.setVisibility(View.GONE);
                     imgThird.setVisibility(View.GONE);
+                    imgSeUri = imgThUri;
+                    imgThUri = null;
                 }
 
                 if (imgFirst.getDrawable() == null) {
@@ -323,6 +340,7 @@ public class RecordActivity extends BaseActivity {
                 imgSecond.setImageDrawable(null);
                 imgSecond.setVisibility(View.GONE);
                 btnDeImgSe.setVisibility(View.GONE);
+                imgSeUri = null;
 
                 if (imgThird.getDrawable() != null) {
                     imgSecond.setImageDrawable(imgThird.getDrawable());
@@ -331,6 +349,8 @@ public class RecordActivity extends BaseActivity {
                     btnDeImgSe.setVisibility(View.VISIBLE);
                     btnDeImgTh.setVisibility(View.GONE);
                     imgThird.setVisibility(View.GONE);
+                    imgSeUri = imgThUri;
+                    imgThUri = null;
                 }
             }
         });
@@ -341,6 +361,7 @@ public class RecordActivity extends BaseActivity {
                 imgThird.setImageDrawable(null);
                 imgThird.setVisibility(View.GONE);
                 btnDeImgTh.setVisibility(View.GONE);
+                imgThUri = null;
             }
         });
 
@@ -385,51 +406,18 @@ public class RecordActivity extends BaseActivity {
                         }
 
                         if (imgFirst.getDrawable() != targetDrawable) {
-                            imgFirst.setDrawingCacheEnabled(true);
-                            Bitmap bitmapFi = Bitmap.createBitmap(imgFirst.getDrawingCache());
-                            imgFirst.setDrawingCacheEnabled(false);
-                            if (bitmapFi != null) {
-                                try {
-                                    ByteArrayOutputStream outputStreamFi = new ByteArrayOutputStream();
-                                    bitmapFi.compress(Bitmap.CompressFormat.PNG, 100, outputStreamFi);
-                                    byte[] byteFi = outputStreamFi.toByteArray();
-                                    entryPhotoService.Add(new EntryPhoto(id, byteFi));
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
+                            String relativePath = saveImageToAppDirectory(RecordActivity.this, imgFirst);
+                            entryPhotoService.Add(new EntryPhoto(id, relativePath));
                         }
 
                         if (imgSecond.getDrawable() != null) {
-                            imgSecond.setDrawingCacheEnabled(true);
-                            Bitmap bitmapSe = Bitmap.createBitmap(imgSecond.getDrawingCache());
-                            imgSecond.setDrawingCacheEnabled(false);
-                            if (bitmapSe != null) {
-                                try {
-                                    ByteArrayOutputStream outputStreamSe = new ByteArrayOutputStream();
-                                    bitmapSe.compress(Bitmap.CompressFormat.PNG, 100, outputStreamSe);
-                                    byte[] byteSe = outputStreamSe.toByteArray();
-                                    entryPhotoService.Add(new EntryPhoto(id, byteSe));
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
+                            String relativePath = saveImageToAppDirectory(RecordActivity.this, imgSecond);
+                            entryPhotoService.Add(new EntryPhoto(id, relativePath));
                         }
 
                         if (imgThird.getDrawable() != null) {
-                            imgThird.setDrawingCacheEnabled(true);
-                            Bitmap bitmapTh = Bitmap.createBitmap(imgThird.getDrawingCache());
-                            imgThird.setDrawingCacheEnabled(false);
-                            if (bitmapTh != null) {
-                                try {
-                                    ByteArrayOutputStream outputStreamTh = new ByteArrayOutputStream();
-                                    bitmapTh.compress(Bitmap.CompressFormat.PNG, 100, outputStreamTh);
-                                    byte[] byteTh = outputStreamTh.toByteArray();
-                                    entryPhotoService.Add(new EntryPhoto(id, byteTh));
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
+                            String relativePath = saveImageToAppDirectory(RecordActivity.this, imgThird);
+                            entryPhotoService.Add(new EntryPhoto(id, relativePath));
                         }
                     } else {
                         int id = result.getId();
@@ -465,54 +453,22 @@ public class RecordActivity extends BaseActivity {
                         }
 
                         if (imgFirst.getDrawable() != targetDrawable) {
-                            imgFirst.setDrawingCacheEnabled(true);
-                            Bitmap bitmapFi = Bitmap.createBitmap(imgFirst.getDrawingCache());
-                            imgFirst.setDrawingCacheEnabled(false);
-                            if (bitmapFi != null) {
-                                try {
-                                    ByteArrayOutputStream outputStreamFi = new ByteArrayOutputStream();
-                                    bitmapFi.compress(Bitmap.CompressFormat.PNG, 100, outputStreamFi);
-                                    byte[] byteFi = outputStreamFi.toByteArray();
-                                    entryPhotoService.Add(new EntryPhoto(id, byteFi));
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
+                            String relativePath = saveImageToAppDirectory(RecordActivity.this, imgFirst);
+                            entryPhotoService.Add(new EntryPhoto(id, relativePath));
                         }
 
                         if (imgSecond.getDrawable() != null) {
-                            imgSecond.setDrawingCacheEnabled(true);
-                            Bitmap bitmapSe = Bitmap.createBitmap(imgSecond.getDrawingCache());
-                            imgSecond.setDrawingCacheEnabled(false);
-                            if (bitmapSe != null) {
-                                try {
-                                    ByteArrayOutputStream outputStreamSe = new ByteArrayOutputStream();
-                                    bitmapSe.compress(Bitmap.CompressFormat.PNG, 100, outputStreamSe);
-                                    byte[] byteSe = outputStreamSe.toByteArray();
-                                    entryPhotoService.Add(new EntryPhoto(id, byteSe));
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
+                            String relativePath = saveImageToAppDirectory(RecordActivity.this, imgSecond);
+                            entryPhotoService.Add(new EntryPhoto(id, relativePath));
                         }
 
                         if (imgThird.getDrawable() != null) {
-                            imgThird.setDrawingCacheEnabled(true);
-                            Bitmap bitmapTh = Bitmap.createBitmap(imgThird.getDrawingCache());
-                            imgThird.setDrawingCacheEnabled(false);
-                            if (bitmapTh != null) {
-                                try {
-                                    ByteArrayOutputStream outputStreamTh = new ByteArrayOutputStream();
-                                    bitmapTh.compress(Bitmap.CompressFormat.PNG, 100, outputStreamTh);
-                                    byte[] byteTh = outputStreamTh.toByteArray();
-                                    entryPhotoService.Add(new EntryPhoto(id, byteTh));
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
+                            String relativePath = saveImageToAppDirectory(RecordActivity.this, imgThird);
+                            entryPhotoService.Add(new EntryPhoto(id, relativePath));
                         }
                     }
                     Toast.makeText(RecordActivity.this, R.string.record_toast_success, Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(RecordActivity.this, ActivityNam.class));
                 }
                 catch (Exception e) {
                     Toast.makeText(RecordActivity.this, R.string.record_toast_fail, Toast.LENGTH_SHORT).show();
@@ -554,11 +510,11 @@ public class RecordActivity extends BaseActivity {
                         if (isBedtime) {
                             hourBed = hourOfDay;
                             minBed = minute;
-                            bedtimeButton.setText(String.format("%02d:%02d", hourOfDay, minute));
+                            bedtimeButton.setText(String.format(Locale.ENGLISH, "%02d:%02d", hourOfDay, minute));
                         } else {
                             hourWakeUp = hourOfDay;
                             minWakeUp = minute;
-                            wakeupButton.setText(String.format("%02d:%02d", hourOfDay, minute));
+                            wakeupButton.setText(String.format(Locale.ENGLISH, "%02d:%02d", hourOfDay, minute));
                         }
                     }
                 },
@@ -567,8 +523,9 @@ public class RecordActivity extends BaseActivity {
                 true
         );
 
-        // Đặt mode của TimePicker thành Spinner
-        timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        if (timePickerDialog.getWindow() != null) {
+            timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
         timePickerDialog.show();
     }
 
@@ -586,7 +543,6 @@ public class RecordActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == PICK_IMAGES_REQUEST && resultCode == RESULT_OK) {
             if (data != null) {
                 ClipData clipData = data.getClipData();
@@ -600,18 +556,22 @@ public class RecordActivity extends BaseActivity {
                         Uri imageUri = clipData.getItemAt(i).getUri();
                         if (imgFirst.getDrawable() == targetDrawable) {
                             imgFirst.setImageURI(imageUri);
+                            imgFirst.setVisibility(View.VISIBLE);
+                            imgFiUri = imageUri;
                             btnDeImgFi.setVisibility(View.VISIBLE);
                         }
                         else {
                             if (imgSecond.getDrawable() == null) {
                                 imgSecond.setImageURI(imageUri);
                                 imgSecond.setVisibility(View.VISIBLE);
+                                imgSeUri = imageUri;
                                 btnDeImgSe.setVisibility(View.VISIBLE);
                             }
                             else {
                                 if (imgThird.getDrawable() == null) {
                                     imgThird.setImageURI(imageUri);
                                     imgThird.setVisibility(View.VISIBLE);
+                                    imgThUri = imageUri;
                                     btnDeImgTh.setVisibility(View.VISIBLE);
                                 }
                             }
@@ -671,5 +631,37 @@ public class RecordActivity extends BaseActivity {
             startActivity(intent);
         }
         return true;
+    }
+
+    public String saveImageToAppDirectory(Context context, ImageView imageView) {
+        Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+
+        File directory = new File(context.getFilesDir() + "/images");
+        if (!directory.exists()) {
+            directory.mkdirs(); // Tạo thư mục nếu không tồn tại
+        }
+
+        String fileName = "image_" + System.currentTimeMillis() + ".jpg";
+        File imageFile = new File(directory, fileName);
+
+        OutputStream outputStream = null;
+        try {
+            outputStream = new FileOutputStream(imageFile);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+            outputStream.flush();
+        } catch (IOException e) {
+            Log.e("RecordActivity", "Error occurred", e);
+            return null;
+        } finally {
+            try {
+                if (outputStream != null) {
+                    outputStream.close();
+                }
+            } catch (IOException e) {
+                Log.e("RecordActivity", "Error occurred", e);
+            }
+        }
+
+        return "images/" + fileName;
     }
 }

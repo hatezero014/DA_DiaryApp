@@ -1,14 +1,11 @@
 package com.example.doan_diaryapp;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +20,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.activity.OnBackPressedCallback;
 
 import com.example.doan_diaryapp.Models.Language;
-import com.example.doan_diaryapp.Service.BaseService;
 import com.example.doan_diaryapp.Service.LanguageService;
 
 import java.util.ArrayList;

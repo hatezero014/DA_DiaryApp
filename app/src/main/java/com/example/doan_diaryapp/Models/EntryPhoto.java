@@ -2,10 +2,7 @@ package com.example.doan_diaryapp.Models;
 
 public class EntryPhoto {
     int EntryId;
-    byte[] Photo;
-
-    public EntryPhoto() {
-    }
+    String Photo;
 
     public int getEntryId() {
         return EntryId;
@@ -15,16 +12,19 @@ public class EntryPhoto {
         EntryId = entryId;
     }
 
-    public byte[] getPhoto() {
-        return Photo;
+    public EntryPhoto() {
     }
 
-    public void setPhoto(byte[] photo) {
+    public EntryPhoto(int entryId, String photo) {
+        EntryId = entryId;
         Photo = photo;
     }
 
-    public EntryPhoto(int entryId, byte[] photo) {
-        EntryId = entryId;
+    public String getPhoto() {
+        return Photo;
+    }
+
+    public void setPhoto(String photo) {
         Photo = photo;
     }
 }
