@@ -66,6 +66,12 @@
     <string name="title_settings">Cài đặt</string>
 
     <string name="your_mood_chart">Biểu đồ tâm trạng của bạn</string>
+    <string name="view_all">Xem tất cả</string>
+    <string name="choose_multiple">Chọn nhiều nhất</string>
 
+    <string name="mood">Cảm xúc</string>
+    <string name="weather">Thời tiết</string>
+    <string name="activity">Hoạt động</string>
+    <string name="partner">Bạn đồng hành</string>
 
 </resources>

@@ -70,5 +70,11 @@
     <string name="contact_text_hint">Your message</string>
 
     <string name="your_mood_chart">Your mood chart</string>
-
+    <string name="view_all">View all</string>
+    <string name="choose_multiple">Choose multiple</string>
+    
+    <string name="mood">Mood</string>
+    <string name="weather">Weather</string>
+    <string name="activity">Activity</string>
+    <string name="partner">Partner</string>
 </resources>
