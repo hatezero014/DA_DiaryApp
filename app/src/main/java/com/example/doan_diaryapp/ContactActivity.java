@@ -103,10 +103,10 @@ public class ContactActivity extends BaseActivity {
                 }
 
                 if (countImagesWithoutImage == 0) {
-                    showSnackbar(getString(R.string.contact_max_image));
+                    showSnackBar(getString(R.string.contact_max_image));
                     return;
                 }
-                showSnackbar(getString(R.string.contact_allow_image));
+                showSnackBar(getString(R.string.contact_allow_image));
 
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/*");
@@ -117,7 +117,7 @@ public class ContactActivity extends BaseActivity {
         });
     }
 
-    void showSnackbar(String content) {
+    void showSnackBar(String content) {
         Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),
                 content, 2000);
 
@@ -194,7 +194,7 @@ public class ContactActivity extends BaseActivity {
                 if (clipData != null) {
                     int count = clipData.getItemCount();
                     if (count > 1) {
-                        showSnackbar(getString(R.string.contact_allow_image));
+                        showSnackBar(getString(R.string.contact_allow_image));
                         return;
                     }
                     Uri imageUri = clipData.getItemAt(0).getUri();

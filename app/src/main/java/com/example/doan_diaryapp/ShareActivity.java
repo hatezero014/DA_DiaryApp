@@ -29,10 +29,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
+import com.example.doan_diaryapp.Models.Entry;
+import com.example.doan_diaryapp.Service.EntryService;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -42,17 +41,18 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
-import java.util.Random;
 
 public class ShareActivity extends BaseActivity {
 
     ImageView imageView;
     Bitmap overlayBitmap;
+    int month, year;
     private static final int REQUEST_WRITE_EXTERNAL_STORAGE = 1;
     private final String[] dayNames = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
-    private final int[] dayImages = {R.drawable.ic_circle1, R.drawable.ic_circle2, R.drawable.ic_circle3,
-            R.drawable.ic_circle4, R.drawable.ic_circle5, R.drawable.ic_circle3, R.drawable.ic_circle3};
+    private final int[] dayImages = {R.drawable.emoji_emotion_sad,
+            R.drawable.emoji_emotion_disappointed, R.drawable.emoji_emotion_worried,
+            R.drawable.emoji_emotion_pleased, R.drawable.emoji_emotion_happy,
+            R.drawable.emoji_emotion_joyful, R.drawable.icon_share_default};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +66,10 @@ public class ShareActivity extends BaseActivity {
             actionBar.setTitle(getString(R.string.title_share));
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        Intent intent = getIntent();
+        year = intent.getIntExtra("Year", 0);
+        month = intent.getIntExtra("Month", 0);
 
         CreateImage();
     }
@@ -207,7 +211,7 @@ public class ShareActivity extends BaseActivity {
         calendar.set(Calendar.DAY_OF_MONTH, 1);
         int firstDayOfMonth = calendar.get(Calendar.DAY_OF_WEEK);
 
-        List<Integer> imagesList = generateImagesList(firstDayOfMonth, daysInMonth);
+        List<Integer> imagesList = generateImagesList(firstDayOfMonth, daysInMonth, month, year);
 
         int index = 0;
         int margin = 14;
@@ -278,17 +282,24 @@ public class ShareActivity extends BaseActivity {
         });
     }
 
-    private List<Integer> generateImagesList(int firstDayOfMonth, int daysInMonth) {
+    private List<Integer> generateImagesList(int firstDayOfMonth, int daysInMonth, int month, int year) {
         List<Integer> imagesList = new ArrayList<>();
-        Random random = new Random();
 
         for (int i = 1; i < firstDayOfMonth; i++) {
             imagesList.add(0);
         }
 
+        EntryService entryService = new EntryService(this);
+
         for (int i = 1; i <= daysInMonth; i++) {
-            int randomImageIndex = random.nextInt(dayImages.length);
-            imagesList.add(dayImages[randomImageIndex]);
+            String date = String.format(Locale.ENGLISH, "%02d-%02d-%04d", i, month, year);
+            Entry entry = entryService.FindByDate(new Entry(),date);
+            if (entry != null) {
+                imagesList.add(dayImages[(int)((entry.getOverallScore() + 1) / 2)]);
+            }
+            else {
+                imagesList.add(dayImages[6]);
+            }
         }
 
         return imagesList;

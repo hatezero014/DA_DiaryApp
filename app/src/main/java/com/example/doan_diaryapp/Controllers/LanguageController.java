@@ -14,9 +14,6 @@ import com.example.doan_diaryapp.R;
 
 import java.util.ArrayList;
 
-public class LanguageController extends BaseActivity {
-    public static String getSubText(Context context) {
-        String subText = context.getString(R.string.language_en);
-        return subText;
-    }
+public class LanguageController {
+
 }

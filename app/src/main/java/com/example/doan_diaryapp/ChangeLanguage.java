@@ -1,12 +1,10 @@
 package com.example.doan_diaryapp;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,16 +20,15 @@ import androidx.appcompat.app.ActionBar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.activity.OnBackPressedCallback;
 
 import com.example.doan_diaryapp.Models.Language;
+import com.example.doan_diaryapp.Service.LanguageService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChangeLanguage extends BaseActivity {
     ListView listViewLanguage;
-    ArrayList<Language> listLanguage;
     LanguageListViewAdapter languageListViewAdapter;
 
     @Override
@@ -61,21 +58,13 @@ public class ChangeLanguage extends BaseActivity {
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        ArrayList<Language> listLanguage = new ArrayList<>();
-
-        Cursor c = database.query("Language",null,null,null,null,null,null);
-        c.moveToFirst();
-        while (!c.isAfterLast()) {
-            listLanguage.add(new Language(c.getInt(0),c.getString(1), c.getString(2), c.getInt(3)));
-            c.moveToNext();
-        }
+        LanguageService languageService = new LanguageService(this);
+        ArrayList<Language> listLanguage = languageService.GetAll(Language.class);
 
         languageListViewAdapter = new LanguageListViewAdapter(listLanguage);
 
         listViewLanguage = findViewById(R.id.listView);
         listViewLanguage.setAdapter(languageListViewAdapter);
-
-        c.close();
 
         listViewLanguage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -83,18 +72,9 @@ public class ChangeLanguage extends BaseActivity {
                 Language language = (Language) languageListViewAdapter.getItem(position);
                 int _id = (id == 1) ? 2 : 1;
                 Language _language = (Language) languageListViewAdapter.getItem(_id - 1);
-                language.setActive(true);
-                _language.setActive(false);
 
-                ContentValues values1 = new ContentValues();
-                values1.put("isActive", language.isActive() ? 1 : 0);
-
-                database.update("Language", values1, "id=?", new String[]{String.valueOf(language.getId())});
-
-                ContentValues values2 = new ContentValues();
-                values2.put("isActive", _language.isActive() ? 1 : 0);
-
-                database.update("Language", values2, "id=?", new String[]{String.valueOf(_language.getId())});
+                languageService.UpdateById(new Language(language.getName(), language.getCode(), 1), (int)id);
+                languageService.UpdateById(new Language(_language.getName(), _language.getCode(), 0), (int)_id);
 
                 languageListViewAdapter.setSelectedItemId(language.getId());
                 setLocale(language.getCode());
@@ -125,7 +105,7 @@ public class ChangeLanguage extends BaseActivity {
 
     class LanguageListViewAdapter extends BaseAdapter {
         private int selectedItemId = -1;
-        final ArrayList<Language> listLanguage;
+        ArrayList<Language> listLanguage;
 
         LanguageListViewAdapter(ArrayList<Language> listProduct) {
             this.listLanguage = listProduct;
@@ -150,12 +130,10 @@ public class ChangeLanguage extends BaseActivity {
         }
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-
             View viewLanguage;
             if (convertView == null) {
                 viewLanguage = View.inflate(parent.getContext(), R.layout.language_view, null);
             } else viewLanguage = convertView;
-
             Language language = (Language) getItem(position);
             TextView nameTextView = viewLanguage.findViewById(R.id.nameLanguage);
             TextView subTextView = viewLanguage.findViewById(R.id.subLanguage);
@@ -168,13 +146,12 @@ public class ChangeLanguage extends BaseActivity {
                 subTextView.setText(getString(R.string.language_en));
             }
 
-            if (language.isActive()) {
+            if (language.getIsActive() == 1) {
                 selectedItemId = language.getId();
                 imageView.setVisibility(View.VISIBLE);
             } else {
                 imageView.setVisibility(View.GONE);
             }
-
             return viewLanguage;
         }
     }

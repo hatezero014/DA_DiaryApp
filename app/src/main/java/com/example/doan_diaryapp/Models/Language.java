@@ -28,21 +28,23 @@ public class Language {
         Name = name;
     }
 
-    public boolean isActive() {
-        return isActive;
+    public int getIsActive() {
+        return IsActive;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setIsActive(int isActive) {
+        IsActive = isActive;
     }
 
-    public Language(int id, String name, String code,int isActive) {
-        Id = id;
+    public Language() {
+    }
+
+    public Language(String name, String code, int isActive) {
         Code = code;
         Name = name;
-        this.isActive = (isActive != 0);
+        IsActive = isActive;
     }
 
     String Name;
-    boolean isActive;
+    int IsActive;
 }

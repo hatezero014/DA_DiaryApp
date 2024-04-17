@@ -1,4 +1,4 @@
-package com.example.doan_diaryapp;
+package com.example.doan_diaryapp.ui.home;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

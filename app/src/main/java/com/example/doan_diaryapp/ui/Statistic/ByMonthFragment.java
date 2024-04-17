@@ -39,10 +39,18 @@ public class ByMonthFragment extends Fragment {
 
     private RecyclerView recyclerView_month;
     private StatisticAdapter statisticAdapter;
+    private LineChart lineChart;
+
+    private List<String> values;
+
+    ArrayList<Integer> imageList;
 
     public ByMonthFragment() {
         // Required empty public constructor
     }
+
+    ImageView imageView1, imageView2;
+    TextView title_month, tb_month;
 
 
     @Override
