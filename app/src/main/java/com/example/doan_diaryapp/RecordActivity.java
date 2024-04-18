@@ -1,7 +1,5 @@
 package com.example.doan_diaryapp;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.ClipData;
 import android.content.Context;
@@ -30,29 +28,17 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_diaryapp.Adapter.ImageRecordAdapter;
 import com.example.doan_diaryapp.Decorator.GridSpacingItemDecoration;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import com.example.doan_diaryapp.Models.Activity;
 import com.example.doan_diaryapp.Models.Emotion;
 import com.example.doan_diaryapp.Models.Entry;
@@ -75,8 +61,6 @@ import com.example.doan_diaryapp.Service.EntryWeatherService;
 import com.example.doan_diaryapp.Service.ImportantDayService;
 import com.example.doan_diaryapp.Service.PartnerService;
 import com.example.doan_diaryapp.Service.WeatherService;
-import com.example.doan_diaryapp.databinding.FragmentHomeBinding;
-import com.example.doan_diaryapp.databinding.FragmentMonthBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.slider.Slider;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
@@ -85,6 +69,12 @@ import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -169,13 +159,6 @@ public class RecordActivity extends BaseActivity {
         textNode = findViewById(R.id.textNote);
         slider = findViewById(R.id.slider);
         textCount = findViewById(R.id.txtCountImage);
-        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                showDialogAlert();
-            }
-        };
-        getOnBackPressedDispatcher().addCallback(this, callback);
 
         RecyclerView recyclerView1 = findViewById(R.id.recyclerView1);
         recyclerView1.setLayoutManager(new GridLayoutManager(this, 4));
