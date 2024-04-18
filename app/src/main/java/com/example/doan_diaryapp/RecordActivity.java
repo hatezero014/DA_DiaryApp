@@ -30,6 +30,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -163,18 +164,13 @@ public class RecordActivity extends BaseActivity {
         textNode = findViewById(R.id.textNote);
         slider = findViewById(R.id.slider);
         textCount = findViewById(R.id.txtCountImage);
-        LinearLayout layoutIcon = findViewById(R.id.layoutIcon);
-        layoutIcon.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                int widthLayoutIcon = layoutIcon.getWidth();
-                Log.i("Width", String.valueOf(widthLayoutIcon));
-                DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-                int densityDpi = displayMetrics.densityDpi;
-                float widthDp = widthLayoutIcon / (densityDpi / 160);
-                Log.i("Width", String.valueOf(densityDpi));
+            public void handleOnBackPressed() {
+                showDialogAlert();
             }
-        });
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
 
         RecyclerView recyclerView1 = findViewById(R.id.recyclerView1);
         recyclerView1.setLayoutManager(new GridLayoutManager(this, 4));
