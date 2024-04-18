@@ -39,7 +39,7 @@
             android:layout_marginTop="50dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:padding="20dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -51,8 +51,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/record_mood_score"
                     android:textColor="@color/md_theme_onSecondaryContainer"
-                    style="@style/TextAppearance.Material3.TitleMedium"
-                    android:textSize="18sp"/>
+                    style="@style/TextAppearance.Material3.TitleMedium" />
 
                 <com.google.android.material.slider.Slider
                     android:id="@+id/slider"
@@ -86,7 +85,6 @@
                     android:text="@string/record_status"
                     android:textColor="@color/md_theme_onSecondaryContainer"
                     style="@style/TextAppearance.Material3.TitleMedium"
-                    android:textSize="18sp"
                     android:paddingBottom="20dp" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -113,7 +111,6 @@
                     android:textColor="@color/md_theme_onSecondaryContainer"
                     style="@style/TextAppearance.Material3.TitleMedium"
                     android:text="@string/record_activity"
-                    android:textSize="18sp"
                     android:paddingBottom="20dp" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -140,7 +137,6 @@
                     android:text="@string/record_partner"
                     android:textColor="@color/md_theme_onSecondaryContainer"
                     style="@style/TextAppearance.Material3.TitleMedium"
-                    android:textSize="18sp"
                     android:paddingBottom="20dp" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -167,7 +163,6 @@
                     android:text="@string/record_weather"
                     android:textColor="@color/md_theme_onSecondaryContainer"
                     style="@style/TextAppearance.Material3.TitleMedium"
-                    android:textSize="18sp"
                     android:paddingBottom="20dp" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -193,8 +188,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/record_sleep"
                     android:textColor="@color/md_theme_onSecondaryContainer"
-                    style="@style/TextAppearance.Material3.TitleMedium"
-                    android:textSize="18sp" />
+                    style="@style/TextAppearance.Material3.TitleMedium" />
 
                 <GridLayout
                     android:id="@+id/gridLayout"
@@ -254,17 +248,18 @@
                 android:id="@+id/outlinedTextField"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/TextAppearance.Material3.BodyLarge"
                 android:layout_marginTop="20dp"
                 app:boxBackgroundMode="outline"
                 android:hint="@string/record_note"
-                android:textColorHint="@color/md_theme_onSecondaryContainer"
+                android:textColorHint="@color/md_theme_onSurfaceVariant"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/textNote"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/md_theme_onSurfaceVariant"
+                    android:textColor="@color/md_theme_onSurface"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -283,11 +278,12 @@
 
                 <TextView
                     android:id="@+id/txtCountImage"
-                    android:paddingTop="5dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="top|end"
-                    android:textSize="16sp"
+                    android:layout_gravity="top|start"
+                    style="@style/TextAppearance.Material3.BodyLarge"
                     android:text="0/3"
                     android:textColor="@color/md_theme_onSurfaceVariant"
                     />
@@ -310,6 +306,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="top|end"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="4dp"
                         android:visibility="gone"
                         android:background="@android:color/transparent"
                         android:src="@drawable/ic_cancel" />
@@ -317,14 +315,13 @@
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp">
 
                     <ImageView
                         android:id="@+id/imageSecond"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
                         android:adjustViewBounds="true"
                         android:contentDescription="@string/app_name"
                         android:scaleType="centerCrop"
@@ -334,7 +331,8 @@
                         android:id="@+id/btnDeImgSe"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="4dp"
                         android:layout_gravity="top|end"
                         android:background="@android:color/transparent"
                         android:src="@drawable/ic_cancel"
@@ -343,12 +341,12 @@
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp">
 
                     <ImageView
                         android:id="@+id/imageThird"
                         android:layout_width="match_parent"
-                        android:layout_marginTop="16dp"
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
                         android:visibility="gone"
@@ -358,7 +356,8 @@
                     <ImageButton
                         android:id="@+id/btnDeImgTh"
                         android:layout_width="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="4dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="top|end"
                         android:visibility="gone"
@@ -368,6 +367,7 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView >
+
     <Button
         android:id="@+id/btnDone"
         android:layout_width="match_parent"
