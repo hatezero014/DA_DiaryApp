@@ -10,7 +10,6 @@
     <uses-permission android:name="android.permission.WRITE_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -21,6 +20,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
+        <activity
+            android:name=".NotificationApp"
+            android:exported="true" />
+        <activity
+            android:name=".PasswordActivity"
+            android:exported="true" />
         <activity
             android:name=".RecordActivity"
             android:exported="true" />

@@ -54,4 +54,6 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation("com.squareup.picasso:picasso:2.71828")
+    implementation("com.hanks:passcodeview:0.1.2")
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
 }
