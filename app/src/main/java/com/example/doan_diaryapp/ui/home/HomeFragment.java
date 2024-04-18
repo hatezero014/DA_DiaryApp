@@ -22,6 +22,7 @@ public class HomeFragment extends Fragment {
     ViewPager2 viewPager;
     ViewPagerAdapter viewPagerAdapter;
 
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -31,6 +32,7 @@ public class HomeFragment extends Fragment {
 
         viewPagerAdapter = new ViewPagerAdapter(this);
         viewPager.setAdapter(viewPagerAdapter);
+
 
         new TabLayoutMediator(DayMonthTab, viewPager, (tab, i) -> {
             if (i == 0)

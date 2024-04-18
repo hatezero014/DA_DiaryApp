@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -17,22 +16,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.doan_diaryapp.Models.Emotion;
-import com.example.doan_diaryapp.Models.Entry;
-import com.example.doan_diaryapp.Models.EntryActivity;
-import com.example.doan_diaryapp.Models.EntryEmotion;
-import com.example.doan_diaryapp.Models.EntryPartner;
-import com.example.doan_diaryapp.Models.EntryPhoto;
-import com.example.doan_diaryapp.Models.EntryWeather;
-import com.example.doan_diaryapp.Service.EmotionService;
-import com.example.doan_diaryapp.Service.EntryActivityService;
-import com.example.doan_diaryapp.Service.EntryEmotionService;
-import com.example.doan_diaryapp.Service.EntryPartnerService;
-import com.example.doan_diaryapp.Service.EntryPhotoService;
-import com.example.doan_diaryapp.Service.EntryService;
-import com.example.doan_diaryapp.Service.EntryWeatherService;
-
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -125,19 +108,7 @@ public class ActivityNam extends BaseActivity {
         btnContact = findViewById(R.id.btnContact);
         btnRecord = findViewById(R.id.btnRecord);
 
-        btnRecord.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ActivityNam.this, RecordActivity.class);
-                Calendar calendar = Calendar.getInstance();
-                int year = calendar.get(Calendar.YEAR);
-                int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cần cộng thêm 1
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-                intent.putExtra("Date", String.format(Locale.ENGLISH, "%02d-%02d-%04d", day, month, year));
-                startActivity(intent);
-            }
-        });
 
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
