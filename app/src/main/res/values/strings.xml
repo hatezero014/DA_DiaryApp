@@ -97,4 +97,8 @@
     <string name="Go">Go</string>
     <string name="year_in_pocket">Year in Pocket</string>
     <string name="ShowDiaLog">Show Dialog</string>
+
+    <!--Month(Add diary)-->
+    <string name="month_alert_title">Unable to create</string>
+    <string name="month_alert_message">Can not create record for future date</string>
 </resources>

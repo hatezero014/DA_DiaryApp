@@ -41,7 +41,7 @@ public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.
 
         int densityDpi = displayMetrics.densityDpi;
 
-        int cardViewWidth = (screenWidth - (int)(72 * (densityDpi / 160.0))) / 5;
+        int cardViewWidth = (screenWidth - (int)(72 * (densityDpi / 160))) / 5;
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         layoutParams.width = cardViewWidth;
         view.setLayoutParams(layoutParams);

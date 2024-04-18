@@ -18,6 +18,7 @@ import com.example.doan_diaryapp.ActivityNam;
 import com.example.doan_diaryapp.R;
 import com.example.doan_diaryapp.RecordActivity;
 import com.example.doan_diaryapp.databinding.FragmentMonthBinding;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
@@ -96,18 +97,12 @@ public class MonthFragment extends Fragment {
     }
 
 
-
-
-
     private void showAlertDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-
-        builder.setTitle("Không thể tạo")
-                .setMessage("Không thể tạo bản ghi cho ngày trong tương lai")
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
+        builder.setTitle(R.string.month_alert_title)
+                .setMessage(R.string.month_alert_message)
                 .setPositiveButton("OK", null);
-        AlertDialog alertDialog = builder.create();
-        alertDialog.getWindow().setBackgroundDrawableResource(R.drawable.main_home_dialog_add_day);
-        alertDialog.show();
+        builder.create().show();
     }
 
     @Override
