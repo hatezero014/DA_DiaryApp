@@ -98,4 +98,8 @@
     <string name="activity">Hoạt động</string>
     <string name="partner">Bạn đồng hành</string>
 
+    <!--Month(Add diary)-->
+    <string name="month_alert_title">Không thể tạo</string>
+    <string name="month_alert_message">Không thể tạo bản ghi cho ngày trong tương lai</string>
+
 </resources>
