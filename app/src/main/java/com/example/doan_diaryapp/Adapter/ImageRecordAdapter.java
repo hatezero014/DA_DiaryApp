@@ -1,5 +1,7 @@
 package com.example.doan_diaryapp.Adapter;
 
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_diaryapp.R;
+import com.example.doan_diaryapp.RecordActivity;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -33,6 +36,16 @@ public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_image_record, parent, false);
+
+        DisplayMetrics displayMetrics = parent.getContext().getResources().getDisplayMetrics();
+        int densityDpi = displayMetrics.densityDpi;
+
+        int cardViewWidth = (int)(displayMetrics.widthPixels - (72 * densityDpi / 160)) * 180 / 1000;
+
+        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        layoutParams.width = cardViewWidth;
+        view.setLayoutParams(layoutParams);
+
         return new ImageViewHolder(view);
     }
 
@@ -40,11 +53,11 @@ public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
         Integer imageRes = imageList.get(position);
         holder.imageView.setImageResource(imageRes);
-        holder.imageView.setAlpha(selectedItems.get(position) ? 1.0f : 0.15f);
+        holder.imageView.setAlpha(selectedItems.get(position) ? 1.0f : 0.35f);
         holder.imageView.setOnClickListener(v -> {
             boolean isSelected = !selectedItems.get(position);
             selectedItems.put(position, isSelected);
-            holder.imageView.setAlpha(isSelected ? 1.0f : 0.15f);
+            holder.imageView.setAlpha(isSelected ? 1.0f : 0.35f);
         });
     }
 

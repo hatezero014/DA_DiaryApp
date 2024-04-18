@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -17,20 +16,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.doan_diaryapp.Models.Entry;
-import com.example.doan_diaryapp.Models.EntryActivity;
-import com.example.doan_diaryapp.Models.EntryEmotion;
-import com.example.doan_diaryapp.Models.EntryPartner;
-import com.example.doan_diaryapp.Models.EntryPhoto;
-import com.example.doan_diaryapp.Models.EntryWeather;
-import com.example.doan_diaryapp.Service.EntryActivityService;
-import com.example.doan_diaryapp.Service.EntryEmotionService;
-import com.example.doan_diaryapp.Service.EntryPartnerService;
-import com.example.doan_diaryapp.Service.EntryPhotoService;
-import com.example.doan_diaryapp.Service.EntryService;
-import com.example.doan_diaryapp.Service.EntryWeatherService;
-
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -49,63 +34,6 @@ public class ActivityNam extends BaseActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-//        EntryService entryService = new EntryService(this);
-//        Entry entry = entryService.FindByDate(new Entry(),"16-04-2024");
-//        if (entry != null) {
-//            Log.i("Entry Id:", String.valueOf(entry.getId()));
-//            Log.i("Entry Note:", entry.getNote());
-//            Log.i("Entry Date:", entry.getDate());
-//            Log.i("Entry Overall Score:", String.valueOf(entry.getOverallScore()));
-//            Log.i("Entry Wake Up Time:", entry.getWakeUp());
-//            Log.i("Entry Sleep Time:", entry.getSleep());
-//        }
-//
-//        EntryPhotoService entryPhotoService = new EntryPhotoService(this);
-//        ArrayList<EntryPhoto> entryPhotos = entryPhotoService.GetAllByEntryId(EntryPhoto.class, 1);
-//        for (EntryPhoto entryPhoto : entryPhotos) {
-//            if (entryPhoto != null) {
-//                Log.i("Entry Id:", String.valueOf(entryPhoto.getEntryId()));
-//                Log.i("Photo", entryPhoto.getPhoto());
-//            }
-//        }
-//
-//
-//        EntryEmotionService entryEmotionService = new EntryEmotionService(this);
-//        ArrayList<EntryEmotion> entryEmotions = entryEmotionService.GetAllByEntryId(EntryEmotion.class, 1);
-//        for (EntryEmotion entryEmotion : entryEmotions) {
-//            if (entryEmotion != null) {
-//                Log.i("Entry Id:", String.valueOf(entryEmotion.getEntryId()));
-//                Log.i("Emotion Id", String.valueOf(entryEmotion.getEmotionId()));
-//            }
-//        }
-//
-//        EntryActivityService entryActivityService = new EntryActivityService(this);
-//        ArrayList<EntryActivity> entryActivities = entryActivityService.GetAllByEntryId(EntryActivity.class, 1);
-//        for (EntryActivity entryActivitie : entryActivities) {
-//            if (entryActivitie != null) {
-//                Log.i("Entry Id:", String.valueOf(entryActivitie.getEntryId()));
-//                Log.i("Activity Id", String.valueOf(entryActivitie.getActivityId()));
-//            }
-//        }
-//
-//        EntryPartnerService entryPartnerService = new EntryPartnerService(this);
-//        ArrayList<EntryPartner> entryPartners = entryPartnerService.GetAllByEntryId(EntryPartner.class, 1);
-//        for (EntryPartner entryPartner : entryPartners) {
-//            if (entryPartner != null) {
-//                Log.i("Entry Id:", String.valueOf(entryPartner.getEntryId()));
-//                Log.i("Partner Id", String.valueOf(entryPartner.getPartnerId()));
-//            }
-//        }
-//
-//        EntryWeatherService entryWeatherService = new EntryWeatherService(this);
-//        ArrayList<EntryWeather> entryWeathers = entryWeatherService.GetAllByEntryId(EntryWeather.class, 1);
-//        for (EntryWeather entryWeather : entryWeathers) {
-//            if (entryWeather != null) {
-//                Log.i("Entry Id:", String.valueOf(entryWeather.getEntryId()));
-//                Log.i("Weather Id", String.valueOf(entryWeather.getWeatherId()));
-//            }
-//        }
 
         customDialog();
 
@@ -128,6 +56,7 @@ public class ActivityNam extends BaseActivity {
                 startActivity(intent);
             }
         });
+
 
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,7 +94,6 @@ public class ActivityNam extends BaseActivity {
     }
 
     public void customDialog() {
-        
         dialog = new Dialog(ActivityNam.this);
         dialog.setContentView(R.layout.dialog_display_mode);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);

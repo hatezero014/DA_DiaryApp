@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_diaryapp.ui.Statistic.ByMonthFragment;
 import com.example.doan_diaryapp.ui.Statistic.EntireYearFragment;
@@ -42,6 +43,4 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         fragmentArrayList.add(fragment);
         fragmentTitle.add(title);
     }
-
-
 }

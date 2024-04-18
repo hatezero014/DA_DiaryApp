@@ -59,6 +59,15 @@
     <!--  Reminder  -->
     <string name="select_reminder_time">Change reminder time</string>
 
+    <string name="your_mood_chart">Your mood chart</string>
+    <string name="view_all">View all</string>
+    <string name="choose_multiple">Choose multiple</string>
+
+    <string name="mood">Mood</string>
+    <string name="weather">Weather</string>
+    <string name="activity">Activity</string>
+    <string name="partner">Partner</string>
+
     <!--  Collection-->
     <string name="recent_photos">Recent photos</string>
     <string name="see_more_photos">See more</string>
@@ -73,11 +82,13 @@
     <string name="record_partner">Partner</string>
     <string name="record_weather">Weather</string>
     <string name="record_sleep">Sleep</string>
-    <string name="record_go_bed">Go bed</string>
+    <string name="record_go_bed">Go to bed</string>
     <string name="record_wake_up">Wake up</string>
     <string name="record_note">Your notes</string>
     <string name="record_done">Done</string>
     <string name="record_toast_fail">Record failed!</string>
+    <string name="record_alert_title">Alert!</string>
+    <string name="record_alert_message">Are you sure you want to exit?</string>
     <string name="record_toast_success">Record successful!</string>
 
     <!--Other (remove)-->
@@ -87,5 +98,7 @@
     <string name="year_in_pocket">Year in Pocket</string>
     <string name="ShowDiaLog">Show Dialog</string>
 
-    <string name="your_mood_chart">Your mood chart</string>
+    <!--Month(Add diary)-->
+    <string name="month_alert_title">Unable to create</string>
+    <string name="month_alert_message">Can not create record for future date</string>
 </resources>

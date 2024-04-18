@@ -3,6 +3,7 @@ package com.example.doan_diaryapp;
 import android.app.TimePickerDialog;
 import android.content.ClipData;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -11,6 +12,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -20,6 +22,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -31,22 +34,11 @@ import androidx.appcompat.app.ActionBar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_diaryapp.Adapter.ImageRecordAdapter;
 import com.example.doan_diaryapp.Decorator.GridSpacingItemDecoration;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import com.example.doan_diaryapp.Models.Activity;
 import com.example.doan_diaryapp.Models.Emotion;
 import com.example.doan_diaryapp.Models.Entry;
@@ -69,10 +61,20 @@ import com.example.doan_diaryapp.Service.EntryWeatherService;
 import com.example.doan_diaryapp.Service.ImportantDayService;
 import com.example.doan_diaryapp.Service.PartnerService;
 import com.example.doan_diaryapp.Service.WeatherService;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.slider.Slider;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.timepicker.MaterialTimePicker;
+import com.google.android.material.timepicker.TimeFormat;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -108,13 +110,14 @@ public class RecordActivity extends BaseActivity {
     private ImageButton btnDeImgFi, btnDeImgSe, btnDeImgTh;
     private ImageView imgFirst, imgSecond, imgThird;
     int hourWakeUp, hourBed, minWakeUp, minBed;
+    int countImage = 0;
     Boolean isCheckFavorite = false;
     Drawable targetDrawable;
     Uri imgFiUri = null, imgSeUri = null, imgThUri = null;
     String date;
     private static final int PICK_IMAGES_REQUEST = 1;
     Slider slider;
-    TextView textNode;
+    TextView textNode, textCount;
     Button btnDone;
 
     @Override
@@ -155,6 +158,7 @@ public class RecordActivity extends BaseActivity {
         wakeupButton = findViewById(R.id.wakeupButton);
         textNode = findViewById(R.id.textNote);
         slider = findViewById(R.id.slider);
+        textCount = findViewById(R.id.txtCountImage);
 
         RecyclerView recyclerView1 = findViewById(R.id.recyclerView1);
         recyclerView1.setLayoutManager(new GridLayoutManager(this, 4));
@@ -247,19 +251,23 @@ public class RecordActivity extends BaseActivity {
 
                 if (i == 0) {
                     Picasso.get().load(new File(absolutePath)).into(imgFirst);
+                    countImage++;
                     btnDeImgFi.setVisibility(View.VISIBLE);
                 }
                 if (i == 1) {
                     Picasso.get().load(new File(absolutePath)).into(imgSecond);
                     imgSecond.setVisibility(View.VISIBLE);
+                    countImage++;
                     btnDeImgSe.setVisibility(View.VISIBLE);
                 }
                 if (i == 2) {
                     Picasso.get().load(new File(absolutePath)).into(imgThird);
                     imgThird.setVisibility(View.VISIBLE);
+                    countImage++;
                     btnDeImgTh.setVisibility(View.VISIBLE);
                 }
-            }
+            };
+            textCount.setText(String.format(Locale.ENGLISH, "%d/%d", countImage, 3));
 
             ImportantDay importantDay = importantDayService.FindByDate(new ImportantDay(), date);
             if (importantDay != null) {
@@ -306,6 +314,8 @@ public class RecordActivity extends BaseActivity {
                 imgFirst.setImageDrawable(null);
                 btnDeImgFi.setVisibility(View.GONE);
                 imgFiUri = null;
+                countImage--;;
+                textCount.setText(String.format(Locale.ENGLISH, "%d/%d", countImage, 3));
 
                 if (imgSecond.getDrawable() != null) {
                     imgFirst.setImageDrawable(imgSecond.getDrawable());
@@ -341,6 +351,8 @@ public class RecordActivity extends BaseActivity {
                 imgSecond.setVisibility(View.GONE);
                 btnDeImgSe.setVisibility(View.GONE);
                 imgSeUri = null;
+                countImage--;;
+                textCount.setText(String.format(Locale.ENGLISH, "%d/%d", countImage, 3));
 
                 if (imgThird.getDrawable() != null) {
                     imgSecond.setImageDrawable(imgThird.getDrawable());
@@ -362,6 +374,8 @@ public class RecordActivity extends BaseActivity {
                 imgThird.setVisibility(View.GONE);
                 btnDeImgTh.setVisibility(View.GONE);
                 imgThUri = null;
+                countImage--;;
+                textCount.setText(String.format(Locale.ENGLISH, "%d/%d", countImage, 3));
             }
         });
 
@@ -468,7 +482,7 @@ public class RecordActivity extends BaseActivity {
                         }
                     }
                     Toast.makeText(RecordActivity.this, R.string.record_toast_success, Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(RecordActivity.this, ActivityNam.class));
+                    onBackPressed();
                 }
                 catch (Exception e) {
                     Toast.makeText(RecordActivity.this, R.string.record_toast_fail, Toast.LENGTH_SHORT).show();
@@ -482,56 +496,66 @@ public class RecordActivity extends BaseActivity {
         return context.getResources().getIdentifier(drawableName, "drawable", context.getPackageName());
     }
 
-    public byte[] uriToByteArray(Context context, Uri uri) throws IOException {
-        InputStream inputStream = context.getContentResolver().openInputStream(uri);
-        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
-        if (inputStream == null) {
-            throw new IOException("Failed to open input stream for URI: " + uri);
-        }
-        int bufferSize = 1024;
-        byte[] buffer = new byte[bufferSize];
-        int len;
-        while ((len = inputStream.read(buffer)) != -1) {
-            byteBuffer.write(buffer, 0, len);
-        }
-        return byteBuffer.toByteArray();
-    }
     private void showTimePickerDialog(String time) {
         int hour = Integer.parseInt(time.split(":")[0]);
         int minute = Integer.parseInt(time.split(":")[1]);
 
-        // Tạo dialog TimePicker với chế độ "spinner"
-        TimePickerDialog timePickerDialog = new TimePickerDialog(
-                this,
-                R.style.MyTimePickerDialog,
-                new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        if (isBedtime) {
-                            hourBed = hourOfDay;
-                            minBed = minute;
-                            bedtimeButton.setText(String.format(Locale.ENGLISH, "%02d:%02d", hourOfDay, minute));
-                        } else {
-                            hourWakeUp = hourOfDay;
-                            minWakeUp = minute;
-                            wakeupButton.setText(String.format(Locale.ENGLISH, "%02d:%02d", hourOfDay, minute));
-                        }
-                    }
-                },
-                hour,
-                minute,
-                true
-        );
+        MaterialTimePicker picker = new MaterialTimePicker.Builder()
+                .setTimeFormat(TimeFormat.CLOCK_24H)
+                .setHour(hour)
+                .setMinute(minute)
+                .setTitleText(R.string.select_reminder_time)
+                .setInputMode(MaterialTimePicker.INPUT_MODE_CLOCK)
+                .build();
 
-        if (timePickerDialog.getWindow() != null) {
-            timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        }
-        timePickerDialog.show();
+        picker.addOnPositiveButtonClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isBedtime) {
+                    hourBed = picker.getHour();
+                    minBed = picker.getMinute();
+                    bedtimeButton.setText(String.format(Locale.ENGLISH, "%02d:%02d", hourBed, minBed));
+                } else {
+                    hourWakeUp = picker.getHour();
+                    minWakeUp = picker.getMinute();
+                    wakeupButton.setText(String.format(Locale.ENGLISH, "%02d:%02d", hourWakeUp, minWakeUp));
+                }
+            }
+        });
+
+        picker.show(getSupportFragmentManager(), "tag");
+        // Tạo dialog TimePicker với chế độ "spinner"
+//        TimePickerDialog timePickerDialog = new TimePickerDialog(
+//                this,
+//                R.style.MyTimePickerDialog,
+//                new TimePickerDialog.OnTimeSetListener() {
+//                    @Override
+//                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+//                        if (isBedtime) {
+//                            hourBed = hourOfDay;
+//                            minBed = minute;
+//                            bedtimeButton.setText(String.format(Locale.ENGLISH, "%02d:%02d", hourOfDay, minute));
+//                        } else {
+//                            hourWakeUp = hourOfDay;
+//                            minWakeUp = minute;
+//                            wakeupButton.setText(String.format(Locale.ENGLISH, "%02d:%02d", hourOfDay, minute));
+//                        }
+//                    }
+//                },
+//                hour,
+//                minute,
+//                true
+//        );
+//
+//        if (timePickerDialog.getWindow() != null) {
+//            timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        }
+//        timePickerDialog.show();
     }
 
     void showSnackBar(String content) {
         Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),
-                content, 2000);
+                content, BaseTransientBottomBar.LENGTH_SHORT);
 
         View snackbarView = snackbar.getView();
         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) snackbarView.getLayoutParams();
@@ -548,9 +572,9 @@ public class RecordActivity extends BaseActivity {
                 ClipData clipData = data.getClipData();
                 if (clipData != null) {
                     int count = clipData.getItemCount();
-                    if (count > 3) {
+                    if (countImage + count > 3) {
                         showSnackBar(getString(R.string.record_allow_image));
-                        count = 3;
+                        count = 3 - countImage;;
                     }
                     for (int i = 0; i < count; i++) {
                         Uri imageUri = clipData.getItemAt(i).getUri();
@@ -559,6 +583,8 @@ public class RecordActivity extends BaseActivity {
                             imgFirst.setVisibility(View.VISIBLE);
                             imgFiUri = imageUri;
                             btnDeImgFi.setVisibility(View.VISIBLE);
+                            countImage++;
+                            textCount.setText(String.format(Locale.ENGLISH, "%d/%d", countImage, 3));
                         }
                         else {
                             if (imgSecond.getDrawable() == null) {
@@ -566,6 +592,8 @@ public class RecordActivity extends BaseActivity {
                                 imgSecond.setVisibility(View.VISIBLE);
                                 imgSeUri = imageUri;
                                 btnDeImgSe.setVisibility(View.VISIBLE);
+                                countImage++;;
+                                textCount.setText(String.format(Locale.ENGLISH, "%d/%d", countImage, 3));
                             }
                             else {
                                 if (imgThird.getDrawable() == null) {
@@ -573,6 +601,8 @@ public class RecordActivity extends BaseActivity {
                                     imgThird.setVisibility(View.VISIBLE);
                                     imgThUri = imageUri;
                                     btnDeImgTh.setVisibility(View.VISIBLE);
+                                    countImage++;;
+                                    textCount.setText(String.format(Locale.ENGLISH, "%d/%d", countImage, 3));
                                 }
                             }
                         }
@@ -601,7 +631,7 @@ public class RecordActivity extends BaseActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_addphoto) {
-            showSnackBar(getString(R.string.record_allow_image));
+            // showSnackBar(getString(R.string.record_allow_image));
 
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
             intent.setType("image/*");
@@ -627,11 +657,30 @@ public class RecordActivity extends BaseActivity {
             }
         }
         if (id == android.R.id.home) {
-            Intent intent = new Intent(RecordActivity.this, ActivityNam.class);
-            startActivity(intent);
+            showDialogAlert();
         }
         return true;
     }
+
+    private void showDialogAlert() {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
+        builder.setMessage(R.string.record_alert_message)
+                .setTitle(R.string.record_alert_title)
+                .setNegativeButton(R.string.button_cancel, (dialog, which) -> dialog.dismiss())
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        onBackPressed();
+                    }
+                });
+        builder.create().show();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
 
     public String saveImageToAppDirectory(Context context, ImageView imageView) {
         Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();

@@ -64,5 +64,7 @@ public class CirclesAdapter extends RecyclerView.Adapter<CirclesAdapter.CirclesV
             super(itemView);
             this.rcvCircle = itemView.findViewById(R.id.rcv_circle);
         }
+
+
     }
 }

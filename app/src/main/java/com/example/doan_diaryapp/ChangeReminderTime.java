@@ -37,8 +37,6 @@ public class ChangeReminderTime extends BaseActivity {
         textView = findViewById(R.id.timeisSet);
         button = findViewById(R.id.btnShowDiaLog);
 
-
-
         //sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPreferences = getSharedPreferences("com.example.doan_diaryapp.PREFERENCE_FILE_KEY", MODE_PRIVATE);
 

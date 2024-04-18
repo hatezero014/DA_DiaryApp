@@ -3,18 +3,7 @@
   <component name="deploymentTargetDropDown">
     <value>
       <entry key="ActivityNam">
-        <State />
-      </entry>
-      <entry key="ChangeReminderTime">
-        <State />
-      </entry>
-      <entry key="NotificationApp">
-        <State />
-      </entry>
-      <entry key="PasswordActivity">
-        <State />
-      </entry>
-      <entry key="app">
+
         <State />
       </entry>
     </value>
