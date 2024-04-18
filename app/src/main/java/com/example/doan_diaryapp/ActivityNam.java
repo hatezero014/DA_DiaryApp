@@ -16,6 +16,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.Calendar;
+import java.util.Locale;
+
 public class ActivityNam extends BaseActivity {
     Button btnChangeLanguage, btnCancel, btnDisplayMode, btnShare, btnContact, btnRecord;
 
@@ -105,6 +108,19 @@ public class ActivityNam extends BaseActivity {
         btnContact = findViewById(R.id.btnContact);
         btnRecord = findViewById(R.id.btnRecord);
 
+        btnRecord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ActivityNam.this, RecordActivity.class);
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cần cộng thêm 1
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                intent.putExtra("Date", String.format(Locale.ENGLISH, "%02d-%02d-%04d", day, month, year));
+                startActivity(intent);
+            }
+        });
 
 
         btnShare.setOnClickListener(new View.OnClickListener() {
