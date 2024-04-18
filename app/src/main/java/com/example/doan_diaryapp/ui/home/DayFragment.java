@@ -70,7 +70,7 @@ public class DayFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), RecordActivity.class);
                 intent.putExtra("Date", String.format(Locale.ENGLISH,
-                        "%02d-%02d-%04d", dayOfMonth, month, year));
+                        "%02d-%02d-%04d", dayOfMonth, month+1, year));
                 startActivity(intent);
             }
         });

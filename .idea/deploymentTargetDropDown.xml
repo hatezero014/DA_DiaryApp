@@ -5,16 +5,10 @@
       <entry key="ActivityNam">
         <State />
       </entry>
+      <entry key="All Tests">
+        <State />
+      </entry>
       <entry key="MainActivity">
-        <State />
-      </entry>
-      <entry key="RecordActivity">
-        <State />
-      </entry>
-      <entry key="RecordDiary">
-        <State />
-      </entry>
-      <entry key="ShareActivity">
         <State />
       </entry>
     </value>

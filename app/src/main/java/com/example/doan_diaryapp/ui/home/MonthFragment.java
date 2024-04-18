@@ -55,9 +55,7 @@ public class MonthFragment extends Fragment {
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int y, int m, int d) {
-                dayOfMonth=d;
-                month=m;
-                year=y;
+                dayOfMonth=d; month=m; year=y;
                 Calendar selectedCalendar = Calendar.getInstance();
                 selectedCalendar.set(y, m, d);
                 String selectedDate = sdf.format(selectedCalendar.getTime());
@@ -74,22 +72,38 @@ public class MonthFragment extends Fragment {
         buttonAddMonth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (CheckDate(dayOfMonth, month, year)) {
+                    showAlertDialog();
+                } else {
                 Intent intent = new Intent(getActivity(), RecordActivity.class);
                 intent.putExtra("Date", String.format(Locale.ENGLISH,
-                        "%02d-%02d-%04d", dayOfMonth, month, year));
+                        "%02d-%02d-%04d", dayOfMonth, month+1, year));
                 startActivity(intent);
+                }
             }
         });
 
     }
+
+    private Boolean CheckDate(int dayOfMonth,int month,int year) {
+        int y = calendar.get(Calendar.YEAR);
+        int m = calendar.get(Calendar.MONTH);
+        int d = calendar.get(Calendar.DAY_OF_MONTH);
+        if (year<y)  return false;
+        if (year==y && month<m)  return false;
+        if (year==y && month==m && dayOfMonth<=d)  return false;
+        return true;
+    }
+
+
 
 
 
     private void showAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
 
-        builder.setTitle("Thông báo")
-                .setMessage("OK")
+        builder.setTitle("Không thể tạo")
+                .setMessage("Không thể tạo bản ghi cho ngày trong tương lai")
                 .setPositiveButton("OK", null);
         AlertDialog alertDialog = builder.create();
         alertDialog.getWindow().setBackgroundDrawableResource(R.drawable.main_home_dialog_add_day);
