@@ -500,7 +500,7 @@ public class RecordActivity extends BaseActivity {
                         }
                     }
                     Toast.makeText(RecordActivity.this, R.string.record_toast_success, Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(RecordActivity.this, MainActivity.class));
+                    onBackPressed();
                 }
                 catch (Exception e) {
                     Toast.makeText(RecordActivity.this, R.string.record_toast_fail, Toast.LENGTH_SHORT).show();
@@ -667,12 +667,18 @@ public class RecordActivity extends BaseActivity {
                 .setNegativeButton(R.string.button_cancel, (dialog, which) -> dialog.dismiss())
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Intent intent = new Intent(RecordActivity.this, MainActivity.class);
-                        startActivity(intent);
+                        onBackPressed();
                     }
                 });
         builder.create().show();
     }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
 
     public String saveImageToAppDirectory(Context context, ImageView imageView) {
         Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
