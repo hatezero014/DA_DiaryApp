@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_diaryapp.R;
+import com.example.doan_diaryapp.RecordActivity;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -38,10 +39,10 @@ public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.
 
         DisplayMetrics displayMetrics = parent.getContext().getResources().getDisplayMetrics();
         int screenWidth = displayMetrics.widthPixels;
+        RecordActivity recordActivity = new RecordActivity();
+        int paddingWidth = recordActivity.getPaddingWidth();
 
-        int densityDpi = displayMetrics.densityDpi;
-
-        int cardViewWidth = (screenWidth - (int)(72 * (densityDpi / 160))) / 5;
+        int cardViewWidth = (screenWidth - paddingWidth) / 6;
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         layoutParams.width = cardViewWidth;
         view.setLayoutParams(layoutParams);
