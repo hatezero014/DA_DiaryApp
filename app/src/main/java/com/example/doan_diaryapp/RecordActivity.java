@@ -125,7 +125,6 @@ public class RecordActivity extends BaseActivity {
     private static final int PICK_IMAGES_REQUEST = 1;
     Slider slider;
     TextView textNode, textCount;
-    int widthLayout;
     Button btnDone;
 
     @Override
@@ -167,17 +166,6 @@ public class RecordActivity extends BaseActivity {
         textNode = findViewById(R.id.textNote);
         slider = findViewById(R.id.slider);
         textCount = findViewById(R.id.txtCountImage);
-        LinearLayout layoutIcon = findViewById(R.id.layoutIcon);
-        widthLayout = layoutIcon.getPaddingLeft() * 2 + (int)(layoutIcon.getPaddingLeft() * 8 / 5);
-        Log.i("Width", String.valueOf(widthLayout));
-//        layoutIcon.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-//            @Override
-//            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-//                int widthLayoutIcon = layoutIcon.getWidth() - layoutIcon.getPaddingLeft() * 2 - (int)(layoutIcon.getPaddingLeft() * 8 / 5);
-//                widthLayout = widthLayoutIcon;
-//                Log.i("Width", String.valueOf(widthLayout));
-//            }
-//        });
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -516,10 +504,6 @@ public class RecordActivity extends BaseActivity {
                 }
             }
         });
-    }
-
-    public int getPaddingWidth() {
-        return widthLayout;
     }
 
     private int getDrawableResourceId(Context context, String drawableName) {

@@ -38,11 +38,12 @@ public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_image_record, parent, false);
 
         DisplayMetrics displayMetrics = parent.getContext().getResources().getDisplayMetrics();
-        int screenWidth = displayMetrics.widthPixels;
-        RecordActivity recordActivity = new RecordActivity();
-        int paddingWidth = recordActivity.getPaddingWidth();
+        int densityDpi = displayMetrics.densityDpi;
 
-        int cardViewWidth = (screenWidth - paddingWidth) / 6;
+        int cardViewWidth = (int)(displayMetrics.widthPixels - (72 * densityDpi / 160)) * 180 / 1000;
+
+        Log.i("width", String.valueOf(cardViewWidth));
+
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         layoutParams.width = cardViewWidth;
         view.setLayoutParams(layoutParams);
