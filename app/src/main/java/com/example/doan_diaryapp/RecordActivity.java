@@ -63,7 +63,10 @@ import com.example.doan_diaryapp.Service.PartnerService;
 import com.example.doan_diaryapp.Service.WeatherService;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.slider.Slider;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.timepicker.MaterialTimePicker;
+import com.google.android.material.timepicker.TimeFormat;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -156,18 +159,6 @@ public class RecordActivity extends BaseActivity {
         textNode = findViewById(R.id.textNote);
         slider = findViewById(R.id.slider);
         textCount = findViewById(R.id.txtCountImage);
-        LinearLayout layoutIcon = findViewById(R.id.layoutIcon);
-        layoutIcon.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                int widthLayoutIcon = layoutIcon.getWidth();
-                Log.i("Width", String.valueOf(widthLayoutIcon));
-                DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-                int densityDpi = displayMetrics.densityDpi;
-                float widthDp = widthLayoutIcon / (densityDpi / 160);
-                Log.i("Width", String.valueOf(densityDpi));
-            }
-        });
 
         RecyclerView recyclerView1 = findViewById(R.id.recyclerView1);
         recyclerView1.setLayoutManager(new GridLayoutManager(this, 4));
@@ -509,38 +500,62 @@ public class RecordActivity extends BaseActivity {
         int hour = Integer.parseInt(time.split(":")[0]);
         int minute = Integer.parseInt(time.split(":")[1]);
 
-        // Tạo dialog TimePicker với chế độ "spinner"
-        TimePickerDialog timePickerDialog = new TimePickerDialog(
-                this,
-                R.style.MyTimePickerDialog,
-                new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        if (isBedtime) {
-                            hourBed = hourOfDay;
-                            minBed = minute;
-                            bedtimeButton.setText(String.format(Locale.ENGLISH, "%02d:%02d", hourOfDay, minute));
-                        } else {
-                            hourWakeUp = hourOfDay;
-                            minWakeUp = minute;
-                            wakeupButton.setText(String.format(Locale.ENGLISH, "%02d:%02d", hourOfDay, minute));
-                        }
-                    }
-                },
-                hour,
-                minute,
-                true
-        );
+        MaterialTimePicker picker = new MaterialTimePicker.Builder()
+                .setTimeFormat(TimeFormat.CLOCK_24H)
+                .setHour(hour)
+                .setMinute(minute)
+                .setTitleText(R.string.select_reminder_time)
+                .setInputMode(MaterialTimePicker.INPUT_MODE_CLOCK)
+                .build();
 
-        if (timePickerDialog.getWindow() != null) {
-            timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        }
-        timePickerDialog.show();
+        picker.addOnPositiveButtonClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isBedtime) {
+                    hourBed = picker.getHour();
+                    minBed = picker.getMinute();
+                    bedtimeButton.setText(String.format(Locale.ENGLISH, "%02d:%02d", hourBed, minBed));
+                } else {
+                    hourWakeUp = picker.getHour();
+                    minWakeUp = picker.getMinute();
+                    wakeupButton.setText(String.format(Locale.ENGLISH, "%02d:%02d", hourWakeUp, minWakeUp));
+                }
+            }
+        });
+
+        picker.show(getSupportFragmentManager(), "tag");
+        // Tạo dialog TimePicker với chế độ "spinner"
+//        TimePickerDialog timePickerDialog = new TimePickerDialog(
+//                this,
+//                R.style.MyTimePickerDialog,
+//                new TimePickerDialog.OnTimeSetListener() {
+//                    @Override
+//                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+//                        if (isBedtime) {
+//                            hourBed = hourOfDay;
+//                            minBed = minute;
+//                            bedtimeButton.setText(String.format(Locale.ENGLISH, "%02d:%02d", hourOfDay, minute));
+//                        } else {
+//                            hourWakeUp = hourOfDay;
+//                            minWakeUp = minute;
+//                            wakeupButton.setText(String.format(Locale.ENGLISH, "%02d:%02d", hourOfDay, minute));
+//                        }
+//                    }
+//                },
+//                hour,
+//                minute,
+//                true
+//        );
+//
+//        if (timePickerDialog.getWindow() != null) {
+//            timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        }
+//        timePickerDialog.show();
     }
 
     void showSnackBar(String content) {
         Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),
-                content, 2000);
+                content, BaseTransientBottomBar.LENGTH_SHORT);
 
         View snackbarView = snackbar.getView();
         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) snackbarView.getLayoutParams();
@@ -616,7 +631,7 @@ public class RecordActivity extends BaseActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_addphoto) {
-            showSnackBar(getString(R.string.record_allow_image));
+            // showSnackBar(getString(R.string.record_allow_image));
 
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
             intent.setType("image/*");
@@ -649,11 +664,7 @@ public class RecordActivity extends BaseActivity {
 
     private void showDialogAlert() {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
-        TextView textView = new TextView(this);
-        textView.setText(R.string.record_alert_message);
-        textView.setTextSize(20);
-        textView.setPadding(65, 25, 0, 0);
-        builder.setView(textView)
+        builder.setMessage(R.string.record_alert_message)
                 .setTitle(R.string.record_alert_title)
                 .setNegativeButton(R.string.button_cancel, (dialog, which) -> dialog.dismiss())
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {

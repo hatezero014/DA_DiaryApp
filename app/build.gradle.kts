@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         buildFeatures{
-            viewBinding=true;
+            viewBinding=true
         }
         applicationId = "com.example.doan_diaryapp"
         minSdk = 24
