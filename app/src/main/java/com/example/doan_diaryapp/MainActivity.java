@@ -15,25 +15,27 @@ public class MainActivity extends BaseActivity {
 
     private ActivityMainBinding binding;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+            binding = ActivityMainBinding.inflate(getLayoutInflater());
+            setContentView(binding.getRoot());
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar();
-        }
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().hide();
+            }
 
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_collection, R.id.navigation_analyze)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(binding.navView, navController);
+            BottomNavigationView navView = findViewById(R.id.nav_view);
+            // Passing each menu ID as a set of Ids because each
+            // menu should be considered as top level destinations.
+            AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                    R.id.navigation_home, R.id.navigation_collection, R.id.navigation_analyze)
+                    .build();
+            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
+            NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+            NavigationUI.setupWithNavController(binding.navView, navController);
+
     }
 }

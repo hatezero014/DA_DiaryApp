@@ -74,6 +74,8 @@ import com.example.doan_diaryapp.Service.EntryWeatherService;
 import com.example.doan_diaryapp.Service.ImportantDayService;
 import com.example.doan_diaryapp.Service.PartnerService;
 import com.example.doan_diaryapp.Service.WeatherService;
+import com.example.doan_diaryapp.databinding.FragmentHomeBinding;
+import com.example.doan_diaryapp.databinding.FragmentMonthBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.slider.Slider;
 import com.google.android.material.snackbar.Snackbar;
@@ -498,7 +500,7 @@ public class RecordActivity extends BaseActivity {
                         }
                     }
                     Toast.makeText(RecordActivity.this, R.string.record_toast_success, Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(RecordActivity.this, ActivityNam.class));
+                    startActivity(new Intent(RecordActivity.this, MainActivity.class));
                 }
                 catch (Exception e) {
                     Toast.makeText(RecordActivity.this, R.string.record_toast_fail, Toast.LENGTH_SHORT).show();
@@ -665,7 +667,7 @@ public class RecordActivity extends BaseActivity {
                 .setNegativeButton(R.string.button_cancel, (dialog, which) -> dialog.dismiss())
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Intent intent = new Intent(RecordActivity.this, ActivityNam.class);
+                        Intent intent = new Intent(RecordActivity.this, MainActivity.class);
                         startActivity(intent);
                     }
                 });
