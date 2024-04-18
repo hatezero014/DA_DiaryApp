@@ -3,12 +3,16 @@ package com.example.doan_diaryapp.ui.home;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.media.session.PlaybackState;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
@@ -21,8 +25,11 @@ import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.doan_diaryapp.Adapter.EntryAdapter;
+import com.example.doan_diaryapp.Models.Entry;
 import com.example.doan_diaryapp.R;
 import com.example.doan_diaryapp.RecordActivity;
+import com.example.doan_diaryapp.Service.EntryService;
 import com.example.doan_diaryapp.databinding.FragmentHomeBinding;
 import com.example.doan_diaryapp.databinding.FragmentDayBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -36,27 +43,26 @@ import java.util.Locale;
 public class DayFragment extends Fragment {
 
     private FragmentDayBinding binding;
+    private ListView mListView;
+    private EntryAdapter mAdapter;
+    private EntryService mEntryService;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_day, container, false);
-
         ButtonAddDay(view);
-
-        ListView listView = view.findViewById(R.id.ListDay);
-        listView.setAdapter(new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_2, android.R.id.text1, generateItemList()));
-
+        mListView = view.findViewById(R.id.ListDay);
+        mEntryService = new EntryService(getContext());
+        List<Entry> entryList = mEntryService.getEntriesFromDatabase();
+        mAdapter = new EntryAdapter(getContext(), entryList);
+        mListView.setAdapter(mAdapter);
         return view;
     }
 
-    private List<String> generateItemList() {
-        List<String> itemList = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            itemList.add("Ngày viết nhật kí " + (i + 1) + "\nSự kiện xảy ra " + (i + 1));
-        }
-        return itemList;
-    }
+
+
 
     private void ButtonAddDay(View view)
     {

@@ -63,6 +63,12 @@ public class Entry {
         Sleep = sleep;
     }
 
+    public Entry(int id, String note, String date) {
+        Id = id;
+        Note = note;
+        Date = date;
+    }
+
     String Date;
     int OverallScore;
     String WakeUp;
