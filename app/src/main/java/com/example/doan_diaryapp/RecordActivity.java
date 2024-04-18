@@ -637,11 +637,7 @@ public class RecordActivity extends BaseActivity {
 
     private void showDialogAlert() {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
-        TextView textView = new TextView(this);
-        textView.setText(R.string.record_alert_message);
-        textView.setTextSize(20);
-        textView.setPadding(65, 25, 0, 0);
-        builder.setView(textView)
+        builder.setMessage(R.string.record_alert_message)
                 .setTitle(R.string.record_alert_title)
                 .setNegativeButton(R.string.button_cancel, (dialog, which) -> dialog.dismiss())
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
