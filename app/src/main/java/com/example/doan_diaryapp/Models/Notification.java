@@ -1,41 +1,41 @@
 package com.example.doan_diaryapp.Models;
 
 public class Notification {
-    int id;
+    int Id;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    String Time;
 
     public int getId() {
-        return id;
+        return Id;
     }
 
-    String time;
-
-    public void setTime(String time) {
-        this.time = time;
+    public void setId(int id) {
+        Id = id;
     }
 
     public String getTime() {
-        return time;
+        return Time;
     }
 
-    String notificationContent;
-
-    public void setNotificationContent(String notificationContent) {
-        this.notificationContent = notificationContent;
+    public void setTime(String time) {
+        Time = time;
     }
 
     public String getNotificationContent() {
-        return notificationContent;
+        return NotificationContent;
     }
 
-    public Notification(){}
-
-    public Notification(String notificationContent, String time)
-    {
-        this.notificationContent = notificationContent;
-        this.time = time;
+    public void setNotificationContent(String notificationContent) {
+        NotificationContent = notificationContent;
     }
+
+    public Notification() {
+    }
+
+    public Notification(String time, String notificationContent) {
+        Time = time;
+        NotificationContent = notificationContent;
+    }
+
+    String NotificationContent;
 }
