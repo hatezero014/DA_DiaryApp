@@ -103,4 +103,8 @@
     <string name="month_alert_message">Không thể tạo bản ghi cho ngày trong tương lai</string>
     <string name="average_rating">Đánh giá trung bình</string>
 
+    <!--  Reminder  -->
+    <string name="reminder_title">Nhắc nhở</string>
+    <string name="reminder_message">Đã được %s năm trôi qua kể từ ngày %s!</string>
+
 </resources>
