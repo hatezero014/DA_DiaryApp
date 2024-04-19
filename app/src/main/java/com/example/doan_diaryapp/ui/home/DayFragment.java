@@ -23,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.doan_diaryapp.Adapter.EntryAdapter;
@@ -30,14 +31,20 @@ import com.example.doan_diaryapp.Models.Entry;
 import com.example.doan_diaryapp.R;
 import com.example.doan_diaryapp.RecordActivity;
 import com.example.doan_diaryapp.Service.EntryService;
-import com.example.doan_diaryapp.databinding.FragmentHomeBinding;
+
 import com.example.doan_diaryapp.databinding.FragmentDayBinding;
+import com.github.mikephil.charting.utils.EntryXComparator;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
-import java.util.Locale;
+import java.util.Locale;import java.util.Collections;import java.util.Comparator;
+import java.util.SimpleTimeZone;
+
 
 
 public class DayFragment extends Fragment {
@@ -48,11 +55,20 @@ public class DayFragment extends Fragment {
     private EntryService mEntryService;
 
 
+    private void updateEntries() {
+        List<Entry> entryList = mEntryService.getEntriesFromDatabase();
+        mAdapter.clear();
+        mAdapter.addAll(entryList);
+        mAdapter.notifyDataSetChanged();
+    }
+
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_day, container, false);
         ButtonAddDay(view);
+        ListViewDay(view);
         mListView = view.findViewById(R.id.ListDay);
         mEntryService = new EntryService(getContext());
         List<Entry> entryList = mEntryService.getEntriesFromDatabase();
@@ -62,6 +78,30 @@ public class DayFragment extends Fragment {
     }
 
 
+
+
+    private void ListViewDay(View view)
+    {
+        mListView = view.findViewById(R.id.ListDay);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView textViewDate = view.findViewById(R.id.textViewDate);
+                String dateText = textViewDate.getText().toString();
+                String[] parts = dateText.split(", ");
+                String formattedDate = parts[1].trim();
+                String[] dateParts = formattedDate.split("-");
+                int day = Integer.parseInt(dateParts[0]);
+                int month = Integer.parseInt(dateParts[1]);
+                int year = Integer.parseInt(dateParts[2]);
+                Intent intent = new Intent(getActivity(), RecordActivity.class);
+                intent.putExtra("Date", String.format(Locale.ENGLISH,
+                        "%02d-%02d-%04d", day, month, year));
+                startActivity(intent);
+            }
+        });
+
+    }
 
 
     private void ButtonAddDay(View view)
@@ -80,8 +120,14 @@ public class DayFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateEntries();
+    }
+
 
     @Override
     public void onDestroyView() {
