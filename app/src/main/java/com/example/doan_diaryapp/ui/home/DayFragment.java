@@ -23,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.doan_diaryapp.Adapter.EntryAdapter;
@@ -61,15 +62,40 @@ public class DayFragment extends Fragment {
             ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_day, container, false);
         ButtonAddDay(view);
+        ListViewDay(view);
+
         mListView = view.findViewById(R.id.ListDay);
         mEntryService = new EntryService(getContext());
         List<Entry> entryList = mEntryService.getEntriesFromDatabase();
         mAdapter = new EntryAdapter(getContext(), entryList);
         mListView.setAdapter(mAdapter);
+
         return view;
     }
 
 
+    private void ListViewDay(View view)
+    {
+        mListView = view.findViewById(R.id.ListDay);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView textViewDate = view.findViewById(R.id.textViewDate);
+                String dateText = textViewDate.getText().toString();
+                String[] parts = dateText.split(", ");
+                String formattedDate = parts[1].trim();
+                String[] dateParts = formattedDate.split("-");
+                int day = Integer.parseInt(dateParts[0]);
+                int month = Integer.parseInt(dateParts[1]);
+                int year = Integer.parseInt(dateParts[2]);
+                Intent intent = new Intent(getActivity(), RecordActivity.class);
+                intent.putExtra("Date", String.format(Locale.ENGLISH,
+                        "%02d-%02d-%04d", day, month, year));
+                startActivity(intent);
+            }
+        });
+
+    }
 
 
     private void ButtonAddDay(View view)

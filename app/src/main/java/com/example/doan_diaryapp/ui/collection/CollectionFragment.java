@@ -1,9 +1,11 @@
 package com.example.doan_diaryapp.ui.collection;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -17,12 +19,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.doan_diaryapp.Adapter.EntryAdapter;
 import com.example.doan_diaryapp.Models.Entry;
 import com.example.doan_diaryapp.R;
+import com.example.doan_diaryapp.RecordActivity;
 import com.example.doan_diaryapp.Service.EntryService;
 import com.example.doan_diaryapp.Service.ImportantDayService;
 import com.example.doan_diaryapp.databinding.FragmentCollectionBinding;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class CollectionFragment extends Fragment {
     private FragmentCollectionBinding binding;
@@ -44,14 +48,15 @@ public class CollectionFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCollectionBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-
         ViewPhoto(view);
+        ListViewDayQT(view);
 
         mListView = view.findViewById(R.id.ListDayQT);
         importantDayService = new ImportantDayService(getContext());
         List<Entry> entryList = importantDayService.getEntriesFromDatabaseQT();
         mAdapter = new EntryAdapter(getContext(), entryList);
         mListView.setAdapter(mAdapter);
+
 
         return view;
     }
@@ -75,6 +80,30 @@ public class CollectionFragment extends Fragment {
         list.add(new CarouselModel(R.drawable.i3));
         list.add(new CarouselModel(R.drawable.i4));
         list.add(new CarouselModel(R.drawable.i5));
+    }
+
+
+    private void ListViewDayQT(View view)
+    {
+        mListView = view.findViewById(R.id.ListDayQT);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView textViewDate = view.findViewById(R.id.textViewDate);
+                String dateText = textViewDate.getText().toString();
+                String[] parts = dateText.split(", ");
+                String formattedDate = parts[1].trim();
+                String[] dateParts = formattedDate.split("-");
+                int day = Integer.parseInt(dateParts[0]);
+                int month = Integer.parseInt(dateParts[1]);
+                int year = Integer.parseInt(dateParts[2]);
+                Intent intent = new Intent(getActivity(), RecordActivity.class);
+                intent.putExtra("Date", String.format(Locale.ENGLISH,
+                        "%02d-%02d-%04d", day, month, year));
+                startActivity(intent);
+            }
+        });
+
     }
 
 
