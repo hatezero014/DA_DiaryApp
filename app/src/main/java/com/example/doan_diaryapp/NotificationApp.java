@@ -55,13 +55,12 @@ public class NotificationApp extends BaseActivity {
     private void AddData()
     {
         Calendar calendar = Calendar.getInstance();
-        int hour = calendar.get(Calendar.HOUR_OF_DAY); // Lấy giờ (24h)
-        int minute = calendar.get(Calendar.MINUTE); // Lấy phút
-        int day = calendar.get(Calendar.DAY_OF_MONTH); // Lấy ngày
-        int month = calendar.get(Calendar.MONTH) + 1; // Lấy tháng (phải cộng thêm 1 vì tháng trong Calendar bắt đầu từ 0)
-        int year = calendar.get(Calendar.YEAR); // Lấy năm
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int year = calendar.get(Calendar.YEAR);
         CurrentTime = hour + ":" + minute + " " + day + "/" + month + "/" + year;
-        // In ra màn hình để kiểm tra
         Log.d("CurrentTime", "Giờ: " + hour + ", Phút: " + minute + ", Ngày: " + day + ", Tháng: " + month + ", Năm: " + year);
         NotificationService notificationService = new NotificationService(this);
         notificationService.Add(new Notification(CurrentTime, this.AddNotification));
@@ -72,11 +71,6 @@ public class NotificationApp extends BaseActivity {
     {
         NotificationService notificationService = new NotificationService(this);
         ArrayList<Notification> notifications = notificationService.GetAll(Notification.class);
-//        List<Notification> notifications = new ArrayList<>();
-//        notifications.add( new Notification("1", "Minh"));
-//        notifications.add( new Notification("1", "Minh"));
-//        notifications.add( new Notification("1", "Minh"));
-//        notifications.add( new Notification("1", "Minh"));
         if(notifications != null) {
             notificationAdapter = new NotificationAdapter(notifications);
             recyclerView.setAdapter(notificationAdapter);
