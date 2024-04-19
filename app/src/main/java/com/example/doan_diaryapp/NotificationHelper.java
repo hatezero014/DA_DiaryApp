@@ -24,6 +24,16 @@ public class NotificationHelper {
         }
     }
 
+    public static void createNotificationChannel(Context context, String channelId, String channelName) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(channel);
+            }
+        }
+    }
+
     public static void showNotification(Context context, String title, String content) {
         // Check if the app has permission to show notifications
         if (NotificationManagerCompat.from(context).areNotificationsEnabled()) {
