@@ -33,12 +33,18 @@ import com.example.doan_diaryapp.RecordActivity;
 import com.example.doan_diaryapp.Service.EntryService;
 
 import com.example.doan_diaryapp.databinding.FragmentDayBinding;
+import com.github.mikephil.charting.utils.EntryXComparator;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
-import java.util.Locale;
+import java.util.Locale;import java.util.Collections;import java.util.Comparator;
+import java.util.SimpleTimeZone;
+
 
 
 public class DayFragment extends Fragment {
@@ -63,15 +69,15 @@ public class DayFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_day, container, false);
         ButtonAddDay(view);
         ListViewDay(view);
-
         mListView = view.findViewById(R.id.ListDay);
         mEntryService = new EntryService(getContext());
         List<Entry> entryList = mEntryService.getEntriesFromDatabase();
         mAdapter = new EntryAdapter(getContext(), entryList);
         mListView.setAdapter(mAdapter);
-
         return view;
     }
+
+
 
 
     private void ListViewDay(View view)

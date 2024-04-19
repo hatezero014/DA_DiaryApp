@@ -38,15 +38,17 @@ public class MonthFragment extends Fragment {
 
     private FragmentMonthBinding binding;
     Calendar calendar = Calendar.getInstance();
-    int year = calendar.get(Calendar.YEAR);
-    int month = calendar.get(Calendar.MONTH);
-    int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+    int year ;
+    int month ;
+    int dayOfMonth ;
     EntryService entryService;
 
     private void updateView() {
         View rootView = getView();
         if (rootView != null) {
             setCardViewDate(rootView);
+            ButtonAddMonth(rootView);
+            ClickLinearLayout(rootView);
         }
     }
 
@@ -56,6 +58,9 @@ public class MonthFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_month, container, false);
         entryService=new EntryService(getContext());
+        year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH);
+        dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
         setCardViewDate(view);
         ButtonAddMonth(view);
         ClickLinearLayout(view);
