@@ -32,7 +32,9 @@ public class NotificationApp extends BaseActivity {
 
     public NotificationApp(String addNotification)
     {
+
         this.AddNotification = addNotification;
+        AddData();
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +42,7 @@ public class NotificationApp extends BaseActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_notification_app);
         recyclerView = findViewById(R.id.recyclerView);
-        AddData();
+
         LoadNotificationbyDatabase();
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -70,7 +72,7 @@ public class NotificationApp extends BaseActivity {
     private void LoadNotificationbyDatabase()
     {
         NotificationService notificationService = new NotificationService(this);
-        ArrayList<Notification> notifications = notificationService.GetAll(Notification.class);
+        ArrayList<Notification> notifications = notificationService.GetAllOrderByDESC(Notification.class, "Id DESC");
         if(notifications != null) {
             notificationAdapter = new NotificationAdapter(notifications);
             recyclerView.setAdapter(notificationAdapter);
