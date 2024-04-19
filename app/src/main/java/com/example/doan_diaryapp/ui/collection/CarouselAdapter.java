@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-
+import com.bumptech.glide.Glide;
 import com.example.doan_diaryapp.databinding.CarouselLayoutBinding;
 
 import java.util.ArrayList;
@@ -15,7 +15,6 @@ import java.util.ArrayList;
 public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.ItemViewHolder> {
 
     private ArrayList<CarouselModel> list;
-
     private Context context;
 
     public CarouselAdapter(ArrayList<CarouselModel> list, Context context) {
@@ -50,8 +49,9 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.ItemVi
         }
 
         public void bind(CarouselModel model) {
-            binding.carouselImageView.setImageResource(model.getImageId());
+            Glide.with(context)
+                    .load(model.getImagePath())
+                    .into(binding.carouselImageView);
         }
     }
 }
-

@@ -69,6 +69,11 @@ public class Entry {
         Date = date;
     }
 
+    public Entry(int overallScore, String date){
+        OverallScore = overallScore;
+        Date = date;
+    }
+
     String Date;
     int OverallScore;
     String WakeUp;

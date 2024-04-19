@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_diaryapp.Models.Statistic;
 import com.example.doan_diaryapp.R;
+import com.example.doan_diaryapp.Service.EntryService;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -28,8 +29,11 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private static int type_linechart = 1;
@@ -96,27 +100,17 @@ public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             tv_trungbinh = itemView.findViewById(R.id.tv_average_rating);
         }
 
-        public void setData(int year, int month) {
-            ArrayList<String>values = new ArrayList<>();
-
-            int trucX = 0;
-            if(month == 0)
-                trucX = 12;
-            else trucX = getDayOfMonth(year,month);
-            for (int i = 1; i <= trucX; i++) {
-                values.add(String.valueOf(i));
-            }
-
+        public void setFormatLinechart(int trucX){
             XAxis xAxis = lineChart.getXAxis();
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            xAxis.setValueFormatter(new IndexAxisValueFormatter(values));
-            xAxis.setLabelCount(6);
-            xAxis.setTextColor(Color.GREEN);
-
-    // Chia đều các cột và hiển thị các văn bản cách đều nhau
+            xAxis.setLabelCount(8);
+            xAxis.setTextColor(Color.RED);
+            xAxis.setAxisLineColor(Color.BLACK);
+            xAxis.setAxisLineWidth(1f);
             xAxis.setGranularity(1f);
+            xAxis.setAxisMinimum(1f);
+            xAxis.setAxisMaximum(trucX);
             xAxis.setGranularityEnabled(true);
-
 
             YAxis yAxis = lineChart.getAxisLeft();
             yAxis.setAxisMinimum(0f);
@@ -126,16 +120,72 @@ public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             yAxis.setTextColor(Color.RED);
             yAxis.setLabelCount(10);
 
+            lineChart.getAxisRight().setEnabled(false);
+            lineChart.getXAxis().setDrawGridLines(false);
+            lineChart.getAxisLeft().setDrawGridLines(false);
+
+        }
+
+        public void setData(int year, int month) {
+            int trucX = 0;
+            if(month == 0)
+                trucX = 12;
+            else trucX = getDayOfMonth(year,month);
+
+            setFormatLinechart(trucX);
+
+            EntryService entryService = new EntryService(itemView.getContext());
+            List<com.example.doan_diaryapp.Models.Entry> entryListM = entryService.getOverallScoreByMonthYear(month,year);
+            List<com.example.doan_diaryapp.Models.Entry> entryListY = entryService.getOverallScoreByYear(year);
+
+            Map<Integer,Integer> valuesM = new HashMap<>();
+            for(com.example.doan_diaryapp.Models.Entry entry:entryListM){
+                String date = entry.getDate().trim();
+                String[] part = date.split("-");
+                int d = Integer.parseInt(part[0]);
+                int score = entry.getOverallScore();
+                valuesM.put(d,score);
+            }
+
+            Map<Integer,Integer> valuesY = new HashMap<>();
+            Map<Integer, Integer> counts = new HashMap<>();
+            for(com.example.doan_diaryapp.Models.Entry entry:entryListY){
+                String date = entry.getDate().trim();
+                String[] part = date.split("-");
+                int m = Integer.parseInt(part[1]);
+                int score = entry.getOverallScore();
+                if (valuesY.containsKey(m)) {
+                    valuesY.put(m, valuesY.get(m) + score);
+                    counts.put(m, counts.get(m) + 1);
+                } else {
+                    valuesY.put(m, score);
+                    counts.put(m, 1);
+                }
+            }
+
             float tb = 0;
             List<Entry> entries = new ArrayList<>();
-            Random random = new Random();
-            for(int i=1;i<trucX;i++){
-                float x = random.nextFloat()*10f;
-                tb+=x;
-                entries.add(new Entry(i,x));
+            Set<Integer> setM = valuesM.keySet();
+            Set<Integer> setY = valuesY.keySet();
+            if(trucX != 12){
+                for(Integer key:setM){
+                    int value = valuesM.get(key);
+                    tb+=value;
+                    entries.add((new Entry(key,value)));
+                }
+                tb/=valuesM.size();
             }
-            tb/=trucX;
-            tv_trungbinh.setText(String.valueOf(tb));
+            else{
+                for(Integer key:setY){
+                    int value = valuesY.get(key);
+                    value = value/counts.get(key);
+                    tb+=value;
+                    entries.add((new Entry(key,value)));
+                }
+                tb/=valuesY.size();
+            }
+
+            tv_trungbinh.setText(itemView.getResources().getString(R.string.average_rating)+": "+String.format("%.2f",tb));
 
             LineDataSet dataSet = new LineDataSet(entries,null);
             dataSet.setColor(Color.BLUE);

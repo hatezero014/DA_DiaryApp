@@ -12,7 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.doan_diaryapp.Adapter.StatisticAdapter;
@@ -39,18 +42,14 @@ public class ByMonthFragment extends Fragment {
 
     private RecyclerView recyclerView_month;
     private StatisticAdapter statisticAdapter;
-    private LineChart lineChart;
+    private Spinner spn_yearm;
+    private Spinner spn_monthm;
 
-    private List<String> values;
-
-    ArrayList<Integer> imageList;
 
     public ByMonthFragment() {
         // Required empty public constructor
     }
 
-    ImageView imageView1, imageView2;
-    TextView title_month, tb_month;
 
 
     @Override
@@ -61,6 +60,12 @@ public class ByMonthFragment extends Fragment {
 
         recyclerView_month = view.findViewById(R.id.rcv_thong_ke_thang);
 
+        spn_yearm = view.findViewById(R.id.spn_yearm);
+        spn_monthm = view.findViewById(R.id.spn_monthm);
+
+        updateSpinnerYear(container);
+        updateSpinnerMonth(container);
+
         statisticAdapter = new StatisticAdapter();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView_month.setLayoutManager(linearLayoutManager);
@@ -69,10 +74,78 @@ public class ByMonthFragment extends Fragment {
         return view;
     }
 
+    private void updateSpinnerMonth(ViewGroup container) {
+        ArrayList<Integer> aMonth = new ArrayList<>();
+        for(int i=1;i<=12;i++){
+            aMonth.add(i);
+        }
+
+        ArrayAdapter<Integer> adapterMonth = new ArrayAdapter<>(container.getContext(), android.R.layout.simple_spinner_item,aMonth);
+        adapterMonth.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spn_monthm.setAdapter(adapterMonth);
+        spn_monthm.setSelection(Calendar.getInstance().get(Calendar.MONTH));
+        spn_monthm.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                statisticAdapter.setData(getListStatistic());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void updateSpinnerYear(ViewGroup container) {
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        ArrayList<Integer> years = new ArrayList<>();
+
+        for(int i = 1990; i<=currentYear;i++){
+            years.add(i);
+        }
+
+        ArrayAdapter<Integer> adapterYear = new ArrayAdapter<Integer>(container.getContext(), android.R.layout.simple_spinner_item,years);
+
+        adapterYear.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spn_yearm.setAdapter(adapterYear);
+        spn_yearm.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                statisticAdapter.setData(getListStatistic());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        setDefaultYear(adapterYear);
+    }
+
+    private void setDefaultYear(ArrayAdapter<Integer> adapterYear) {
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        boolean yearExists = false;
+        for (int i = 0; i < adapterYear.getCount(); i++) {
+            if (adapterYear.getItem(i) == currentYear) {
+                yearExists = true;
+                break;
+            }
+        }
+        if (!yearExists) {
+            adapterYear.add(currentYear);
+            adapterYear.notifyDataSetChanged();
+        }
+        spn_yearm.setSelection(adapterYear.getPosition(currentYear));
+    }
+
     private List<Statistic> getListStatistic() {
         List<Statistic> mStatistic = new ArrayList<>();
-        mStatistic.add(new Statistic(2024,2,1));
-        mStatistic.add(new Statistic(2024,2,2));
+        int month = (Integer)spn_monthm.getSelectedItem();
+        int year = (Integer)spn_yearm.getSelectedItem();
+        mStatistic.clear();
+        mStatistic.add(new Statistic(year,month,1));
+        mStatistic.add(new Statistic(year,month,2));
         return mStatistic;
     }
 
