@@ -20,6 +20,7 @@ import com.example.doan_diaryapp.Adapter.EntryAdapter;
 import com.example.doan_diaryapp.Models.Entry;
 import com.example.doan_diaryapp.R;
 import com.example.doan_diaryapp.RecordActivity;
+import com.example.doan_diaryapp.Service.EntryPhotoService;
 import com.example.doan_diaryapp.Service.EntryService;
 import com.example.doan_diaryapp.Service.ImportantDayService;
 import com.example.doan_diaryapp.databinding.FragmentCollectionBinding;
@@ -30,11 +31,12 @@ import java.util.Locale;
 
 public class CollectionFragment extends Fragment {
     private FragmentCollectionBinding binding;
-    private ArrayList<CarouselModel> list = new ArrayList<>();
     private CarouselAdapter carouselAdapter;
     private ListView mListView;
     private EntryAdapter mAdapter;
     private ImportantDayService importantDayService;
+
+    private EntryPhotoService entryPhotoService;
 
     private void updateEntries() {
         List<Entry> entryList = importantDayService.getEntriesFromDatabaseQT();
@@ -48,39 +50,31 @@ public class CollectionFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCollectionBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-        ViewPhoto(view);
         ListViewDayQT(view);
-
         mListView = view.findViewById(R.id.ListDayQT);
         importantDayService = new ImportantDayService(getContext());
         List<Entry> entryList = importantDayService.getEntriesFromDatabaseQT();
         mAdapter = new EntryAdapter(getContext(), entryList);
         mListView.setAdapter(mAdapter);
 
-
-        return view;
-    }
-
-    private void ViewPhoto(View view)
-    {
         RecyclerView recyclerView = view.findViewById(R.id.carousel_recycler_view);
         ViewGroup.LayoutParams layoutParams = recyclerView.getLayoutParams();
         layoutParams.height = (int) getResources().getDimension(R.dimen.recyclerview_height);
         recyclerView.setLayoutParams(layoutParams);
+
+
+
+        entryPhotoService = new EntryPhotoService(getContext());
+        ArrayList<CarouselModel> list = entryPhotoService.getPhotoFromDatabase();
         carouselAdapter = new CarouselAdapter(list, requireContext());
         recyclerView.setAdapter(carouselAdapter);
 
-        list.add(new CarouselModel(R.drawable.i1));
-        list.add(new CarouselModel(R.drawable.i2));
-        list.add(new CarouselModel(R.drawable.i3));
-        list.add(new CarouselModel(R.drawable.i4));
-        list.add(new CarouselModel(R.drawable.i5));
-        list.add(new CarouselModel(R.drawable.i1));
-        list.add(new CarouselModel(R.drawable.i2));
-        list.add(new CarouselModel(R.drawable.i3));
-        list.add(new CarouselModel(R.drawable.i4));
-        list.add(new CarouselModel(R.drawable.i5));
+        return view;
     }
+
+
+
+
 
 
     private void ListViewDayQT(View view)

@@ -1,13 +1,16 @@
 package com.example.doan_diaryapp.ui.collection;
 public class CarouselModel {
-    private int imageId;
-    public CarouselModel(int imageId) {
-        this.imageId = imageId;
+    private String imagePath;
+
+    public CarouselModel(String imagePath) {
+        this.imagePath = imagePath;
     }
-    public int getImageId() {
-        return imageId;
+
+    public String getImagePath() {
+        return imagePath;
     }
-    public void setImageId(int imageId) {
-        this.imageId = imageId;
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }

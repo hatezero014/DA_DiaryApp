@@ -54,7 +54,7 @@ public class EntryService extends BaseService{
     }
 
     public int getEntriesNoteFromDatabase(int day, int month, int year, StringBuilder note, AtomicInteger rate) {
-        SQLiteDatabase db = this.getReadableDatabase();
+        db = this.getReadableDatabase();
         try (Cursor cursor = db.rawQuery("SELECT * FROM Entry", null)) {
             if (cursor != null && cursor.moveToFirst()) {
                 int dateColumnIndex = cursor.getColumnIndex("Date");
