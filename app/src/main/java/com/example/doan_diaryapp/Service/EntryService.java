@@ -82,5 +82,56 @@ public class EntryService extends BaseService{
         return 0;
     }
 
+    public List<Entry>getOverallScoreByMonthYear(int month, int year){
+        db = this.getReadableDatabase();
+        List<Entry> entryList = new ArrayList<>();
+        try (Cursor cursor = db.rawQuery("SELECT * FROM Entry ORDER BY Date ASC", null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                int scoreColumnIndex = cursor.getColumnIndex("OverallScore");
+                int dateColumnIndex = cursor.getColumnIndex("Date");
 
+                do {
+                    String date = cursor.getString(dateColumnIndex).trim();
+                    String[] parts = date.split("-");
+                    int m = Integer.parseInt(parts[1]);
+                    int y = Integer.parseInt(parts[2]);
+                    int score = cursor.getInt(scoreColumnIndex);
+                    if(m == month && y == year){
+                        entryList.add(new Entry(score,date));
+                    }
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            if (db != null) {
+                db.close();
+            }
+        }
+        return entryList;
+    }
+
+    public List<Entry>getOverallScoreByYear(int year){
+        db = this.getReadableDatabase();
+        List<Entry> entryList = new ArrayList<>();
+        try (Cursor cursor = db.rawQuery("SELECT * FROM Entry ORDER BY Date ASC", null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                int scoreColumnIndex = cursor.getColumnIndex("OverallScore");
+                int dateColumnIndex = cursor.getColumnIndex("Date");
+
+                do {
+                    String date = cursor.getString(dateColumnIndex).trim();
+                    String[] parts = date.split("-");
+                    int y = Integer.parseInt(parts[2]);
+                    int score = cursor.getInt(scoreColumnIndex);
+                    if(y == year){
+                        entryList.add(new Entry(score,date));
+                    }
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            if (db != null) {
+                db.close();
+            }
+        }
+        return entryList;
+    }
 }
