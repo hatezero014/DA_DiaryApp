@@ -45,6 +45,21 @@ public class CollectionFragment extends Fragment {
         mAdapter.notifyDataSetChanged();
     }
 
+    private void updateView() {
+        View rootView = getView();
+        if (rootView != null) {
+            RecyclerView recyclerView = rootView.findViewById(R.id.carousel_recycler_view);
+            ViewGroup.LayoutParams layoutParams = recyclerView.getLayoutParams();
+            layoutParams.height = (int) getResources().getDimension(R.dimen.recyclerview_height);
+            recyclerView.setLayoutParams(layoutParams);
+            entryPhotoService = new EntryPhotoService(getContext());
+            ArrayList<CarouselModel> list = entryPhotoService.getPhotoFromDatabase();
+            carouselAdapter = new CarouselAdapter(list, requireContext());
+            recyclerView.setAdapter(carouselAdapter);
+
+        }
+    }
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -61,9 +76,6 @@ public class CollectionFragment extends Fragment {
         ViewGroup.LayoutParams layoutParams = recyclerView.getLayoutParams();
         layoutParams.height = (int) getResources().getDimension(R.dimen.recyclerview_height);
         recyclerView.setLayoutParams(layoutParams);
-
-
-
         entryPhotoService = new EntryPhotoService(getContext());
         ArrayList<CarouselModel> list = entryPhotoService.getPhotoFromDatabase();
         carouselAdapter = new CarouselAdapter(list, requireContext());
@@ -105,6 +117,7 @@ public class CollectionFragment extends Fragment {
     public void onResume() {
         super.onResume();
         updateEntries();
+        updateView();
     }
 
 
