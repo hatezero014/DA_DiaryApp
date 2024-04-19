@@ -29,7 +29,7 @@ public class EntryService extends BaseService{
     public List<Entry> getEntriesFromDatabase() {
         db = this.getReadableDatabase();
         List<Entry> entryList = new ArrayList<>();
-        try (Cursor cursor = db.rawQuery("SELECT * FROM Entry", null)) {
+        try (Cursor cursor = db.rawQuery("SELECT * FROM Entry ORDER BY Date DESC", null)) {
             if (cursor != null && cursor.moveToFirst()) {
                 int idColumnIndex = cursor.getColumnIndex("Id");
                 int noteColumnIndex = cursor.getColumnIndex("Note");
