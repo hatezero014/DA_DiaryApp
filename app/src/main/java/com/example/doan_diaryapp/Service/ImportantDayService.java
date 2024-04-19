@@ -46,8 +46,11 @@ public class ImportantDayService extends BaseService {
                     }
                 } while (cursor.moveToNext());
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        }
+        finally {
+            if (db != null) {
+                db.close(); // Đảm bảo đóng kết nối đến cơ sở dữ liệu
+            }
         }
         return entryList;
     }

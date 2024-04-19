@@ -12,9 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.doan_diaryapp.ActivityNam;
+import com.example.doan_diaryapp.Models.Entry;
+import com.example.doan_diaryapp.Models.Language;
 import com.example.doan_diaryapp.R;
 import com.example.doan_diaryapp.RecordActivity;
 import com.example.doan_diaryapp.Service.EntryService;
@@ -22,9 +25,13 @@ import com.example.doan_diaryapp.databinding.FragmentMonthBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class MonthFragment extends Fragment {
@@ -35,6 +42,13 @@ public class MonthFragment extends Fragment {
     int month = calendar.get(Calendar.MONTH);
     int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
     EntryService entryService;
+
+    private void updateView() {
+        View rootView = getView();
+        if (rootView != null) {
+            setCardViewDate(rootView);
+        }
+    }
 
 
     @Override
@@ -51,35 +65,75 @@ public class MonthFragment extends Fragment {
 
     private void setCardViewDate(View view)
     {
-        TextView textView=view.findViewById(R.id.CardViewNote);
-        ShowNote(view,dayOfMonth,month,year,textView);
-        CalendarView calendarView = view.findViewById(R.id.calendarView);
+        LinearLayout linearLayout=view.findViewById(R.id.show_date_note);
+        TextView textViewNote=view.findViewById(R.id.CardViewNote);
+        TextView textViewRate=view.findViewById(R.id.CardViewRate);
+        ShowNote(view,dayOfMonth,month,year,textViewNote,textViewRate,linearLayout);
+
         TextView selectedDateTextView = view.findViewById(R.id.CardViewDate);
-        SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd-MM-yyyy", new Locale("vi", "VN"));
-        String currentDate = sdf.format(calendar.getTime());
-        selectedDateTextView.setText(currentDate);
+        ShowDate(view,dayOfMonth,month,year,selectedDateTextView);
+
+        CalendarView calendarView = view.findViewById(R.id.calendarView);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int y, int m, int d) {
                 dayOfMonth=d; month=m; year=y;
-                ShowNote(view,d,m,y,textView);
-                Calendar selectedCalendar = Calendar.getInstance();
-                selectedCalendar.set(y, m, d);
-                String selectedDate = sdf.format(selectedCalendar.getTime());
-                selectedDateTextView.setText(selectedDate);
+                ShowNote(view,d,m,y,textViewNote,textViewRate,linearLayout);
+                ShowDate(view,d,m+1,y,selectedDateTextView);
             }
         });
     }
 
 
-    private void ShowNote(View view,int d,int m,int y,TextView textView)
+    private void ShowDate(View view,int d,int m,int y, TextView textViewDate)
     {
-        String note=entryService.getEntriesNoteFromDatabase(d,m,y);
-        if (note.length() != 0) textView.setText(note);
-        else  {
-            textView.setText("            Chưa có bản ghi vào ngày này.\n             Nhấn nút để tạo bản ghi mới. ");
+        String date = d + "-" + m + "-" + y;
+        String fullDate = getDayOfWeek(date)+", "+date;
+        textViewDate.setText(fullDate);
+    }
+
+
+    private static Language currentLanguage;
+
+    public static void setCurrentLanguage(Language language) {
+        currentLanguage = language;
+    }
+    private String getDayOfWeek(String date) {
+
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        Date dateTime = null;
+        try {
+            dateTime = format.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Locale locale;
+        if (currentLanguage != null && currentLanguage.getCode() != null) {
+            locale = new Locale(currentLanguage.getCode());
+        } else {
+            locale = Locale.getDefault();
         }
 
+        SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", locale);
+        return dayFormat.format(dateTime);
+    }
+
+
+    private void ShowNote(View view,int d,int m,int y,
+                          TextView textViewNote,TextView textViewRate,
+                          LinearLayout linearLayout)
+    {
+        StringBuilder note = new StringBuilder();
+        AtomicInteger rate = new AtomicInteger();
+        int check = entryService.getEntriesNoteFromDatabase(d,m,y,note,rate);
+        textViewNote.setText(note);
+        textViewRate.setText("Mood rating: "+rate);
+        if (check==0) {
+            linearLayout.setVisibility(View.GONE);
+        }
+        else  {
+            linearLayout.setVisibility(View.VISIBLE);
+        }
     }
 
 
@@ -95,10 +149,10 @@ public class MonthFragment extends Fragment {
                 if (CheckDate(dayOfMonth, month, year)) {
                     showAlertDialog();
                 } else {
-                Intent intent = new Intent(getActivity(), RecordActivity.class);
-                intent.putExtra("Date", String.format(Locale.ENGLISH,
-                        "%02d-%02d-%04d", dayOfMonth, month+1, year));
-                startActivity(intent);
+                    Intent intent = new Intent(getActivity(), RecordActivity.class);
+                    intent.putExtra("Date", String.format(Locale.ENGLISH,
+                            "%02d-%02d-%04d", dayOfMonth, month + 1, year));
+                    startActivity(intent);
                 }
             }
         });
@@ -123,6 +177,16 @@ public class MonthFragment extends Fragment {
                 .setPositiveButton("OK", null);
         builder.create().show();
     }
+
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateView();
+    }
+
+
 
     @Override
     public void onDestroyView() {
