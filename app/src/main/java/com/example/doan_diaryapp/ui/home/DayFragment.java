@@ -30,7 +30,7 @@ import com.example.doan_diaryapp.Models.Entry;
 import com.example.doan_diaryapp.R;
 import com.example.doan_diaryapp.RecordActivity;
 import com.example.doan_diaryapp.Service.EntryService;
-import com.example.doan_diaryapp.databinding.FragmentHomeBinding;
+
 import com.example.doan_diaryapp.databinding.FragmentDayBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -46,6 +46,14 @@ public class DayFragment extends Fragment {
     private ListView mListView;
     private EntryAdapter mAdapter;
     private EntryService mEntryService;
+
+
+    private void updateEntries() {
+        List<Entry> entryList = mEntryService.getEntriesFromDatabase();
+        mAdapter.clear();
+        mAdapter.addAll(entryList);
+        mAdapter.notifyDataSetChanged();
+    }
 
 
     @Override
@@ -80,8 +88,14 @@ public class DayFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateEntries();
+    }
+
 
     @Override
     public void onDestroyView() {
