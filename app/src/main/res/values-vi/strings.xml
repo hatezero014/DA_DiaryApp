@@ -101,5 +101,6 @@
     <!--Month(Add diary)-->
     <string name="month_alert_title">Không thể tạo</string>
     <string name="month_alert_message">Không thể tạo bản ghi cho ngày trong tương lai</string>
+    <string name="average_rating">Đánh giá trung bình</string>
 
 </resources>

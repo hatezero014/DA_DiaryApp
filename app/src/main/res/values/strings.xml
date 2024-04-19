@@ -101,4 +101,5 @@
     <!--Month(Add diary)-->
     <string name="month_alert_title">Unable to create</string>
     <string name="month_alert_message">Can not create record for future date</string>
+    <string name="average_rating">Average rating</string>
 </resources>

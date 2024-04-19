@@ -12,7 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.doan_diaryapp.Adapter.StatisticAdapter;
@@ -30,6 +33,7 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -45,6 +49,7 @@ public class EntireYearFragment extends Fragment {
 
     private RecyclerView recyclerView_year;
     private StatisticAdapter statisticAdapter;
+    private Spinner spn_yeary;
 
     public EntireYearFragment() {
         // Required empty public constructor
@@ -59,6 +64,9 @@ public class EntireYearFragment extends Fragment {
 
         statisticAdapter = new StatisticAdapter();
 
+        spn_yeary = view.findViewById(R.id.spn_yeary);
+        updateSpinnerYear(container);
+
         recyclerView_year = view.findViewById(R.id.rcv_thong_ke_nam);
         statisticAdapter = new StatisticAdapter();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -68,10 +76,54 @@ public class EntireYearFragment extends Fragment {
         return view;
     }
 
+    private void updateSpinnerYear(ViewGroup container) {
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        ArrayList<Integer> years = new ArrayList<>();
+
+        for(int i = 1990; i<=currentYear;i++){
+            years.add(i);
+        }
+
+        ArrayAdapter<Integer> adapterYear = new ArrayAdapter<Integer>(container.getContext(), android.R.layout.simple_spinner_item,years);
+
+        adapterYear.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spn_yeary.setAdapter(adapterYear);
+        spn_yeary.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                statisticAdapter.setData(getListStatistic());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        setDefaultYear(adapterYear);
+    }
+
+    private void setDefaultYear(ArrayAdapter<Integer> adapterYear) {
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        boolean yearExists = false;
+        for (int i = 0; i < adapterYear.getCount(); i++) {
+            if (adapterYear.getItem(i) == currentYear) {
+                yearExists = true;
+                break;
+            }
+        }
+        if (!yearExists) {
+            adapterYear.add(currentYear);
+            adapterYear.notifyDataSetChanged();
+        }
+        spn_yeary.setSelection(adapterYear.getPosition(currentYear));
+    }
+
     private List<Statistic> getListStatistic() {
         List<Statistic> mStatistic = new ArrayList<>();
-        mStatistic.add(new Statistic(2024,1));
-        mStatistic.add(new Statistic(2024,2));
+        int year =(Integer) spn_yeary.getSelectedItem();
+        mStatistic.clear();
+        mStatistic.add(new Statistic(year,1));
+        mStatistic.add(new Statistic(year,2));
         return mStatistic;
     }
 }
