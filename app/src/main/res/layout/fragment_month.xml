@@ -45,14 +45,13 @@
             android:padding="16dp">
 
             <TextView
-                android:text="Sunday, 23-03-2024"
                 android:id="@+id/CardViewDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/md_theme_onSurface"
                 style="@style/TextAppearance.Material3.TitleMedium" />
             <TextView
-                android:text="Mood rating: 8"
+                android:text="Mood rating:"
                 android:layout_marginTop="4dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -60,7 +59,8 @@
                 android:textColor="@color/md_theme_onSurfaceVariant"
                 style="@style/TextAppearance.Material3.BodyMedium"/>
             <TextView
-                android:text="Gấu nước là loài vật bất trị nhất trên hành tinh. Chúng con được biết với cái tên “lợn con ăn rêu”, nghe có vẻ dễ thương nhưng đừng dại mà tin nhé."
+                android:text="            Chưa có bản ghi vào ngày này.
+                             \n             Nhấn nút để tạo bản ghi mới. "
                 android:id="@+id/CardViewNote"
                 android:layout_marginTop="8dp"
                 android:layout_width="match_parent"

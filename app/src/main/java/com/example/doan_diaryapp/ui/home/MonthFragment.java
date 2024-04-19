@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.example.doan_diaryapp.ActivityNam;
 import com.example.doan_diaryapp.R;
 import com.example.doan_diaryapp.RecordActivity;
+import com.example.doan_diaryapp.Service.EntryService;
 import com.example.doan_diaryapp.databinding.FragmentMonthBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -33,12 +34,14 @@ public class MonthFragment extends Fragment {
     int year = calendar.get(Calendar.YEAR);
     int month = calendar.get(Calendar.MONTH);
     int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+    EntryService entryService;
 
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_month, container, false);
+        entryService=new EntryService(getContext());
         setCardViewDate(view);
         ButtonAddMonth(view);
         return view;
@@ -48,6 +51,8 @@ public class MonthFragment extends Fragment {
 
     private void setCardViewDate(View view)
     {
+        TextView textView=view.findViewById(R.id.CardViewNote);
+        ShowNote(view,dayOfMonth,month,year,textView);
         CalendarView calendarView = view.findViewById(R.id.calendarView);
         TextView selectedDateTextView = view.findViewById(R.id.CardViewDate);
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd-MM-yyyy", new Locale("vi", "VN"));
@@ -57,6 +62,7 @@ public class MonthFragment extends Fragment {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int y, int m, int d) {
                 dayOfMonth=d; month=m; year=y;
+                ShowNote(view,d,m,y,textView);
                 Calendar selectedCalendar = Calendar.getInstance();
                 selectedCalendar.set(y, m, d);
                 String selectedDate = sdf.format(selectedCalendar.getTime());
@@ -64,6 +70,19 @@ public class MonthFragment extends Fragment {
             }
         });
     }
+
+
+    private void ShowNote(View view,int d,int m,int y,TextView textView)
+    {
+        String note=entryService.getEntriesNoteFromDatabase(d,m,y);
+        if (note.length() != 0) textView.setText(note);
+        else  {
+            textView.setText("            Chưa có bản ghi vào ngày này.\n             Nhấn nút để tạo bản ghi mới. ");
+        }
+
+    }
+
+
 
 
 

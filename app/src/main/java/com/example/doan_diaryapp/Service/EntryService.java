@@ -50,5 +50,26 @@ public class EntryService extends BaseService{
         return entryList;
     }
 
+    public String getEntriesNoteFromDatabase(int day,int month,int year) {
+        db = this.getReadableDatabase();
+        String note="";
+
+        try (Cursor cursor = db.rawQuery("SELECT * FROM Entry", null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                int dateColumnIndex = cursor.getColumnIndex("Date");
+                int noteColumnIndex = cursor.getColumnIndex("Note");
+                do {
+                    String date = cursor.getString(dateColumnIndex).trim();
+                    String[] parts = date.split("-");
+                    int d = Integer.parseInt(parts[0]);
+                    int m = Integer.parseInt(parts[1]);
+                    int y = Integer.parseInt(parts[2]);
+                    if (d==day && month+1==m && year==y) return cursor.getString(noteColumnIndex).trim();
+                } while (cursor.moveToNext());
+            }
+        }
+        return note;
+    }
+
 
 }
