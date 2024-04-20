@@ -122,8 +122,13 @@ public class EntireYearFragment extends Fragment {
         List<Statistic> mStatistic = new ArrayList<>();
         int year =(Integer) spn_yeary.getSelectedItem();
         mStatistic.clear();
-        mStatistic.add(new Statistic(year,1));
-        mStatistic.add(new Statistic(year,2));
+
+        mStatistic.add(new Statistic(year,1,null));
+        mStatistic.add(new Statistic(year,2,"Mood"));
+        mStatistic.add(new Statistic(year,2,"Activity"));
+        mStatistic.add(new Statistic(year,2,"Partner"));
+        mStatistic.add(new Statistic(year,2,"Weather"));
+
         return mStatistic;
     }
 }

@@ -4,7 +4,11 @@ import android.content.Context;
 import android.database.Cursor;
 
 import com.example.doan_diaryapp.Models.Emotion;
+import com.example.doan_diaryapp.Models.Entry;
 import com.example.doan_diaryapp.Models.EntryEmotion;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EmotionService extends BaseService {
     public EmotionService(Context context) {

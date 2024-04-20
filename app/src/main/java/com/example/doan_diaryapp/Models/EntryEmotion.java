@@ -12,6 +12,10 @@ public class EntryEmotion {
         EmotionId = emotionId;
     }
 
+    public EntryEmotion(int emotionId) {
+        EmotionId = emotionId;
+    }
+
     public int getEntryId() {
         return EntryId;
     }

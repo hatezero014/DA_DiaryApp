@@ -14,16 +14,28 @@ public class Statistic {
 
     private int statisticType;
 
-    public Statistic(int year, int month, int statisticType) {
+    private String emotionType;
+
+    public String getEmotionType() {
+        return emotionType;
+    }
+
+    public void setEmotionType(String emotionType) {
+        this.emotionType = emotionType;
+    }
+
+    public Statistic(int year, int month, int statisticType, String emotionType) {
         this.year = year;
         this.month = month;
         this.statisticType = statisticType;
+        this.emotionType = emotionType;
     }
 
-    public Statistic(int year, int statisticType) {
+    public Statistic(int year, int statisticType, String emotionType) {
         this.year = year;
         this.month = 0;
         this.statisticType = statisticType;
+        this.emotionType =emotionType;
     }
 
     public int getYear() {
