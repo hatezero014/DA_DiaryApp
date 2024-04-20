@@ -2,37 +2,35 @@ package com.example.doan_diaryapp.Adapter;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.TypedValue;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.doan_diaryapp.Models.Emotion;
 import com.example.doan_diaryapp.Models.Statistic;
 import com.example.doan_diaryapp.R;
+import com.example.doan_diaryapp.Service.EmotionService;
 import com.example.doan_diaryapp.Service.EntryService;
+import com.example.doan_diaryapp.ui.image.Image;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 
 public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
@@ -71,7 +69,7 @@ public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             lineChartViewHolder.setData(statistic.getYear(),statistic.getMonth());
         }else if( type_emotion == holder.getItemViewType()){
             EmotionViewHolder emotionViewHolder = (EmotionViewHolder) holder;
-            emotionViewHolder.setEmotion(statistic.getYear(),statistic.getMonth());
+            emotionViewHolder.setEmotion(statistic.getYear(),statistic.getMonth(),statistic.getEmotionType());
         }
     }
 
@@ -177,7 +175,7 @@ public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             }
             else{
                 for(Integer key:setY){
-                    int value = valuesY.get(key);
+                    float value = valuesY.get(key);
                     value = value/counts.get(key);
                     tb+=value;
                     entries.add((new Entry(key,value)));
@@ -223,9 +221,7 @@ public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public class EmotionViewHolder extends RecyclerView.ViewHolder{
         private Context context;
-
-        private Spinner spinner;
-
+        private TextView tv_emotion_type;
         private ImageView img1;
         private TextView tv1;
         private ImageView img2;
@@ -236,8 +232,9 @@ public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         private TextView tv4;
         public EmotionViewHolder(@NonNull View itemView) {
             super(itemView);
+            context = itemView.getContext();
+            tv_emotion_type = itemView.findViewById(R.id.tv_emotion_type);
 
-            spinner = itemView.findViewById(R.id.spn_emotion);
             img1 = itemView.findViewById(R.id.imageView1);
             tv1 = itemView.findViewById(R.id.tv_img1);
             img2 = itemView.findViewById(R.id.imageView2);
@@ -248,71 +245,53 @@ public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             tv4 = itemView.findViewById(R.id.tv_img4);
         }
 
+        public void setEmotion(int year, int month, @NonNull String emotionType) {
+            Map<String,Integer> emotionCount = new HashMap<>();
 
+            if(emotionType.equals("Mood")){
+                emotionCount.clear();
+                tv_emotion_type.setText(context.getString(R.string.mood));
+                emotionCount = new Image().getMood(year,month,context);
 
-        public void setSpinner() {
-            ArrayList<String> arrayEmotion = new ArrayList<>();
-            arrayEmotion.add(itemView.getContext().getString(R.string.mood));
-            arrayEmotion.add(itemView.getContext().getString(R.string.weather));
-            arrayEmotion.add(itemView.getContext().getString(R.string.partner));
-            arrayEmotion.add(itemView.getContext().getString(R.string.activity));
+            }
+            else if(emotionType.equals("Activity")){
+                emotionCount.clear();
+                tv_emotion_type.setText(context.getString(R.string.activity));
+                emotionCount = new Image().getActivity(year,month,context);
+            }
+            else if(emotionType.equals("Partner")){
+                emotionCount.clear();
+                tv_emotion_type.setText(context.getString(R.string.partner));
+                emotionCount = new Image().getPartner(year,month,context);
+            }
+            else {
+                emotionCount.clear();
+                tv_emotion_type.setText(context.getString(R.string.weather));
+                emotionCount = new Image().getWeather(year,month,context);
+            }
 
-            ArrayAdapter arrayAdapter = new ArrayAdapter(itemView.getContext(), android.R.layout.simple_spinner_item, arrayEmotion){
-                @Override
-                public View getView(int position, View convertView, ViewGroup parent) {
-                    View v = super.getView(position, convertView, parent);
-                    ((TextView) v).setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20); // Đặt kích thước chữ
-                    return v;
+            List<Map.Entry<String, Integer>> sortedList = new ArrayList<>(emotionCount.entrySet());
+            sortedList.sort(Map.Entry.<String, Integer>comparingByValue().reversed());
+
+            for(int i=0;i<4&&i<sortedList.size();i++) {
+                String icon = sortedList.get(i).getKey();
+                int imageResourceId = context.getResources().getIdentifier(icon, "drawable", context.getPackageName());
+                Drawable drawable = context.getDrawable(imageResourceId);
+                if(i == 0){
+                    img1.setImageDrawable(drawable);
+                    tv1.setText("x"+sortedList.get(i).getValue());
                 }
-
-                @Override
-                public View getDropDownView(int position, View convertView, ViewGroup parent) {
-                    View v = super.getDropDownView(position, convertView, parent);
-                    ((TextView) v).setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20); // Đặt kích thước chữ
-                    return v;
+                else if(i==1){
+                    img2.setImageDrawable(drawable);
+                    tv2.setText("x"+sortedList.get(i).getValue());
                 }
-            };
-            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-            spinner.setAdapter(arrayAdapter);
-        }
-
-
-        public void setEmotion(int year, int month) {
-            setSpinner();
-            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    showEmotion(position);
+                else if(i==2){
+                    img3.setImageDrawable(drawable);
+                    tv3.setText("x"+sortedList.get(i).getValue());
                 }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
-
-                void showEmotion(int position){
-                    img1.setImageDrawable(null);
-                    img2.setImageDrawable(null);
-                    img3.setImageDrawable(null);
-                    img4.setImageDrawable(null);
-
-                    switch (position){
-                        case 0:
-                            img1.setImageResource(R.drawable.emoji_acitivity_travel);
-                            break;
-                        case 1:
-                            img2.setImageResource(R.drawable.emoji_activity_bake);
-                            break;
-                        case 2:
-                            img3.setImageResource(R.drawable.emoji_activity_biking);
-                            break;
-                        case 3:
-                            img4.setImageResource(R.drawable.emoji_activity_cook);
-                            break;
-                    }
-                }
-            });
+                else {img4.setImageDrawable(drawable);
+                    tv4.setText("x"+sortedList.get(i).getValue());}
+            }
         }
     }
 }
