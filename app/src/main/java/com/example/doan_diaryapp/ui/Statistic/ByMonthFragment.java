@@ -144,8 +144,12 @@ public class ByMonthFragment extends Fragment {
         int month = (Integer)spn_monthm.getSelectedItem();
         int year = (Integer)spn_yearm.getSelectedItem();
         mStatistic.clear();
-        mStatistic.add(new Statistic(year,month,1));
-        mStatistic.add(new Statistic(year,month,2));
+        mStatistic.add(new Statistic(year,month,1,null));
+        mStatistic.add(new Statistic(year,month,2,"Mood"));
+        mStatistic.add(new Statistic(year,month,2,"Activity"));
+        mStatistic.add(new Statistic(year,month,2,"Partner"));
+        mStatistic.add(new Statistic(year,month,2,"Weather"));
+
         return mStatistic;
     }
 

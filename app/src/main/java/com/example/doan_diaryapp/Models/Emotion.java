@@ -12,6 +12,8 @@ public class Emotion {
     public Emotion() {
     }
 
+
+
     public String getIcon() {
         return Icon;
     }
