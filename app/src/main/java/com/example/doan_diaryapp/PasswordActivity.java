@@ -1,20 +1,18 @@
 package com.example.doan_diaryapp;
 
-
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
-import com.hanks.passcodeview.PasscodeView;
 
 public class PasswordActivity extends AppCompatActivity {
 
     private Button createPasswordButton, changePasswordButton, deletePasswordButton;
-    private PasscodeView passcodeView;
-    private String savedPasscode = null;
-
+    // String savedPasscode = null;
+    private SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,61 +21,55 @@ public class PasswordActivity extends AppCompatActivity {
         createPasswordButton = findViewById(R.id.CreatePassWord);
         changePasswordButton = findViewById(R.id.ChangePassWord);
         deletePasswordButton = findViewById(R.id.DeletePassWord);
-        passcodeView = findViewById(R.id.passcodeView);
+        sharedPreferences = getSharedPreferences("Passcode", MODE_PRIVATE);
 
-        createPasswordButton.setOnClickListener(v -> {
-            passcodeView.setVisibility(View.VISIBLE);
-            passcodeView.setPasscodeType(PasscodeView.PasscodeViewType.TYPE_SET_PASSCODE);
-            passcodeView.setListener(new PasscodeView.PasscodeViewListener() {
-                @Override
-                public void onFail() {
-                }
+        // Initially hide ChangePassword and DeletePassword buttons
+        changePasswordButton.setVisibility(View.GONE);
+        deletePasswordButton.setVisibility(View.GONE);
 
-                @Override
-                public void onSuccess(String number) {
-                    savedPasscode = number;
-                    passcodeView.setVisibility(View.GONE);
-                }
-            });
-        });
-
-        changePasswordButton.setOnClickListener(v -> {
-            if (savedPasscode != null) {
-                passcodeView.setVisibility(View.VISIBLE);
-                passcodeView.setPasscodeType(PasscodeView.PasscodeViewType.TYPE_CHECK_PASSCODE);
-                passcodeView.setListener(new PasscodeView.PasscodeViewListener() {
-                    @Override
-                    public void onFail() {
-                    }
-
-                    @Override
-                    public void onSuccess(String number) {
-                        if (number.equals(savedPasscode)) {
-                            passcodeView.setPasscodeType(PasscodeView.PasscodeViewType.TYPE_SET_PASSCODE);
-                        }
-                    }
-                });
+        createPasswordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PasswordActivity.this, OpenPasscodeView.class);
+                intent.putExtra("action", "create");
+                startActivity(intent);
             }
         });
 
-        deletePasswordButton.setOnClickListener(v -> {
-            if (savedPasscode != null) {
-                passcodeView.setVisibility(View.VISIBLE);
-                passcodeView.setPasscodeType(PasscodeView.PasscodeViewType.TYPE_CHECK_PASSCODE);
-                passcodeView.setListener(new PasscodeView.PasscodeViewListener() {
-                    @Override
-                    public void onFail() {
-                    }
-
-                    @Override
-                    public void onSuccess(String number) {
-                        if (number.equals(savedPasscode)) {
-                            savedPasscode = null;
-                            passcodeView.setVisibility(View.GONE);
-                        }
-                    }
-                });
+        changePasswordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PasswordActivity.this, OpenPasscodeView.class);
+                intent.putExtra("action", "change");
+                startActivity(intent);
             }
         });
+
+        deletePasswordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PasswordActivity.this, OpenPasscodeView.class);
+                intent.putExtra("action", "delete");
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String savedPasscode = sharedPreferences.getString("passcode", null);
+        // Check if password is set
+        if (savedPasscode != null) {
+            // If password is set, hide CreatePassword button and show ChangePassword and DeletePassword buttons
+            createPasswordButton.setVisibility(View.GONE);
+            changePasswordButton.setVisibility(View.VISIBLE);
+            deletePasswordButton.setVisibility(View.VISIBLE);
+        } else {
+            // If password is not set, show CreatePassword button and hide ChangePassword and DeletePassword buttons
+            createPasswordButton.setVisibility(View.VISIBLE);
+            changePasswordButton.setVisibility(View.GONE);
+            deletePasswordButton.setVisibility(View.GONE);
+        }
     }
 }

@@ -28,9 +28,10 @@ public class YourImagesInApp extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityYourImagesInAppBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+
 
         EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_your_images_in_app);
         recyclerView = binding.carouselRecyclerView;
         GridLayoutManager layoutManager = new GridLayoutManager(this, 3, RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
@@ -46,10 +47,10 @@ public class YourImagesInApp extends AppCompatActivity {
         yourImagesAdapter = new YourImagesAdapter(list, this);
         recyclerView.setAdapter(yourImagesAdapter);
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+//            return insets;
+//        });
     }
 }
