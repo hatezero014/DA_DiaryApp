@@ -106,5 +106,6 @@
     <!--  Reminder  -->
     <string name="reminder_title">Nhắc nhở</string>
     <string name="reminder_message">Đã được %s năm trôi qua kể từ ngày %s!</string>
+    <string name="most_frequently_recorded">Được ghi nhiều nhất</string>
 
 </resources>
