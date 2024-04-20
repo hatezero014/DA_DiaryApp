@@ -107,4 +107,6 @@
     <string name="reminder_title">Remind</string>
     <string name="reminder_message">It has been %s years since %s!</string>
 
+    <string name="most_frequently_recorded">Most frequently recorded</string>
+
 </resources>
