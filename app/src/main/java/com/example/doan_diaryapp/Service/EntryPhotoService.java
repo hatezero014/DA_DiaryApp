@@ -22,7 +22,7 @@ public class EntryPhotoService extends BaseService {
     public ArrayList<CarouselModel> getPhotoFromDatabase() {
         db = this.getReadableDatabase();
         ArrayList<CarouselModel> list = new ArrayList<>();
-        try (Cursor cursor = db.rawQuery("SELECT * FROM EntryPhoto", null)) {
+        try (Cursor cursor = db.rawQuery("SELECT * FROM EntryPhoto ORDER BY EntryId DESC", null)) {
             if (cursor != null && cursor.moveToFirst()) {
                 int photoScoreIndex = cursor.getColumnIndex("Photo");
                 do {
