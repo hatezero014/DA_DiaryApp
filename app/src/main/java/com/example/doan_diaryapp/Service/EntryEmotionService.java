@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 
 import com.example.doan_diaryapp.Models.Emotion;
+import com.example.doan_diaryapp.Models.EntryActivity;
 import com.example.doan_diaryapp.Models.EntryEmotion;
 
 import java.util.ArrayList;
@@ -14,6 +15,18 @@ public class EntryEmotionService extends BaseService {
         super(context);
     }
 
+    public EntryEmotion FindByEntryIdAndEmotionId(Class<EntryEmotion> clazz, int entryId, int emotionId) {
+        db = this.getReadableDatabase();
+        String selection = "EntryId=? AND EmotionId=?";
+        String[] selectionArgs = new String[]{String.valueOf(entryId), String.valueOf(emotionId)};
+        Cursor cursor = db.query(clazz.getSimpleName(), null, selection, selectionArgs, null, null, null);
+        EntryEmotion object = null;
+        if (cursor != null && cursor.moveToFirst()) {
+            object = CreateModelObjectFromCursor(clazz, cursor);
+            cursor.close();
+        }
+        return object;
+    }
     public List<Emotion> getEmotionIdByMonthYear(int month, int year){
         db = this.getReadableDatabase();
         List<Emotion> entryList = new ArrayList<>();

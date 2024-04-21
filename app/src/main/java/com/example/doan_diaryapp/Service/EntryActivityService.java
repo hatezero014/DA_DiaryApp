@@ -15,6 +15,18 @@ public class EntryActivityService extends BaseService{
     public EntryActivityService(Context context) {
         super(context);
     }
+    public EntryActivity FindByEntryIdAndActivityId(Class<EntryActivity> clazz, int entryId, int activityId) {
+        db = this.getReadableDatabase();
+        String selection = "EntryId=? AND ActivityId=?";
+        String[] selectionArgs = new String[]{String.valueOf(entryId), String.valueOf(activityId)};
+        Cursor cursor = db.query(clazz.getSimpleName(), null, selection, selectionArgs, null, null, null);
+        EntryActivity object = null;
+        if (cursor != null && cursor.moveToFirst()) {
+            object = CreateModelObjectFromCursor(clazz, cursor);
+            cursor.close();
+        }
+        return object;
+    }
 
     public List<Activity> getActivityIdByMonthYear(int month, int year){
         db = this.getReadableDatabase();
