@@ -17,7 +17,7 @@
             android:minHeight="?attr/actionBarSize"
             app:title="@string/title_analyze"
             app:menu="@menu/toolbar_collection_and_stats"
-            app:titleCentered="true"/>
+            app:titleCentered="false"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 

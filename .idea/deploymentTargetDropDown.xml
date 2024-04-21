@@ -2,17 +2,22 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="NotificationApp">
+      <entry key="ActivityNam">
         <State />
       </entry>
-      <entry key="ActivityPhong">
+      <entry key="MainActivity">
+        <State />
+      </entry>
+      <entry key="OpenPasscodeView">
+        <State />
+      </entry>
+      <entry key="PasswordActivity">
         <State />
       </entry>
       <entry key="ShowEmojiActivity">
         <State />
       </entry>
       <entry key="app">
-
         <State />
       </entry>
     </value>

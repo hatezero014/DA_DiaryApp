@@ -85,10 +85,6 @@ public class CollectionFragment extends Fragment {
     }
 
 
-
-
-
-
     private void ListViewDayQT(View view)
     {
         mListView = view.findViewById(R.id.ListDayQT);
@@ -112,15 +108,12 @@ public class CollectionFragment extends Fragment {
 
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
         updateEntries();
         updateView();
     }
-
-
 
     @Override
     public void onDestroyView() {

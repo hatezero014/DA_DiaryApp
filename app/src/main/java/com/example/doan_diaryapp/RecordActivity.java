@@ -26,8 +26,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+import androidx.activity.OnBackPressedCallback;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedDispatcher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -80,6 +82,8 @@ import java.util.Locale;
 
 public class RecordActivity extends BaseActivity {
 
+    private OnBackPressedDispatcher dispatcher;
+
     private final List<Integer> imageMoodList = Arrays.asList(
             R.drawable.emoji_emotion_joyful, R.drawable.emoji_emotion_cool, R.drawable.emoji_emotion_melting, R.drawable.emoji_emotion_pleased,
             R.drawable.emoji_emotion_happy, R.drawable.emoji_emotion_surprise, R.drawable.emoji_emotion_embarrassed, R.drawable.emoji_emotion_normal,
@@ -129,6 +133,14 @@ public class RecordActivity extends BaseActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        dispatcher = getOnBackPressedDispatcher();
+        dispatcher.addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                showDialogAlert();
+            }
         });
 
         Intent intent = getIntent();
@@ -482,7 +494,7 @@ public class RecordActivity extends BaseActivity {
                         }
                     }
                     Toast.makeText(RecordActivity.this, R.string.record_toast_success, Toast.LENGTH_SHORT).show();
-                    onBackPressed();
+                    finish();
                 }
                 catch (Exception e) {
                     Toast.makeText(RecordActivity.this, R.string.record_toast_fail, Toast.LENGTH_SHORT).show();
@@ -662,6 +674,7 @@ public class RecordActivity extends BaseActivity {
         return true;
     }
 
+
     private void showDialogAlert() {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
         builder.setMessage(R.string.record_alert_message)
@@ -669,12 +682,11 @@ public class RecordActivity extends BaseActivity {
                 .setNegativeButton(R.string.button_cancel, (dialog, which) -> dialog.dismiss())
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        onBackPressed();
+                        finish();
                     }
                 });
         builder.create().show();
     }
-
 
     @Override
     public void onBackPressed() {

@@ -23,7 +23,6 @@ import java.util.List;
 public class ShowEmojiActivity extends AppCompatActivity {
     private EmojiAdapter emojiAdapter;
     private RecyclerView recyclerView;
-    private Button btn_arrowback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +30,6 @@ public class ShowEmojiActivity extends AppCompatActivity {
         setContentView(R.layout.activity_show_emoji);
 
         recyclerView = findViewById(R.id.rcv_emoji);
-        btn_arrowback = findViewById(R.id.btn_arrowback);
-        btn_arrowback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
 
         emojiAdapter = new EmojiAdapter(this);
 

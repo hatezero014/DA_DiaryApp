@@ -20,5 +20,4 @@
         app:passcodeLength="4"
         app:passcodeViewType="set_passcode" />
 
-
 </RelativeLayout>

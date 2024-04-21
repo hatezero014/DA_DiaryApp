@@ -18,7 +18,7 @@
             android:minHeight="?attr/actionBarSize"
             app:menu="@menu/toolbar_collection_and_stats"
             app:title="@string/title_collection"
-            app:titleCentered="true" />
+            app:titleCentered="false" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -61,17 +61,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/carousel_recycler_view" />
 
-    <com.google.android.material.divider.MaterialDivider
-        android:id="@+id/divider"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:dividerInsetStart="28dp"
-        app:dividerInsetEnd="28dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button"/>
-
     <TextView
         android:id="@+id/textView3"
         style="@style/TextAppearance.Material3.TitleMedium"
@@ -82,7 +71,7 @@
         android:text="@string/important_days"
         android:textColor="@color/md_theme_onSurface"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
+        app:layout_constraintTop_toBottomOf="@+id/button" />
 
     <ListView
         android:id="@+id/ListDayQT"
