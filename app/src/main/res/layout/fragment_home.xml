@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
-<!--    keo xuong duoi la segmented button, nho chinh sua constraint cua framelayout-->
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/home_TopAppBar"
@@ -57,31 +56,3 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-<!--     <com.google.android.material.button.MaterialButtonToggleGroup
-        android:id="@+id/toggleGroup"
-        android:layout_marginTop="16dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:checkedButton="@+id/ButtonDay"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/home_TopAppBar"
-        app:singleSelection="true">
-
-        <Button
-            android:id="@+id/ButtonDay"
-            style="@style/Widget.Material3.Button.OutlinedButton"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:text="@string/day_view"
-            app:icon="@drawable/main_home_dayview" />
-
-        <Button
-            android:id="@+id/ButtonMonth"
-            style="@style/Widget.Material3.Button.OutlinedButton"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:text="@string/month_view"
-            app:icon="@drawable/main_home_monthview"/>
-    </com.google.android.material.button.MaterialButtonToggleGroup> -->

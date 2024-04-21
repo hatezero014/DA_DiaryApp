@@ -68,8 +68,6 @@ public class MonthFragment extends Fragment {
     }
 
 
-
-
     private void setCardViewDate(View view)
     {
         LinearLayout linearLayout=view.findViewById(R.id.show_date_note);
