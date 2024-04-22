@@ -40,6 +40,9 @@ public class OpenPasscodeView extends BaseActivity {
         } else if ("change".equals(action) || "delete".equals(action)) {
             VerifyPassCode();
         }
+         else if ("verify".equals(action)) {
+            VerifyPassword();
+        }
     }
 
     private void SetPassCode() {
@@ -81,6 +84,23 @@ public class OpenPasscodeView extends BaseActivity {
                             sharedPreferences.edit().remove("passcode").apply();
                             startActivity(new Intent(OpenPasscodeView.this, PasswordActivity.class));
                         }
+                    }
+                });
+    }
+
+    private void VerifyPassword() {
+        passcodeView.setPasscodeLength(4)
+                .setLocalPasscode(sharedPreferences.getString("passcode", ""))
+                .setListener(new PasscodeView.PasscodeViewListener() {
+                    @Override
+                    public void onFail() {
+                        finish();
+                    }
+
+                    @Override
+                    public void onSuccess(String number) {
+                        startActivity(new Intent(OpenPasscodeView.this, MainActivity.class));
+                        finish();
                     }
                 });
     }

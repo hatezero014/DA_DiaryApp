@@ -1,5 +1,6 @@
 package com.example.doan_diaryapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_diaryapp.Adapter.NotificationAdapter;
+import com.example.doan_diaryapp.Controllers.DataHolderController;
 import com.example.doan_diaryapp.Models.Notification;
 import com.example.doan_diaryapp.Service.NotificationService;
 
@@ -24,18 +26,6 @@ public class NotificationApp extends BaseActivity {
     RecyclerView recyclerView;
     NotificationAdapter notificationAdapter;
 
-    String AddNotification;
-
-    String CurrentTime;
-
-    public NotificationApp(){}
-
-    public NotificationApp(String addNotification)
-    {
-
-        this.AddNotification = addNotification;
-        AddData();
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,28 +34,12 @@ public class NotificationApp extends BaseActivity {
         recyclerView = findViewById(R.id.recyclerView);
 
         LoadNotificationbyDatabase();
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-
-    }
-
-    private void AddData()
-    {
-        Calendar calendar = Calendar.getInstance();
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int month = calendar.get(Calendar.MONTH) + 1;
-        int year = calendar.get(Calendar.YEAR);
-        CurrentTime = hour + ":" + minute + " " + day + "/" + month + "/" + year;
-        Log.d("CurrentTime", "Giờ: " + hour + ", Phút: " + minute + ", Ngày: " + day + ", Tháng: " + month + ", Năm: " + year);
-        NotificationService notificationService = new NotificationService(this);
-        notificationService.Add(new Notification(CurrentTime, this.AddNotification));
 
     }
 

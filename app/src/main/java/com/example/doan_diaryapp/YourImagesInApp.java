@@ -37,20 +37,15 @@ public class YourImagesInApp extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         entryPhotoService = new EntryPhotoService(this);
-//        ArrayList<CarouselModel> list = entryPhotoService.getPhotoFromDatabase();
-        ArrayList<CarouselModel> list = new ArrayList<>();
-        list.add(new CarouselModel(getResources().getResourceName(R.drawable.i5)));
-        list.add(new CarouselModel(getResources().getResourceName(R.drawable.i5)));
-        list.add(new CarouselModel(getResources().getResourceName(R.drawable.i5)));
-        list.add(new CarouselModel(getResources().getResourceName(R.drawable.i5)));
-        list.add(new CarouselModel(getResources().getResourceName(R.drawable.i5)));
+       ArrayList<CarouselModel> list = entryPhotoService.getPhotoFromDatabase();
+
         yourImagesAdapter = new YourImagesAdapter(list, this);
         recyclerView.setAdapter(yourImagesAdapter);
 
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-//            return insets;
-//        });
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
     }
 }
