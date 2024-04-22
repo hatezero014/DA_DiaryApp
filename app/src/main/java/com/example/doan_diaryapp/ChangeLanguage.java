@@ -73,8 +73,20 @@ public class ChangeLanguage extends BaseActivity {
                 int _id = (id == 1) ? 2 : 1;
                 Language _language = (Language) languageListViewAdapter.getItem(_id - 1);
 
+                Language lan = languageService.FindById(Language.class, 1);
+                if (lan.getIsActive() == 1) {
+                    if (lan.getId() == (int)id) {
+                        return;
+                    }
+                }
+                else {
+                    if (id == 2) {
+                        return;
+                    }
+                }
+
                 languageService.UpdateById(new Language(language.getName(), language.getCode(), 1), (int)id);
-                languageService.UpdateById(new Language(_language.getName(), _language.getCode(), 0), (int)_id);
+                languageService.UpdateById(new Language(_language.getName(), _language.getCode(), 0), _id);
 
                 languageListViewAdapter.setSelectedItemId(language.getId());
                 setLocale(language.getCode());
