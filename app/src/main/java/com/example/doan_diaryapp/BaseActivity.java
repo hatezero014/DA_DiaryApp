@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.doan_diaryapp.Service.BaseService;
 
+import java.util.Calendar;
 import java.util.Locale;
 
 public class BaseActivity  extends AppCompatActivity {
@@ -27,6 +28,7 @@ public class BaseActivity  extends AppCompatActivity {
         loadLocale();
         baseService = new BaseService(this);
         baseService.copyDatabase();
+
     }
 
     public void setLocale(String languageCode) {
@@ -76,5 +78,18 @@ public class BaseActivity  extends AppCompatActivity {
             }
         }
         return super.dispatchTouchEvent( event );
+    }
+
+    public String getCurrentTime()
+    {
+        String CurrentTime;
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int year = calendar.get(Calendar.YEAR);
+        CurrentTime = hour + ":" + minute + " " + day + "/" + month + "/" + year;
+        return CurrentTime;
     }
 }

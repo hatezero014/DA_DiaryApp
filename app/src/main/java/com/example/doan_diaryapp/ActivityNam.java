@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -16,6 +17,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.doan_diaryapp.Controllers.DataHolderController;
+import com.example.doan_diaryapp.Models.Notification;
+import com.example.doan_diaryapp.Service.NotificationService;
 import com.example.doan_diaryapp.Service.ReminderService;
 
 import java.util.Calendar;
@@ -39,6 +43,10 @@ public class ActivityNam extends BaseActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+//        String chuoiCanTruyen = "Nội dung chuỗi cần truyền";
+//        NotificationService notificationService = new NotificationService(this);
+//        notificationService.Add(new Notification(getCurrentTime(), chuoiCanTruyen));;
 
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         long lastNotificationTime = settings.getLong(PREF_LAST_NOTIFICATION_DATE, 0);
@@ -188,4 +196,5 @@ public class ActivityNam extends BaseActivity {
             }
         });
     }
+
 }

@@ -65,6 +65,10 @@ public class PasswordActivity extends AppCompatActivity {
             createPasswordButton.setVisibility(View.GONE);
             changePasswordButton.setVisibility(View.VISIBLE);
             deletePasswordButton.setVisibility(View.VISIBLE);
+            Intent intent = new Intent(PasswordActivity.this, OpenPasscodeView.class);
+            intent.putExtra("action", "verify");
+            startActivity(intent);
+            finish();
         } else {
             // If password is not set, show CreatePassword button and hide ChangePassword and DeletePassword buttons
             createPasswordButton.setVisibility(View.VISIBLE);
