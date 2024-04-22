@@ -35,7 +35,7 @@ public class ChangeLanguage extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            Intent intent = new Intent(ChangeLanguage.this, ActivityNam.class);
+            Intent intent = new Intent(ChangeLanguage.this, SettingActivity.class);
             startActivity(intent);
             return true;
         }
@@ -78,11 +78,11 @@ public class ChangeLanguage extends BaseActivity {
 
                 languageListViewAdapter.setSelectedItemId(language.getId());
                 setLocale(language.getCode());
-                recreateAllActivities(ChangeLanguage.this, ChangeLanguage.this);
+                recreateAllActivities(ChangeLanguage.this);
             }
         });
     }
-    void recreateAllActivities(Context context, Activity callerActivity) {
+    void recreateAllActivities(Context context) {
         PackageManager packageManager = context.getPackageManager();
         Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
         mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -95,11 +95,6 @@ public class ChangeLanguage extends BaseActivity {
                 newIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(newIntent);
             }
-        }
-
-        if (callerActivity != null) {
-            callerActivity.finish();
-            context.startActivity(callerActivity.getIntent());
         }
     }
 

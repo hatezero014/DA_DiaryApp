@@ -110,4 +110,12 @@
     <string name="most_frequently_recorded">Most frequently recorded</string>
     <string name="frequently_recorded">Frequently recorded</string>
     <string name="no_record">There is no record on this day.</string>
+
+    <!--  Setting  -->
+    <string name="setting_title">Setting</string>
+    <string name="setting_display">Display</string>
+    <string name="setting_theme">Theme</string>
+    <string name="setting_other">Others</string>
+    <string name="setting_feedback">Send feedback</string>
+    <string name="setting_sub_feedback">Help improve this application</string>
 </resources>

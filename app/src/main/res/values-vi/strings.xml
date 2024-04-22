@@ -109,4 +109,11 @@
     <string name="most_frequently_recorded">Được ghi nhiều nhất</string>
     <string name="no_record">Chưa có bản ghi vào ngày này.</string>
 
+    <!--  Setting  -->
+    <string name="setting_title">Cài đặt</string>
+    <string name="setting_display">Giao diện</string>
+    <string name="setting_theme">Chủ đề</string>
+    <string name="setting_other">Khác</string>
+    <string name="setting_feedback">Gửi phản hồi</string>
+    <string name="setting_sub_feedback">Giúp cải thiện ứng dụng này</string>
 </resources>

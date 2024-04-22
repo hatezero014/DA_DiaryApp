@@ -2,6 +2,7 @@ package com.example.doan_diaryapp;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Rect;
@@ -15,11 +16,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.doan_diaryapp.Service.BaseService;
+import com.example.doan_diaryapp.Service.ReminderService;
 
+import java.util.Calendar;
 import java.util.Locale;
 
 public class BaseActivity  extends AppCompatActivity {
     BaseService baseService;
+
+    private static final String PREFS_NAME = "MyPrefsFile";
+    private static final String PREF_LAST_NOTIFICATION_DATE = "LastNotificationDate";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +33,30 @@ public class BaseActivity  extends AppCompatActivity {
         loadLocale();
         baseService = new BaseService(this);
         baseService.copyDatabase();
+
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        long lastNotificationTime = settings.getLong(PREF_LAST_NOTIFICATION_DATE, 0);
+
+        Calendar calendar = Calendar.getInstance();
+        long currentTime = calendar.getTimeInMillis();
+
+        if (!isSameDay(lastNotificationTime, currentTime)) {
+            Intent intent = new Intent(this, ReminderService.class);
+            startService(intent);
+
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putLong(PREF_LAST_NOTIFICATION_DATE, currentTime);
+            editor.apply();
+        }
+    }
+
+    private boolean isSameDay(long time1, long time2) {
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        cal1.setTimeInMillis(time1);
+        cal2.setTimeInMillis(time2);
+        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
     }
 
     public void setLocale(String languageCode) {

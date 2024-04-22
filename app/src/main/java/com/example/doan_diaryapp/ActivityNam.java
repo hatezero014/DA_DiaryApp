@@ -26,9 +26,6 @@ public class ActivityNam extends BaseActivity {
 
     Dialog dialog;
 
-    private static final String PREFS_NAME = "MyPrefsFile";
-    private static final String PREF_LAST_NOTIFICATION_DATE = "LastNotificationDate";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,23 +36,6 @@ public class ActivityNam extends BaseActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        long lastNotificationTime = settings.getLong(PREF_LAST_NOTIFICATION_DATE, 0);
-
-        Calendar calendar = Calendar.getInstance();
-        long currentTime = calendar.getTimeInMillis();
-
-        if (!isSameDay(lastNotificationTime, currentTime)) {
-            Intent intent = new Intent(this, ReminderService.class);
-            startService(intent);
-
-            SharedPreferences.Editor editor = settings.edit();
-            editor.putLong(PREF_LAST_NOTIFICATION_DATE, currentTime);
-            editor.apply();
-        }
-
-        customDialog();
 
         btnDisplayMode = findViewById(R.id.btnDisplayMode);
         btnChangeLanguage = findViewById(R.id.btnChangeLanguage);
@@ -109,82 +89,6 @@ public class ActivityNam extends BaseActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ActivityNam.this, ContactActivity.class);
                 startActivity(intent);
-            }
-        });
-    }
-
-    private boolean isSameDay(long time1, long time2) {
-        Calendar cal1 = Calendar.getInstance();
-        Calendar cal2 = Calendar.getInstance();
-        cal1.setTimeInMillis(time1);
-        cal2.setTimeInMillis(time2);
-        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
-                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
-    }
-
-    public void customDialog() {
-        dialog = new Dialog(ActivityNam.this);
-        dialog.setContentView(R.layout.dialog_display_mode);
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_display_mode));
-        dialog.setCancelable(true);
-
-        btnCancel = dialog.findViewById(R.id.btnCancel);
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        RadioButton rBtnLight = dialog.findViewById(R.id.rBtnLight);
-        RadioButton rBtnDark = dialog.findViewById(R.id.rBtnDark);
-        RadioButton rBtnSystem = dialog.findViewById(R.id.rBtnSystem);
-
-
-        int displayMode = getSharedPreferences("MODE", Context.MODE_PRIVATE).getInt("displayMode", 2);
-        if (displayMode == 0) {
-            rBtnLight.setChecked(true);
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
-        else if (displayMode == 1){
-            rBtnDark.setChecked(true);
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        }
-        else {
-            rBtnSystem.setChecked(true);
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-        }
-        rBtnLight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                SharedPreferences.Editor editor = getSharedPreferences("MODE", Context.MODE_PRIVATE).edit();
-                editor.putInt("displayMode", 0);
-                editor.apply();
-                dialog.dismiss();
-            }
-        });
-
-        rBtnDark.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                SharedPreferences.Editor editor = getSharedPreferences("MODE", Context.MODE_PRIVATE).edit();
-                editor.putInt("displayMode", 1);
-                editor.apply();
-                dialog.dismiss();
-            }
-        });
-
-        rBtnSystem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-                SharedPreferences.Editor editor = getSharedPreferences("MODE", Context.MODE_PRIVATE).edit();
-                editor.putInt("displayMode", 2);
-                editor.apply();
-                dialog.dismiss();
             }
         });
     }
