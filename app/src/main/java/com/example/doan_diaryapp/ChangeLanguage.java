@@ -35,7 +35,7 @@ public class ChangeLanguage extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            Intent intent = new Intent(ChangeLanguage.this, ActivityNam.class);
+            Intent intent = new Intent(ChangeLanguage.this, SettingActivity.class);
             startActivity(intent);
             return true;
         }
@@ -73,16 +73,28 @@ public class ChangeLanguage extends BaseActivity {
                 int _id = (id == 1) ? 2 : 1;
                 Language _language = (Language) languageListViewAdapter.getItem(_id - 1);
 
+                Language lan = languageService.FindById(Language.class, 1);
+                if (lan.getIsActive() == 1) {
+                    if (lan.getId() == (int)id) {
+                        return;
+                    }
+                }
+                else {
+                    if (id == 2) {
+                        return;
+                    }
+                }
+
                 languageService.UpdateById(new Language(language.getName(), language.getCode(), 1), (int)id);
-                languageService.UpdateById(new Language(_language.getName(), _language.getCode(), 0), (int)_id);
+                languageService.UpdateById(new Language(_language.getName(), _language.getCode(), 0), _id);
 
                 languageListViewAdapter.setSelectedItemId(language.getId());
                 setLocale(language.getCode());
-                recreateAllActivities(ChangeLanguage.this, ChangeLanguage.this);
+                recreateAllActivities(ChangeLanguage.this);
             }
         });
     }
-    void recreateAllActivities(Context context, Activity callerActivity) {
+    void recreateAllActivities(Context context) {
         PackageManager packageManager = context.getPackageManager();
         Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
         mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -95,11 +107,6 @@ public class ChangeLanguage extends BaseActivity {
                 newIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(newIntent);
             }
-        }
-
-        if (callerActivity != null) {
-            callerActivity.finish();
-            context.startActivity(callerActivity.getIntent());
         }
     }
 

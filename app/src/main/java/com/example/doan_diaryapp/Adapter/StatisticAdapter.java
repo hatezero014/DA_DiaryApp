@@ -1,11 +1,14 @@
 package com.example.doan_diaryapp.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,11 +16,13 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.doan_diaryapp.Models.EmojiInfo;
 import com.example.doan_diaryapp.Models.Emotion;
 import com.example.doan_diaryapp.Models.Statistic;
 import com.example.doan_diaryapp.R;
 import com.example.doan_diaryapp.Service.EmotionService;
 import com.example.doan_diaryapp.Service.EntryService;
+import com.example.doan_diaryapp.ShowEmojiActivity;
 import com.example.doan_diaryapp.ui.image.Image;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -230,6 +235,8 @@ public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         private TextView tv3;
         private ImageView img4;
         private TextView tv4;
+
+        private Button btn_viewall;
         public EmotionViewHolder(@NonNull View itemView) {
             super(itemView);
             context = itemView.getContext();
@@ -243,6 +250,7 @@ public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             tv3 = itemView.findViewById(R.id.tv_img3);
             img4 = itemView.findViewById(R.id.imageView4);
             tv4 = itemView.findViewById(R.id.tv_img4);
+            btn_viewall = itemView.findViewById(R.id.btn_display_all);
         }
 
         public void setEmotion(int year, int month, @NonNull String emotionType) {
@@ -292,6 +300,19 @@ public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 else {img4.setImageDrawable(drawable);
                     tv4.setText("x"+sortedList.get(i).getValue());}
             }
+
+            btn_viewall.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(),ShowEmojiActivity.class);
+                    ArrayList<String> dataList = new ArrayList<>();
+                    for (Map.Entry<String, Integer> entry : sortedList) {
+                        dataList.add(entry.getKey() + "," + entry.getValue());
+                    }
+                    intent.putStringArrayListExtra("sortedData", dataList);
+                    v.getContext().startActivity(intent);
+                }
+            });
         }
     }
 }

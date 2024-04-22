@@ -87,8 +87,8 @@
     <string name="record_note">Your notes</string>
     <string name="record_done">Done</string>
     <string name="record_toast_fail">Record failed!</string>
-    <string name="record_alert_title">Alert!</string>
-    <string name="record_alert_message">Are you sure you want to exit?</string>
+    <string name="record_alert_title">Exit confirmation</string>
+    <string name="record_alert_message">Are you sure you want to exit?\nChanges will not be saved.</string>
     <string name="record_toast_success">Record successful!</string>
 
     <!--Other (remove)-->
@@ -107,4 +107,15 @@
     <string name="reminder_title">Remind</string>
     <string name="reminder_message">It has been %s years since %s!</string>
 
+    <string name="most_frequently_recorded">Most frequently recorded</string>
+    <string name="frequently_recorded">Frequently recorded</string>
+    <string name="no_record">There is no record on this day.</string>
+
+    <!--  Setting  -->
+    <string name="setting_title">Setting</string>
+    <string name="setting_display">Display</string>
+    <string name="setting_theme">Theme</string>
+    <string name="setting_other">Others</string>
+    <string name="setting_feedback">Send feedback</string>
+    <string name="setting_sub_feedback">Help improve this application</string>
 </resources>

@@ -20,6 +20,12 @@
       <entry key="app">
         <State />
       </entry>
+      <entry key="MainActivity">
+        <State />
+      </entry>
+      <entry key="SettingActivity">
+        <State />
+      </entry>
     </value>
   </component>
 </project>

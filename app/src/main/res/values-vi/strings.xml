@@ -76,8 +76,8 @@
     <string name="record_wake_up">Thức dậy</string>
     <string name="record_note">Ghi chú của bạn</string>
     <string name="record_allow_image">Bạn chỉ có thể chọn tối đa 3 ảnh</string>
-    <string name="record_alert_title">Cảnh báo!</string>
-    <string name="record_alert_message">Bạn có chắc muốn thoát không?</string>
+    <string name="record_alert_title">Xác nhận thoa</string>
+    <string name="record_alert_message">Bạn có chắc muốn thoát không?\nCác thay đổi sẽ không được lưu.</string>
     <string name="record_done">Hoàn thành</string>
     <string name="record_toast_fail">Ghi nhật ký thất bại!</string>
     <string name="record_toast_success">Ghi nhật ký thành công!</string>
@@ -106,5 +106,14 @@
     <!--  Reminder  -->
     <string name="reminder_title">Nhắc nhở</string>
     <string name="reminder_message">Đã được %s năm trôi qua kể từ ngày %s!</string>
+    <string name="most_frequently_recorded">Được ghi nhiều nhất</string>
+    <string name="no_record">Chưa có bản ghi vào ngày này.</string>
 
+    <!--  Setting  -->
+    <string name="setting_title">Cài đặt</string>
+    <string name="setting_display">Giao diện</string>
+    <string name="setting_theme">Chủ đề</string>
+    <string name="setting_other">Khác</string>
+    <string name="setting_feedback">Gửi phản hồi</string>
+    <string name="setting_sub_feedback">Giúp cải thiện ứng dụng này</string>
 </resources>

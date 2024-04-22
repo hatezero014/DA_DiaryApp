@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.widget.TextView;
 
 import com.example.doan_diaryapp.Models.Entry;
+import com.example.doan_diaryapp.Models.EntryPartner;
+import com.example.doan_diaryapp.Models.EntryPhoto;
 import com.example.doan_diaryapp.R;
 import com.example.doan_diaryapp.ui.collection.CarouselModel;
 
@@ -19,10 +21,23 @@ public class EntryPhotoService extends BaseService {
         super(context);
     }
 
+    public EntryPhoto FindByEntryIdAndPhotoId(Class<EntryPhoto> clazz, int entryId, int photoId) {
+        db = this.getReadableDatabase();
+        String selection = "EntryId=? AND PhotoId=?";
+        String[] selectionArgs = new String[]{String.valueOf(entryId), String.valueOf(photoId)};
+        Cursor cursor = db.query(clazz.getSimpleName(), null, selection, selectionArgs, null, null, null);
+        EntryPhoto object = null;
+        if (cursor != null && cursor.moveToFirst()) {
+            object = CreateModelObjectFromCursor(clazz, cursor);
+            cursor.close();
+        }
+        return object;
+    }
+
     public ArrayList<CarouselModel> getPhotoFromDatabase() {
         db = this.getReadableDatabase();
         ArrayList<CarouselModel> list = new ArrayList<>();
-        try (Cursor cursor = db.rawQuery("SELECT * FROM EntryPhoto", null)) {
+        try (Cursor cursor = db.rawQuery("SELECT * FROM EntryPhoto ORDER BY EntryId DESC", null)) {
             if (cursor != null && cursor.moveToFirst()) {
                 int photoScoreIndex = cursor.getColumnIndex("Photo");
                 do {

@@ -38,17 +38,18 @@ public class CollectionFragment extends Fragment {
 
     private EntryPhotoService entryPhotoService;
 
-    private void updateEntries() {
-        List<Entry> entryList = importantDayService.getEntriesFromDatabaseQT();
-        mAdapter.clear();
-        mAdapter.addAll(entryList);
-        mAdapter.notifyDataSetChanged();
-    }
+
 
     private void updateView() {
-        View rootView = getView();
-        if (rootView != null) {
-            RecyclerView recyclerView = rootView.findViewById(R.id.carousel_recycler_view);
+        View view = getView();
+        if (view != null) {
+            ListViewDayQT(view);
+            mListView = view.findViewById(R.id.ListDayQT);
+            importantDayService = new ImportantDayService(getContext());
+            List<Entry> entryList = importantDayService.getEntriesFromDatabaseQT();
+            mAdapter = new EntryAdapter(getContext(), entryList);
+            mListView.setAdapter(mAdapter);
+            RecyclerView recyclerView = view.findViewById(R.id.carousel_recycler_view);
             ViewGroup.LayoutParams layoutParams = recyclerView.getLayoutParams();
             layoutParams.height = (int) getResources().getDimension(R.dimen.recyclerview_height);
             recyclerView.setLayoutParams(layoutParams);
@@ -56,7 +57,6 @@ public class CollectionFragment extends Fragment {
             ArrayList<CarouselModel> list = entryPhotoService.getPhotoFromDatabase();
             carouselAdapter = new CarouselAdapter(list, requireContext());
             recyclerView.setAdapter(carouselAdapter);
-
         }
     }
 
@@ -71,7 +71,6 @@ public class CollectionFragment extends Fragment {
         List<Entry> entryList = importantDayService.getEntriesFromDatabaseQT();
         mAdapter = new EntryAdapter(getContext(), entryList);
         mListView.setAdapter(mAdapter);
-
         RecyclerView recyclerView = view.findViewById(R.id.carousel_recycler_view);
         ViewGroup.LayoutParams layoutParams = recyclerView.getLayoutParams();
         layoutParams.height = (int) getResources().getDimension(R.dimen.recyclerview_height);
@@ -83,10 +82,6 @@ public class CollectionFragment extends Fragment {
 
         return view;
     }
-
-
-
-
 
 
     private void ListViewDayQT(View view)
@@ -112,15 +107,11 @@ public class CollectionFragment extends Fragment {
 
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
-        updateEntries();
         updateView();
     }
-
-
 
     @Override
     public void onDestroyView() {

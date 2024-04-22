@@ -4,8 +4,15 @@
 
     <item
         android:id="@+id/action_new_record"
-        android:title="@string/title_settings"
+        android:icon="@drawable/common_add_or_edit"
+        app:showAsAction="ifRoom"
+        android:title="@string/add_record"
+        android:iconTint="@color/md_theme_onSurfaceVariant"/>
+
+    <item
+        android:id="@+id/action_settings"
         android:icon="@drawable/common_settings"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom"
+        android:title="@string/title_settings" />
 
 </menu>

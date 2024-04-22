@@ -16,6 +16,18 @@ public class EntryPartnerService extends BaseService {
         super(context);
     }
 
+    public EntryPartner FindByEntryIdAndPartnerId(Class<EntryPartner> clazz, int entryId, int partnerId) {
+        db = this.getReadableDatabase();
+        String selection = "EntryId=? AND PartnerId=?";
+        String[] selectionArgs = new String[]{String.valueOf(entryId), String.valueOf(partnerId)};
+        Cursor cursor = db.query(clazz.getSimpleName(), null, selection, selectionArgs, null, null, null);
+        EntryPartner object = null;
+        if (cursor != null && cursor.moveToFirst()) {
+            object = CreateModelObjectFromCursor(clazz, cursor);
+            cursor.close();
+        }
+        return object;
+    }
     public List<Partner> getPartnerIdByMonthYear(int month, int year){
         db = this.getReadableDatabase();
         List<Partner> entryList = new ArrayList<>();

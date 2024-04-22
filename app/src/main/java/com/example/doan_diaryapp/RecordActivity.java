@@ -26,8 +26,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+import androidx.activity.OnBackPressedCallback;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedDispatcher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -73,12 +75,15 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
 public class RecordActivity extends BaseActivity {
+
+    private OnBackPressedDispatcher dispatcher;
 
     private final List<Integer> imageMoodList = Arrays.asList(
             R.drawable.emoji_emotion_joyful, R.drawable.emoji_emotion_cool, R.drawable.emoji_emotion_melting, R.drawable.emoji_emotion_pleased,
@@ -119,6 +124,21 @@ public class RecordActivity extends BaseActivity {
     Slider slider;
     TextView textNode, textCount;
     Button btnDone;
+    boolean checkChangedImage = false;
+    List<Integer> partnerIndexes, weatherIndexes, emotionIndexes, activityIndexes;
+    ImageRecordAdapter adapter1, adapter2, adapter3, adapter4;
+    Entry result;
+    EntryService entryService;
+    EntryEmotionService entryEmotionService;
+    EntryActivityService entryActivityService;
+    EntryPartnerService entryPartnerService;
+    EntryPhotoService entryPhotoService;
+    EntryWeatherService entryWeatherService;
+    ActivityService activityService;
+    EmotionService emotionService;
+    PartnerService partnerService;
+    WeatherService weatherService;
+    ImportantDayService importantDayService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,20 +151,28 @@ public class RecordActivity extends BaseActivity {
             return insets;
         });
 
+        dispatcher = getOnBackPressedDispatcher();
+        dispatcher.addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                showDialogAlert();
+            }
+        });
+
         Intent intent = getIntent();
         date = intent.getStringExtra("Date");
 
-        EntryService entryService = new EntryService(this);
-        EntryEmotionService entryEmotionService = new EntryEmotionService(this);
-        EntryActivityService entryActivityService = new EntryActivityService(this);
-        EntryPartnerService entryPartnerService = new EntryPartnerService(this);
-        EntryPhotoService entryPhotoService = new EntryPhotoService(this);
-        EntryWeatherService entryWeatherService = new EntryWeatherService(this);
-        ActivityService activityService = new ActivityService(this);
-        EmotionService emotionService = new EmotionService(this);
-        PartnerService partnerService = new PartnerService(this);
-        WeatherService weatherService = new WeatherService(this);
-        ImportantDayService importantDayService = new ImportantDayService(this);
+        entryService = new EntryService(this);
+        entryEmotionService = new EntryEmotionService(this);
+        entryActivityService = new EntryActivityService(this);
+        entryPartnerService = new EntryPartnerService(this);
+        entryPhotoService = new EntryPhotoService(this);
+        entryWeatherService = new EntryWeatherService(this);
+        activityService = new ActivityService(this);
+        emotionService = new EmotionService(this);
+        partnerService = new PartnerService(this);
+        weatherService = new WeatherService(this);
+        importantDayService = new ImportantDayService(this);
 
         imgFirst = findViewById(R.id.imageFirst);
         imgSecond = findViewById(R.id.imageSecond);
@@ -162,19 +190,15 @@ public class RecordActivity extends BaseActivity {
 
         RecyclerView recyclerView1 = findViewById(R.id.recyclerView1);
         recyclerView1.setLayoutManager(new GridLayoutManager(this, 4));
-        ImageRecordAdapter adapter1;
 
         RecyclerView recyclerView2 = findViewById(R.id.recyclerView2);
         recyclerView2.setLayoutManager(new GridLayoutManager(this, 4));
-        ImageRecordAdapter adapter2;
 
         RecyclerView recyclerView3 = findViewById(R.id.recyclerView3);
         recyclerView3.setLayoutManager(new GridLayoutManager(this, 4));
-        ImageRecordAdapter adapter3;
 
         RecyclerView recyclerView4 = findViewById(R.id.recyclerView4);
         recyclerView4.setLayoutManager(new GridLayoutManager(this, 4));
-        ImageRecordAdapter adapter4;
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -182,7 +206,7 @@ public class RecordActivity extends BaseActivity {
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Entry result = entryService.FindByDate(new Entry(), date);
+        result = entryService.FindByDate(new Entry(), date);
         if (result != null) {
             textNode.setText(result.getNote());
             wakeupButton.setText(result.getWakeUp());
@@ -194,7 +218,7 @@ public class RecordActivity extends BaseActivity {
             ArrayList<EntryWeather> entryWeathers = entryWeatherService.GetAllByEntryId(EntryWeather.class, result.getId());
             ArrayList<EntryPhoto> entryPhotos = entryPhotoService.GetAllByEntryId(EntryPhoto.class, result.getId());
 
-            List<Integer> activityIndexes = new ArrayList<>();
+            activityIndexes = new ArrayList<>();
             for (EntryActivity entity : entryActivities) {
                 Activity activity = activityService.FindById(Activity.class, entity.getActivityId());
                 int index = imageActivityList.indexOf(getDrawableResourceId(this, activity.getIcon()));
@@ -203,7 +227,7 @@ public class RecordActivity extends BaseActivity {
                 }
             }
 
-            List<Integer> emotionIndexes = new ArrayList<>();
+            emotionIndexes = new ArrayList<>();
             for (EntryEmotion entity : entryEmotions) {
                 Emotion emotion = emotionService.FindById(Emotion.class, entity.getEmotionId());
                 int index = imageMoodList.indexOf(getDrawableResourceId(this, emotion.getIcon()));
@@ -212,7 +236,7 @@ public class RecordActivity extends BaseActivity {
                 }
             }
 
-            List<Integer> partnerIndexes = new ArrayList<>();
+            partnerIndexes = new ArrayList<>();
             for (EntryPartner entity : entryPartners) {
                 Partner partner = partnerService.FindById(Partner.class, entity.getPartnerId());
                 int index = imageCompanionList.indexOf(getDrawableResourceId(this, partner.getIcon()));
@@ -221,7 +245,7 @@ public class RecordActivity extends BaseActivity {
                 }
             }
 
-            List<Integer> weatherIndexes = new ArrayList<>();
+            weatherIndexes = new ArrayList<>();
             for (EntryWeather entity : entryWeathers) {
                 Weather weather = weatherService.FindById(Weather.class, entity.getWeatherId());
                 int index = imageWeatherList.indexOf(getDrawableResourceId(this, weather.getIcon()));
@@ -314,8 +338,9 @@ public class RecordActivity extends BaseActivity {
                 imgFirst.setImageDrawable(null);
                 btnDeImgFi.setVisibility(View.GONE);
                 imgFiUri = null;
-                countImage--;;
+                countImage--;
                 textCount.setText(String.format(Locale.ENGLISH, "%d/%d", countImage, 3));
+                checkChangedImage = true;
 
                 if (imgSecond.getDrawable() != null) {
                     imgFirst.setImageDrawable(imgSecond.getDrawable());
@@ -353,6 +378,7 @@ public class RecordActivity extends BaseActivity {
                 imgSeUri = null;
                 countImage--;;
                 textCount.setText(String.format(Locale.ENGLISH, "%d/%d", countImage, 3));
+                checkChangedImage = true;
 
                 if (imgThird.getDrawable() != null) {
                     imgSecond.setImageDrawable(imgThird.getDrawable());
@@ -376,6 +402,7 @@ public class RecordActivity extends BaseActivity {
                 imgThUri = null;
                 countImage--;;
                 textCount.setText(String.format(Locale.ENGLISH, "%d/%d", countImage, 3));
+                checkChangedImage = true;
             }
         });
 
@@ -433,7 +460,8 @@ public class RecordActivity extends BaseActivity {
                             String relativePath = saveImageToAppDirectory(RecordActivity.this, imgThird);
                             entryPhotoService.Add(new EntryPhoto(id, relativePath));
                         }
-                    } else {
+                    }
+                    else {
                         int id = result.getId();
                         entryService.UpdateById(entity, id);
                         entryPhotoService.DeleteByEntryId(EntryPhoto.class, id);
@@ -482,7 +510,7 @@ public class RecordActivity extends BaseActivity {
                         }
                     }
                     Toast.makeText(RecordActivity.this, R.string.record_toast_success, Toast.LENGTH_SHORT).show();
-                    onBackPressed();
+                    finish();
                 }
                 catch (Exception e) {
                     Toast.makeText(RecordActivity.this, R.string.record_toast_fail, Toast.LENGTH_SHORT).show();
@@ -583,6 +611,7 @@ public class RecordActivity extends BaseActivity {
                             imgFirst.setVisibility(View.VISIBLE);
                             imgFiUri = imageUri;
                             btnDeImgFi.setVisibility(View.VISIBLE);
+                            checkChangedImage = true;
                             countImage++;
                             textCount.setText(String.format(Locale.ENGLISH, "%d/%d", countImage, 3));
                         }
@@ -592,6 +621,7 @@ public class RecordActivity extends BaseActivity {
                                 imgSecond.setVisibility(View.VISIBLE);
                                 imgSeUri = imageUri;
                                 btnDeImgSe.setVisibility(View.VISIBLE);
+                                checkChangedImage = true;
                                 countImage++;;
                                 textCount.setText(String.format(Locale.ENGLISH, "%d/%d", countImage, 3));
                             }
@@ -600,6 +630,7 @@ public class RecordActivity extends BaseActivity {
                                     imgThird.setImageURI(imageUri);
                                     imgThird.setVisibility(View.VISIBLE);
                                     imgThUri = imageUri;
+                                    checkChangedImage = true;
                                     btnDeImgTh.setVisibility(View.VISIBLE);
                                     countImage++;;
                                     textCount.setText(String.format(Locale.ENGLISH, "%d/%d", countImage, 3));
@@ -657,10 +688,85 @@ public class RecordActivity extends BaseActivity {
             }
         }
         if (id == android.R.id.home) {
-            showDialogAlert();
+            String notes = textNode.getText().toString();
+            String wakeUp = wakeupButton.getText().toString();
+            String sleep = bedtimeButton.getText().toString();
+            int overallScore = (int) slider.getValue();
+            List<Integer> selectedItems1 = adapter1.getSelectedItems();
+            List<Integer> selectedItems2 = adapter2.getSelectedItems();
+            List<Integer> selectedItems3 = adapter3.getSelectedItems();
+            List<Integer> selectedItems4 = adapter4.getSelectedItems();
+            Entry entity = new Entry(notes, date, overallScore, wakeUp, sleep);
+            boolean checkChanged = false;
+            if (result.getOverallScore() == entity.getOverallScore()
+                    && result.getDate().equals(entity.getDate())
+                    && result.getSleep().equals(entity.getSleep())
+                    && result.getNote().equals(entity.getNote())
+                    && result.getWakeUp().equals(entity.getWakeUp())) {
+                int entryId = result.getId();
+                ArrayList<EntryEmotion> entryEmotions = entryEmotionService.GetAllByEntryId(EntryEmotion.class, entryId);
+                ArrayList<EntryActivity> entryActivities = entryActivityService.GetAllByEntryId(EntryActivity.class, entryId);
+                ArrayList<EntryPartner> entryPartners = entryPartnerService.GetAllByEntryId(EntryPartner.class, entryId);
+                ArrayList<EntryWeather> entryWeathers = entryWeatherService.GetAllByEntryId(EntryWeather.class, entryId);
+                if (entryEmotions.size() == selectedItems1.size()
+                    && entryActivities.size() == selectedItems2.size()
+                    && entryPartners.size() == selectedItems3.size()
+                    && entryWeathers.size() == selectedItems4.size()) {
+                    for (Integer imageId : selectedItems1) {
+                        String icon = getResources().getResourceEntryName(imageMoodList.get(imageId));
+                        Emotion emotion = emotionService.GetByIcon(new Emotion(), icon);
+                        if (entryEmotionService.FindByEntryIdAndEmotionId(EntryEmotion.class, entryId, emotion.getId()) == null) {
+                            checkChanged = true;
+                            break;
+                        }
+                    }
+
+                    for (Integer imageId : selectedItems2) {
+                        String icon = getResources().getResourceEntryName(imageActivityList.get(imageId));
+                        Activity activity = activityService.GetByIcon(new Activity(), icon);
+                        if (entryActivityService.FindByEntryIdAndActivityId(EntryActivity.class, entryId, activity.getId()) == null) {
+                            checkChanged = true;
+                            break;
+                        }
+                    }
+
+                    for (Integer imageId : selectedItems3) {
+                        String icon = getResources().getResourceEntryName(imageCompanionList.get(imageId));
+                        Partner partner = partnerService.GetByIcon(new Partner(), icon);
+                        if (entryPartnerService.FindByEntryIdAndPartnerId(EntryPartner.class, entryId, partner.getId()) == null) {
+                            checkChanged = true;
+                            break;
+                        }
+                    }
+
+                    for (Integer imageId : selectedItems4) {
+                        String icon = getResources().getResourceEntryName(imageWeatherList.get(imageId));
+                        Weather weather = weatherService.GetByIcon(new Weather(), icon);
+                        if (entryWeatherService.FindByEntryIdAndWeatherId(EntryWeather.class, entryId, weather.getId()) == null) {
+                            checkChanged = true;
+                            break;
+                        }
+                    }
+                    if (checkChangedImage)
+                        checkChanged = true;
+                }
+                else {
+                    checkChanged = true;
+                }
+            }
+            else {
+                checkChanged = true;
+            }
+            if (checkChanged) {
+                showDialogAlert();
+            }
+            else {
+                finish();
+            }
         }
         return true;
     }
+
 
     private void showDialogAlert() {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
@@ -669,12 +775,11 @@ public class RecordActivity extends BaseActivity {
                 .setNegativeButton(R.string.button_cancel, (dialog, which) -> dialog.dismiss())
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        onBackPressed();
+                        finish();
                     }
                 });
         builder.create().show();
     }
-
 
     @Override
     public void onBackPressed() {

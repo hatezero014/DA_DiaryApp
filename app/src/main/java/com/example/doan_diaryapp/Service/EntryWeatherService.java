@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.Cursor;
 
 import com.example.doan_diaryapp.Models.Activity;
+import com.example.doan_diaryapp.Models.EntryPhoto;
+import com.example.doan_diaryapp.Models.EntryWeather;
 import com.example.doan_diaryapp.Models.Weather;
 
 import java.util.ArrayList;
@@ -14,6 +16,18 @@ public class EntryWeatherService extends BaseService {
         super(context);
     }
 
+    public EntryWeather FindByEntryIdAndWeatherId(Class<EntryWeather> clazz, int entryId, int weatherId) {
+        db = this.getReadableDatabase();
+        String selection = "EntryId=? AND WeatherId=?";
+        String[] selectionArgs = new String[]{String.valueOf(entryId), String.valueOf(weatherId)};
+        Cursor cursor = db.query(clazz.getSimpleName(), null, selection, selectionArgs, null, null, null);
+        EntryWeather object = null;
+        if (cursor != null && cursor.moveToFirst()) {
+            object = CreateModelObjectFromCursor(clazz, cursor);
+            cursor.close();
+        }
+        return object;
+    }
     public List<Weather> getWeatherIdByMonthYear(int month, int year){
         db = this.getReadableDatabase();
         List<Weather> entryList = new ArrayList<>();

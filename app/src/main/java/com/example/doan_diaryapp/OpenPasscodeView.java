@@ -26,9 +26,14 @@ public class OpenPasscodeView extends BaseActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_open_passcode_view);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
+
         passcodeView = findViewById(R.id.passcodeView1);
         action = getIntent().getStringExtra("action");
         sharedPreferences = getSharedPreferences("Passcode", MODE_PRIVATE);
+
 
         if ("create".equals(action)) {
             SetPassCode();
