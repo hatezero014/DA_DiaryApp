@@ -26,15 +26,5 @@ public class ActivityPhong extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phong);
 
-//        mTablayout = findViewById(R.id.tb_thongke);
-//        viewPager = findViewById(R.id.vp_thongke);
-//
-//        mTablayout.setupWithViewPager(viewPager);
-//
-//        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-//        viewPagerAdapter.addFragment(new ByMonthFragment(), getResources().getString(R.string.by_month_fragment));
-//        viewPagerAdapter.addFragment(new EntireYearFragment(), getResources().getString(R.string.entire_year_fragment));
-//        viewPager.setAdapter(viewPagerAdapter);
-
     }
 }
