@@ -14,5 +14,4 @@
         android:icon="@drawable/record_star"
         app:showAsAction="ifRoom"/>
 
-
 </menu>
