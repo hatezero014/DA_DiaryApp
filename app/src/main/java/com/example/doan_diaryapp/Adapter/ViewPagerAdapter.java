@@ -16,7 +16,6 @@ import java.util.ArrayList;
 
 public class ViewPagerAdapter extends FragmentStateAdapter {
 
-
     public ViewPagerAdapter(@NonNull Fragment fragment) {
         super(fragment);
 

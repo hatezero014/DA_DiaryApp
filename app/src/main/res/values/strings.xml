@@ -93,8 +93,8 @@
     <string name="record_toast_success">Record successful!</string>
 
     <!--Other (remove)-->
-    <string name="by_month_fragment">By Month fragment</string>
-    <string name="entire_year_fragment">Entire Year fragment</string>
+    <string name="by_month">By Month</string>
+    <string name="entire_year">Year</string>
     <string name="Go">Go</string>
     <string name="year_in_pocket">Year in Pocket</string>
     <string name="ShowDiaLog">Show Dialog</string>
