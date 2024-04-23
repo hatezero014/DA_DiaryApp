@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="statistics_grid">#ececec</color>
     <color name="colorIconDownload">#34343e</color>
     <color name="colorIconShare">#34343e</color>
     <color name="colorShareText">#70716d</color>

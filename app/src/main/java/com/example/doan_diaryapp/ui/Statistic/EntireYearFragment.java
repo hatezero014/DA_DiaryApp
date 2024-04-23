@@ -62,13 +62,13 @@ public class EntireYearFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_entire_year, container, false);
 
-        statisticAdapter = new StatisticAdapter();
+        statisticAdapter = new StatisticAdapter(getContext());
 
         spn_yeary = view.findViewById(R.id.spn_yeary);
         updateSpinnerYear(container);
 
         recyclerView_year = view.findViewById(R.id.rcv_thong_ke_nam);
-        statisticAdapter = new StatisticAdapter();
+        statisticAdapter = new StatisticAdapter(getContext());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView_year.setLayoutManager(linearLayoutManager);
         statisticAdapter.setData(getListStatistic());

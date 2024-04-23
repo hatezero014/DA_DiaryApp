@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_diaryapp.Models.EmojiInfo;
@@ -41,6 +42,12 @@ import java.util.Set;
 public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private static int type_linechart = 1;
     private static int type_emotion = 2;
+
+    private Context mContext;
+
+    public StatisticAdapter(Context context) {
+        mContext = context;
+    }
 
     private List<Statistic> mStatistic;
 
@@ -98,35 +105,55 @@ public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         private TextView tv_trungbinh;
         public LineChartViewHolder(@NonNull View itemView) {
             super(itemView);
-
             lineChart = itemView.findViewById(R.id.lineChart);
             tv_trungbinh = itemView.findViewById(R.id.tv_average_rating);
         }
 
-        public void setFormatLinechart(int trucX){
+        public void setFormatLinechart(int trucX) {
+            lineChart.setDescription(null);
+            lineChart.setScaleYEnabled(false);
+            lineChart.setDoubleTapToZoomEnabled(false);
+            lineChart.setBackgroundColor(Color.parseColor("#00000000"));
+            lineChart.setHighlightPerTapEnabled(false);
+            lineChart.setHighlightPerDragEnabled(false);
+            lineChart.setExtraBottomOffset(6);
+
             XAxis xAxis = lineChart.getXAxis();
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            xAxis.setLabelCount(8);
-            xAxis.setTextColor(Color.RED);
-            xAxis.setAxisLineColor(Color.BLACK);
-            xAxis.setAxisLineWidth(1f);
+            xAxis.setTextSize(14);
+            xAxis.setTextColor(ContextCompat.getColor(mContext, R.color.md_theme_onSurfaceVariant));
+            xAxis.setAxisLineColor(ContextCompat.getColor(mContext, R.color.statistics_grid));
+            xAxis.setGridColor(ContextCompat.getColor(mContext, R.color.statistics_grid));
+            xAxis.setAxisLineWidth(2);
             xAxis.setGranularity(1f);
+            xAxis.setGridLineWidth(2);
+            // xAxis.setYOffset(10);
             xAxis.setAxisMinimum(1f);
             xAxis.setAxisMaximum(trucX);
+            xAxis.setLabelCount(7); // value: trucX
             xAxis.setGranularityEnabled(true);
+            // experimental
+            xAxis.setDrawAxisLine(false);
 
             YAxis yAxis = lineChart.getAxisLeft();
+            yAxis.setAxisLineColor(ContextCompat.getColor(mContext, R.color.statistics_grid));
+            yAxis.setTextSize(14);
+            yAxis.setTextColor(ContextCompat.getColor(mContext, R.color.md_theme_onSurfaceVariant));
+            xAxis.setAxisLineColor(ContextCompat.getColor(mContext, R.color.statistics_grid));
+            yAxis.setGridColor(ContextCompat.getColor(mContext, R.color.statistics_grid));
+            yAxis.setXOffset(10);
             yAxis.setAxisMinimum(0f);
             yAxis.setAxisMaximum(10f);
-            yAxis.setAxisLineWidth(1f);
-            yAxis.setAxisLineColor(Color.BLACK);
-            yAxis.setTextColor(Color.RED);
+            yAxis.setAxisLineWidth(2);
             yAxis.setLabelCount(10);
+            yAxis.setGridLineWidth(2);
+            // experimental
+            yAxis.setDrawAxisLine(false);
 
+            lineChart.getLegend().setEnabled(false);
             lineChart.getAxisRight().setEnabled(false);
-            lineChart.getXAxis().setDrawGridLines(false);
-            lineChart.getAxisLeft().setDrawGridLines(false);
-
+//            lineChart.getXAxis().setDrawGridLines(false);
+//            lineChart.getAxisLeft().setDrawGridLines(false);
         }
 
         public void setData(int year, int month) {
