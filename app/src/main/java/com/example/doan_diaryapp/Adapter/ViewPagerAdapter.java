@@ -7,40 +7,32 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.doan_diaryapp.ui.Statistic.ByMonthFragment;
 import com.example.doan_diaryapp.ui.Statistic.EntireYearFragment;
 
 import java.util.ArrayList;
 
-public class ViewPagerAdapter extends FragmentPagerAdapter {
+public class ViewPagerAdapter extends FragmentStateAdapter {
 
-    private final ArrayList<Fragment> fragmentArrayList = new ArrayList<>();
-    private final ArrayList<String> fragmentTitle = new ArrayList<>();
-    public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
-        super(fm, behavior);
+
+    public ViewPagerAdapter(@NonNull Fragment fragment) {
+        super(fragment);
+
     }
 
     @NonNull
     @Override
-    public Fragment getItem(int position) {
-        return fragmentArrayList.get(position);
+    public Fragment createFragment(int position) {
+        if(position == 0)
+            return new ByMonthFragment();
+        return new EntireYearFragment();
     }
 
     @Override
-    public int getCount() {
-        return fragmentArrayList.size();
-    }
+    public int getItemCount() {
+        return 2;
 
-    @Nullable
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return fragmentTitle.get(position);
-    }
-
-    public void addFragment(Fragment fragment, String title)
-    {
-        fragmentArrayList.add(fragment);
-        fragmentTitle.add(title);
     }
 }
