@@ -1,6 +1,5 @@
 package com.example.doan_diaryapp.ui.Statistic;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -46,12 +45,11 @@ public class ByMonthFragment extends Fragment {
     private Spinner spn_yearm;
     private Spinner spn_monthm;
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_by_month, container, false); //pass the correct layout name for the fragment
+        LayoutInflater lf = getActivity().getLayoutInflater();
+        View view =  lf.inflate(R.layout.fragment_by_month, container, false); //pass the correct layout name for the fragment
 
         recyclerView_month = view.findViewById(R.id.rcv_thong_ke_thang);
 
@@ -100,7 +98,7 @@ public class ByMonthFragment extends Fragment {
             years.add(i);
         }
 
-        ArrayAdapter<Integer> adapterYear = new ArrayAdapter<Integer>(getContext(), android.R.layout.simple_spinner_item,years);
+        ArrayAdapter<Integer> adapterYear = new ArrayAdapter<Integer>(container.getContext(), android.R.layout.simple_spinner_item,years);
 
         adapterYear.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spn_yearm.setAdapter(adapterYear);

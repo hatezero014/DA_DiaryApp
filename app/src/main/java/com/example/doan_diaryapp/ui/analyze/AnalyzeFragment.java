@@ -1,21 +1,19 @@
 package com.example.doan_diaryapp.ui.analyze;
 
 import android.os.Bundle;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
-
+import com.example.doan_diaryapp.Adapter.ViewPagerAdapter;
 import com.example.doan_diaryapp.R;
 import com.example.doan_diaryapp.databinding.FragmentAnalyzeBinding;
-
-
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -23,29 +21,31 @@ public class AnalyzeFragment extends Fragment {
 
     private FragmentAnalyzeBinding binding;
 
-    private TabLayout mTablayout;
-    private ViewPager2 viewPager;
+    private ViewPager2 viewPager2;
+    private TabLayout tabLayout;
     private ViewPagerAdapter viewPagerAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        AnalyzeViewModel notificationsViewModel =
+                new ViewModelProvider(this).get(AnalyzeViewModel.class);
 
-        View view = inflater.inflate(R.layout.fragment_analyze,container,false);
+        binding = FragmentAnalyzeBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
 
-        mTablayout = view.findViewById(R.id.tb_thongkefm);
-        viewPager = view.findViewById(R.id.vp_thongkefm);
+        viewPager2 = root.findViewById(R.id.vp_thongkefm);
+        tabLayout = root.findViewById(R.id.tab_thongke);
 
         viewPagerAdapter = new ViewPagerAdapter(this);
-        viewPager.setAdapter(viewPagerAdapter);
+        viewPager2.setAdapter(viewPagerAdapter);
 
-        new TabLayoutMediator(mTablayout, viewPager, (tab, i) -> {
-            if (i == 0)
-                tab.setText(getString(R.string.by_month));
-            else if (i == 1)
-                tab.setText(getString(R.string.entire_year));
+        new TabLayoutMediator(tabLayout, viewPager2, (tab, i) -> {
+            if(i==0)
+                tab.setText(R.string.by_month);
+            else  tab.setText(R.string.entire_year);
         }).attach();
-
-        return view;
+        
+        return root;
     }
 
     @Override

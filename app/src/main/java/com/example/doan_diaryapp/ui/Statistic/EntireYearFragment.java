@@ -51,6 +51,7 @@ public class EntireYearFragment extends Fragment {
     private StatisticAdapter statisticAdapter;
     private Spinner spn_yeary;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
