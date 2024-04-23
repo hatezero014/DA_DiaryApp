@@ -45,6 +45,7 @@ public class ByMonthFragment extends Fragment {
     private Spinner spn_yearm;
     private Spinner spn_monthm;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

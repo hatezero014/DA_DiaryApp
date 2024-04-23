@@ -17,6 +17,7 @@ import com.example.doan_diaryapp.databinding.FragmentAnalyzeBinding;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+
 public class AnalyzeFragment extends Fragment {
 
     private FragmentAnalyzeBinding binding;
@@ -44,6 +45,7 @@ public class AnalyzeFragment extends Fragment {
                 tab.setText(R.string.by_month);
             else  tab.setText(R.string.entire_year);
         }).attach();
+
         
         return root;
     }

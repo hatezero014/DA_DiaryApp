@@ -19,6 +19,7 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
 
     public ViewPagerAdapter(@NonNull Fragment fragment) {
         super(fragment);
+
     }
 
     @NonNull
@@ -32,5 +33,6 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     @Override
     public int getItemCount() {
         return 2;
+
     }
 }

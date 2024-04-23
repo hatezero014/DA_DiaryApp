@@ -7,8 +7,8 @@
     tools:context=".ui.analyze.AnalyzeFragment"
     style="@style/Theme.Material3.DayNight.NoActionBar">
 
+
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/analyse_TopAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent">
@@ -39,5 +39,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/analyse_TopAppBar" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

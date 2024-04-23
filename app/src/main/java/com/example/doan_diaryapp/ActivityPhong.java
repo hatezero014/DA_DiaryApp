@@ -35,5 +35,6 @@ public class ActivityPhong extends BaseActivity {
 //        viewPagerAdapter.addFragment(new ByMonthFragment(), getResources().getString(R.string.by_month_fragment));
 //        viewPagerAdapter.addFragment(new EntireYearFragment(), getResources().getString(R.string.entire_year_fragment));
 //        viewPager.setAdapter(viewPagerAdapter);
+
     }
 }
