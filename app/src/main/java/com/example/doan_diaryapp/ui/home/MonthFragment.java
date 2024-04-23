@@ -133,6 +133,13 @@ public class MonthFragment extends Fragment {
         int check = entryService.getEntriesNoteFromDatabase(d,m,y,note,rate);
         textViewNote.setText(note);
         textViewRate.setText("Mood rating: "+rate);
+
+        if (note.length()==0){
+            textViewNote.setVisibility(View.GONE);
+        } else {
+            textViewNote.setVisibility(View.VISIBLE);
+        }
+
         if (check==0) {
             linearLayout.setVisibility(View.GONE);
         }

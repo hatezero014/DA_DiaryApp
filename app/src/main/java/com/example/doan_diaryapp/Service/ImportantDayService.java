@@ -39,17 +39,13 @@ public class ImportantDayService extends BaseService {
                     int id = cursor.getInt(idColumnIndex);
                     String note = cursor.getString(noteColumnIndex).trim();
                     String date = cursor.getString(dateColumnIndex);
-
-                    int d = note.length();
-                    if (d != 0 ) {
-                        entryList.add(new Entry(id, note, date));
-                    }
+                    entryList.add(new Entry(id, note, date));
                 } while (cursor.moveToNext());
             }
         }
         finally {
             if (db != null) {
-                db.close(); // Đảm bảo đóng kết nối đến cơ sở dữ liệu
+                db.close();
             }
         }
         return entryList;
