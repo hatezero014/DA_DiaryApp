@@ -84,8 +84,8 @@
     <string name="record_toast_success">Ghi nhật ký thành công!</string>
 
     <!--Other (remove)-->
-    <string name="by_month">Tháng</string>
-    <string name="entire_year">Năm</string>
+    <string name="by_month_fragment">Tháng</string>
+    <string name="entire_year_fragment">Năm</string>
     <string name="Go">Đi</string>
     <string name="year_in_pocket">Một năm trong Pocket</string>
     <string name="ShowDiaLog">Hiển thị</string>
