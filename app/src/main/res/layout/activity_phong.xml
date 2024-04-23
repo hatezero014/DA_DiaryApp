@@ -5,10 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    style="@style/Theme.Material3.DayNight.NoActionBar"
     tools:context=".ActivityPhong">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tb_thongke"
+        style="@style/Widget.Material3.TabLayout.OnSurface"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

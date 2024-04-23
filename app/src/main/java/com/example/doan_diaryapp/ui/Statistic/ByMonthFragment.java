@@ -50,8 +50,6 @@ public class ByMonthFragment extends Fragment {
         // Required empty public constructor
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -66,7 +64,7 @@ public class ByMonthFragment extends Fragment {
         updateSpinnerYear(container);
         updateSpinnerMonth(container);
 
-        statisticAdapter = new StatisticAdapter();
+        statisticAdapter = new StatisticAdapter(getContext());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView_month.setLayoutManager(linearLayoutManager);
         statisticAdapter.setData(getListStatistic());
@@ -101,7 +99,7 @@ public class ByMonthFragment extends Fragment {
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         ArrayList<Integer> years = new ArrayList<>();
 
-        for(int i = 1990; i<=currentYear;i++){
+        for(int i = 2023; i <=currentYear;i++){
             years.add(i);
         }
 

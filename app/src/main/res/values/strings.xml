@@ -84,6 +84,7 @@
     <string name="record_sleep">Sleep</string>
     <string name="record_go_bed">Go to bed</string>
     <string name="record_wake_up">Wake up</string>
+    <string name="select_time">Choose time</string>
     <string name="record_note">Your notes</string>
     <string name="record_done">Done</string>
     <string name="record_toast_fail">Record failed!</string>
@@ -107,7 +108,6 @@
     <string name="reminder_title">Remind</string>
     <string name="reminder_message">It has been %s years since %s!</string>
 
-    <string name="most_frequently_recorded">Most frequently recorded</string>
     <string name="frequently_recorded">Frequently recorded</string>
     <string name="no_record">There is no record on this day.</string>
 

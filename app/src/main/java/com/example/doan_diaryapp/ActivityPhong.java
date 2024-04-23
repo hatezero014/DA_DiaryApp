@@ -21,7 +21,6 @@ public class ActivityPhong extends BaseActivity {
     private TabLayout mTablayout;
     private ViewPager viewPager;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
