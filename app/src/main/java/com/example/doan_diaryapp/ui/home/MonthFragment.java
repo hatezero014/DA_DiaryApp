@@ -134,6 +134,7 @@ public class MonthFragment extends Fragment {
         textViewNote.setText(note);
         textViewRate.setText("Mood rating: "+rate);
 
+
         if (note.length()==0){
             textViewNote.setVisibility(View.GONE);
         } else {
