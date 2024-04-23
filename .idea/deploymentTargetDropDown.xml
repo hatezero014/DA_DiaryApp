@@ -2,10 +2,29 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="ActivityPhong">
+      <entry key="ActivityNam">
         <State />
       </entry>
+      <entry key="ActivityPhong">
+        <State>
+          <runningDeviceTargetSelectedWithDropDown>
+            <Target>
+              <type value="RUNNING_DEVICE_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="SERIAL_NUMBER" />
+                  <value value="adb-RF8R908N65R-qUgfHx._adb-tls-connect._tcp" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </runningDeviceTargetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-04-23T09:24:50.966777200Z" />
+        </State>
+      </entry>
       <entry key="MainActivity">
+        <State />
+      </entry>
+      <entry key="app">
         <State />
       </entry>
     </value>

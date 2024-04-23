@@ -51,25 +51,32 @@ public class EntireYearFragment extends Fragment {
     private StatisticAdapter statisticAdapter;
     private Spinner spn_yeary;
 
+    public EntireYearFragment() {
+        // Required empty public constructor
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_entire_year, container, false);
 
+        statisticAdapter = new StatisticAdapter(getContext());
+
         spn_yeary = view.findViewById(R.id.spn_yeary);
-        updateSpinnerYear(view);
+        updateSpinnerYear(container);
 
         recyclerView_year = view.findViewById(R.id.rcv_thong_ke_nam);
-        statisticAdapter = new StatisticAdapter(view.getContext());
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
+        statisticAdapter = new StatisticAdapter(getContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView_year.setLayoutManager(linearLayoutManager);
         statisticAdapter.setData(getListStatistic());
         recyclerView_year.setAdapter(statisticAdapter);
         return view;
     }
 
-    private void updateSpinnerYear(View container) {
+    private void updateSpinnerYear(ViewGroup container) {
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         ArrayList<Integer> years = new ArrayList<>();
 
