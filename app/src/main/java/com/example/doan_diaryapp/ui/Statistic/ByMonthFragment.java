@@ -1,5 +1,6 @@
 package com.example.doan_diaryapp.ui.Statistic;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -46,33 +47,29 @@ public class ByMonthFragment extends Fragment {
     private Spinner spn_monthm;
 
 
-    public ByMonthFragment() {
-        // Required empty public constructor
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        LayoutInflater lf = getActivity().getLayoutInflater();
-        View view =  lf.inflate(R.layout.fragment_by_month, container, false); //pass the correct layout name for the fragment
+        View view =  inflater.inflate(R.layout.fragment_by_month, container, false); //pass the correct layout name for the fragment
 
         recyclerView_month = view.findViewById(R.id.rcv_thong_ke_thang);
 
         spn_yearm = view.findViewById(R.id.spn_yearm);
         spn_monthm = view.findViewById(R.id.spn_monthm);
 
-        updateSpinnerYear(container);
-        updateSpinnerMonth(container);
+        updateSpinnerYear(view);
+        updateSpinnerMonth(view);
 
-        statisticAdapter = new StatisticAdapter(getContext());
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        statisticAdapter = new StatisticAdapter(view.getContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
         recyclerView_month.setLayoutManager(linearLayoutManager);
         statisticAdapter.setData(getListStatistic());
         recyclerView_month.setAdapter(statisticAdapter);
         return view;
     }
 
-    private void updateSpinnerMonth(ViewGroup container) {
+    private void updateSpinnerMonth(View container) {
         ArrayList<Integer> aMonth = new ArrayList<>();
         for(int i=1;i<=12;i++){
             aMonth.add(i);
@@ -95,7 +92,7 @@ public class ByMonthFragment extends Fragment {
         });
     }
 
-    private void updateSpinnerYear(ViewGroup container) {
+    private void updateSpinnerYear(View container) {
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         ArrayList<Integer> years = new ArrayList<>();
 
@@ -103,7 +100,7 @@ public class ByMonthFragment extends Fragment {
             years.add(i);
         }
 
-        ArrayAdapter<Integer> adapterYear = new ArrayAdapter<Integer>(container.getContext(), android.R.layout.simple_spinner_item,years);
+        ArrayAdapter<Integer> adapterYear = new ArrayAdapter<Integer>(getContext(), android.R.layout.simple_spinner_item,years);
 
         adapterYear.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spn_yearm.setAdapter(adapterYear);
