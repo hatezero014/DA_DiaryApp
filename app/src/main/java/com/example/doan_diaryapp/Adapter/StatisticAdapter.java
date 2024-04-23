@@ -31,6 +31,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -111,12 +112,17 @@ public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         public void setFormatLinechart(int trucX) {
             lineChart.setDescription(null);
-            lineChart.setScaleYEnabled(false);
-            lineChart.setDoubleTapToZoomEnabled(false);
+            lineChart.setScaleYEnabled(false); // tắt zoom trên cột Y
+            lineChart.setDoubleTapToZoomEnabled(false); // tắt chạm 2 lần để zoom
             lineChart.setBackgroundColor(Color.parseColor("#00000000"));
-            lineChart.setHighlightPerTapEnabled(false);
-            lineChart.setHighlightPerDragEnabled(false);
-            lineChart.setExtraBottomOffset(6);
+            lineChart.setHighlightPerTapEnabled(false); // tắt highlight điểm
+            lineChart.setHighlightPerDragEnabled(false); // same
+            lineChart.setExtraBottomOffset(6); // chỉnh margin cạnh dưới
+            lineChart.setExtraRightOffset(6);
+            lineChart.getLegend().setEnabled(false); // tắt chú thích (cái màu xanh)
+            lineChart.getAxisRight().setEnabled(false); // tắt cột Y bên phải
+            // lineChart.getXAxis().setDrawGridLines(false); // tắt vẽ lưới
+            // lineChart.getAxisLeft().setDrawGridLines(false); // tắt vẽ lưới
 
             XAxis xAxis = lineChart.getXAxis();
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -127,13 +133,12 @@ public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             xAxis.setAxisLineWidth(2);
             xAxis.setGranularity(1f);
             xAxis.setGridLineWidth(2);
-            // xAxis.setYOffset(10);
+            xAxis.setYOffset(6); // thêm khoảng cách giữa cột với số
             xAxis.setAxisMinimum(1f);
             xAxis.setAxisMaximum(trucX);
-            xAxis.setLabelCount(7); // value: trucX
+            xAxis.setLabelCount(8);
             xAxis.setGranularityEnabled(true);
-            // experimental
-            xAxis.setDrawAxisLine(false);
+            // test
 
             YAxis yAxis = lineChart.getAxisLeft();
             yAxis.setAxisLineColor(ContextCompat.getColor(mContext, R.color.statistics_grid));
@@ -141,19 +146,15 @@ public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             yAxis.setTextColor(ContextCompat.getColor(mContext, R.color.md_theme_onSurfaceVariant));
             xAxis.setAxisLineColor(ContextCompat.getColor(mContext, R.color.statistics_grid));
             yAxis.setGridColor(ContextCompat.getColor(mContext, R.color.statistics_grid));
-            yAxis.setXOffset(10);
+            yAxis.setXOffset(10); // khoảng cách giữa cột với số
             yAxis.setAxisMinimum(0f);
             yAxis.setAxisMaximum(10f);
             yAxis.setAxisLineWidth(2);
             yAxis.setLabelCount(10);
             yAxis.setGridLineWidth(2);
-            // experimental
-            yAxis.setDrawAxisLine(false);
+            // test
+            yAxis.setDrawLabels(false);
 
-            lineChart.getLegend().setEnabled(false);
-            lineChart.getAxisRight().setEnabled(false);
-//            lineChart.getXAxis().setDrawGridLines(false);
-//            lineChart.getAxisLeft().setDrawGridLines(false);
         }
 
         public void setData(int year, int month) {
@@ -218,7 +219,12 @@ public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             tv_trungbinh.setText(itemView.getResources().getString(R.string.average_rating)+": "+String.format("%.2f",tb));
 
             LineDataSet dataSet = new LineDataSet(entries,null);
+            dataSet.setLineWidth(2); // chỉnh kích thước đường
+            dataSet.setDrawValues(false); // tắt số trên điểm
             dataSet.setColor(Color.BLUE);
+            dataSet.setCircleColor(Color.BLUE);
+            dataSet.setCircleRadius(1);
+            dataSet.setDrawCircleHole(false);
 
             LineData lineData = new LineData(dataSet);
             lineChart.setData(lineData);
