@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_diaryapp.Models.EmojiInfo;
@@ -30,10 +31,13 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -41,6 +45,12 @@ import java.util.Set;
 public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private static int type_linechart = 1;
     private static int type_emotion = 2;
+
+    private Context mContext;
+
+    public StatisticAdapter(Context context) {
+        mContext = context;
+    }
 
     private List<Statistic> mStatistic;
 
@@ -98,34 +108,54 @@ public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         private TextView tv_trungbinh;
         public LineChartViewHolder(@NonNull View itemView) {
             super(itemView);
-
             lineChart = itemView.findViewById(R.id.lineChart);
             tv_trungbinh = itemView.findViewById(R.id.tv_average_rating);
         }
 
-        public void setFormatLinechart(int trucX){
+        public void setFormatLinechart(int trucX) {
+            lineChart.setDescription(null);
+            lineChart.setScaleYEnabled(false); // tắt zoom trên cột Y
+            lineChart.setDoubleTapToZoomEnabled(false); // tắt chạm 2 lần để zoom
+            lineChart.setBackgroundColor(Color.parseColor("#00000000"));
+            lineChart.setHighlightPerTapEnabled(false); // tắt highlight điểm
+            lineChart.setHighlightPerDragEnabled(false); // same
+            lineChart.setExtraBottomOffset(6); // chỉnh margin cạnh dưới
+            lineChart.setExtraRightOffset(6);
+            lineChart.getLegend().setEnabled(false); // tắt chú thích (cái màu xanh)
+            lineChart.getAxisRight().setEnabled(false); // tắt cột Y bên phải
+            // lineChart.getXAxis().setDrawGridLines(false); // tắt vẽ lưới
+            // lineChart.getAxisLeft().setDrawGridLines(false); // tắt vẽ lưới
+
             XAxis xAxis = lineChart.getXAxis();
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            xAxis.setLabelCount(8);
-            xAxis.setTextColor(Color.RED);
-            xAxis.setAxisLineColor(Color.BLACK);
-            xAxis.setAxisLineWidth(1f);
+            xAxis.setTextSize(14);
+            xAxis.setTextColor(ContextCompat.getColor(mContext, R.color.md_theme_onSurfaceVariant));
+            xAxis.setAxisLineColor(ContextCompat.getColor(mContext, R.color.statistics_grid));
+            xAxis.setGridColor(ContextCompat.getColor(mContext, R.color.statistics_grid));
+            xAxis.setAxisLineWidth(2);
             xAxis.setGranularity(1f);
+            xAxis.setGridLineWidth(2);
+            xAxis.setYOffset(6); // thêm khoảng cách giữa cột với số
             xAxis.setAxisMinimum(1f);
             xAxis.setAxisMaximum(trucX);
+            xAxis.setLabelCount(8);
             xAxis.setGranularityEnabled(true);
+            // test
 
             YAxis yAxis = lineChart.getAxisLeft();
+            yAxis.setAxisLineColor(ContextCompat.getColor(mContext, R.color.statistics_grid));
+            yAxis.setTextSize(14);
+            yAxis.setTextColor(ContextCompat.getColor(mContext, R.color.md_theme_onSurfaceVariant));
+            xAxis.setAxisLineColor(ContextCompat.getColor(mContext, R.color.statistics_grid));
+            yAxis.setGridColor(ContextCompat.getColor(mContext, R.color.statistics_grid));
+            yAxis.setXOffset(10); // khoảng cách giữa cột với số
             yAxis.setAxisMinimum(0f);
             yAxis.setAxisMaximum(10f);
-            yAxis.setAxisLineWidth(1f);
-            yAxis.setAxisLineColor(Color.BLACK);
-            yAxis.setTextColor(Color.RED);
+            yAxis.setAxisLineWidth(2);
             yAxis.setLabelCount(10);
-
-            lineChart.getAxisRight().setEnabled(false);
-            lineChart.getXAxis().setDrawGridLines(false);
-            lineChart.getAxisLeft().setDrawGridLines(false);
+            yAxis.setGridLineWidth(2);
+            // test
+            yAxis.setDrawLabels(false);
 
         }
 
@@ -141,6 +171,7 @@ public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             List<com.example.doan_diaryapp.Models.Entry> entryListM = entryService.getOverallScoreByMonthYear(month,year);
             List<com.example.doan_diaryapp.Models.Entry> entryListY = entryService.getOverallScoreByYear(year);
 
+            //lấy dữ liệu tháng
             Map<Integer,Integer> valuesM = new HashMap<>();
             for(com.example.doan_diaryapp.Models.Entry entry:entryListM){
                 String date = entry.getDate().trim();
@@ -150,6 +181,17 @@ public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 valuesM.put(d,score);
             }
 
+            List<Map.Entry<Integer, Integer>> entriesM = new ArrayList<>(valuesM.entrySet());
+
+            entriesM.sort(Comparator.comparingInt(Map.Entry::getKey));
+
+            Map<Integer, Integer> sortedMapM = new LinkedHashMap<>();
+
+            for (Map.Entry<Integer, Integer> entry : entriesM) {
+                sortedMapM.put(entry.getKey(), entry.getValue());
+            }
+
+            //lấy dữ liệu năm
             Map<Integer,Integer> valuesY = new HashMap<>();
             Map<Integer, Integer> counts = new HashMap<>();
             for(com.example.doan_diaryapp.Models.Entry entry:entryListY){
@@ -166,35 +208,52 @@ public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 }
             }
 
+            List<Map.Entry<Integer, Integer>> entriesY = new ArrayList<>(valuesY.entrySet());
+
+            entriesY.sort(Comparator.comparingInt(Map.Entry::getKey));
+
+            Map<Integer, Integer> sortedMapY = new LinkedHashMap<>();
+
+            for (Map.Entry<Integer, Integer> entry : entriesY) {
+                sortedMapY.put(entry.getKey(), entry.getValue());
+            }
+
+            //thêm dữ liệu vào biểu đồ
             float tb = 0;
             List<Entry> entries = new ArrayList<>();
-            Set<Integer> setM = valuesM.keySet();
-            Set<Integer> setY = valuesY.keySet();
+            Set<Integer> setM = sortedMapM.keySet();
+            Set<Integer> setY = sortedMapY.keySet();
             if(trucX != 12){
                 for(Integer key:setM){
-                    int value = valuesM.get(key);
+                    int value = sortedMapM.get(key);
                     tb+=value;
                     entries.add((new Entry(key,value)));
                 }
-                tb/=valuesM.size();
+                tb/=sortedMapM.size();
             }
             else{
                 for(Integer key:setY){
-                    float value = valuesY.get(key);
+                    float value = sortedMapY.get(key);
                     value = value/counts.get(key);
                     tb+=value;
                     entries.add((new Entry(key,value)));
                 }
-                tb/=valuesY.size();
+                tb/=sortedMapY.size();
             }
 
             tv_trungbinh.setText(itemView.getResources().getString(R.string.average_rating)+": "+String.format("%.2f",tb));
 
             LineDataSet dataSet = new LineDataSet(entries,null);
+            dataSet.setLineWidth(2); // chỉnh kích thước đường
+            dataSet.setDrawValues(false); // tắt số trên điểm
             dataSet.setColor(Color.BLUE);
+            dataSet.setCircleColor(Color.BLUE);
+            dataSet.setCircleRadius(1);
+            dataSet.setDrawCircleHole(false);
 
             LineData lineData = new LineData(dataSet);
             lineChart.setData(lineData);
+            lineChart.notifyDataSetChanged();
             lineChart.invalidate();
         }
     }

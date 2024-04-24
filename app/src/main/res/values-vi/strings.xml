@@ -74,6 +74,7 @@
     <string name="record_sleep">Giấc ngủ</string>
     <string name="record_go_bed">Đi ngủ</string>
     <string name="record_wake_up">Thức dậy</string>
+    <string name="select_time">Chọn thời gian</string>
     <string name="record_note">Ghi chú của bạn</string>
     <string name="record_allow_image">Bạn chỉ có thể chọn tối đa 3 ảnh</string>
     <string name="record_alert_title">Xác nhận thoa</string>
@@ -83,8 +84,8 @@
     <string name="record_toast_success">Ghi nhật ký thành công!</string>
 
     <!--Other (remove)-->
-    <string name="by_month_fragment">Tháng</string>
-    <string name="entire_year_fragment">Năm</string>
+    <string name="by_month">Tháng</string>
+    <string name="entire_year">Năm</string>
     <string name="Go">Đi</string>
     <string name="year_in_pocket">Một năm trong Pocket</string>
     <string name="ShowDiaLog">Hiển thị</string>
@@ -101,12 +102,12 @@
     <!--Month(Add diary)-->
     <string name="month_alert_title">Không thể tạo</string>
     <string name="month_alert_message">Không thể tạo bản ghi cho ngày trong tương lai</string>
-    <string name="average_rating">Đánh giá trung bình</string>
+    <string name="average_rating">Trung bình</string>
 
     <!--  Reminder  -->
     <string name="reminder_title">Nhắc nhở</string>
     <string name="reminder_message">Đã được %s năm trôi qua kể từ ngày %s!</string>
-    <string name="most_frequently_recorded">Được ghi nhiều nhất</string>
+    <string name="frequently_recorded">Được ghi nhiều nhất</string>
     <string name="no_record">Chưa có bản ghi vào ngày này.</string>
 
     <!--  Setting  -->

@@ -46,12 +46,6 @@ public class ByMonthFragment extends Fragment {
     private Spinner spn_monthm;
 
 
-    public ByMonthFragment() {
-        // Required empty public constructor
-    }
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -63,18 +57,18 @@ public class ByMonthFragment extends Fragment {
         spn_yearm = view.findViewById(R.id.spn_yearm);
         spn_monthm = view.findViewById(R.id.spn_monthm);
 
-        updateSpinnerYear(container);
-        updateSpinnerMonth(container);
+        updateSpinnerYear(view);
+        updateSpinnerMonth(view);
 
-        statisticAdapter = new StatisticAdapter();
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        statisticAdapter = new StatisticAdapter(view.getContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
         recyclerView_month.setLayoutManager(linearLayoutManager);
         statisticAdapter.setData(getListStatistic());
         recyclerView_month.setAdapter(statisticAdapter);
         return view;
     }
 
-    private void updateSpinnerMonth(ViewGroup container) {
+    private void updateSpinnerMonth(View container) {
         ArrayList<Integer> aMonth = new ArrayList<>();
         for(int i=1;i<=12;i++){
             aMonth.add(i);
@@ -97,11 +91,11 @@ public class ByMonthFragment extends Fragment {
         });
     }
 
-    private void updateSpinnerYear(ViewGroup container) {
+    private void updateSpinnerYear(View container) {
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         ArrayList<Integer> years = new ArrayList<>();
 
-        for(int i = 1990; i<=currentYear;i++){
+        for(int i = 2023; i <=currentYear;i++){
             years.add(i);
         }
 

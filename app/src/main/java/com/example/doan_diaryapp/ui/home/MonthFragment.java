@@ -23,6 +23,7 @@ import com.example.doan_diaryapp.RecordActivity;
 import com.example.doan_diaryapp.Service.EntryService;
 import com.example.doan_diaryapp.databinding.FragmentMonthBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.divider.MaterialDivider;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.ParseException;
@@ -73,7 +74,8 @@ public class MonthFragment extends Fragment {
         LinearLayout linearLayout=view.findViewById(R.id.show_date_note);
         TextView textViewNote=view.findViewById(R.id.CardViewNote);
         TextView textViewRate=view.findViewById(R.id.CardViewRate);
-        ShowNote(view,dayOfMonth,month,year,textViewNote,textViewRate,linearLayout);
+        MaterialDivider divider = view.findViewById(R.id.divider);
+        ShowNote(view,dayOfMonth,month,year,textViewNote,textViewRate,divider,linearLayout);
 
         TextView selectedDateTextView = view.findViewById(R.id.CardViewDate);
         ShowDate(view,dayOfMonth,month+1,year,selectedDateTextView);
@@ -83,12 +85,11 @@ public class MonthFragment extends Fragment {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int y, int m, int d) {
                 dayOfMonth=d; month=m; year=y;
-                ShowNote(view,d,m,y,textViewNote,textViewRate,linearLayout);
+                ShowNote(view,d,m,y,textViewNote,textViewRate,divider,linearLayout);
                 ShowDate(view,d,m+1,y,selectedDateTextView);
             }
         });
     }
-
 
     private void ShowDate(View view,int d,int m,int y, TextView textViewDate)
     {
@@ -125,7 +126,7 @@ public class MonthFragment extends Fragment {
 
 
     private void ShowNote(View view,int d,int m,int y,
-                          TextView textViewNote,TextView textViewRate,
+                          TextView textViewNote,TextView textViewRate, MaterialDivider divider,
                           LinearLayout linearLayout)
     {
         StringBuilder note = new StringBuilder();
@@ -133,6 +134,17 @@ public class MonthFragment extends Fragment {
         int check = entryService.getEntriesNoteFromDatabase(d,m,y,note,rate);
         textViewNote.setText(note);
         textViewRate.setText("Mood rating: "+rate);
+
+
+        if (note.length()==0){
+            textViewNote.setVisibility(View.GONE);
+            divider.setVisibility(View.GONE);
+        }
+        else {
+            textViewNote.setVisibility(View.VISIBLE);
+            divider.setVisibility(View.VISIBLE);
+        }
+
         if (check==0) {
             linearLayout.setVisibility(View.GONE);
         }

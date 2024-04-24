@@ -3,12 +3,7 @@
   <component name="deploymentTargetDropDown">
     <value>
       <entry key="MainActivity">
-        <State />
-      </entry>
-      <entry key="NotificationApp">
-        <State />
-      </entry>
-      <entry key="ShareActivity">
+
         <State />
       </entry>
       <entry key="YourImageButtonClick">
@@ -27,12 +22,7 @@
           <timeTargetWasSelectedWithDropDown value="2024-04-24T08:22:15.816338400Z" />
         </State>
       </entry>
-      <entry key="YourImagesInApp">
-        <State />
-      </entry>
-      <entry key="app">
-        <State />
-      </entry>
+
     </value>
   </component>
 </project>

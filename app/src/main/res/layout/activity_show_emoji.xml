@@ -8,20 +8,6 @@
     android:orientation="vertical"
     tools:context=".ShowEmojiActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize"
-            app:title="@string/frequently_recorded"
-            app:navigationIcon="@drawable/common_arrowback"
-            app:navigationIconTint="@color/md_theme_onSurface"/>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_emoji"
         android:layout_width="match_parent"

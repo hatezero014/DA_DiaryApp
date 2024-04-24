@@ -4,9 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.analyze.AnalyzeFragment">
+    tools:context=".ui.analyze.AnalyzeFragment"
+    style="@style/Theme.Material3.DayNight.NoActionBar">
+
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/analyse_TopAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent">
@@ -19,6 +22,24 @@
             app:menu="@menu/toolbar_collection_and_stats"
             app:titleCentered="false"/>
 
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_thongke"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/analyse_TopAppBar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
     </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vp_thongkefm"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/analyse_TopAppBar" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
