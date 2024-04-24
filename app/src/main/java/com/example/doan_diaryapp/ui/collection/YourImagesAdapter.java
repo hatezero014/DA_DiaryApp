@@ -10,7 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.doan_diaryapp.Models.EntryPhoto;
 import com.example.doan_diaryapp.R;
+import com.example.doan_diaryapp.databinding.CarouselLayoutBinding;
 import com.example.doan_diaryapp.databinding.YourImagesBinding;
 
 import java.util.ArrayList;
@@ -18,47 +20,59 @@ import java.util.List;
 
 public class YourImagesAdapter extends RecyclerView.Adapter<YourImagesAdapter.ItemViewHolder> {
 
-    private List<ImageModel> imageModels;
-    private Context context;
-
-    public YourImagesAdapter(Context context) {
+    public YourImagesAdapter(ArrayList<CarouselModel> carouselModelList, Context context) {
+        this.carouselModelList = carouselModelList;
         this.context = context;
     }
 
-    public void setData(List<ImageModel> imageModels)
-    {
-        this.imageModels = imageModels;
-        notifyDataSetChanged();
-    }
+    private ArrayList<CarouselModel> carouselModelList;
+    private Context context;
+
+
 
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.your_images, parent, false);
-        return new ItemViewHolder(view);
+//        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.your_images, parent, false);
+//        return new ItemViewHolder(view);
+        return new ItemViewHolder(YourImagesBinding.inflate(LayoutInflater.from(context), parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-        ImageModel carouselModel = imageModels.get(position);
-        if(carouselModel == null) return;
-        holder.imageView.setImageResource(carouselModel.getImage());
+//        CarouselModel entryPhoto = carouselModelList.get(position);
+//        if(entryPhoto == null) return;
+//        holder.imageView.setImageResource(Integer.parseInt(entryPhoto.getImagePath()));
+        CarouselModel model = carouselModelList.get(position);
+        holder.bind(model);
     }
 
     @Override
     public int getItemCount() {
 
-        if(imageModels==null) return 0;
-        return imageModels.size();
+//        if(carouselModelList==null) return 0;
+        return carouselModelList.size();
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView;
+//        ImageView imageView;
+//
+//
+//        public ItemViewHolder(@NonNull View itemView) {
+//            super(itemView);
+//            imageView = itemView.findViewById(R.id.imageView5);
+//        }
+        private YourImagesBinding binding;
 
+        public ItemViewHolder(YourImagesBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+        }
 
-        public ItemViewHolder(@NonNull View itemView) {
-            super(itemView);
-            imageView = itemView.findViewById(R.id.imageView5);
+        public void bind(CarouselModel model) {
+            Glide.with(context)
+                    .load(model.getImagePath())
+                    .into(binding.imageView5);
         }
     }
 }
