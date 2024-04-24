@@ -56,4 +56,19 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             cardView = itemView.findViewById(R.id.cardView);
         }
     }
+
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
+
+    class DateViewHolder extends RecyclerView.ViewHolder{
+        private TextView tv_date;
+
+        public DateViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            tv_date = itemView.findViewById(R.id.tv_date);
+        }
+    }
 }

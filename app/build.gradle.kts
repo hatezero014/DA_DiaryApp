@@ -63,5 +63,6 @@ dependencies {
     implementation("com.google.android.material:material:1.3.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.0")
     implementation("androidx.multidex:multidex:2.0.1")
+    implementation("com.github.chrisbanes:PhotoView:2.3.0")
 
 }

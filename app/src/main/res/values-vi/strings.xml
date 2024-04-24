@@ -117,4 +117,7 @@
     <string name="setting_other">Khác</string>
     <string name="setting_feedback">Gửi phản hồi</string>
     <string name="setting_sub_feedback">Giúp cải thiện ứng dụng này</string>
+
+    <!--  Image App  -->
+    <string name="title_YourImage">Ảnh của bạn</string>
 </resources>
