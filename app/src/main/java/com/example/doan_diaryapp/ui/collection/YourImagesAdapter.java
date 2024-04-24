@@ -28,21 +28,23 @@ public class YourImagesAdapter extends RecyclerView.Adapter<YourImagesAdapter.It
     private ArrayList<CarouselModel> carouselModelList;
     private Context context;
 
+    public void setOnImageClickListener(OnImageClickListener onImageClickListener) {
+        this.onImageClickListener = onImageClickListener;
+    }
+
+    private OnImageClickListener onImageClickListener;
+
 
 
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.your_images, parent, false);
-//        return new ItemViewHolder(view);
+
         return new ItemViewHolder(YourImagesBinding.inflate(LayoutInflater.from(context), parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-//        CarouselModel entryPhoto = carouselModelList.get(position);
-//        if(entryPhoto == null) return;
-//        holder.imageView.setImageResource(Integer.parseInt(entryPhoto.getImagePath()));
         CarouselModel model = carouselModelList.get(position);
         holder.bind(model);
     }
@@ -50,23 +52,29 @@ public class YourImagesAdapter extends RecyclerView.Adapter<YourImagesAdapter.It
     @Override
     public int getItemCount() {
 
-//        if(carouselModelList==null) return 0;
         return carouselModelList.size();
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
-//        ImageView imageView;
-//
-//
-//        public ItemViewHolder(@NonNull View itemView) {
-//            super(itemView);
-//            imageView = itemView.findViewById(R.id.imageView5);
-//        }
+
         private YourImagesBinding binding;
 
         public ItemViewHolder(YourImagesBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+
+            binding.imageView5.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(onImageClickListener!=null){
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            // Gọi phương thức của giao diện xử lý sự kiện click
+                            onImageClickListener.onImageClick(position);
+                        }
+                    }
+                }
+            });
         }
 
         public void bind(CarouselModel model) {
@@ -74,5 +82,9 @@ public class YourImagesAdapter extends RecyclerView.Adapter<YourImagesAdapter.It
                     .load(model.getImagePath())
                     .into(binding.imageView5);
         }
+    }
+
+    public interface OnImageClickListener {
+        void onImageClick(int position);
     }
 }
