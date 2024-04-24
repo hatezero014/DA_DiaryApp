@@ -34,8 +34,10 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -169,6 +171,7 @@ public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             List<com.example.doan_diaryapp.Models.Entry> entryListM = entryService.getOverallScoreByMonthYear(month,year);
             List<com.example.doan_diaryapp.Models.Entry> entryListY = entryService.getOverallScoreByYear(year);
 
+            //lấy dữ liệu tháng
             Map<Integer,Integer> valuesM = new HashMap<>();
             for(com.example.doan_diaryapp.Models.Entry entry:entryListM){
                 String date = entry.getDate().trim();
@@ -178,6 +181,17 @@ public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 valuesM.put(d,score);
             }
 
+            List<Map.Entry<Integer, Integer>> entriesM = new ArrayList<>(valuesM.entrySet());
+
+            entriesM.sort(Comparator.comparingInt(Map.Entry::getKey));
+
+            Map<Integer, Integer> sortedMapM = new LinkedHashMap<>();
+
+            for (Map.Entry<Integer, Integer> entry : entriesM) {
+                sortedMapM.put(entry.getKey(), entry.getValue());
+            }
+
+            //lấy dữ liệu năm
             Map<Integer,Integer> valuesY = new HashMap<>();
             Map<Integer, Integer> counts = new HashMap<>();
             for(com.example.doan_diaryapp.Models.Entry entry:entryListY){
@@ -194,26 +208,37 @@ public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 }
             }
 
+            List<Map.Entry<Integer, Integer>> entriesY = new ArrayList<>(valuesY.entrySet());
+
+            entriesY.sort(Comparator.comparingInt(Map.Entry::getKey));
+
+            Map<Integer, Integer> sortedMapY = new LinkedHashMap<>();
+
+            for (Map.Entry<Integer, Integer> entry : entriesY) {
+                sortedMapY.put(entry.getKey(), entry.getValue());
+            }
+
+            //thêm dữ liệu vào biểu đồ
             float tb = 0;
             List<Entry> entries = new ArrayList<>();
-            Set<Integer> setM = valuesM.keySet();
-            Set<Integer> setY = valuesY.keySet();
+            Set<Integer> setM = sortedMapM.keySet();
+            Set<Integer> setY = sortedMapY.keySet();
             if(trucX != 12){
                 for(Integer key:setM){
-                    int value = valuesM.get(key);
+                    int value = sortedMapM.get(key);
                     tb+=value;
                     entries.add((new Entry(key,value)));
                 }
-                tb/=valuesM.size();
+                tb/=sortedMapM.size();
             }
             else{
                 for(Integer key:setY){
-                    float value = valuesY.get(key);
+                    float value = sortedMapY.get(key);
                     value = value/counts.get(key);
                     tb+=value;
                     entries.add((new Entry(key,value)));
                 }
-                tb/=valuesY.size();
+                tb/=sortedMapY.size();
             }
 
             tv_trungbinh.setText(itemView.getResources().getString(R.string.average_rating)+": "+String.format("%.2f",tb));
@@ -228,6 +253,7 @@ public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
             LineData lineData = new LineData(dataSet);
             lineChart.setData(lineData);
+            lineChart.notifyDataSetChanged();
             lineChart.invalidate();
         }
     }
