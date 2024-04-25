@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
@@ -23,20 +26,24 @@ public class FullImageView extends AppCompatActivity {
     int position;
     PhotoView imageView;
 
+    ImageButton imageButton;
+
 
     String file;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_full_image_view);
+
         imageView = findViewById(R.id.fullImageView);
+        imageButton = findViewById(R.id.imageButton);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle(getString(R.string.title_YourImage));
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null){
@@ -48,6 +55,13 @@ public class FullImageView extends AppCompatActivity {
             file = intent.getStringExtra("image");
         }
         imageView.setImageURI(Uri.fromFile(new File(file)));
+
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
