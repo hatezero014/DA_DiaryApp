@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.RadioButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -32,6 +34,7 @@ public class SettingActivity extends BaseActivity {
 
     Dialog dialog;
     TextView textViewSubTheme, textViewSubLanguage;
+    Switch switchNotification, switchSecurity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,15 +49,31 @@ public class SettingActivity extends BaseActivity {
 
         textViewSubTheme = findViewById(R.id.textviewSubTheme);
         textViewSubLanguage = findViewById(R.id.textviewSubLanguage);
+        switchNotification = findViewById(R.id.switch_notification);
+        switchSecurity = findViewById(R.id.switch_security);
+
 
         initLanguage();
         customDialog();
+        setupSwitchNotification();
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(getString(R.string.setting_title));
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void setupSwitchNotification() {
+        switchNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    Intent intent = new Intent(SettingActivity.this, ChangeReminderTime.class);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     @Override

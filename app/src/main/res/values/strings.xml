@@ -119,6 +119,18 @@
     <string name="setting_feedback">Send feedback</string>
     <string name="setting_sub_feedback">Help improve this application</string>
 
+    <!-- Notification -->
+    <string name="notification_title">Notification</string>
+    <string name="notification_daily_reminder">Daily Reminder</string>
+    <string name="notification_reminder_time">Reminder Time</string>
+
+    <!-- Security -->
+    <string name="security_title">Security</string>
+    <string name="security_sign_in">Sign in with your PIN</string>
+    <string name="security_sign_in_subtitle">The PIN cannot be recovered</string>
+    <string name="security_change_PIN">Change your PIN</string>
+    <string name="security_delete_PIN">Delete your PIN</string>
+
     <!--  Image App  -->
     <string name="title_YourImage">Your Image</string>
 </resources>

@@ -2,8 +2,13 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="ChangeReminderTime">
+        <State />
+      </entry>
       <entry key="MainActivity">
-
+        <State />
+      </entry>
+      <entry key="SettingActivity">
         <State />
       </entry>
       <entry key="YourImageButtonClick">
@@ -22,7 +27,6 @@
           <timeTargetWasSelectedWithDropDown value="2024-04-24T08:22:15.816338400Z" />
         </State>
       </entry>
-
     </value>
   </component>
 </project>
