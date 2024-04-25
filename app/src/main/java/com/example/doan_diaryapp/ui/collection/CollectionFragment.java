@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ import com.example.doan_diaryapp.RecordActivity;
 import com.example.doan_diaryapp.Service.EntryPhotoService;
 import com.example.doan_diaryapp.Service.EntryService;
 import com.example.doan_diaryapp.Service.ImportantDayService;
+import com.example.doan_diaryapp.YourImagesInApp;
 import com.example.doan_diaryapp.databinding.FragmentCollectionBinding;
 
 import java.util.ArrayList;
@@ -33,6 +35,7 @@ public class CollectionFragment extends Fragment {
     private FragmentCollectionBinding binding;
     private CarouselAdapter carouselAdapter;
     private ListView mListView;
+    private Button mButton;
     private EntryAdapter mAdapter;
     private ImportantDayService importantDayService;
 
@@ -56,7 +59,6 @@ public class CollectionFragment extends Fragment {
         ArrayList<CarouselModel> list = entryPhotoService.getPhotoFromDatabase();
         carouselAdapter = new CarouselAdapter(list, requireContext());
         recyclerView.setAdapter(carouselAdapter);
-
     }
 
 
@@ -65,6 +67,7 @@ public class CollectionFragment extends Fragment {
         binding = FragmentCollectionBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         ListViewDayQT(view);
+        Button(view);
         mListView = view.findViewById(R.id.ListDayQT);
         importantDayService = new ImportantDayService(getContext());
         List<Entry> entryList = importantDayService.getEntriesFromDatabaseQT();
@@ -80,6 +83,20 @@ public class CollectionFragment extends Fragment {
         recyclerView.setAdapter(carouselAdapter);
 
         return view;
+    }
+
+
+
+    private void Button(View view)
+    {
+        mButton=view.findViewById(R.id.button);
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), YourImagesInApp.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
