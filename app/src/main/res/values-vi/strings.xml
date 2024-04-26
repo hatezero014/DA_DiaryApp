@@ -118,6 +118,18 @@
     <string name="setting_feedback">Gửi phản hồi</string>
     <string name="setting_sub_feedback">Giúp cải thiện ứng dụng này</string>
 
+    <!-- Notification -->
+    <string name="notification_title">Thông báo</string>
+    <string name="notification_daily_reminder">Nhắc nhở hàng ngày</string>
+    <string name="notification_reminder_time">Thời gian nhắc nhở</string>
+
+    <!-- Security -->
+    <string name="security_title">Bảo mật</string>
+    <string name="security_sign_in">Đăng nhập bằng mã PIN</string>
+    <string name="security_sign_in_subtitle">Mã pin không thể khôi phục</string>
+    <string name="security_change_PIN">Thay đổi mã PIN</string>
+    <string name="security_delete_PIN">Xóa mã PIN</string>
+
     <!--  Image App  -->
     <string name="title_YourImage">Ảnh của bạn</string>
 </resources>

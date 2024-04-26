@@ -11,7 +11,10 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -31,7 +34,10 @@ import java.util.ArrayList;
 public class SettingActivity extends BaseActivity {
 
     Dialog dialog;
-    TextView textViewSubTheme, textViewSubLanguage;
+    TextView textViewSubTheme, textViewSubLanguage, textViewNotificationAlarm;
+    Switch switchNotification, switchSecurity;
+    LinearLayout layoutSecurity ,changePasswordButton, deletePasswordButton;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,15 +52,44 @@ public class SettingActivity extends BaseActivity {
 
         textViewSubTheme = findViewById(R.id.textviewSubTheme);
         textViewSubLanguage = findViewById(R.id.textviewSubLanguage);
+        switchNotification = findViewById(R.id.switch_notification);
+        textViewNotificationAlarm = findViewById(R.id.notification_alarm_clock);
+        switchSecurity = findViewById(R.id.switch_security);
+        layoutSecurity = findViewById(R.id.layout_Security);
+        changePasswordButton = findViewById(R.id.change_PIN);
+        deletePasswordButton = findViewById(R.id.delete_PIN);
+        sharedPreferences = getSharedPreferences("Passcode", MODE_PRIVATE);
+        // Initially hide ChangePassword and DeletePassword buttons
+        layoutSecurity.setVisibility(View.VISIBLE);
+        changePasswordButton.setVisibility(View.GONE);
+        deletePasswordButton.setVisibility(View.GONE);
+
+
 
         initLanguage();
         customDialog();
+        setupSwitchNotification();
+        setUpSwitchSecurity();
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(getString(R.string.setting_title));
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+    }
+
+
+    private void setupSwitchNotification() {
+        switchNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    Intent intent = new Intent(SettingActivity.this, ChangeReminderTime.class);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     @Override
@@ -163,4 +198,91 @@ public class SettingActivity extends BaseActivity {
             }
         });
     }
+
+    private void setUpSwitchSecurity()
+    {
+        switchSecurity.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    Intent intent = new Intent(SettingActivity.this, OpenPasscodeView.class);
+                    intent.putExtra("action", "create");
+                    startActivity(intent);
+                    //finish();
+                }
+            }
+        });
+        changePasswordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingActivity.this, OpenPasscodeView.class);
+                intent.putExtra("action", "change");
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        deletePasswordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingActivity.this, OpenPasscodeView.class);
+                intent.putExtra("action", "delete");
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
+
+    private boolean isPasscodeVerified = false;
+    private boolean previousSwitchState = false;
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        previousSwitchState = switchSecurity.isChecked();
+        boolean receivedBoolean = getIntent().getBooleanExtra("myBooleanKey", true);
+        String savedPasscode = sharedPreferences.getString("passcode", null);
+        if (!isPasscodeVerified && receivedBoolean) {
+
+
+            if (savedPasscode != null) {
+//
+//                switchSecurity.setVisibility(View.VISIBLE);
+//                changePasswordButton.setVisibility(View.GONE);
+//                deletePasswordButton.setVisibility(View.GONE);
+
+                layoutSecurity.setVisibility(View.VISIBLE);
+                changePasswordButton.setVisibility(View.GONE);
+                deletePasswordButton.setVisibility(View.GONE);
+
+
+                Intent intent = new Intent(SettingActivity.this, OpenPasscodeView.class);
+                intent.putExtra("action", "verify");
+                startActivity(intent);
+
+                finish();
+            }
+        }
+        else {
+
+//                switchSecurity.setVisibility(View.GONE);
+//                changePasswordButton.setVisibility(View.VISIBLE);
+//                deletePasswordButton.setVisibility(View.VISIBLE);
+            if(savedPasscode!=null) {
+                layoutSecurity.setVisibility(View.GONE);
+                changePasswordButton.setVisibility(View.VISIBLE);
+                deletePasswordButton.setVisibility(View.VISIBLE);
+            }
+            else {
+                layoutSecurity.setVisibility(View.VISIBLE);
+                changePasswordButton.setVisibility(View.GONE);
+                deletePasswordButton.setVisibility(View.GONE);
+            }
+
+        }
+        isPasscodeVerified = true;
+    }
+
+
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -91,6 +92,138 @@
                 android:textColor="@color/md_theme_onSurfaceVariant"
                 android:layout_height="wrap_content"/>
 
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/notification_title"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_marginTop="16dp"
+            style="@style/TextAppearance.Material3.TitleSmall"
+            android:textColor="@color/md_theme_onSurfaceVariant"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:background="@drawable/background_selector"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/notification_daily_reminder"
+                style="@style/TextAppearance.Material3.BodyLarge"
+                android:layout_weight="1"
+                android:textColor="@color/md_theme_onSurface_mediumContrast"
+               />
+            <Switch
+                android:id="@+id/switch_notification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:background="@drawable/background_selector"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/notification_reminder_time"
+                style="@style/TextAppearance.Material3.BodyLarge"
+                android:textColor="@color/md_theme_onSurface_mediumContrast"
+                />
+            <TextView
+                android:id="@+id/notification_alarm_clock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8:00PM"/>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/security_title"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_marginTop="16dp"
+            style="@style/TextAppearance.Material3.TitleSmall"
+            android:textColor="@color/md_theme_onSurfaceVariant"/>
+        <LinearLayout
+            android:id="@+id/layout_Security"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:background="@drawable/background_selector"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/security_sign_in"
+                style="@style/TextAppearance.Material3.BodyLarge"
+                android:layout_weight="1"
+                android:textColor="@color/md_theme_onSurface_mediumContrast"
+                />
+            <Switch
+                android:id="@+id/switch_security"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/change_PIN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:background="@drawable/background_selector"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/security_change_PIN"
+                style="@style/TextAppearance.Material3.BodyLarge"
+                android:textColor="@color/md_theme_onSurface_mediumContrast"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/delete_PIN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:background="@drawable/background_selector"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/security_delete_PIN"
+                style="@style/TextAppearance.Material3.BodyLarge"
+                android:textColor="@color/md_theme_onSurface_mediumContrast"
+                />
         </LinearLayout>
 
 
