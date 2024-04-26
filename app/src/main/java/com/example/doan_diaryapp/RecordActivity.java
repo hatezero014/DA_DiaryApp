@@ -666,81 +666,6 @@ public class RecordActivity extends BaseActivity {
             if (isDataChanged()) // t tách ra hàm riêng để dùng cho backpressed nữa
                 showDialogAlert();
             else finish();
-//            String notes = textNode.getText().toString();
-//            String wakeUp = wakeupButton.getText().toString();
-//            String sleep = bedtimeButton.getText().toString();
-//            int overallScore = (int) slider.getValue();
-//            List<Integer> selectedItems1 = adapter1.getSelectedItems();
-//            List<Integer> selectedItems2 = adapter2.getSelectedItems();
-//            List<Integer> selectedItems3 = adapter3.getSelectedItems();
-//            List<Integer> selectedItems4 = adapter4.getSelectedItems();
-//            Entry entity = new Entry(notes, date, overallScore, wakeUp, sleep);
-//            if (result.getOverallScore() == entity.getOverallScore()
-//                    && result.getDate().equals(entity.getDate())
-//                    && result.getSleep().equals(entity.getSleep())
-//                    && result.getNote().equals(entity.getNote())
-//                    && result.getWakeUp().equals(entity.getWakeUp())) {
-//                int entryId = result.getId();
-//                ArrayList<EntryEmotion> entryEmotions = entryEmotionService.GetAllByEntryId(EntryEmotion.class, entryId);
-//                ArrayList<EntryActivity> entryActivities = entryActivityService.GetAllByEntryId(EntryActivity.class, entryId);
-//                ArrayList<EntryPartner> entryPartners = entryPartnerService.GetAllByEntryId(EntryPartner.class, entryId);
-//                ArrayList<EntryWeather> entryWeathers = entryWeatherService.GetAllByEntryId(EntryWeather.class, entryId);
-//                if (entryEmotions.size() == selectedItems1.size()
-//                    && entryActivities.size() == selectedItems2.size()
-//                    && entryPartners.size() == selectedItems3.size()
-//                    && entryWeathers.size() == selectedItems4.size()) {
-//                    for (Integer imageId : selectedItems1) {
-//                        String icon = getResources().getResourceEntryName(imageMoodList.get(imageId));
-//                        Emotion emotion = emotionService.GetByIcon(new Emotion(), icon);
-//                        if (entryEmotionService.FindByEntryIdAndEmotionId(EntryEmotion.class, entryId, emotion.getId()) == null) {
-//                            checkChanged = true;
-//                            break;
-//                        }
-//                    }
-//
-//                    for (Integer imageId : selectedItems2) {
-//                        String icon = getResources().getResourceEntryName(imageActivityList.get(imageId));
-//                        Activity activity = activityService.GetByIcon(new Activity(), icon);
-//                        if (entryActivityService.FindByEntryIdAndActivityId(EntryActivity.class, entryId, activity.getId()) == null) {
-//                            checkChanged = true;
-//                            break;
-//                        }
-//                    }
-//
-//                    for (Integer imageId : selectedItems3) {
-//                        String icon = getResources().getResourceEntryName(imageCompanionList.get(imageId));
-//                        Partner partner = partnerService.GetByIcon(new Partner(), icon);
-//                        if (entryPartnerService.FindByEntryIdAndPartnerId(EntryPartner.class, entryId, partner.getId()) == null) {
-//                            checkChanged = true;
-//                            break;
-//                        }
-//                    }
-//
-//                    for (Integer imageId : selectedItems4) {
-//                        String icon = getResources().getResourceEntryName(imageWeatherList.get(imageId));
-//                        Weather weather = weatherService.GetByIcon(new Weather(), icon);
-//                        if (entryWeatherService.FindByEntryIdAndWeatherId(EntryWeather.class, entryId, weather.getId()) == null) {
-//                            checkChanged = true;
-//                            break;
-//                        }
-//                    }
-//                    if (checkChangedImage)
-//                        checkChanged = true;
-//                }
-//                else {
-//                    checkChanged = true;
-//                }
-//            }
-//            else {
-//                checkChanged = true;
-//            }
-//            if (checkChanged) {
-//                showDialogAlert();
-//            }
-//            else {
-//                finish();
-//            }
-//        }
         }
         return true;
     }
@@ -755,6 +680,11 @@ public class RecordActivity extends BaseActivity {
         List<Integer> selectedItems3 = adapter3.getSelectedItems();
         List<Integer> selectedItems4 = adapter4.getSelectedItems();
         Entry entity = new Entry(notes, date, overallScore, wakeUp, sleep);
+        if (result == null) {
+            return !notes.isEmpty() || !wakeUp.equals("07:30") || !sleep.equals("22:30")
+                    || overallScore != 5 || !selectedItems1.isEmpty() || !selectedItems2.isEmpty()
+                    || !selectedItems3.isEmpty() || !selectedItems4.isEmpty();
+        }
         boolean checkChanged = false;
         if (result.getOverallScore() == entity.getOverallScore()
                 && result.getDate().equals(entity.getDate())

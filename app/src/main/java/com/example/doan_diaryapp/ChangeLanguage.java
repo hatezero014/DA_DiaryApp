@@ -1,10 +1,7 @@
 package com.example.doan_diaryapp;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +22,6 @@ import com.example.doan_diaryapp.Models.Language;
 import com.example.doan_diaryapp.Service.LanguageService;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ChangeLanguage extends BaseActivity {
     ListView listViewLanguage;
@@ -35,8 +31,7 @@ public class ChangeLanguage extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            Intent intent = new Intent(ChangeLanguage.this, SettingActivity.class);
-            startActivity(intent);
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -95,18 +90,10 @@ public class ChangeLanguage extends BaseActivity {
         });
     }
     void recreateAllActivities(Context context) {
-        PackageManager packageManager = context.getPackageManager();
-        Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
-        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-
-        List<ResolveInfo> activities = packageManager.queryIntentActivities(mainIntent, 0);
-        for (ResolveInfo resolveInfo : activities) {
-            String packageName = resolveInfo.activityInfo.packageName;
-            Intent newIntent = packageManager.getLaunchIntentForPackage(packageName);
-            if (newIntent != null) {
-                newIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(newIntent);
-            }
+        Intent intent = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName());
+        if (intent != null) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
         }
     }
 
