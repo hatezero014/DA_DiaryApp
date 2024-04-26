@@ -34,14 +34,19 @@ public class OpenPasscodeView extends BaseActivity {
         action = getIntent().getStringExtra("action");
         sharedPreferences = getSharedPreferences("Passcode", MODE_PRIVATE);
 
+        boolean fromMainActivity = getIntent().getBooleanExtra("fromMainActivity", false);
 
-        if ("create".equals(action)) {
-            SetPassCode();
-        } else if ("change".equals(action) || "delete".equals(action)) {
-            VerifyPassCode();
-        }
-         else if ("verify".equals(action)) {
-            VerifyPassword();
+        if (fromMainActivity) {
+            setResult(RESULT_CANCELED);
+            finish();
+        } else {
+            if ("create".equals(action)) {
+                SetPassCode();
+            } else if ("change".equals(action) || "delete".equals(action)) {
+                VerifyPassCode();
+            } else if ("verify".equals(action)) {
+                VerifyPassword();
+            }
         }
     }
 
@@ -58,6 +63,7 @@ public class OpenPasscodeView extends BaseActivity {
                         Log.i("OpenPasscodeView", "Mật khẩu đúng");
                         sharedPreferences.edit().putString("passcode", number).apply();
                         startActivity(new Intent(OpenPasscodeView.this, PasswordActivity.class));
+                        finish();
                     }
                 });
     }
@@ -79,10 +85,12 @@ public class OpenPasscodeView extends BaseActivity {
                             Intent intent = new Intent(OpenPasscodeView.this, OpenPasscodeView.class);
                             intent.putExtra("action", "create");
                             startActivity(intent);
+                            finish();
                         }
                         else if ("delete".equals(action)) {
                             sharedPreferences.edit().remove("passcode").apply();
-                            startActivity(new Intent(OpenPasscodeView.this, PasswordActivity.class));
+                            startActivity(new Intent(OpenPasscodeView.this, SettingActivity.class));
+                            finish();
                         }
                     }
                 });
@@ -94,7 +102,8 @@ public class OpenPasscodeView extends BaseActivity {
                 .setListener(new PasscodeView.PasscodeViewListener() {
                     @Override
                     public void onFail() {
-                        finish();
+
+//                        finish();
                     }
 
                     @Override

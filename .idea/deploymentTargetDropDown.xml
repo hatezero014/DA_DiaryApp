@@ -8,8 +8,24 @@
       <entry key="MainActivity">
         <State />
       </entry>
-      <entry key="SettingActivity">
+      <entry key="PasswordActivity">
         <State />
+      </entry>
+      <entry key="SettingActivity">
+        <State>
+          <runningDeviceTargetSelectedWithDropDown>
+            <Target>
+              <type value="RUNNING_DEVICE_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="C:\Users\Admin\.android\avd\Pixel_3a_API_34_extension_level_7_x86_64.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </runningDeviceTargetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-04-26T03:30:19.483387100Z" />
+        </State>
       </entry>
       <entry key="YourImageButtonClick">
         <State>
