@@ -108,7 +108,10 @@ public class OpenPasscodeView extends BaseActivity {
 
                     @Override
                     public void onSuccess(String number) {
-                        startActivity(new Intent(OpenPasscodeView.this, MainActivity.class));
+                        Intent intent = new Intent(OpenPasscodeView.this, MainActivity.class);
+
+                        intent.putExtra("isCheckMainActivity", true);
+                        startActivity(intent);
                         finish();
                     }
                 });
