@@ -1,6 +1,7 @@
 package com.example.doan_diaryapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,8 @@ import com.example.doan_diaryapp.databinding.ActivityMainBinding;
 
 
 public class MainActivity extends BaseActivity {
+    SharedPreferences sharedPreferences;
+    String passCode;
 
     private ActivityMainBinding binding;
     @Override
@@ -28,6 +31,16 @@ public class MainActivity extends BaseActivity {
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
+        }
+        sharedPreferences = getSharedPreferences("Passcode", MODE_PRIVATE);
+
+        boolean receivedBoolean = getIntent().getBooleanExtra("isCheckMainActivity", false);
+        passCode = sharedPreferences.getString("passcode", null);
+        if(passCode!=null && !receivedBoolean){
+            Intent intent = new Intent(MainActivity.this, OpenPasscodeView.class);
+            intent.putExtra("action", "verify");
+            startActivity(intent);
+            finish();
         }
 
         BottomNavigationView navView = findViewById(R.id.nav_view);

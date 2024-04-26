@@ -255,6 +255,7 @@ public class SettingActivity extends BaseActivity {
                 layoutSecurity.setVisibility(View.VISIBLE);
                 changePasswordButton.setVisibility(View.GONE);
                 deletePasswordButton.setVisibility(View.GONE);
+                switchSecurity.setChecked(true);
 
 
                 Intent intent = new Intent(SettingActivity.this, OpenPasscodeView.class);
@@ -265,6 +266,7 @@ public class SettingActivity extends BaseActivity {
             }
         }
         else {
+            switchSecurity.setChecked(false);
 
 //                switchSecurity.setVisibility(View.GONE);
 //                changePasswordButton.setVisibility(View.VISIBLE);
