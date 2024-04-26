@@ -121,8 +121,11 @@ public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             lineChart.setHighlightPerDragEnabled(false); // same
             lineChart.setExtraBottomOffset(6); // chỉnh margin cạnh dưới
             lineChart.setExtraRightOffset(6);
-            lineChart.getLegend().setEnabled(false); // tắt chú thích (cái màu xanh)
-            lineChart.getAxisRight().setEnabled(false); // tắt cột Y bên phải
+            lineChart.getLegend().setEnabled(false);// tắt chú thích (cái màu xanh)
+            lineChart.getAxisRight().setDrawLabels(false);
+            lineChart.getAxisRight().setAxisLineWidth(2);
+            lineChart.getAxisRight().setDrawGridLines(false);
+            lineChart.getAxisRight().setAxisLineColor(ContextCompat.getColor(mContext, R.color.statistics_grid));
             // lineChart.getXAxis().setDrawGridLines(false); // tắt vẽ lưới
             // lineChart.getAxisLeft().setDrawGridLines(false); // tắt vẽ lưới
 

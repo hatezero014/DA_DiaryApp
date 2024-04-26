@@ -18,18 +18,19 @@
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginBottom="10dp"
-        android:background="@color/md_theme_surface">
+        android:background="@drawable/radius_item_emotion">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
 
             <TextView
                 android:id="@+id/tv_most_choosen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="15dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:text="@string/choose_multiple"/>
@@ -40,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textSize="20sp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="15dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -50,7 +51,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -77,7 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginStart="30dp">
+                android:layout_marginStart="25dp">
 
                 <ImageView
                     android:id="@+id/imageView2"
@@ -99,7 +101,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginStart="30dp">
+                android:layout_marginStart="25dp">
 
                 <ImageView
                     android:id="@+id/imageView3"
@@ -121,7 +123,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginStart="30dp">
+                android:layout_marginStart="25dp">
 
                 <ImageView
                     android:id="@+id/imageView4"
