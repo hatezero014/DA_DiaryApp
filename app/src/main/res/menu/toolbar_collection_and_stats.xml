@@ -12,6 +12,8 @@
     <item
         android:id="@+id/action_settings"
         android:icon="@drawable/common_settings"
+        android:onClick="Setting_onClick"
+
         app:showAsAction="ifRoom"
         android:title="@string/title_settings" />
 

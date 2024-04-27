@@ -33,6 +33,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.doan_diaryapp.Models.Language;
 import com.example.doan_diaryapp.Service.LanguageService;
+import com.google.android.material.divider.MaterialDivider;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 
@@ -52,6 +53,7 @@ public class SettingActivity extends BaseActivity {
     private int selectedMinute;
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
+    MaterialDivider div1, div2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,12 +74,17 @@ public class SettingActivity extends BaseActivity {
         layoutSecurity = findViewById(R.id.layout_Security);
         changePasswordButton = findViewById(R.id.change_PIN);
         deletePasswordButton = findViewById(R.id.delete_PIN);
+        div1 = findViewById(R.id.div1);
+        div2 = findViewById(R.id.div2);
         sharedPreferences = getSharedPreferences("Passcode", MODE_PRIVATE);
         sharedPreferences1 = getSharedPreferences("com.example.doan_diaryapp.NOTIFICATION_PREFS", MODE_PRIVATE);
         // Initially hide ChangePassword and DeletePassword buttons
         layoutSecurity.setVisibility(View.VISIBLE);
         changePasswordButton.setVisibility(View.GONE);
         deletePasswordButton.setVisibility(View.GONE);
+        div1.setVisibility(View.GONE);
+        div2.setVisibility(View.GONE);
+
 
         NotificationHelper.createNotificationChannel(this);
 
@@ -339,6 +346,8 @@ public class SettingActivity extends BaseActivity {
                 layoutSecurity.setVisibility(View.VISIBLE);
                 changePasswordButton.setVisibility(View.GONE);
                 deletePasswordButton.setVisibility(View.GONE);
+                div1.setVisibility(View.GONE);
+                div2.setVisibility(View.GONE);
                 switchSecurity.setChecked(true);
 
 
@@ -359,11 +368,15 @@ public class SettingActivity extends BaseActivity {
                 layoutSecurity.setVisibility(View.GONE);
                 changePasswordButton.setVisibility(View.VISIBLE);
                 deletePasswordButton.setVisibility(View.VISIBLE);
+                div1.setVisibility(View.GONE);
+                div2.setVisibility(View.VISIBLE);
             }
             else {
                 layoutSecurity.setVisibility(View.VISIBLE);
                 changePasswordButton.setVisibility(View.GONE);
                 deletePasswordButton.setVisibility(View.GONE);
+                div1.setVisibility(View.GONE);
+                div2.setVisibility(View.GONE);
             }
 
         }
