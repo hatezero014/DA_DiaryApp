@@ -119,7 +119,7 @@
                 style="@style/TextAppearance.Material3.BodyLarge"
                 android:layout_weight="1"
                 android:textColor="@color/md_theme_onSurface_mediumContrast"
-               />
+                />
             <Switch
                 android:id="@+id/switch_notification"
                 android:layout_width="wrap_content"
@@ -127,6 +127,12 @@
                 tools:ignore="UseSwitchCompatOrMaterialXml" />
 
         </LinearLayout>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            app:dividerInsetStart="16dp"
+            app:dividerInsetEnd="16dp"
+            android:layout_height="wrap_content"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -187,6 +193,12 @@
                 tools:ignore="UseSwitchCompatOrMaterialXml" />
 
         </LinearLayout>
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:id="@+id/div1"
+            app:dividerInsetStart="16dp"
+            app:dividerInsetEnd="16dp"
+            android:layout_height="wrap_content"/>
 
         <LinearLayout
             android:id="@+id/change_PIN"
@@ -206,6 +218,13 @@
                 android:textColor="@color/md_theme_onSurface_mediumContrast"
                 />
         </LinearLayout>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:id="@+id/div2"
+            app:dividerInsetStart="16dp"
+            app:dividerInsetEnd="16dp"
+            android:layout_height="wrap_content"/>
 
         <LinearLayout
             android:id="@+id/delete_PIN"
@@ -271,8 +290,6 @@
                 android:layout_height="wrap_content"/>
 
         </LinearLayout>
-
     </LinearLayout>
 
 </ScrollView>
-
