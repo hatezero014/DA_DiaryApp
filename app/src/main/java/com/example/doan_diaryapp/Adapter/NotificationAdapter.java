@@ -19,8 +19,9 @@ import java.util.List;
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotificationHolder> {
     List<Notification> notificationList;
 
-    public NotificationAdapter(List<Notification> notificationList) {
-        this.notificationList = notificationList;
+    public void setData(List<Notification> list){
+        notificationList =list;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -33,9 +34,10 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     @Override
     public void onBindViewHolder(@NonNull NotificationHolder holder, int position) {
         Notification notification = notificationList.get(position);
+        if(notification==null) return;
         holder.imageView.setImageResource(R.drawable.img);
         holder.Date.setText(notification.getTime());
-        holder.Content.setText(notification.getNotificationContent());
+        holder.Content.setText(notification.getContent());
     }
 
     @Override
@@ -62,13 +64,5 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         return super.getItemViewType(position);
     }
 
-    class DateViewHolder extends RecyclerView.ViewHolder{
-        private TextView tv_date;
 
-        public DateViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            tv_date = itemView.findViewById(R.id.tv_date);
-        }
-    }
 }

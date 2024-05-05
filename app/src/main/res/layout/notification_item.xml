@@ -3,10 +3,12 @@
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <androidx.appcompat.widget.LinearLayoutCompat
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginEnd="10dp">
+
         <ImageView
             android:id="@+id/item_notification"
             android:src="@drawable/img"
@@ -18,17 +20,19 @@
             android:id="@+id/text_notification"
             android:text="Day la thong bao"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/item_notification"
+            android:layout_centerInParent="true"
+            />
 
         <TextView
             android:id="@+id/date"
             android:text="ThoigianHienTai"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"/>
 
-
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
+    </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

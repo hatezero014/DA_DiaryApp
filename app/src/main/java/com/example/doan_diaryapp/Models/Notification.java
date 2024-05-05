@@ -2,8 +2,18 @@ package com.example.doan_diaryapp.Models;
 
 public class Notification {
     int Id;
-
     String Time;
+    String Day;
+    String Content;
+
+    public Notification() {
+    }
+
+    public Notification(String time, String day, String content) {
+        Time = time;
+        Day = day;
+        Content = content;
+    }
 
     public int getId() {
         return Id;
@@ -21,21 +31,19 @@ public class Notification {
         Time = time;
     }
 
-    public String getNotificationContent() {
-        return NotificationContent;
+    public String getDay() {
+        return Day;
     }
 
-    public void setNotificationContent(String notificationContent) {
-        NotificationContent = notificationContent;
+    public void setDay(String day) {
+        Day = day;
     }
 
-    public Notification() {
+    public String getContent() {
+        return Content;
     }
 
-    public Notification(String time, String notificationContent) {
-        Time = time;
-        NotificationContent = notificationContent;
+    public void setContent(String content) {
+        Content = content;
     }
-
-    String NotificationContent;
 }

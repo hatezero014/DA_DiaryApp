@@ -1,6 +1,7 @@
 package com.example.doan_diaryapp;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -20,6 +21,7 @@ import com.example.doan_diaryapp.databinding.ActivityMainBinding;
 public class MainActivity extends BaseActivity {
     SharedPreferences sharedPreferences;
     String passCode;
+
 
     private ActivityMainBinding binding;
     @Override
@@ -60,4 +62,5 @@ public class MainActivity extends BaseActivity {
         startActivity(intent);
 
     }
+
 }
