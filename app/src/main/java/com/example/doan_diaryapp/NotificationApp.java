@@ -3,8 +3,11 @@ package com.example.doan_diaryapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -29,6 +32,7 @@ public class NotificationApp extends BaseActivity {
 
     RecyclerView recyclerView;
     CategoryAdapter categoryAdapter;
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +40,17 @@ public class NotificationApp extends BaseActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_notification_app);
 //
-//        String chuocantruyen = "Tao nè";
+//        String chuocantruyen = "Thông báo mới";
 //        NotificationService notificationService = new NotificationService(this);
 //        notificationService.Add(new Notification(getCurrentTime(),getCurrentDay(),chuocantruyen));
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(getString(R.string.notification_title));
+        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recyclerView = findViewById(R.id.recyclerView);
+        textView = findViewById(R.id.tv_content_null);
         categoryAdapter = new CategoryAdapter(this);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
@@ -62,6 +72,9 @@ public class NotificationApp extends BaseActivity {
         NotificationService notificationService = new NotificationService(this);;
         List<Category> categoryList = new ArrayList<>();
         List<DayDistinct> days = notificationService.DayDistinct(DayDistinct.class);
+        if(days.size()==0){
+            textView.setVisibility(View.VISIBLE);
+        }
         for(DayDistinct day : days){
             String temp = day.getDay();
             String whereClause = "Day = ?";

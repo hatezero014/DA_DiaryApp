@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".NotificationApp">
+    tools:context=".NotificationApp"
+    android:layout_marginStart="10dp"
+    android:layout_marginBottom="10dp">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
-        />
+        android:layout_marginTop="50dp" />
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+    <TextView
+        android:id="@+id/tv_content_null"
+        android:text="Nội dung còn trống"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="50dp"
+        android:gravity="center_horizontal"/>
+
+</RelativeLayout>
