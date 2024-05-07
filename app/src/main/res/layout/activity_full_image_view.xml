@@ -26,5 +26,6 @@
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/common_arrowback" />
+        app:srcCompat="@drawable/common_arrowback"
+        android:background="@drawable/background_selector"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

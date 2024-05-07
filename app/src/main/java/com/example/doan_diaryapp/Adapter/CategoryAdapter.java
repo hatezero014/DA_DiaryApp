@@ -39,7 +39,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
         Category category = categoryList.get(position);
         if(category==null) return;
-        holder.tv.setText(category.getNameCategory());
+        String day = context.getResources().getString(R.string.notification_day);
+        holder.tv.setText(day + ": " + category.getNameCategory());
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, RecyclerView.VERTICAL,false);
         holder.rcv.setLayoutManager(linearLayoutManager);

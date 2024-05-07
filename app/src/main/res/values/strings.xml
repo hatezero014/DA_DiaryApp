@@ -123,6 +123,7 @@
     <string name="notification_title">Notification</string>
     <string name="notification_daily_reminder">Daily Reminder</string>
     <string name="notification_reminder_time">Reminder Time</string>
+    <string name="notification_day">Day</string>
 
     <!-- Security -->
     <string name="security_title">Security</string>

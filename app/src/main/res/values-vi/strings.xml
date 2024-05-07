@@ -122,6 +122,8 @@
     <string name="notification_title">Thông báo</string>
     <string name="notification_daily_reminder">Nhắc nhở hàng ngày</string>
     <string name="notification_reminder_time">Thời gian nhắc nhở</string>
+    <string name="notification_day">Ngày</string>
+
 
     <!-- Security -->
     <string name="security_title">Bảo mật</string>
