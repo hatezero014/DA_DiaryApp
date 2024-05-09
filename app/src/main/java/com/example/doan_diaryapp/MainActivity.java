@@ -63,4 +63,9 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    public void Notification_onClick(MenuItem item){
+        Intent intent = new Intent(MainActivity.this, NotificationApp.class);
+        startActivity(intent);
+    }
+
 }

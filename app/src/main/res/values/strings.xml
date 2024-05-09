@@ -125,6 +125,14 @@
     <string name="notification_reminder_time">Reminder Time</string>
     <string name="notification_day">Day</string>
 
+    <string name="notification_1">You added your diary today!</string>
+    <string name="notification_2">You added your diary today and today is an important day!</string>
+    <string name="notification_3">Your mood score this month is:</string>
+    <string name="notification_4">You have set a password! If you were not the one who set it up, contact us for support!</string>
+    <string name="notification_5">You have changed your password, please check again. If you are not a changemaker, contact us for support!</string>
+    <string name="notification_6">You have deleted your password!</string>
+
+
     <!-- Security -->
     <string name="security_title">Security</string>
     <string name="security_sign_in">Sign in with your PIN</string>

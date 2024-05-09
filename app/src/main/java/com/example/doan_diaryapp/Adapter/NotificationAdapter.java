@@ -37,7 +37,25 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         if(notification==null) return;
         holder.imageView.setImageResource(R.drawable.icon_noti);
         holder.Date.setText(notification.getTime());
-        holder.Content.setText(notification.getContent());
+//        holder.Content.setText(notification.getContent());
+        if(notification.getContent() == 1){
+            holder.Content.setText(R.string.notification_1);
+        }
+        else if(notification.getContent() == 2){
+            holder.Content.setText(R.string.notification_2);
+        }
+        else if(notification.getContent() == 3){
+            holder.Content.setText(R.string.notification_3);
+        }
+        else if(notification.getContent() == 4){
+            holder.Content.setText(R.string.notification_4);
+        }
+        else if(notification.getContent() == 5){
+            holder.Content.setText(R.string.notification_5);
+        }
+        else if(notification.getContent() == 6){
+            holder.Content.setText(R.string.notification_6);
+        }
     }
 
     @Override
