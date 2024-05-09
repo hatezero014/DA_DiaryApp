@@ -67,7 +67,7 @@ public class YourImagesInApp extends AppCompatActivity {
                 CarouselModel clickedModel = getListData().get(position);
                 String imagePath = clickedModel.getImagePath();
 
-                Toast.makeText(YourImagesInApp.this, "Position" + position, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(YourImagesInApp.this, "Position" + position, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(YourImagesInApp.this, FullImageView.class);
                 intent.putExtra("pos", position);
                 intent.putExtra("image", imagePath);

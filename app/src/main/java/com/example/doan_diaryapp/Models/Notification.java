@@ -4,12 +4,12 @@ public class Notification {
     int Id;
     String Time;
     String Day;
-    String Content;
+    int Content;
 
     public Notification() {
     }
 
-    public Notification(String time, String day, String content) {
+    public Notification(String time, String day, int content) {
         Time = time;
         Day = day;
         Content = content;
@@ -39,11 +39,11 @@ public class Notification {
         Day = day;
     }
 
-    public String getContent() {
+    public int getContent() {
         return Content;
     }
 
-    public void setContent(String content) {
+    public void setContent(int content) {
         Content = content;
     }
 }
