@@ -20,10 +20,31 @@ public class Weather {
     public Weather() {
     }
 
-    public Weather(String icon) {
+    public Weather(String icon, String descEn, String descVi) {
         Icon = icon;
+        DescEn = descEn;
+        DescVi = descVi;
     }
 
+    String DescEn;
+
+    public String getDescEn() {
+        return DescEn;
+    }
+
+    public void setDescEn(String descEn) {
+        DescEn = descEn;
+    }
+
+    public String getDescVi() {
+        return DescVi;
+    }
+
+    public void setDescVi(String descVi) {
+        DescVi = descVi;
+    }
+
+    String DescVi;
     int Id;
     String Icon;
 }

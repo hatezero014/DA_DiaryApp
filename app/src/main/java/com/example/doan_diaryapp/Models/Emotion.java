@@ -12,8 +12,6 @@ public class Emotion {
     public Emotion() {
     }
 
-
-
     public String getIcon() {
         return Icon;
     }
@@ -22,10 +20,32 @@ public class Emotion {
         Icon = icon;
     }
 
-    public Emotion(String icon) {
+    public Emotion(String icon, String descEn, String descVi) {
         Icon = icon;
+        DescEn = descEn;
+        DescVi = descVi;
     }
 
     int Id;
     String Icon;
+
+    String DescEn;
+
+    public String getDescEn() {
+        return DescEn;
+    }
+
+    public void setDescEn(String descEn) {
+        DescEn = descEn;
+    }
+
+    public String getDescVi() {
+        return DescVi;
+    }
+
+    public void setDescVi(String descVi) {
+        DescVi = descVi;
+    }
+
+    String DescVi;
 }

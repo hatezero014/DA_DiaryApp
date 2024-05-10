@@ -12,28 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <!--    <com.google.android.material.appbar.AppBarLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:fitsSystemWindows="true"-->
-    <!--        app:layout_constraintTop_toTopOf="parent">-->
-
-    <!--        <com.google.android.material.appbar.CollapsingToolbarLayout-->
-    <!--            style="?attr/collapsingToolbarLayoutMediumStyle"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="?attr/collapsingToolbarLayoutMediumSize">-->
-
-    <!--            <com.google.android.material.appbar.MaterialToolbar-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                app:navigationIcon="@drawable/common_arrowback"-->
-    <!--                app:title="Test ngày tháng"-->
-    <!--                app:menu="@menu/toolbar_record"-->
-    <!--                android:layout_height="?attr/actionBarSize"-->
-    <!--                android:elevation="0dp" />-->
-
-    <!--        </com.google.android.material.appbar.CollapsingToolbarLayout>-->
-
-    <!--    </com.google.android.material.appbar.AppBarLayout>-->
         <LinearLayout
             android:id="@+id/layout_parent"
             android:layout_marginTop="50dp"
@@ -71,12 +49,133 @@
 
             </LinearLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/outlinedTextField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.Material3.BodyLarge"
+                android:layout_marginTop="10dp"
+                app:boxBackgroundMode="outline"
+                android:hint="@string/record_note"
+                android:textColorHint="@color/md_theme_onSurfaceVariant"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textNote"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/md_theme_onSurface"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:id="@+id/verticalLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                android:background="@drawable/custom_background_image_record"
+                android:paddingStart="16dp"
+                android:paddingBottom="10dp"
+                android:paddingEnd="16dp">
+
+                <TextView
+                    android:id="@+id/txtCountImage"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|start"
+                    style="@style/TextAppearance.Material3.BodyLarge"
+                    android:text="Đã thêm 0/3"
+                    android:textColor="@color/md_theme_onSurfaceVariant"
+                    />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/imageFirst"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/record_image"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="@string/app_name" />
+
+                    <ImageButton
+                        android:id="@+id/btnDeImgFi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|end"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:visibility="gone"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_cancel" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="16dp"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/imageSecond"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/app_name"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone" />
+
+                    <ImageButton
+                        android:id="@+id/btnDeImgSe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_gravity="top|end"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_cancel"
+                        android:visibility="gone" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="16dp"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/imageThird"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:visibility="gone"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="@string/app_name" />
+
+                    <ImageButton
+                        android:id="@+id/btnDeImgTh"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|end"
+                        android:visibility="gone"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_cancel" />
+                </FrameLayout>
+            </LinearLayout>
+
             <!-- Danh sách 1 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="20dp"
                 android:padding="20dp"
                 android:background="@drawable/custom_background_diary">
                 <TextView
@@ -157,6 +256,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="20dp"
+                android:layout_marginBottom="100dp"
                 android:background="@drawable/custom_background_diary">
                 <TextView
                     android:layout_width="wrap_content"
@@ -176,208 +276,87 @@
                     app:spanCount="4" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_marginTop="20dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp"
-                android:background="@drawable/custom_background_diary">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/record_sleep"
-                    android:textColor="@color/md_theme_onSecondaryContainer"
-                    style="@style/TextAppearance.Material3.TitleMedium" />
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical"-->
+<!--                android:padding="20dp"-->
+<!--                android:background="@drawable/custom_background_diary">-->
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="@string/record_sleep"-->
+<!--                    android:textColor="@color/md_theme_onSecondaryContainer"-->
+<!--                    style="@style/TextAppearance.Material3.TitleMedium" />-->
 
-                <GridLayout
-                    android:id="@+id/gridLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:columnCount="3">
+<!--                <GridLayout-->
+<!--                    android:id="@+id/gridLayout"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:columnCount="3">-->
 
-                    <!-- Cột 1: Đi Ngủ -->
-                    <Button
-                        android:id="@+id/bedtimeButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/TextAppearance.Material3.DisplaySmall"
-                        android:text="22:30"
-                        android:textSize="38sp"
-                        android:textColor="@color/md_theme_onSurfaceVariant"
-                        android:background="#00000000"
-                        android:layout_columnWeight="1" />
+<!--                    &lt;!&ndash; Cột 1: Đi Ngủ &ndash;&gt;-->
+<!--                    <Button-->
+<!--                        android:id="@+id/bedtimeButton"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        style="@style/TextAppearance.Material3.DisplaySmall"-->
+<!--                        android:text="22:30"-->
+<!--                        android:textSize="38sp"-->
+<!--                        android:textColor="@color/md_theme_onSurfaceVariant"-->
+<!--                        android:background="#00000000"-->
+<!--                        android:layout_columnWeight="1" />-->
 
-                    <!-- Cột 2: Chỗ trống -->
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_columnWeight="1" />
+<!--                    &lt;!&ndash; Cột 2: Chỗ trống &ndash;&gt;-->
+<!--                    <View-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="0dp"-->
+<!--                        android:layout_columnWeight="1" />-->
 
-                    <!-- Cột 3: Thức Dậy -->
-                    <Button
-                        android:id="@+id/wakeupButton"
-                        style="@style/TextAppearance.Material3.DisplaySmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="#00000000"
-                        android:textSize="38sp"
-                        android:text="07:30"
-                        android:textColor="@color/md_theme_onSurfaceVariant"
-                        android:layout_columnWeight="1"/>
+<!--                    &lt;!&ndash; Cột 3: Thức Dậy &ndash;&gt;-->
+<!--                    <Button-->
+<!--                        android:id="@+id/wakeupButton"-->
+<!--                        style="@style/TextAppearance.Material3.DisplaySmall"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:background="#00000000"-->
+<!--                        android:textSize="38sp"-->
+<!--                        android:text="07:30"-->
+<!--                        android:textColor="@color/md_theme_onSurfaceVariant"-->
+<!--                        android:layout_columnWeight="1"/>-->
 
-                    <TextView
-                        android:id="@+id/bedtimeTimeView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/record_go_bed"
-                        android:textColor="@color/md_theme_onSurfaceVariant"
-                        android:textSize="18sp"
-                        android:layout_gravity="center"
-                        android:layout_row="1"
-                        android:layout_column="0"/>
+<!--                    <TextView-->
+<!--                        android:id="@+id/bedtimeTimeView"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="@string/record_go_bed"-->
+<!--                        android:textColor="@color/md_theme_onSurfaceVariant"-->
+<!--                        android:textSize="18sp"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_row="1"-->
+<!--                        android:layout_column="0"/>-->
 
-                    <!-- Cột 2: Chỗ trống -->
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_columnWeight="1" />
+<!--                    &lt;!&ndash; Cột 2: Chỗ trống &ndash;&gt;-->
+<!--                    <View-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="0dp"-->
+<!--                        android:layout_columnWeight="1" />-->
 
-                    <TextView
-                        android:id="@+id/wakeupTimeView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/record_wake_up"
-                        android:textColor="@color/md_theme_onSurfaceVariant"
-                        android:textSize="18sp"
-                        android:layout_gravity="center"
-                        android:layout_row="1"
-                        android:layout_column="2"/>
+<!--                    <TextView-->
+<!--                        android:id="@+id/wakeupTimeView"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="@string/record_wake_up"-->
+<!--                        android:textColor="@color/md_theme_onSurfaceVariant"-->
+<!--                        android:textSize="18sp"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_row="1"-->
+<!--                        android:layout_column="2"/>-->
 
-                </GridLayout>
-            </LinearLayout>
+<!--                </GridLayout>-->
+<!--            </LinearLayout>-->
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/outlinedTextField"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/TextAppearance.Material3.BodyLarge"
-                android:layout_marginTop="20dp"
-                app:boxBackgroundMode="outline"
-                android:hint="@string/record_note"
-                android:textColorHint="@color/md_theme_onSurfaceVariant"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textNote"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/md_theme_onSurface"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <LinearLayout
-                android:id="@+id/verticalLinearLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="100dp"
-                android:orientation="vertical"
-                android:background="@drawable/custom_background_image_record"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:paddingBottom="16dp">
-
-                <TextView
-                    android:id="@+id/txtCountImage"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="12dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="top|start"
-                    style="@style/TextAppearance.Material3.BodyLarge"
-                    android:text="0/3"
-                    android:textColor="@color/md_theme_onSurfaceVariant"
-                    />
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/imageFirst"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/record_image"
-                        android:adjustViewBounds="true"
-                        android:scaleType="centerCrop"
-                        android:contentDescription="@string/app_name" />
-
-                    <ImageButton
-                        android:id="@+id/btnDeImgFi"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="top|end"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginEnd="4dp"
-                        android:visibility="gone"
-                        android:background="@android:color/transparent"
-                        android:src="@drawable/ic_cancel" />
-                </FrameLayout>
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp">
-
-                    <ImageView
-                        android:id="@+id/imageSecond"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:adjustViewBounds="true"
-                        android:contentDescription="@string/app_name"
-                        android:scaleType="centerCrop"
-                        android:visibility="gone" />
-
-                    <ImageButton
-                        android:id="@+id/btnDeImgSe"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginEnd="4dp"
-                        android:layout_gravity="top|end"
-                        android:background="@android:color/transparent"
-                        android:src="@drawable/ic_cancel"
-                        android:visibility="gone" />
-                </FrameLayout>
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp">
-
-                    <ImageView
-                        android:id="@+id/imageThird"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:adjustViewBounds="true"
-                        android:visibility="gone"
-                        android:scaleType="centerCrop"
-                        android:contentDescription="@string/app_name" />
-
-                    <ImageButton
-                        android:id="@+id/btnDeImgTh"
-                        android:layout_width="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginEnd="4dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="top|end"
-                        android:visibility="gone"
-                        android:background="@android:color/transparent"
-                        android:src="@drawable/ic_cancel" />
-                </FrameLayout>
-            </LinearLayout>
         </LinearLayout>
     </ScrollView >
 

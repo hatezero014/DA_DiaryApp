@@ -157,6 +157,17 @@ public class BaseService extends SQLiteOpenHelper {
         return object;
     }
 
+    public <T> T FindByIcon(Class<T> clazz, String icon) {
+        db = this.getReadableDatabase();
+        Cursor cursor = db.query(clazz.getSimpleName(), null, "Icon=?", new String[]{String.valueOf(icon)}, null, null, null);
+        T object = null;
+        if (cursor != null && cursor.moveToFirst()) {
+            object = CreateModelObjectFromCursor(clazz, cursor);
+            cursor.close();
+        }
+        return object;
+    }
+
     public  <T> T CreateModelObjectFromCursor(Class<T> clazz, Cursor cursor) {
         try {
             T object = clazz.newInstance();

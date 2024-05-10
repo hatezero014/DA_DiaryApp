@@ -74,6 +74,7 @@
     <string name="record_sleep">Giấc ngủ</string>
     <string name="record_go_bed">Đi ngủ</string>
     <string name="record_wake_up">Thức dậy</string>
+    <string name="record_title_add_image">Đã thêm %d/%d</string>
     <string name="select_time">Chọn thời gian</string>
     <string name="record_note">Ghi chú của bạn</string>
     <string name="record_allow_image">Bạn chỉ có thể chọn tối đa 3 ảnh</string>

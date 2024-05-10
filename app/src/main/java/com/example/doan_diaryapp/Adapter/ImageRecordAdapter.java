@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,11 +20,13 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.ImageViewHolder> {
-    private final  List<Integer> imageList;
+    private final List<Integer> imageList;
+    private final List<String> descList;
     private SparseBooleanArray selectedItems;
 
-    public ImageRecordAdapter(List<Integer> imageList, @Nullable List<Integer> imageSelectedList) {
+    public ImageRecordAdapter(List<Integer> imageList, List<String> descList, @Nullable List<Integer> imageSelectedList) {
         this.imageList = imageList;
+        this.descList = descList;
         this.selectedItems = new SparseBooleanArray();
         if (imageSelectedList != null) {
             for (int index : imageSelectedList) {
@@ -40,7 +43,7 @@ public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.
         DisplayMetrics displayMetrics = parent.getContext().getResources().getDisplayMetrics();
         int densityDpi = displayMetrics.densityDpi;
 
-        int cardViewWidth = (int)(displayMetrics.widthPixels - (72 * densityDpi / 160)) * 180 / 1000;
+        int cardViewWidth = (displayMetrics.widthPixels - (72 * densityDpi / 160)) * 180 / 1000;
 
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         layoutParams.width = cardViewWidth;
@@ -52,12 +55,16 @@ public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
         Integer imageRes = imageList.get(position);
+        String desc = descList.get(position);
+        holder.textView.setText(desc);
         holder.imageView.setImageResource(imageRes);
         holder.imageView.setAlpha(selectedItems.get(position) ? 1.0f : 0.35f);
+        holder.textView.setAlpha(selectedItems.get(position) ? 1.0f : 0.35f);
         holder.imageView.setOnClickListener(v -> {
             boolean isSelected = !selectedItems.get(position);
             selectedItems.put(position, isSelected);
             holder.imageView.setAlpha(isSelected ? 1.0f : 0.35f);
+            holder.textView.setAlpha(isSelected ? 1.0f : 0.35f);
         });
     }
 
@@ -68,10 +75,12 @@ public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.
 
     static class ImageViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
+        TextView textView;
 
         ImageViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView);
+            textView = itemView.findViewById(R.id.textDesc);
         }
     }
 

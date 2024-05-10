@@ -35,6 +35,8 @@ public class EntryActivityService extends BaseService{
             if (cursor != null && cursor.moveToFirst()) {
                 int dateColumnIndex = cursor.getColumnIndex("Date");
                 int iconColumnIndex = cursor.getColumnIndex("Icon");
+                int descEnColumnIndex = cursor.getColumnIndex("DescEn");
+                int descViColumnIndex = cursor.getColumnIndex("DescVi");
 
                 do {
                     String date = cursor.getString(dateColumnIndex).trim();
@@ -42,8 +44,10 @@ public class EntryActivityService extends BaseService{
                     int m = Integer.parseInt(parts[1]);
                     int y = Integer.parseInt(parts[2]);
                     String icon = cursor.getString(iconColumnIndex);
+                    String descEn = cursor.getString(descEnColumnIndex);
+                    String descVi = cursor.getString(descViColumnIndex);
                     if(m == month && y == year){
-                        entryList.add(new Activity(icon));
+                        entryList.add(new Activity(icon, descEn, descVi));
                     }
                 } while (cursor.moveToNext());
             }
@@ -62,14 +66,18 @@ public class EntryActivityService extends BaseService{
             if (cursor != null && cursor.moveToFirst()) {
                 int dateColumnIndex = cursor.getColumnIndex("Date");
                 int iconColumnIndex = cursor.getColumnIndex("Icon");
+                int descEnColumnIndex = cursor.getColumnIndex("DescEn");
+                int descViColumnIndex = cursor.getColumnIndex("DescVi");
 
                 do {
                     String date = cursor.getString(dateColumnIndex).trim();
                     String[] parts = date.split("-");
                     int y = Integer.parseInt(parts[2]);
                     String icon = cursor.getString(iconColumnIndex);
+                    String descEn = cursor.getString(descEnColumnIndex);
+                    String descVi = cursor.getString(descViColumnIndex);
                     if(y == year){
-                        entryList.add(new Activity(icon));
+                        entryList.add(new Activity(icon, descEn, descVi));
                     }
                 } while (cursor.moveToNext());
             }

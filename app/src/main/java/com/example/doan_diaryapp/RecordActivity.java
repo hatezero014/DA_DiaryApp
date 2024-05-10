@@ -5,6 +5,7 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -85,7 +86,7 @@ public class RecordActivity extends BaseActivity {
 
     private OnBackPressedDispatcher dispatcher;
 
-    private final List<Integer> imageMoodList = Arrays.asList(
+    private List<Integer> imageMoodList = Arrays.asList(
             R.drawable.emoji_emotion_joyful, R.drawable.emoji_emotion_cool, R.drawable.emoji_emotion_melting, R.drawable.emoji_emotion_pleased,
             R.drawable.emoji_emotion_happy, R.drawable.emoji_emotion_surprise, R.drawable.emoji_emotion_embarrassed, R.drawable.emoji_emotion_normal,
             R.drawable.emoji_emotion_fearful, R.drawable.emoji_emotion_tired, R.drawable.emoji_emotion_worried, R.drawable.emoji_emotion_sad,
@@ -93,7 +94,7 @@ public class RecordActivity extends BaseActivity {
             R.drawable.emoji_emotion_annoyed, R.drawable.emoji_emotion_angry
     );
 
-    private final List<Integer> imageActivityList = Arrays.asList(
+    private List<Integer> imageActivityList = Arrays.asList(
             R.drawable.emoji_activity_work, R.drawable.emoji_activity_study, R.drawable.emoji_activity_bake, R.drawable.emoji_activity_write,
             R.drawable.emoji_activity_sport, R.drawable.emoji_activity_gym, R.drawable.emoji_activity_watch_movie, R.drawable.emoji_activity_game,
             R.drawable.emoji_activity_play_instruments, R.drawable.emoji_activity_sing, R.drawable.emoji_activity_biking, R.drawable.emoji_activity_shopping,
@@ -101,7 +102,7 @@ public class RecordActivity extends BaseActivity {
             R.drawable.emoji_activity_play_cards, R.drawable.emoji_activity_cook, R.drawable.emoji_activity_housework, R.drawable.emoji_activity_read
     );
 
-    private final List<Integer> imageCompanionList = Arrays.asList(
+    private List<Integer> imageCompanionList = Arrays.asList(
             R.drawable.emoji_companion_partner, R.drawable.emoji_companion_friends, R.drawable.emoji_companion_family, R.drawable.emoji_companion_pets
     );
 
@@ -110,11 +111,8 @@ public class RecordActivity extends BaseActivity {
             R.drawable.emoji_weather_sunny, R.drawable.emoji_weather_windy
     );
 
-    private Button bedtimeButton, wakeupButton;
-    private boolean isBedtime;
     private ImageButton btnDeImgFi, btnDeImgSe, btnDeImgTh;
     private ImageView imgFirst, imgSecond, imgThird;
-    int hourWakeUp, hourBed, minWakeUp, minBed;
     int countImage = 0;
     Boolean isCheckFavorite = false;
     Drawable targetDrawable;
@@ -184,11 +182,10 @@ public class RecordActivity extends BaseActivity {
         btnDeImgTh = findViewById(R.id.btnDeImgTh);
         btnDone = findViewById(R.id.btnDone);
         targetDrawable = imgFirst.getDrawable();
-        bedtimeButton = findViewById(R.id.bedtimeButton);
-        wakeupButton = findViewById(R.id.wakeupButton);
         textNode = findViewById(R.id.textNote);
         slider = findViewById(R.id.slider);
         textCount = findViewById(R.id.txtCountImage);
+        textCount.setText(getResources().getString(R.string.record_title_add_image, countImage, 3));
 
         RecyclerView recyclerView1 = findViewById(R.id.recyclerView1);
         recyclerView1.setLayoutManager(new GridLayoutManager(this, 4));
@@ -208,11 +205,52 @@ public class RecordActivity extends BaseActivity {
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        SharedPreferences prefs = getSharedPreferences("Settings", android.app.Activity.MODE_PRIVATE);
+        String language = prefs.getString("My_Language", "");
+
+        List<String> descMoodList = new ArrayList<>();
+        for (Integer resourceId : imageMoodList) {
+            String resourceName = getResourceName(resourceId);
+            Emotion emotion = emotionService.FindByIcon(Emotion.class, resourceName);
+            String desc = emotion.getDescEn();
+            if (language.equals("vi"))
+                desc = emotion.getDescVi();
+            descMoodList.add(desc);
+        }
+
+        List<String> descActivityList = new ArrayList<>();
+        for (Integer resourceId : imageActivityList) {
+            String resourceName = getResourceName(resourceId);
+            Activity activity = activityService.FindByIcon(Activity.class, resourceName);
+            String desc = activity.getDescEn();
+            if (language.equals("vi"))
+                desc = activity.getDescVi();
+            descActivityList.add(desc);
+        }
+
+        List<String> descPartnerList = new ArrayList<>();
+        for (Integer resourceId : imageCompanionList) {
+            String resourceName = getResourceName(resourceId);
+            Partner partner = partnerService.FindByIcon(Partner.class, resourceName);
+            String desc = partner.getDescEn();
+            if (language.equals("vi"))
+                desc = partner.getDescVi();
+            descPartnerList.add(desc);
+        }
+
+        List<String> descWeatherList = new ArrayList<>();
+        for (Integer resourceId : imageWeatherList) {
+            String resourceName = getResourceName(resourceId);
+            Weather weather = weatherService.FindByIcon(Weather.class, resourceName);
+            String desc = weather.getDescEn();
+            if (language.equals("vi"))
+                desc = weather.getDescVi();
+            descWeatherList.add(desc);
+        }
+
         result = entryService.FindByDate(new Entry(), date);
         if (result != null) {
             textNode.setText(result.getNote());
-            wakeupButton.setText(result.getWakeUp());
-            bedtimeButton.setText(result.getSleep());
             slider.setValue((float)result.getOverallScore());
             ArrayList<EntryActivity> entryActivities = entryActivityService.GetAllByEntryId(EntryActivity.class, result.getId());
             ArrayList<EntryEmotion> entryEmotions = entryEmotionService.GetAllByEntryId(EntryEmotion.class, result.getId());
@@ -256,16 +294,16 @@ public class RecordActivity extends BaseActivity {
                 }
             }
 
-            adapter1 = new ImageRecordAdapter(imageMoodList, emotionIndexes);
+            adapter1 = new ImageRecordAdapter(imageMoodList, descMoodList, emotionIndexes);
             recyclerView1.setAdapter(adapter1);
             recyclerView1.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
-            adapter2 = new ImageRecordAdapter(imageActivityList, activityIndexes);
+            adapter2 = new ImageRecordAdapter(imageActivityList, descActivityList, activityIndexes);
             recyclerView2.setAdapter(adapter2);
             recyclerView2.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
-            adapter3 = new ImageRecordAdapter(imageCompanionList, partnerIndexes);
+            adapter3 = new ImageRecordAdapter(imageCompanionList, descPartnerList, partnerIndexes);
             recyclerView3.setAdapter(adapter3);
             recyclerView3.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
-            adapter4 = new ImageRecordAdapter(imageWeatherList, weatherIndexes);
+            adapter4 = new ImageRecordAdapter(imageWeatherList, descWeatherList, weatherIndexes);
             recyclerView4.setAdapter(adapter4);
             recyclerView4.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
 
@@ -293,7 +331,7 @@ public class RecordActivity extends BaseActivity {
                     btnDeImgTh.setVisibility(View.VISIBLE);
                 }
             };
-            textCount.setText(String.format(Locale.ENGLISH, "%d/%d", countImage, 3));
+            textCount.setText(getResources().getString(R.string.record_title_add_image, countImage, 3));
 
             ImportantDay importantDay = importantDayService.FindByDate(new ImportantDay(), date);
             if (importantDay != null) {
@@ -302,37 +340,19 @@ public class RecordActivity extends BaseActivity {
             }
         }
         else {
-            adapter1 = new ImageRecordAdapter(imageMoodList, null);
+            adapter1 = new ImageRecordAdapter(imageMoodList, descMoodList, null);
             recyclerView1.setAdapter(adapter1);
             recyclerView1.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
-            adapter2 = new ImageRecordAdapter(imageActivityList, null);
+            adapter2 = new ImageRecordAdapter(imageActivityList, descActivityList, null);
             recyclerView2.setAdapter(adapter2);
             recyclerView2.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
-            adapter3 = new ImageRecordAdapter(imageCompanionList, null);
+            adapter3 = new ImageRecordAdapter(imageCompanionList, descPartnerList, null);
             recyclerView3.setAdapter(adapter3);
             recyclerView3.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
-            adapter4 = new ImageRecordAdapter(imageWeatherList, null);
+            adapter4 = new ImageRecordAdapter(imageWeatherList, descWeatherList, null);
             recyclerView4.setAdapter(adapter4);
             recyclerView4.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
         }
-
-        bedtimeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isBedtime = true;
-                String time = bedtimeButton.getText().toString();
-                showTimePickerDialog(time);
-            }
-        });
-
-        wakeupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isBedtime = false;
-                String time = wakeupButton.getText().toString();
-                showTimePickerDialog(time);
-            }
-        });
 
         btnDeImgFi.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -341,7 +361,7 @@ public class RecordActivity extends BaseActivity {
                 btnDeImgFi.setVisibility(View.GONE);
                 imgFiUri = null;
                 countImage--;
-                textCount.setText(String.format(Locale.ENGLISH, "%d/%d", countImage, 3));
+                textCount.setText(getResources().getString(R.string.record_title_add_image, countImage, 3));
                 checkChangedImage = true;
 
                 if (imgSecond.getDrawable() != null) {
@@ -379,7 +399,7 @@ public class RecordActivity extends BaseActivity {
                 btnDeImgSe.setVisibility(View.GONE);
                 imgSeUri = null;
                 countImage--;;
-                textCount.setText(String.format(Locale.ENGLISH, "%d/%d", countImage, 3));
+                textCount.setText(getResources().getString(R.string.record_title_add_image, countImage, 3));
                 checkChangedImage = true;
 
                 if (imgThird.getDrawable() != null) {
@@ -402,8 +422,8 @@ public class RecordActivity extends BaseActivity {
                 imgThird.setVisibility(View.GONE);
                 btnDeImgTh.setVisibility(View.GONE);
                 imgThUri = null;
-                countImage--;;
-                textCount.setText(String.format(Locale.ENGLISH, "%d/%d", countImage, 3));
+                countImage--;
+                textCount.setText(getResources().getString(R.string.record_title_add_image, countImage, 3));
                 checkChangedImage = true;
             }
         });
@@ -413,8 +433,8 @@ public class RecordActivity extends BaseActivity {
             public void onClick(View v) {
                 try {
                     String notes = textNode.getText().toString();
-                    String wakeUp = wakeupButton.getText().toString();
-                    String sleep = bedtimeButton.getText().toString();
+                    String wakeUp = "6:30";
+                    String sleep = "6:30";
                     int overallScore = (int) slider.getValue();
                     List<Integer> selectedItems1 = adapter1.getSelectedItems();
                     List<Integer> selectedItems2 = adapter2.getSelectedItems();
@@ -522,38 +542,12 @@ public class RecordActivity extends BaseActivity {
         });
     }
 
-    private int getDrawableResourceId(Context context, String drawableName) {
-        return context.getResources().getIdentifier(drawableName, "drawable", context.getPackageName());
+    private String getResourceName(int resourceId) {
+        return getResources().getResourceEntryName(resourceId);
     }
 
-    private void showTimePickerDialog(String time) {
-        int hour = Integer.parseInt(time.split(":")[0]);
-        int minute = Integer.parseInt(time.split(":")[1]);
-
-        MaterialTimePicker picker = new MaterialTimePicker.Builder()
-                .setTimeFormat(TimeFormat.CLOCK_24H)
-                .setHour(hour)
-                .setMinute(minute)
-                .setTitleText(R.string.select_time)
-                .setInputMode(MaterialTimePicker.INPUT_MODE_CLOCK)
-                .build();
-
-        picker.addOnPositiveButtonClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isBedtime) {
-                    hourBed = picker.getHour();
-                    minBed = picker.getMinute();
-                    bedtimeButton.setText(String.format(Locale.ENGLISH, "%02d:%02d", hourBed, minBed));
-                } else {
-                    hourWakeUp = picker.getHour();
-                    minWakeUp = picker.getMinute();
-                    wakeupButton.setText(String.format(Locale.ENGLISH, "%02d:%02d", hourWakeUp, minWakeUp));
-                }
-            }
-        });
-
-        picker.show(getSupportFragmentManager(), "tag");
+    private int getDrawableResourceId(Context context, String drawableName) {
+        return context.getResources().getIdentifier(drawableName, "drawable", context.getPackageName());
     }
 
     void showSnackBar(String content) {
@@ -588,7 +582,7 @@ public class RecordActivity extends BaseActivity {
                             btnDeImgFi.setVisibility(View.VISIBLE);
                             checkChangedImage = true;
                             countImage++;
-                            textCount.setText(String.format(Locale.ENGLISH, "%d/%d", countImage, 3));
+                            textCount.setText(getResources().getString(R.string.record_title_add_image, countImage, 3));
                         }
                         else {
                             if (imgSecond.getDrawable() == null) {
@@ -663,7 +657,7 @@ public class RecordActivity extends BaseActivity {
             }
         }
         if (id == android.R.id.home) {
-            if (isDataChanged()) // t tách ra hàm riêng để dùng cho backpressed nữa
+            if (isDataChanged())
                 showDialogAlert();
             else finish();
         }
@@ -672,8 +666,8 @@ public class RecordActivity extends BaseActivity {
 
     private boolean isDataChanged() {
         String notes = textNode.getText().toString();
-        String wakeUp = wakeupButton.getText().toString();
-        String sleep = bedtimeButton.getText().toString();
+        String wakeUp = "6:30";
+        String sleep = "6:30";
         int overallScore = (int) slider.getValue();
         List<Integer> selectedItems1 = adapter1.getSelectedItems();
         List<Integer> selectedItems2 = adapter2.getSelectedItems();
@@ -681,8 +675,8 @@ public class RecordActivity extends BaseActivity {
         List<Integer> selectedItems4 = adapter4.getSelectedItems();
         Entry entity = new Entry(notes, date, overallScore, wakeUp, sleep);
         if (result == null) {
-            return !notes.isEmpty() || !wakeUp.equals("07:30") || !sleep.equals("22:30")
-                    || overallScore != 5 || !selectedItems1.isEmpty() || !selectedItems2.isEmpty()
+            return !notes.isEmpty() || overallScore != 5
+                    || !selectedItems1.isEmpty() || !selectedItems2.isEmpty()
                     || !selectedItems3.isEmpty() || !selectedItems4.isEmpty();
         }
         boolean checkChanged = false;

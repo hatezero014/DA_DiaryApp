@@ -87,6 +87,7 @@
     <string name="select_time">Choose time</string>
     <string name="record_note">Your notes</string>
     <string name="record_done">Done</string>
+    <string name="record_title_add_image">Added %d/%d</string>
     <string name="record_toast_fail">Record failed!</string>
     <string name="record_alert_title">Exit confirmation</string>
     <string name="record_alert_message">Are you sure you want to exit?\nChanges will not be saved.</string>

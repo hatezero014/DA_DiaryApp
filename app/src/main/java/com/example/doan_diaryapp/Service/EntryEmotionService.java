@@ -34,6 +34,8 @@ public class EntryEmotionService extends BaseService {
             if (cursor != null && cursor.moveToFirst()) {
                 int dateColumnIndex = cursor.getColumnIndex("Date");
                 int iconColumnIndex = cursor.getColumnIndex("Icon");
+                int descEnColumnIndex = cursor.getColumnIndex("DescEn");
+                int descViColumnIndex = cursor.getColumnIndex("DescVi");
 
                 do {
                     String date = cursor.getString(dateColumnIndex).trim();
@@ -41,8 +43,10 @@ public class EntryEmotionService extends BaseService {
                     int m = Integer.parseInt(parts[1]);
                     int y = Integer.parseInt(parts[2]);
                     String icon = cursor.getString(iconColumnIndex);
+                    String descEn = cursor.getString(descEnColumnIndex);
+                    String descVi = cursor.getString(descViColumnIndex);
                     if(m == month && y == year){
-                        entryList.add(new Emotion(icon));
+                        entryList.add(new Emotion(icon, descEn, descVi));
                     }
                 } while (cursor.moveToNext());
             }
@@ -61,14 +65,18 @@ public class EntryEmotionService extends BaseService {
             if (cursor != null && cursor.moveToFirst()) {
                 int dateColumnIndex = cursor.getColumnIndex("Date");
                 int iconColumnIndex = cursor.getColumnIndex("Icon");
+                int descEnColumnIndex = cursor.getColumnIndex("DescEn");
+                int descViColumnIndex = cursor.getColumnIndex("DescVi");
 
                 do {
                     String date = cursor.getString(dateColumnIndex).trim();
                     String[] parts = date.split("-");
                     int y = Integer.parseInt(parts[2]);
                     String icon = cursor.getString(iconColumnIndex);
+                    String descEn = cursor.getString(descEnColumnIndex);
+                    String descVi = cursor.getString(descViColumnIndex);
                     if(y == year){
-                        entryList.add(new Emotion(icon));
+                        entryList.add(new Emotion(icon, descEn, descVi));
                     }
                 } while (cursor.moveToNext());
             }
