@@ -77,8 +77,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -339,7 +341,8 @@ public class RecordActivity extends BaseActivity {
                 invalidateOptionsMenu();
             }
         }
-        else {
+        else
+        {
             adapter1 = new ImageRecordAdapter(imageMoodList, descMoodList, null);
             recyclerView1.setAdapter(adapter1);
             recyclerView1.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
@@ -353,7 +356,6 @@ public class RecordActivity extends BaseActivity {
             recyclerView4.setAdapter(adapter4);
             recyclerView4.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
         }
-
         btnDeImgFi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -440,10 +442,22 @@ public class RecordActivity extends BaseActivity {
                     List<Integer> selectedItems2 = adapter2.getSelectedItems();
                     List<Integer> selectedItems3 = adapter3.getSelectedItems();
                     List<Integer> selectedItems4 = adapter4.getSelectedItems();
-                    Entry entity = new Entry(notes, date, overallScore, wakeUp, sleep);
+                    Calendar calendar = Calendar.getInstance();
+                    int day = calendar.get(Calendar.DAY_OF_MONTH);
+                    int month = calendar.get(Calendar.MONTH) + 1;
+                    int year = calendar.get(Calendar.YEAR);
+                    int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                    int minute = calendar.get(Calendar.MINUTE);
+                    int second = calendar.get(Calendar.SECOND);
+                    String currentTime = String.format(Locale.ENGLISH, "%02d:%02d:%02d %02d-%02d-%04d", hour, minute, second, day, month, year);
                     if (result == null) {
+                        Entry entity = new Entry(notes, currentTime, overallScore, wakeUp, sleep);
                         entryService.Add(entity);
-                        int id = entryService.FindByDate(new Entry(), date).getId();
+                        if (isCheckFavorite) {
+                            importantDayService.Add(new ImportantDay(currentTime));
+                        }
+
+                        int id = entryService.FindByDate(new Entry(), currentTime).getId();
                         for (Integer imageId : selectedItems1) {
                             String icon = getResources().getResourceEntryName(imageMoodList.get(imageId));
                             Emotion emotion = emotionService.GetByIcon(new Emotion(), icon);
@@ -485,12 +499,24 @@ public class RecordActivity extends BaseActivity {
                     }
                     else {
                         int id = result.getId();
+                        Entry entity = new Entry(notes, date, overallScore, wakeUp, sleep);
+                        ImportantDay importantDay = importantDayService.FindByDate(new ImportantDay(),date);
                         entryService.UpdateById(entity, id);
                         entryPhotoService.DeleteByEntryId(EntryPhoto.class, id);
                         entryActivityService.DeleteByEntryId(EntryActivity.class, id);
                         entryEmotionService.DeleteByEntryId(EntryEmotion.class, id);
                         entryPartnerService.DeleteByEntryId(EntryPartner.class, id);
                         entryWeatherService.DeleteByEntryId(EntryWeather.class, id);
+                        if (isCheckFavorite) {
+                            if (importantDay == null) {
+                                importantDayService.Add(new ImportantDay(date));
+                            }
+                        }
+                        else {
+                            if (importantDay != null) {
+                                importantDayService.DeleteById(ImportantDay.class, importantDay.getId());
+                            }
+                        }
 
                         for (Integer imageId : selectedItems1) {
                             String icon = getResources().getResourceEntryName(imageMoodList.get(imageId));
@@ -571,7 +597,7 @@ public class RecordActivity extends BaseActivity {
                     int count = clipData.getItemCount();
                     if (countImage + count > 3) {
                         showSnackBar(getString(R.string.record_allow_image));
-                        count = 3 - countImage;;
+                        count = 3 - countImage;
                     }
                     for (int i = 0; i < count; i++) {
                         Uri imageUri = clipData.getItemAt(i).getUri();
@@ -641,19 +667,20 @@ public class RecordActivity extends BaseActivity {
         }
         if (id == R.id.action_favorite) {
             boolean isSelected = item.isChecked();
-            ImportantDayService importantDayService = new ImportantDayService(this);
 
             isSelected = !isSelected;
 
             item.setChecked(isSelected);
 
             if (isSelected) {
+                isCheckFavorite = true;
                 item.setIcon(R.drawable.state_filled_record_star);
-                importantDayService.Add(new ImportantDay(date));
+                //importantDayService.Add(new ImportantDay(date));
             } else {
-                int idDay = importantDayService.FindByDate(new ImportantDay(), date).getId();
-                importantDayService.DeleteById(ImportantDay.class, idDay);
+                //int idDay = importantDayService.FindByDate(new ImportantDay(), date).getId();
+                //importantDayService.DeleteById(ImportantDay.class, idDay);
                 item.setIcon(R.drawable.state_outlined_record_star);
+                isCheckFavorite = false;
             }
         }
         if (id == android.R.id.home) {
@@ -673,7 +700,15 @@ public class RecordActivity extends BaseActivity {
         List<Integer> selectedItems2 = adapter2.getSelectedItems();
         List<Integer> selectedItems3 = adapter3.getSelectedItems();
         List<Integer> selectedItems4 = adapter4.getSelectedItems();
-        Entry entity = new Entry(notes, date, overallScore, wakeUp, sleep);
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int year = calendar.get(Calendar.YEAR);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        int second = calendar.get(Calendar.SECOND);
+        String currentTime = String.format(Locale.ENGLISH, "%02d:%02d:%02d %02d-%02d-%04d", hour, minute, second, day, month, year);
+        Entry entity = new Entry(notes, currentTime, overallScore, wakeUp, sleep);
         if (result == null) {
             return !notes.isEmpty() || overallScore != 5
                     || !selectedItems1.isEmpty() || !selectedItems2.isEmpty()

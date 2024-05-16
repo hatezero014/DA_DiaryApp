@@ -4,6 +4,16 @@ public class EntryPhoto {
     int EntryId;
     String Photo;
 
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
+    }
+
+    int Id;
+
     public int getEntryId() {
         return EntryId;
     }

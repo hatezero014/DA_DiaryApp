@@ -50,7 +50,7 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
 
     private String getDayOfWeek(String date) {
 
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        SimpleDateFormat format = new SimpleDateFormat("hh:mm:ss dd-MM-yyyy", Locale.getDefault());
         Date dateTime = null;
         try {
             dateTime = format.parse(date);
