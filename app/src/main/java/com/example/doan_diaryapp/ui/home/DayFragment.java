@@ -47,7 +47,8 @@ import java.util.SimpleTimeZone;
 
 
 
-public class DayFragment extends Fragment {
+public class
+DayFragment extends Fragment {
 
     private FragmentDayBinding binding;
     private ListView mListView;
@@ -88,15 +89,9 @@ public class DayFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TextView textViewDate = view.findViewById(R.id.textViewDate);
                 String dateText = textViewDate.getText().toString();
-                String[] parts = dateText.split(", ");
-                String formattedDate = parts[1].trim();
-                String[] dateParts = formattedDate.split("-");
-                int day = Integer.parseInt(dateParts[0]);
-                int month = Integer.parseInt(dateParts[1]);
-                int year = Integer.parseInt(dateParts[2]);
+                dateText=dateText.substring(dateText.length() - 19);
                 Intent intent = new Intent(getActivity(), RecordActivity.class);
-                intent.putExtra("Date", String.format(Locale.ENGLISH,
-                        "%02d-%02d-%04d", day, month, year));
+                intent.putExtra("Date", dateText);
                 startActivity(intent);
             }
         });
@@ -111,12 +106,16 @@ public class DayFragment extends Fragment {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        int second = calendar.get(Calendar.SECOND);
         buttonAddMonth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), RecordActivity.class);
                 intent.putExtra("Date", String.format(Locale.ENGLISH,
-                        "%02d-%02d-%04d", dayOfMonth, month+1, year));
+                        "%02d:%02d:%02d %02d-%02d-%04d", hour,minute,second,dayOfMonth, month+1, year));
                 startActivity(intent);
             }
         });

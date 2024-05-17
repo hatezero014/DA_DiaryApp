@@ -49,7 +49,6 @@ public class MonthFragment extends Fragment {
         if (rootView != null) {
             setCardViewDate(rootView);
             ButtonAddMonth(rootView);
-            ClickLinearLayout(rootView);
         }
     }
 
@@ -64,7 +63,7 @@ public class MonthFragment extends Fragment {
         dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
         setCardViewDate(view);
         ButtonAddMonth(view);
-        ClickLinearLayout(view);
+
         return view;
     }
 
@@ -75,18 +74,18 @@ public class MonthFragment extends Fragment {
         TextView textViewNote=view.findViewById(R.id.CardViewNote);
         TextView textViewRate=view.findViewById(R.id.CardViewRate);
         MaterialDivider divider = view.findViewById(R.id.divider);
-        ShowNote(view,dayOfMonth,month,year,textViewNote,textViewRate,divider,linearLayout);
+        //ShowNote(view,dayOfMonth,month,year,textViewNote,textViewRate,divider,linearLayout);
 
         TextView selectedDateTextView = view.findViewById(R.id.CardViewDate);
-        ShowDate(view,dayOfMonth,month+1,year,selectedDateTextView);
+        //ShowDate(view,dayOfMonth,month+1,year,selectedDateTextView);
 
         CalendarView calendarView = view.findViewById(R.id.calendarView);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int y, int m, int d) {
                 dayOfMonth=d; month=m; year=y;
-                ShowNote(view,d,m,y,textViewNote,textViewRate,divider,linearLayout);
-                ShowDate(view,d,m+1,y,selectedDateTextView);
+                //ShowNote(view,d,m,y,textViewNote,textViewRate,divider,linearLayout);
+                //ShowDate(view,d,m+1,y,selectedDateTextView);
             }
         });
     }
@@ -166,9 +165,12 @@ public class MonthFragment extends Fragment {
                 if (CheckDate(dayOfMonth, month, year)) {
                     showAlertDialog();
                 } else {
+                    int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                    int minute = calendar.get(Calendar.MINUTE);
+                    int second = calendar.get(Calendar.SECOND);
                     Intent intent = new Intent(getActivity(), RecordActivity.class);
                     intent.putExtra("Date", String.format(Locale.ENGLISH,
-                            "%02d-%02d-%04d", dayOfMonth, month + 1, year));
+                            "%02d:%02d:%02d %02d-%02d-%04d", hour,minute,second,dayOfMonth, month + 1, year));
                     startActivity(intent);
                 }
             }
@@ -193,31 +195,6 @@ public class MonthFragment extends Fragment {
                 .setMessage(R.string.month_alert_message)
                 .setPositiveButton("OK", null);
         builder.create().show();
-    }
-
-
-    private void ClickLinearLayout(View view)
-    {
-        LinearLayout linearLayout = view.findViewById(R.id.show_date_note);
-        linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TextView textViewDate = view.findViewById(R.id.CardViewDate);
-                String dateText = textViewDate.getText().toString();
-                String[] parts = dateText.split(", ");
-                String formattedDate = parts[1].trim();
-                String[] dateParts = formattedDate.split("-");
-                int day = Integer.parseInt(dateParts[0]);
-                int month = Integer.parseInt(dateParts[1]);
-                int year = Integer.parseInt(dateParts[2]);
-                Intent intent = new Intent(getActivity(), RecordActivity.class);
-                intent.putExtra("Date", String.format(Locale.ENGLISH,
-                        "%02d-%02d-%04d", day, month, year));
-                startActivity(intent);
-
-            }
-        });
-
     }
 
 

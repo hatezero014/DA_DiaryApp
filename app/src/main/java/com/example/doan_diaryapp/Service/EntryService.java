@@ -29,7 +29,7 @@ public class EntryService extends BaseService{
     public List<Entry> getEntriesFromDatabase() {
         db = this.getReadableDatabase();
         List<Entry> entryList = new ArrayList<>();
-        try (Cursor cursor = db.rawQuery("SELECT * FROM Entry ORDER BY SUBSTR(Date, 7, 4) || '-' || SUBSTR(Date, 4, 2) || '-' || SUBSTR(Date, 1, 2) DESC", null)) {
+        try (Cursor cursor = db.rawQuery("SELECT * FROM Entry ORDER BY SUBSTR(Date, 16, 4) || SUBSTR(Date, 13, 2) || SUBSTR(Date, 10, 2)||SUBSTR(Date, 1, 2) || '-' || SUBSTR(Date, 4, 2) || '-' || SUBSTR(Date, 7, 2) DESC", null)) {
             if (cursor != null && cursor.moveToFirst()) {
                 int idColumnIndex = cursor.getColumnIndex("Id");
                 int noteColumnIndex = cursor.getColumnIndex("Note");

@@ -5,6 +5,8 @@ import android.database.Cursor;
 
 import com.example.doan_diaryapp.Models.Entry;
 import com.example.doan_diaryapp.Models.ImportantDay;
+import com.example.doan_diaryapp.R;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,4 +52,27 @@ public class ImportantDayService extends BaseService {
         }
         return entryList;
     }
+
+    public boolean checkImportant(String checkDate) {
+        db = this.getReadableDatabase();
+        int d=0;
+        try (Cursor cursor = db.rawQuery("SELECT * FROM ImportantDay", null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                int dateColumnIndex = cursor.getColumnIndex("Date");
+                do {
+                    String date = cursor.getString(dateColumnIndex);
+                    if (checkDate.equals(date)) return true;
+                } while (cursor.moveToNext());
+            }
+        }
+        finally {
+            if (db != null) {
+                db.close();
+            }
+        }
+        return false;
+    }
+
+
+
 }

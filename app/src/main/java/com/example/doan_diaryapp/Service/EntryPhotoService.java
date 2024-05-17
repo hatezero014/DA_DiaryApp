@@ -53,6 +53,25 @@ public class EntryPhotoService extends BaseService {
         return list;
     }
 
+    public String getDate(String idPhoto) {
+        db = this.getReadableDatabase();
+        try (Cursor cursor = db.rawQuery("SELECT  * FROM EntryPhoto INNER JOIN Entry ON EntryPhoto.EntryId = Entry.Id ", null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                int dateScoreIndex = cursor.getColumnIndex("Date");
+                do {
+                    String date = cursor.getString(dateScoreIndex);
+                    return date;
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            if (db != null) {
+                db.close();
+            }
+        }
+        return "";
+    }
+
+
     public <T> ArrayList<T> GetAllImagesOrderByDESC(Class<T> clazz, String desc) {
         ArrayList<T> list = new ArrayList<>();
         db = this.getReadableDatabase();
