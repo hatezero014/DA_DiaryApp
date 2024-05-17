@@ -32,7 +32,7 @@ public class ImportantDayService extends BaseService {
     public List<Entry> getEntriesFromDatabaseQT() {
         db = this.getReadableDatabase();
         List<Entry> entryList = new ArrayList<>();
-        try (Cursor cursor = db.rawQuery("SELECT * FROM Entry INNER JOIN ImportantDay ON Entry.Date = ImportantDay.Date ORDER BY SUBSTR(Entry.Date, 7, 4) || '-' || SUBSTR(Entry.Date, 4, 2) || '-' || SUBSTR(Entry.Date, 1, 2) DESC", null)) {
+        try (Cursor cursor = db.rawQuery("SELECT * FROM Entry INNER JOIN ImportantDay ON Entry.Date = ImportantDay.Date ORDER BY SUBSTR(Entry.Date, 16, 4) || SUBSTR(Entry.Date, 13, 2) || SUBSTR(Entry.Date, 10, 2)||SUBSTR(Entry.Date, 1, 2) || '-' || SUBSTR(Entry.Date, 4, 2) || '-' || SUBSTR(Entry.Date, 7, 2) DESC", null)) {
             if (cursor != null && cursor.moveToFirst()) {
                 int idColumnIndex = cursor.getColumnIndex("Id");
                 int noteColumnIndex = cursor.getColumnIndex("Note");

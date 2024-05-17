@@ -8,17 +8,20 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_diaryapp.Adapter.EntryAdapter;
 import com.example.doan_diaryapp.Models.Entry;
+import com.example.doan_diaryapp.Models.ImportantDay;
 import com.example.doan_diaryapp.R;
 import com.example.doan_diaryapp.RecordActivity;
 import com.example.doan_diaryapp.Service.EntryPhotoService;
@@ -26,6 +29,7 @@ import com.example.doan_diaryapp.Service.EntryService;
 import com.example.doan_diaryapp.Service.ImportantDayService;
 import com.example.doan_diaryapp.YourImagesInApp;
 import com.example.doan_diaryapp.databinding.FragmentCollectionBinding;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,22 +39,25 @@ public class CollectionFragment extends Fragment {
     private FragmentCollectionBinding binding;
     private CarouselAdapter carouselAdapter;
     private ListView mListView;
+
+    ImageView actionFavorite;
     private Button mButton;
     private EntryAdapter mAdapter;
+
+    private EntryAdapter mAdapter1;
     private ImportantDayService importantDayService;
 
     private EntryPhotoService entryPhotoService;
 
 
 
+
     private void updateView() {
         View view = binding.getRoot();
+
         ListViewDayQT(view);
-        mListView = view.findViewById(R.id.ListDayQT);
-        importantDayService = new ImportantDayService(getContext());
-        List<Entry> entryList = importantDayService.getEntriesFromDatabaseQT();
-        mAdapter = new EntryAdapter(getContext(), entryList);
-        mListView.setAdapter(mAdapter);
+        Button(view);
+
         RecyclerView recyclerView = view.findViewById(R.id.carousel_recycler_view);
         ViewGroup.LayoutParams layoutParams = recyclerView.getLayoutParams();
         layoutParams.height = (int) getResources().getDimension(R.dimen.recyclerview_height);
@@ -59,6 +66,7 @@ public class CollectionFragment extends Fragment {
         ArrayList<CarouselModel> list = entryPhotoService.getPhotoFromDatabase();
         carouselAdapter = new CarouselAdapter(list, requireContext());
         recyclerView.setAdapter(carouselAdapter);
+
     }
 
 
@@ -68,11 +76,7 @@ public class CollectionFragment extends Fragment {
         View view = binding.getRoot();
         ListViewDayQT(view);
         Button(view);
-        mListView = view.findViewById(R.id.ListDayQT);
-        importantDayService = new ImportantDayService(getContext());
-        List<Entry> entryList = importantDayService.getEntriesFromDatabaseQT();
-        mAdapter = new EntryAdapter(getContext(), entryList);
-        mListView.setAdapter(mAdapter);
+
         RecyclerView recyclerView = view.findViewById(R.id.carousel_recycler_view);
         ViewGroup.LayoutParams layoutParams = recyclerView.getLayoutParams();
         layoutParams.height = (int) getResources().getDimension(R.dimen.recyclerview_height);
@@ -82,8 +86,29 @@ public class CollectionFragment extends Fragment {
         carouselAdapter = new CarouselAdapter(list, requireContext());
         recyclerView.setAdapter(carouselAdapter);
 
+        mListView = view.findViewById(R.id.ListDayQT);
+        importantDayService = new ImportantDayService(getContext());
+        List<Entry> entryList = importantDayService.getEntriesFromDatabaseQT();
+        mAdapter = new EntryAdapter(getContext(), entryList);
+        mListView.setAdapter(mAdapter);
+
+        mAdapter.setOnFavoriteClickListener(new EntryAdapter.OnFavoriteClickListener() {
+            @Override
+            public void onFavoriteClick(Entry entry) {
+                updateListView();
+            }
+        });
+
         return view;
     }
+
+    private void updateListView() {
+        List<Entry> entryList = importantDayService.getEntriesFromDatabaseQT();
+        mAdapter.updateEntries1(entryList);
+    }
+
+
+
 
 
 
@@ -108,25 +133,28 @@ public class CollectionFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TextView textViewDate = view.findViewById(R.id.textViewDate);
                 String dateText = textViewDate.getText().toString();
-                String[] parts = dateText.split(", ");
-                String formattedDate = parts[1].trim();
-                String[] dateParts = formattedDate.split("-");
-                int day = Integer.parseInt(dateParts[0]);
-                int month = Integer.parseInt(dateParts[1]);
-                int year = Integer.parseInt(dateParts[2]);
+                dateText=dateText.substring(dateText.length() - 19);
                 Intent intent = new Intent(getActivity(), RecordActivity.class);
-                intent.putExtra("Date", String.format(Locale.ENGLISH,
-                        "%02d-%02d-%04d", day, month, year));
+                intent.putExtra("Date", dateText);
                 startActivity(intent);
+
             }
         });
 
     }
 
+
+
+
+
+
+
+
     @Override
     public void onResume() {
         super.onResume();
         updateView();
+
     }
 
     @Override

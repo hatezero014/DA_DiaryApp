@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.doan_diaryapp.Models.Entry;
@@ -14,6 +15,7 @@ import com.example.doan_diaryapp.Models.ImportantDay;
 import com.example.doan_diaryapp.Models.Language;
 import com.example.doan_diaryapp.R;
 import com.example.doan_diaryapp.Service.ImportantDayService;
+
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.text.ParseException;
@@ -22,9 +24,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+
+
 public class EntryAdapter extends ArrayAdapter<Entry> {
 
     private OnFavoriteClickListener favoriteClickListener;
+
     ImportantDayService importantDayService;
 
 
@@ -35,8 +40,12 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
         this.favoriteClickListener = listener;
     }
 
+
+
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
 
         Entry entry = getItem(position);
 
@@ -62,6 +71,7 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
             actionFavorite.setImageResource(R.drawable.state_outlined_record_star);
         }
 
+
         actionFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,6 +88,10 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
                     if (importantDay == null) {
                         importantDayService.Add(new ImportantDay(entry.getDate()));
                     }
+                }
+
+                if (favoriteClickListener != null) {
+                    favoriteClickListener.onFavoriteClick(entry);
                 }
             }
         });
@@ -120,7 +134,15 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
         notifyDataSetChanged();
     }
 
+    public void updateEntries1(List<Entry> newEntries) {
+        clear(); // Clear existing entries
+        addAll(newEntries); // Add new entries
+        notifyDataSetChanged(); // Notify adapter of data change
+    }
+
     public interface OnFavoriteClickListener {
         void onFavoriteClick(Entry entry);
     }
+
+
 }

@@ -2,6 +2,7 @@ package com.example.doan_diaryapp.ui.collection;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,7 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.ItemVi
         return new ItemViewHolder(CarouselLayoutBinding.inflate(LayoutInflater.from(context), parent, false));
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         CarouselModel model = list.get(position);
@@ -51,6 +53,7 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.ItemVi
         return list.size();
     }
 
+
     public class ItemViewHolder extends RecyclerView.ViewHolder {
 
         private CarouselLayoutBinding binding;
@@ -58,33 +61,36 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.ItemVi
         public ItemViewHolder(CarouselLayoutBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+
+            // Set OnClickListener for the ImageView
+            binding.carouselImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Get the position of the clicked item
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        // Handle click event here
+                        CarouselModel model = list.get(position);
+                        showDaily(model.getImagePath());
+                        Log.d("CarouselAdapter", "onClick: Image clicked at position " + position);
+                    }
+                }
+            });
         }
 
         public void bind(CarouselModel model) {
             Glide.with(context)
                     .load(model.getImagePath())
                     .into(binding.carouselImageView);
-
-            /*ImageView imageView = model.;
-
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String idPhoto=model.getImagePath();
-                    showDaily(idPhoto);
-                }
-            });*/
-
         }
-
     }
 
 
 
-    private void showDaily(String idPhoto) {
+    private void showDaily(String Photo) {
         Intent intent = new Intent(context, RecordActivity.class);
         entryPhotoService=new EntryPhotoService(context);
-        String date = entryPhotoService.getDate(idPhoto);
+        String date = entryPhotoService.getDate(Photo);
         intent.putExtra("Date", date);
         context.startActivity(intent);
     }

@@ -37,7 +37,7 @@ public class EntryPhotoService extends BaseService {
     public ArrayList<CarouselModel> getPhotoFromDatabase() {
         db = this.getReadableDatabase();
         ArrayList<CarouselModel> list = new ArrayList<>();
-        try (Cursor cursor = db.rawQuery("SELECT * FROM EntryPhoto ORDER BY EntryId DESC", null)) {
+        try (Cursor cursor = db.rawQuery("SELECT * FROM EntryPhoto", null)) {
             if (cursor != null && cursor.moveToFirst()) {
                 int photoScoreIndex = cursor.getColumnIndex("Photo");
                 do {
@@ -53,14 +53,16 @@ public class EntryPhotoService extends BaseService {
         return list;
     }
 
-    public String getDate(String idPhoto) {
+    public String getDate(String Photo) {
         db = this.getReadableDatabase();
         try (Cursor cursor = db.rawQuery("SELECT  * FROM EntryPhoto INNER JOIN Entry ON EntryPhoto.EntryId = Entry.Id ", null)) {
             if (cursor != null && cursor.moveToFirst()) {
+                int photoScoreIndex = cursor.getColumnIndex("Photo");
                 int dateScoreIndex = cursor.getColumnIndex("Date");
                 do {
                     String date = cursor.getString(dateScoreIndex);
-                    return date;
+                    String photo = "/data/user/0/com.example.doan_diaryapp/files/"+cursor.getString(photoScoreIndex);
+                    if (Photo.equals(photo)) return date;
                 } while (cursor.moveToNext());
             }
         } finally {

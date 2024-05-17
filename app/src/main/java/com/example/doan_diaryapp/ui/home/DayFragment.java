@@ -102,17 +102,16 @@ DayFragment extends Fragment {
     private void ButtonAddDay(View view)
     {
         FloatingActionButton buttonAddMonth = view.findViewById(R.id.ButtonAddDay);
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
-        int second = calendar.get(Calendar.SECOND);
         buttonAddMonth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+                int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                int minute = calendar.get(Calendar.MINUTE);
+                int second = calendar.get(Calendar.SECOND);
                 Intent intent = new Intent(getActivity(), RecordActivity.class);
                 intent.putExtra("Date", String.format(Locale.ENGLISH,
                         "%02d:%02d:%02d %02d-%02d-%04d", hour,minute,second,dayOfMonth, month+1, year));
