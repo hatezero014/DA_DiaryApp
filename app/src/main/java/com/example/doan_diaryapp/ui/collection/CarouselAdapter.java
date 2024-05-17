@@ -55,24 +55,20 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.ItemVi
 
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
-
         private CarouselLayoutBinding binding;
 
         public ItemViewHolder(CarouselLayoutBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
 
-            // Set OnClickListener for the ImageView
-            binding.carouselImageView.setOnClickListener(new View.OnClickListener() {
+            // Set OnClickListener for the whole item view
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // Get the position of the clicked item
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
-                        // Handle click event here
-                        CarouselModel model = list.get(position);
-                        showDaily(model.getImagePath());
-                        Log.d("CarouselAdapter", "onClick: Image clicked at position " + position);
+                        CarouselModel clickedItem = list.get(position);
+                        showDaily(clickedItem.getImagePath());
                     }
                 }
             });
@@ -85,15 +81,11 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.ItemVi
         }
     }
 
-
-
-    private void showDaily(String Photo) {
+    private void showDaily(String imagePath) {
         Intent intent = new Intent(context, RecordActivity.class);
-        entryPhotoService=new EntryPhotoService(context);
-        String date = entryPhotoService.getDate(Photo);
+        entryPhotoService = new EntryPhotoService(context);
+        String date = entryPhotoService.getDate(imagePath);
         intent.putExtra("Date", date);
         context.startActivity(intent);
     }
-
-
 }
