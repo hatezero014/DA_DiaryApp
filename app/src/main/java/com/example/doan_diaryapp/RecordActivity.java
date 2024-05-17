@@ -122,7 +122,7 @@ public class RecordActivity extends BaseActivity {
     String date;
     private static final int PICK_IMAGES_REQUEST = 1;
     Slider slider;
-    TextView textNode, textCount;
+    TextView textNote, textCount, textTitle;
     Button btnDone;
     boolean checkChangedImage = false;
     List<Integer> partnerIndexes, weatherIndexes, emotionIndexes, activityIndexes;
@@ -184,7 +184,8 @@ public class RecordActivity extends BaseActivity {
         btnDeImgTh = findViewById(R.id.btnDeImgTh);
         btnDone = findViewById(R.id.btnDone);
         targetDrawable = imgFirst.getDrawable();
-        textNode = findViewById(R.id.textNote);
+        textNote = findViewById(R.id.textNote);
+        textTitle = findViewById(R.id.textTitle);
         slider = findViewById(R.id.slider);
         textCount = findViewById(R.id.txtCountImage);
         textCount.setText(getResources().getString(R.string.record_title_add_image, countImage, 3));
@@ -252,7 +253,8 @@ public class RecordActivity extends BaseActivity {
 
         result = entryService.FindByDate(new Entry(), date);
         if (result != null) {
-            textNode.setText(result.getNote());
+            textNote.setText(result.getNote());
+            textTitle.setText(result.getTitle());
             slider.setValue((float)result.getOverallScore());
             ArrayList<EntryActivity> entryActivities = entryActivityService.GetAllByEntryId(EntryActivity.class, result.getId());
             ArrayList<EntryEmotion> entryEmotions = entryEmotionService.GetAllByEntryId(EntryEmotion.class, result.getId());
@@ -434,7 +436,8 @@ public class RecordActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    String notes = textNode.getText().toString();
+                    String notes = textNote.getText().toString();
+                    String title = textTitle.getText().toString();
                     String wakeUp = "6:30";
                     String sleep = "6:30";
                     int overallScore = (int) slider.getValue();
@@ -443,15 +446,16 @@ public class RecordActivity extends BaseActivity {
                     List<Integer> selectedItems3 = adapter3.getSelectedItems();
                     List<Integer> selectedItems4 = adapter4.getSelectedItems();
                     Calendar calendar = Calendar.getInstance();
-                    int day = calendar.get(Calendar.DAY_OF_MONTH);
-                    int month = calendar.get(Calendar.MONTH) + 1;
-                    int year = calendar.get(Calendar.YEAR);
+                    String[] dateInto = date.split(" ");
+                    int day = Integer.parseInt(dateInto[1].split("-")[0]);
+                    int month = Integer.parseInt(dateInto[1].split("-")[1]);
+                    int year = Integer.parseInt(dateInto[1].split("-")[2]);
                     int hour = calendar.get(Calendar.HOUR_OF_DAY);
                     int minute = calendar.get(Calendar.MINUTE);
                     int second = calendar.get(Calendar.SECOND);
                     String currentTime = String.format(Locale.ENGLISH, "%02d:%02d:%02d %02d-%02d-%04d", hour, minute, second, day, month, year);
                     if (result == null) {
-                        Entry entity = new Entry(notes, currentTime, overallScore, wakeUp, sleep);
+                        Entry entity = new Entry(title, notes, currentTime, overallScore, wakeUp, sleep);
                         entryService.Add(entity);
                         if (isCheckFavorite) {
                             importantDayService.Add(new ImportantDay(currentTime));
@@ -499,7 +503,7 @@ public class RecordActivity extends BaseActivity {
                     }
                     else {
                         int id = result.getId();
-                        Entry entity = new Entry(notes, date, overallScore, wakeUp, sleep);
+                        Entry entity = new Entry(title, notes, date, overallScore, wakeUp, sleep);
                         ImportantDay importantDay = importantDayService.FindByDate(new ImportantDay(),date);
                         entryService.UpdateById(entity, id);
                         entryPhotoService.DeleteByEntryId(EntryPhoto.class, id);
@@ -692,7 +696,8 @@ public class RecordActivity extends BaseActivity {
     }
 
     private boolean isDataChanged() {
-        String notes = textNode.getText().toString();
+        String notes = textNote.getText().toString();
+        String title = textTitle.getText().toString();
         String wakeUp = "6:30";
         String sleep = "6:30";
         int overallScore = (int) slider.getValue();
@@ -701,14 +706,15 @@ public class RecordActivity extends BaseActivity {
         List<Integer> selectedItems3 = adapter3.getSelectedItems();
         List<Integer> selectedItems4 = adapter4.getSelectedItems();
         Calendar calendar = Calendar.getInstance();
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int month = calendar.get(Calendar.MONTH) + 1;
-        int year = calendar.get(Calendar.YEAR);
+        String[] dateInto = date.split(" ");
+        int day = Integer.parseInt(dateInto[1].split("-")[0]);
+        int month = Integer.parseInt(dateInto[1].split("-")[1]);
+        int year = Integer.parseInt(dateInto[1].split("-")[2]);
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
         int second = calendar.get(Calendar.SECOND);
         String currentTime = String.format(Locale.ENGLISH, "%02d:%02d:%02d %02d-%02d-%04d", hour, minute, second, day, month, year);
-        Entry entity = new Entry(notes, currentTime, overallScore, wakeUp, sleep);
+        Entry entity = new Entry(title, notes, currentTime, overallScore, wakeUp, sleep);
         if (result == null) {
             return !notes.isEmpty() || overallScore != 5
                     || !selectedItems1.isEmpty() || !selectedItems2.isEmpty()

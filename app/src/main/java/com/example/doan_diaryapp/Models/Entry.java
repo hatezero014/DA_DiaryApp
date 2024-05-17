@@ -4,6 +4,16 @@ public class Entry {
     int Id;
     String Note;
 
+    public String getTitle() {
+        return Title;
+    }
+
+    public void setTitle(String title) {
+        Title = title;
+    }
+
+    String Title;
+
     public Entry() {
     }
 
@@ -55,7 +65,8 @@ public class Entry {
         Sleep = sleep;
     }
 
-    public Entry(String note, String date, int overallScore, String wakeUp, String sleep) {
+    public Entry(String title, String note, String date, int overallScore, String wakeUp, String sleep) {
+        Title = title;
         Note = note;
         Date = date;
         OverallScore = overallScore;

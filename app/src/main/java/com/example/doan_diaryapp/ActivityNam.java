@@ -55,10 +55,10 @@ public class ActivityNam extends BaseActivity {
                 int year = calendar.get(Calendar.YEAR);
                 int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cần cộng thêm 1
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
-                String hour = String.valueOf(calendar.get(Calendar.HOUR_OF_DAY));
-                String minute = String.valueOf(calendar.get(Calendar.MINUTE));
-                String second = String.valueOf(calendar.get(Calendar.SECOND));
-                String currentTime = hour + ":" + minute + ":" + second + " " + day + "/" + month + "/" + year;
+                int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                int minute = calendar.get(Calendar.MINUTE);
+                int second = calendar.get(Calendar.SECOND);
+                String currentTime = String.format(Locale.ENGLISH, "%02d:%02d:%02d %02d-%02d-%04d", hour, minute, second, day, month, year);
 
                 intent.putExtra("Date", currentTime);
                 startActivity(intent);
