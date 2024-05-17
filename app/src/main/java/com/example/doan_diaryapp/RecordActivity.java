@@ -116,7 +116,7 @@ public class RecordActivity extends BaseActivity {
     private ImageButton btnDeImgFi, btnDeImgSe, btnDeImgTh;
     private ImageView imgFirst, imgSecond, imgThird;
     int countImage = 0;
-    Boolean isCheckFavorite = false;
+    Boolean isCheckFavorite = false, checkBeforeDone = false;
     Drawable targetDrawable;
     Uri imgFiUri = null, imgSeUri = null, imgThUri = null;
     String date;
@@ -358,6 +358,7 @@ public class RecordActivity extends BaseActivity {
             recyclerView4.setAdapter(adapter4);
             recyclerView4.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
         }
+        checkBeforeDone = isCheckFavorite;
         btnDeImgFi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -716,16 +717,15 @@ public class RecordActivity extends BaseActivity {
         String currentTime = String.format(Locale.ENGLISH, "%02d:%02d:%02d %02d-%02d-%04d", hour, minute, second, day, month, year);
         Entry entity = new Entry(title, notes, currentTime, overallScore, wakeUp, sleep);
         if (result == null) {
-            return !notes.isEmpty() || overallScore != 5
+            return !notes.isEmpty() || !title.isEmpty() || overallScore != 5
                     || !selectedItems1.isEmpty() || !selectedItems2.isEmpty()
                     || !selectedItems3.isEmpty() || !selectedItems4.isEmpty();
         }
         boolean checkChanged = false;
         if (result.getOverallScore() == entity.getOverallScore()
-                && result.getDate().equals(entity.getDate())
-                && result.getSleep().equals(entity.getSleep())
+                && result.getTitle().equals(entity.getTitle())
                 && result.getNote().equals(entity.getNote())
-                && result.getWakeUp().equals(entity.getWakeUp())) {
+                && isCheckFavorite == checkBeforeDone) {
             int entryId = result.getId();
             ArrayList<EntryEmotion> entryEmotions = entryEmotionService.GetAllByEntryId(EntryEmotion.class, entryId);
             ArrayList<EntryActivity> entryActivities = entryActivityService.GetAllByEntryId(EntryActivity.class, entryId);
