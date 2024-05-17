@@ -446,23 +446,23 @@ public class RecordActivity extends BaseActivity {
                     List<Integer> selectedItems2 = adapter2.getSelectedItems();
                     List<Integer> selectedItems3 = adapter3.getSelectedItems();
                     List<Integer> selectedItems4 = adapter4.getSelectedItems();
-                    Calendar calendar = Calendar.getInstance();
-                    String[] dateInto = date.split(" ");
-                    int day = Integer.parseInt(dateInto[1].split("-")[0]);
-                    int month = Integer.parseInt(dateInto[1].split("-")[1]);
-                    int year = Integer.parseInt(dateInto[1].split("-")[2]);
-                    int hour = calendar.get(Calendar.HOUR_OF_DAY);
-                    int minute = calendar.get(Calendar.MINUTE);
-                    int second = calendar.get(Calendar.SECOND);
-                    String currentTime = String.format(Locale.ENGLISH, "%02d:%02d:%02d %02d-%02d-%04d", hour, minute, second, day, month, year);
+//                    Calendar calendar = Calendar.getInstance();
+//                    String[] dateInto = date.split(" ");
+//                    int day = Integer.parseInt(dateInto[1].split("-")[0]);
+//                    int month = Integer.parseInt(dateInto[1].split("-")[1]);
+//                    int year = Integer.parseInt(dateInto[1].split("-")[2]);
+//                    int hour = calendar.get(Calendar.HOUR_OF_DAY);
+//                    int minute = calendar.get(Calendar.MINUTE);
+//                    int second = calendar.get(Calendar.SECOND);
+//                    String currentTime = String.format(Locale.ENGLISH, "%02d:%02d:%02d %02d-%02d-%04d", hour, minute, second, day, month, year);
                     if (result == null) {
-                        Entry entity = new Entry(title, notes, currentTime, overallScore, wakeUp, sleep);
+                        Entry entity = new Entry(title, notes, date, overallScore, wakeUp, sleep);
                         entryService.Add(entity);
                         if (isCheckFavorite) {
-                            importantDayService.Add(new ImportantDay(currentTime));
+                            importantDayService.Add(new ImportantDay(date));
                         }
 
-                        int id = entryService.FindByDate(new Entry(), currentTime).getId();
+                        int id = entryService.FindByDate(new Entry(), date).getId();
                         for (Integer imageId : selectedItems1) {
                             String icon = getResources().getResourceEntryName(imageMoodList.get(imageId));
                             Emotion emotion = emotionService.GetByIcon(new Emotion(), icon);
@@ -706,16 +706,16 @@ public class RecordActivity extends BaseActivity {
         List<Integer> selectedItems2 = adapter2.getSelectedItems();
         List<Integer> selectedItems3 = adapter3.getSelectedItems();
         List<Integer> selectedItems4 = adapter4.getSelectedItems();
-        Calendar calendar = Calendar.getInstance();
-        String[] dateInto = date.split(" ");
-        int day = Integer.parseInt(dateInto[1].split("-")[0]);
-        int month = Integer.parseInt(dateInto[1].split("-")[1]);
-        int year = Integer.parseInt(dateInto[1].split("-")[2]);
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
-        int second = calendar.get(Calendar.SECOND);
-        String currentTime = String.format(Locale.ENGLISH, "%02d:%02d:%02d %02d-%02d-%04d", hour, minute, second, day, month, year);
-        Entry entity = new Entry(title, notes, currentTime, overallScore, wakeUp, sleep);
+//        Calendar calendar = Calendar.getInstance();
+//        String[] dateInto = date.split(" ");
+//        int day = Integer.parseInt(dateInto[1].split("-")[0]);
+//        int month = Integer.parseInt(dateInto[1].split("-")[1]);
+//        int year = Integer.parseInt(dateInto[1].split("-")[2]);
+//        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+//        int minute = calendar.get(Calendar.MINUTE);
+//        int second = calendar.get(Calendar.SECOND);
+//        String currentTime = String.format(Locale.ENGLISH, "%02d:%02d:%02d %02d-%02d-%04d", hour, minute, second, day, month, year);
+        Entry entity = new Entry(title, notes, date, overallScore, wakeUp, sleep);
         if (result == null) {
             return !notes.isEmpty() || !title.isEmpty() || overallScore != 5
                     || !selectedItems1.isEmpty() || !selectedItems2.isEmpty()
