@@ -54,10 +54,9 @@ public class CollectionFragment extends Fragment {
 
     private void updateView() {
         View view = binding.getRoot();
-
         ListViewDayQT(view);
         Button(view);
-
+        updateListView();
         RecyclerView recyclerView = view.findViewById(R.id.carousel_recycler_view);
         ViewGroup.LayoutParams layoutParams = recyclerView.getLayoutParams();
         layoutParams.height = (int) getResources().getDimension(R.dimen.recyclerview_height);
