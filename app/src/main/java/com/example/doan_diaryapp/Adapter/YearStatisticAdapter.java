@@ -1,10 +1,9 @@
 package com.example.doan_diaryapp.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,24 +13,20 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.doan_diaryapp.Models.EmojiInfo;
-import com.example.doan_diaryapp.Models.Emotion;
+import com.example.doan_diaryapp.Models.Entry;
 import com.example.doan_diaryapp.Models.Statistic;
 import com.example.doan_diaryapp.R;
-import com.example.doan_diaryapp.Service.EmotionService;
 import com.example.doan_diaryapp.Service.EntryService;
-import com.example.doan_diaryapp.ShowEmojiActivity;
 import com.example.doan_diaryapp.ui.image.Image;
-import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -42,13 +37,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
-    private static int type_linechart = 1;
+public class YearStatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+    private static int type_barchart = 1;
     private static int type_emotion = 2;
 
     private Context mContext;
 
-    public StatisticAdapter(Context context) {
+    public YearStatisticAdapter(Context context) {
         mContext = context;
     }
 
@@ -62,9 +57,9 @@ public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if(type_linechart == viewType){
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_chart,parent,false);
-            return new LineChartViewHolder(view);
+        if(type_barchart == viewType){
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_barchart,parent,false);
+            return new BarChartViewHolder(view);
         }else if(type_emotion == viewType){
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_emotion,parent,false);
             return new EmotionViewHolder(view);
@@ -79,9 +74,9 @@ public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             return;
         }
 
-        if(type_linechart == holder.getItemViewType()){
-            LineChartViewHolder lineChartViewHolder = (LineChartViewHolder) holder;
-            lineChartViewHolder.setData(statistic.getYear(),statistic.getMonth());
+        if(type_barchart == holder.getItemViewType()){
+            BarChartViewHolder barChartViewHolder = (BarChartViewHolder) holder;
+            barChartViewHolder.setData(statistic.getYear());
         }else if( type_emotion == holder.getItemViewType()){
             EmotionViewHolder emotionViewHolder = (EmotionViewHolder) holder;
             emotionViewHolder.setEmotion(statistic.getYear(),statistic.getMonth(),statistic.getEmotionType());
@@ -99,37 +94,37 @@ public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public int getItemViewType(int position) {
         Statistic statistic = mStatistic.get(position);
         if(statistic.getStatisticType() == 1)
-            return type_linechart;
+            return type_barchart;
         else return type_emotion;
     }
 
-    public class LineChartViewHolder extends RecyclerView.ViewHolder{
-        private LineChart lineChart;
+    public class BarChartViewHolder extends RecyclerView.ViewHolder{
+        private BarChart barChart;
         private TextView tv_trungbinh;
-        public LineChartViewHolder(@NonNull View itemView) {
+        public BarChartViewHolder(@NonNull View itemView) {
             super(itemView);
-            lineChart = itemView.findViewById(R.id.lineChart);
+            barChart = itemView.findViewById(R.id.barChart);
             tv_trungbinh = itemView.findViewById(R.id.tv_average_rating);
         }
 
-        public void setFormatLinechart(int trucX) {
-            lineChart.setDescription(null);
-            lineChart.setScaleYEnabled(false); // tắt zoom trên cột Y
-            lineChart.setDoubleTapToZoomEnabled(false); // tắt chạm 2 lần để zoom
-            lineChart.setBackgroundColor(Color.parseColor("#00000000"));
-            lineChart.setHighlightPerTapEnabled(false); // tắt highlight điểm
-            lineChart.setHighlightPerDragEnabled(false); // same
-            lineChart.setExtraBottomOffset(6); // chỉnh margin cạnh dưới
-            lineChart.setExtraRightOffset(6);
-            lineChart.getLegend().setEnabled(false);// tắt chú thích (cái màu xanh)
-            lineChart.getAxisRight().setDrawLabels(false);
-            lineChart.getAxisRight().setAxisLineWidth(2);
-            lineChart.getAxisRight().setDrawGridLines(false);
-            lineChart.getAxisRight().setAxisLineColor(ContextCompat.getColor(mContext, R.color.statistics_grid));
+        public void setFormatBarchart() {
+            barChart.setDescription(null);
+            barChart.setScaleYEnabled(false); // tắt zoom trên cột Y
+            barChart.setDoubleTapToZoomEnabled(false); // tắt chạm 2 lần để zoom
+            barChart.setBackgroundColor(Color.parseColor("#00000000"));
+            barChart.setHighlightPerTapEnabled(false); // tắt highlight điểm
+            barChart.setHighlightPerDragEnabled(false); // same
+            barChart.setExtraBottomOffset(6); // chỉnh margin cạnh dưới
+            barChart.setExtraRightOffset(6);
+            barChart.getLegend().setEnabled(false);// tắt chú thích (cái màu xanh)
+            barChart.getAxisRight().setDrawLabels(false);
+            barChart.getAxisRight().setAxisLineWidth(2);
+            barChart.getAxisRight().setDrawGridLines(false);
+            barChart.getAxisRight().setAxisLineColor(ContextCompat.getColor(mContext, R.color.statistics_grid));
             // lineChart.getXAxis().setDrawGridLines(false); // tắt vẽ lưới
             // lineChart.getAxisLeft().setDrawGridLines(false); // tắt vẽ lưới
 
-            XAxis xAxis = lineChart.getXAxis();
+            XAxis xAxis = barChart.getXAxis();
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
             xAxis.setTextSize(14);
             xAxis.setTextColor(ContextCompat.getColor(mContext, R.color.md_theme_onSurfaceVariant));
@@ -140,12 +135,12 @@ public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             xAxis.setGridLineWidth(2);
             xAxis.setYOffset(6); // thêm khoảng cách giữa cột với số
             xAxis.setAxisMinimum(1f);
-            xAxis.setAxisMaximum(trucX);
+            xAxis.setAxisMaximum(12f);
             xAxis.setLabelCount(8);
             xAxis.setGranularityEnabled(true);
             // test
 
-            YAxis yAxis = lineChart.getAxisLeft();
+            YAxis yAxis = barChart.getAxisLeft();
             yAxis.setAxisLineColor(ContextCompat.getColor(mContext, R.color.statistics_grid));
             yAxis.setTextSize(14);
             yAxis.setTextColor(ContextCompat.getColor(mContext, R.color.md_theme_onSurfaceVariant));
@@ -158,106 +153,140 @@ public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             yAxis.setLabelCount(10);
             yAxis.setGridLineWidth(2);
             // test
-            yAxis.setDrawLabels(false);
+            //yAxis.setDrawLabels(false);
+
+//            lineChart.setOnChartGestureListener(new OnChartGestureListener() {
+//                @Override
+//                public void onChartGestureStart(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
+//
+//                }
+//
+//                @Override
+//                public void onChartGestureEnd(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
+//
+//                }
+//
+//                @Override
+//                public void onChartLongPressed(MotionEvent me) {
+//
+//                }
+//
+//                @Override
+//                public void onChartDoubleTapped(MotionEvent me) {
+//
+//                }
+//
+//                @Override
+//                public void onChartSingleTapped(MotionEvent me) {
+//                    // Lấy giá trị label khi nhấn một lần
+//                    float tappedX = me.getX();
+//                    float tappedY = me.getY();
+//
+//                    MPPointD point = lineChart.getTransformer(YAxis.AxisDependency.LEFT).getValuesByTouchPoint(tappedX, tappedY);
+//                    float xPos = (float) point.x;
+//
+//                    String label = xAxis.getValueFormatter().getAxisLabel(xPos, xAxis);
+//                    Toast.makeText(mContext, label, Toast.LENGTH_SHORT).show();
+//                }
+//
+//                @Override
+//                public void onChartFling(MotionEvent me1, MotionEvent me2, float velocityX, float velocityY) {
+//
+//                }
+//
+//                @Override
+//                public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
+//
+//                }
+//
+//                @Override
+//                public void onChartTranslate(MotionEvent me, float dX, float dY) {
+//
+//                }
+//            });
 
         }
 
-        public void setData(int year, int month) {
-            int trucX = 0;
-            if(month == 0)
-                trucX = 12;
-            else trucX = getDayOfMonth(year,month);
+        public void setData(int year) {
+            setFormatBarchart();
 
-            setFormatLinechart(trucX);
-
-            EntryService entryService = new EntryService(itemView.getContext());
-            List<com.example.doan_diaryapp.Models.Entry> entryListM = entryService.getOverallScoreByMonthYear(month,year);
-            List<com.example.doan_diaryapp.Models.Entry> entryListY = entryService.getOverallScoreByYear(year);
-
-            //lấy dữ liệu tháng
-            Map<Integer,Integer> valuesM = new HashMap<>();
-            for(com.example.doan_diaryapp.Models.Entry entry:entryListM){
-                String date = entry.getDate().trim();
-                String[] part = date.split("-");
-                int d = Integer.parseInt(part[0]);
-                int score = entry.getOverallScore();
-                valuesM.put(d,score);
-            }
-
-            List<Map.Entry<Integer, Integer>> entriesM = new ArrayList<>(valuesM.entrySet());
-
-            entriesM.sort(Comparator.comparingInt(Map.Entry::getKey));
-
-            Map<Integer, Integer> sortedMapM = new LinkedHashMap<>();
-
-            for (Map.Entry<Integer, Integer> entry : entriesM) {
-                sortedMapM.put(entry.getKey(), entry.getValue());
-            }
+            EntryService entryService = new EntryService(mContext);
+            List<Entry> entryList = entryService.getOverallScoreByYear(year);
 
             //lấy dữ liệu năm
-            Map<Integer,Integer> valuesY = new HashMap<>();
-            Map<Integer, Integer> counts = new HashMap<>();
-            for(com.example.doan_diaryapp.Models.Entry entry:entryListY){
+            Map<String,Integer> dayValues = new HashMap<>();
+            Map<String, Integer> dayCounts = new HashMap<>();
+            for(Entry entry:entryList){
                 String date = entry.getDate().trim();
-                String[] part = date.split("-");
-                int m = Integer.parseInt(part[1]);
+                String[] part = date.split("[:\\s-]");
+                int d = Integer.parseInt(part[3]);
+                int m = Integer.parseInt(part[4]);
+                String day = d+"-"+m;
                 int score = entry.getOverallScore();
-                if (valuesY.containsKey(m)) {
-                    valuesY.put(m, valuesY.get(m) + score);
+                if (dayValues.containsKey(day)) {
+                    dayValues.put(day, dayValues.get(day) + score);
+                    dayCounts.put(day, dayCounts.get(day) + 1);
+                } else {
+                    dayValues.put(day, score);
+                    dayCounts.put(day, 1);
+                }
+            }
+
+            Map<Integer,Float> values = new HashMap<>();
+            Map<Integer,Integer> counts = new HashMap<>();
+
+            Set<String> setD = dayValues.keySet();
+
+            for(String day: setD){
+                String[] part = day.split("-");
+                int m = Integer.parseInt(part[1]);
+                float score = (float)dayValues.get(day)/dayCounts.get(day);
+
+                if (values.containsKey(m)) {
+                    values.put(m, values.get(m) + score);
                     counts.put(m, counts.get(m) + 1);
                 } else {
-                    valuesY.put(m, score);
+                    values.put(m, score);
                     counts.put(m, 1);
                 }
             }
 
-            List<Map.Entry<Integer, Integer>> entriesY = new ArrayList<>(valuesY.entrySet());
 
-            entriesY.sort(Comparator.comparingInt(Map.Entry::getKey));
 
-            Map<Integer, Integer> sortedMapY = new LinkedHashMap<>();
+            List<Map.Entry<Integer, Float>> entries = new ArrayList<>(values.entrySet());
 
-            for (Map.Entry<Integer, Integer> entry : entriesY) {
-                sortedMapY.put(entry.getKey(), entry.getValue());
+            entries.sort(Comparator.comparingInt(Map.Entry::getKey));
+
+            Map<Integer, Float> sortedMap = new LinkedHashMap<>();
+
+            for (Map.Entry<Integer, Float> entry : entries) {
+                sortedMap.put(entry.getKey(), entry.getValue());
             }
 
             //thêm dữ liệu vào biểu đồ
             float tb = 0;
-            List<Entry> entries = new ArrayList<>();
-            Set<Integer> setM = sortedMapM.keySet();
-            Set<Integer> setY = sortedMapY.keySet();
-            if(trucX != 12){
-                for(Integer key:setM){
-                    int value = sortedMapM.get(key);
-                    tb+=value;
-                    entries.add((new Entry(key,value)));
-                }
-                tb/=sortedMapM.size();
+            List<BarEntry> barEntries = new ArrayList<>();
+            Set<Integer> set = sortedMap.keySet();
+
+            for(Integer key:set){
+                float value = sortedMap.get(key);
+                value = value/counts.get(key);
+                tb+=value;
+                barEntries.add((new BarEntry(key,value)));
             }
-            else{
-                for(Integer key:setY){
-                    float value = sortedMapY.get(key);
-                    value = value/counts.get(key);
-                    tb+=value;
-                    entries.add((new Entry(key,value)));
-                }
-                tb/=sortedMapY.size();
-            }
+            tb/=sortedMap.size();
+
 
             tv_trungbinh.setText(itemView.getResources().getString(R.string.average_rating)+": "+String.format("%.2f",tb));
 
-            LineDataSet dataSet = new LineDataSet(entries,null);
-            dataSet.setLineWidth(2); // chỉnh kích thước đường
+            BarDataSet dataSet = new BarDataSet(barEntries,null);
             dataSet.setDrawValues(false); // tắt số trên điểm
-            dataSet.setColor(Color.BLUE);
-            dataSet.setCircleColor(Color.BLUE);
-            dataSet.setCircleRadius(1);
-            dataSet.setDrawCircleHole(false);
+            dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
 
-            LineData lineData = new LineData(dataSet);
-            lineChart.setData(lineData);
-            lineChart.notifyDataSetChanged();
-            lineChart.invalidate();
+            BarData barData = new BarData(dataSet);
+            barChart.setData(barData);
+            barChart.notifyDataSetChanged();
+            barChart.invalidate();
         }
     }
 
@@ -315,6 +344,7 @@ public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             btn_viewall = itemView.findViewById(R.id.btn_display_all);
         }
 
+        @SuppressLint("SetTextI18n")
         public void setEmotion(int year, int month, @NonNull String emotionType) {
             Map<String,Integer> emotionCount = new HashMap<>();
 
@@ -363,18 +393,7 @@ public class StatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     tv4.setText("x"+sortedList.get(i).getValue());}
             }
 
-            btn_viewall.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(),ShowEmojiActivity.class);
-                    ArrayList<String> dataList = new ArrayList<>();
-                    for (Map.Entry<String, Integer> entry : sortedList) {
-                        dataList.add(entry.getKey() + "," + entry.getValue());
-                    }
-                    intent.putStringArrayListExtra("sortedData", dataList);
-                    v.getContext().startActivity(intent);
-                }
-            });
+
         }
     }
 }
