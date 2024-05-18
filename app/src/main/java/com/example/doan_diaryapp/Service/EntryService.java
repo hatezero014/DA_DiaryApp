@@ -5,6 +5,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.doan_diaryapp.Models.Entry;
+import com.example.doan_diaryapp.R;
+import com.example.doan_diaryapp.ui.home.MonthFragment;
+import com.example.doan_diaryapp.ui.home.SpecificDayDecorator;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
 import java.sql.Time;
 import java.util.ArrayList;
@@ -94,6 +99,33 @@ public class EntryService extends BaseService{
             }
         }
         return entryList;
+    }
+
+    private MaterialCalendarView calendarView;
+    public String[]  getEntries() {
+        db = this.getReadableDatabase();
+        String[] Diary;
+        Diary = new String[0];
+        try (Cursor cursor = db.rawQuery("SELECT * FROM Entry", null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                int dateColumnIndex = cursor.getColumnIndex("Date");
+                do {
+                    String date = cursor.getString(dateColumnIndex);
+                    String day=date.substring(date.length() - 10);
+
+                    String[] newArray = new String[Diary.length + 1];
+                    System.arraycopy(Diary, 0, newArray, 0, Diary.length);
+                    newArray[Diary.length] =day;
+                    Diary = newArray;
+
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            if (db != null) {
+                db.close();
+            }
+        }
+        return Diary;
     }
 
 

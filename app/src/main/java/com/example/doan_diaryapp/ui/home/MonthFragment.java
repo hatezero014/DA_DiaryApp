@@ -28,6 +28,8 @@ import com.example.doan_diaryapp.databinding.FragmentMonthBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.divider.MaterialDivider;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,6 +38,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
+
+
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
+
 
 
 public class MonthFragment extends Fragment {
@@ -49,6 +55,9 @@ public class MonthFragment extends Fragment {
     private EntryAdapter mAdapter;
     private EntryService mEntryService;
     private ListView mListView;
+    private MaterialCalendarView calendarView;
+    String[] Diary;
+
 
     private void updateView() {
         View rootView = getView();
@@ -56,6 +65,7 @@ public class MonthFragment extends Fragment {
             setCardViewDate(rootView);
             ButtonAddMonth(rootView);
             ListViewDay(rootView);
+            ShowDiary(rootView);
         }
     }
 
@@ -71,8 +81,28 @@ public class MonthFragment extends Fragment {
         setCardViewDate(view);
         ButtonAddMonth(view);
         ListViewDay(view);
-
+        ShowDiary(view);
         return view;
+    }
+
+
+    private void ShowDiary(View view) {
+        entryService = new EntryService(getContext());
+        Diary = new String[0];
+        Diary = entryService.getEntries();
+        for (String date : Diary) {
+            String[] parts = date.split("-");
+            String d = parts[0];
+            String m = parts[1];
+            String y = parts[2];
+            int intDay = Integer.parseInt(d);
+            int intMonth = Integer.parseInt(m);
+            int intYear = Integer.parseInt(y);
+            calendarView = view.findViewById(R.id.calendarView);
+            CalendarDay specificDate = CalendarDay.from(intYear, intMonth, intDay);
+            SpecificDayDecorator specificDayDecorator = new SpecificDayDecorator(specificDate);
+            calendarView.addDecorator(specificDayDecorator);
+        }
     }
 
 
@@ -115,11 +145,13 @@ public class MonthFragment extends Fragment {
         mAdapter = new EntryAdapter(getContext(), entryList);
         mListView.setAdapter(mAdapter);
 
-        CalendarView calendarView = view.findViewById(R.id.calendarView);
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+        MaterialCalendarView calendarView = view.findViewById(R.id.calendarView);
+        calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int y, int m, int d) {
-                dayOfMonth=d; month=m; year=y;
+            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+                dayOfMonth = date.getDay();
+                month = date.getMonth()-1;
+                year = date.getYear();
                 String time = String.format(Locale.ENGLISH, "%02d-%02d-%04d", dayOfMonth, month+1, year);
                 List<Entry> entryList = mEntryService.getEntriesFromDatabase(time);
 
@@ -133,15 +165,10 @@ public class MonthFragment extends Fragment {
                 mAdapter.clear();
                 mAdapter.addAll(entryList);
                 mAdapter.notifyDataSetChanged();
-
             }
         });
+
     }
-
-
-
-
-
 
 
 
@@ -171,6 +198,7 @@ public class MonthFragment extends Fragment {
         });
 
     }
+
 
     private Boolean CheckDate(int dayOfMonth,int month,int year) {
         int y = calendar.get(Calendar.YEAR);
