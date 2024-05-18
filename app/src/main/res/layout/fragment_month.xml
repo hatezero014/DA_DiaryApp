@@ -64,6 +64,7 @@
         <com.example.doan_diaryapp.ui.collection.NonScrollListView
             android:id="@+id/list_of_day"
             android:layout_width="match_parent"
+            android:background="@drawable/border" 
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"

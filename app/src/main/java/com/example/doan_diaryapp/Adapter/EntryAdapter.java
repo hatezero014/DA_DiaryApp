@@ -98,7 +98,7 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
             textViewDate.setText("");
             textViewNote.setText(getDayOfWeek(entry.getNote()));
 
-            textViewNote.setTextColor(Color.GREEN);
+            textViewNote.setTextColor(Color.parseColor("#005138"));
             textViewDate.setVisibility(View.GONE);
             actionFavorite.setVisibility(View.GONE);
             textViewNote.setTypeface(textViewNote.getTypeface(), Typeface.BOLD);
