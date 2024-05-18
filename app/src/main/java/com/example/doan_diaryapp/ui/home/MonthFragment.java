@@ -165,6 +165,10 @@ public class MonthFragment extends Fragment {
                 if (CheckDate(dayOfMonth, month, year)) {
                     showAlertDialog();
                 } else {
+                    Calendar calendar = Calendar.getInstance();
+                    /*int year = calendar.get(Calendar.YEAR);
+                    int month = calendar.get(Calendar.MONTH);
+                    int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);*/
                     int hour = calendar.get(Calendar.HOUR_OF_DAY);
                     int minute = calendar.get(Calendar.MINUTE);
                     int second = calendar.get(Calendar.SECOND);
