@@ -1,6 +1,10 @@
 package com.example.doan_diaryapp.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.icu.text.CaseMap;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -9,6 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
 
 import com.example.doan_diaryapp.Models.Entry;
 import com.example.doan_diaryapp.Models.ImportantDay;
@@ -55,12 +61,51 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
 
         TextView textViewDate = convertView.findViewById(R.id.textViewDate);
         TextView textViewNote = convertView.findViewById(R.id.textViewNote);
+        TextView textViewId = convertView.findViewById(R.id.textViewID);
         ImageView actionFavorite = convertView.findViewById(R.id.action_favorite);
 
+        textViewId.setText(entry.getDate());
 
-        String fullDate = getDayOfWeek(entry.getDate())+", "+entry.getDate();
-        textViewDate.setText(fullDate);
-        textViewNote.setText(entry.getNote());
+
+        if (entry.getDate().length() == 19) {
+
+            String Title = entry.getTitle();
+            Title = Title.substring(0, Math.min(Title.length(), 20));
+            if (Title.length() == 0) {
+                Title = "(Chưa có chủ đề)";
+            }
+
+            String Note = entry.getNote();
+            if (Note.length()==0){
+                Note = "(Chưa có nội dung)";
+            }
+
+            String time=entry.getDate();
+            time = time.substring(0, Math.min(time.length(), 8));
+            time = time +", "+ Title;
+
+            textViewDate.setText(time);
+            textViewNote.setText(Note);
+
+            int color = ContextCompat.getColor(getContext(), R.color.md_theme_onSurfaceVariant);
+            textViewNote.setTextColor(color);
+            textViewDate.setVisibility(View.VISIBLE);
+            actionFavorite.setVisibility(View.VISIBLE);
+            textViewNote.setTypeface(null, Typeface.NORMAL);
+            textViewNote.setGravity(Gravity.START | Gravity.TOP);
+        } else {
+
+            textViewDate.setText("");
+            textViewNote.setText(getDayOfWeek(entry.getNote()));
+
+            textViewNote.setTextColor(Color.parseColor("#005138"));
+            textViewDate.setVisibility(View.GONE);
+            actionFavorite.setVisibility(View.GONE);
+            textViewNote.setTypeface(textViewNote.getTypeface(), Typeface.BOLD);
+            textViewNote.setGravity(Gravity.CENTER);
+        }
+
+
         //actionFavorite.setImageResource(R.drawable.state_outlined_main_collection);
 
         importantDayService=new ImportantDayService(getContext());
@@ -107,7 +152,7 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
 
     private String getDayOfWeek(String date) {
 
-        SimpleDateFormat format = new SimpleDateFormat("hh:mm:ss dd-MM-yyyy", Locale.getDefault());
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         Date dateTime = null;
         try {
             dateTime = format.parse(date);
@@ -122,7 +167,7 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
         }
 
         SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", locale);
-        return dayFormat.format(dateTime);
+        return dayFormat.format(dateTime) + ", " + date;
     }
 
 

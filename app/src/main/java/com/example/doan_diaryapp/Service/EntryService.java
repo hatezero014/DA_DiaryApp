@@ -6,8 +6,10 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.doan_diaryapp.Models.Entry;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class EntryService extends BaseService{
@@ -28,18 +30,31 @@ public class EntryService extends BaseService{
 
     public List<Entry> getEntriesFromDatabase() {
         db = this.getReadableDatabase();
+        String DATE = "";
         List<Entry> entryList = new ArrayList<>();
         try (Cursor cursor = db.rawQuery("SELECT * FROM Entry ORDER BY SUBSTR(Date, 16, 4) || SUBSTR(Date, 13, 2) || SUBSTR(Date, 10, 2)||SUBSTR(Date, 1, 2) || '-' || SUBSTR(Date, 4, 2) || '-' || SUBSTR(Date, 7, 2) DESC", null)) {
             if (cursor != null && cursor.moveToFirst()) {
                 int idColumnIndex = cursor.getColumnIndex("Id");
                 int noteColumnIndex = cursor.getColumnIndex("Note");
                 int dateColumnIndex = cursor.getColumnIndex("Date");
+                int titleColumnIndex = cursor.getColumnIndex("Title");
 
                 do {
+
                     int id = cursor.getInt(idColumnIndex);
                     String note = cursor.getString(noteColumnIndex).trim();
+                    String title = cursor.getString(titleColumnIndex).trim();
                     String date = cursor.getString(dateColumnIndex);
-                    entryList.add(new Entry(id, note, date));
+                    String day=date.substring(date.length() - 10);
+
+                    if (DATE.equals(day)) {
+                        entryList.add(new Entry(id, note, date,title));
+                    } else {
+                        DATE=day;
+                        entryList.add(new Entry(id, DATE, "",""));
+                        entryList.add(new Entry(id, note, date,title));
+                    }
+
                 } while (cursor.moveToNext());
             }
         } finally {
@@ -50,24 +65,26 @@ public class EntryService extends BaseService{
         return entryList;
     }
 
-    public int getEntriesNoteFromDatabase(int day, int month, int year, StringBuilder note, AtomicInteger rate) {
+
+    public List<Entry> getEntriesFromDatabase(String time) {
         db = this.getReadableDatabase();
-        try (Cursor cursor = db.rawQuery("SELECT * FROM Entry", null)) {
+        List<Entry> entryList = new ArrayList<>();
+        try (Cursor cursor = db.rawQuery("SELECT * FROM Entry ORDER BY SUBSTR(Date, 16, 4) || SUBSTR(Date, 13, 2) || SUBSTR(Date, 10, 2)||SUBSTR(Date, 1, 2) || '-' || SUBSTR(Date, 4, 2) || '-' || SUBSTR(Date, 7, 2) DESC", null)) {
             if (cursor != null && cursor.moveToFirst()) {
-                int dateColumnIndex = cursor.getColumnIndex("Date");
+                int idColumnIndex = cursor.getColumnIndex("Id");
                 int noteColumnIndex = cursor.getColumnIndex("Note");
-                int overallScoreIndex = cursor.getColumnIndex("OverallScore");
+                int dateColumnIndex = cursor.getColumnIndex("Date");
+                int titleColumnIndex = cursor.getColumnIndex("Title");
+
                 do {
-                    String date = cursor.getString(dateColumnIndex).trim();
-                    String[] parts = date.split("-");
-                    int d = Integer.parseInt(parts[0]);
-                    int m = Integer.parseInt(parts[1]);
-                    int y = Integer.parseInt(parts[2]);
-                    if (d == day && month + 1 == m && year == y) {
-                        note.setLength(0);
-                        note.append(cursor.getString(noteColumnIndex).trim());
-                        rate.set(cursor.getInt(overallScoreIndex));
-                        return 1;
+
+                    int id = cursor.getInt(idColumnIndex);
+                    String note = cursor.getString(noteColumnIndex).trim();
+                    String title = cursor.getString(titleColumnIndex).trim();
+                    String date = cursor.getString(dateColumnIndex);
+                    String day=date.substring(date.length() - 10);
+                    if (day.equals(time)) {
+                        entryList.add(new Entry(id, note, date, title));
                     }
                 } while (cursor.moveToNext());
             }
@@ -76,8 +93,11 @@ public class EntryService extends BaseService{
                 db.close();
             }
         }
-        return 0;
+        return entryList;
     }
+
+
+
 
     public List<Entry>getOverallScoreByMonthYear(int month, int year){
         db = this.getReadableDatabase();
@@ -89,9 +109,9 @@ public class EntryService extends BaseService{
 
                 do {
                     String date = cursor.getString(dateColumnIndex).trim();
-                    String[] parts = date.split("-");
-                    int m = Integer.parseInt(parts[1]);
-                    int y = Integer.parseInt(parts[2]);
+                    String[] parts = date.split("[:\\s-]");
+                    int m = Integer.parseInt(parts[4]);
+                    int y = Integer.parseInt(parts[5]);
                     int score = cursor.getInt(scoreColumnIndex);
                     if(m == month && y == year){
                         entryList.add(new Entry(score,date));
@@ -116,10 +136,41 @@ public class EntryService extends BaseService{
 
                 do {
                     String date = cursor.getString(dateColumnIndex).trim();
-                    String[] parts = date.split("-");
-                    int y = Integer.parseInt(parts[2]);
+                    String[] parts = date.split("[:\\s-]");
+                    int y = Integer.parseInt(parts[5]);
                     int score = cursor.getInt(scoreColumnIndex);
                     if(y == year){
+                        entryList.add(new Entry(score,date));
+                    }
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            if (db != null) {
+                db.close();
+            }
+        }
+        return entryList;
+    }
+
+    public List<Entry>getOverallScoreCustom(int byear, int bmonth, int ayear, int amonth){
+        db = this.getReadableDatabase();
+        List<Entry> entryList = new ArrayList<>();
+        try (Cursor cursor = db.rawQuery("SELECT * FROM Entry", null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                int scoreColumnIndex = cursor.getColumnIndex("OverallScore");
+                int dateColumnIndex = cursor.getColumnIndex("Date");
+
+                do {
+                    String date = cursor.getString(dateColumnIndex).trim();
+                    String[] parts = date.split("-");
+                    int y = Integer.parseInt(parts[2]);
+                    int m = Integer.parseInt(parts[1]);
+                    int score = cursor.getInt(scoreColumnIndex);
+                    boolean isAfterLower = (y > byear) || (y == byear && m >= bmonth);
+
+                    boolean isBeforeUpper = (y < ayear) || (y == ayear && m <= amonth);
+
+                    if(isBeforeUpper&&isAfterLower){
                         entryList.add(new Entry(score,date));
                     }
                 } while (cursor.moveToNext());

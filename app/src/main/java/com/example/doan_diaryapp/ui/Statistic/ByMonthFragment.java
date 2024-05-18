@@ -1,10 +1,7 @@
 package com.example.doan_diaryapp.ui.Statistic;
 
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,34 +11,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
-import com.example.doan_diaryapp.Adapter.StatisticAdapter;
+import com.example.doan_diaryapp.Adapter.MonthStatisticAdapter;
 import com.example.doan_diaryapp.Models.Statistic;
 import com.example.doan_diaryapp.R;
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 
 public class ByMonthFragment extends Fragment {
 
     private RecyclerView recyclerView_month;
-    private StatisticAdapter statisticAdapter;
+    private MonthStatisticAdapter monthStatisticAdapter;
     private Spinner spn_yearm;
     private Spinner spn_monthm;
 
@@ -60,11 +44,11 @@ public class ByMonthFragment extends Fragment {
         updateSpinnerYear(view);
         updateSpinnerMonth(view);
 
-        statisticAdapter = new StatisticAdapter(view.getContext());
+        monthStatisticAdapter = new MonthStatisticAdapter(view.getContext());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
         recyclerView_month.setLayoutManager(linearLayoutManager);
-        statisticAdapter.setData(getListStatistic());
-        recyclerView_month.setAdapter(statisticAdapter);
+        monthStatisticAdapter.setData(getListStatistic());
+        recyclerView_month.setAdapter(monthStatisticAdapter);
         return view;
     }
 
@@ -81,7 +65,7 @@ public class ByMonthFragment extends Fragment {
         spn_monthm.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                statisticAdapter.setData(getListStatistic());
+                monthStatisticAdapter.setData(getListStatistic());
             }
 
             @Override
@@ -106,7 +90,7 @@ public class ByMonthFragment extends Fragment {
         spn_yearm.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                statisticAdapter.setData(getListStatistic());
+                monthStatisticAdapter.setData(getListStatistic());
             }
 
             @Override

@@ -88,6 +88,7 @@
     <!--Other (remove)-->
     <string name="by_month">Tháng</string>
     <string name="entire_year">Năm</string>
+    <string name="custom">Tự điều chỉnh</string>
     <string name="Go">Đi</string>
     <string name="year_in_pocket">Một năm trong Pocket</string>
     <string name="ShowDiaLog">Hiển thị</string>

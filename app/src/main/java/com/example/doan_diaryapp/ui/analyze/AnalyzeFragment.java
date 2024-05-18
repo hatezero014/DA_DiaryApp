@@ -43,10 +43,11 @@ public class AnalyzeFragment extends Fragment {
         new TabLayoutMediator(tabLayout, viewPager2, (tab, i) -> {
             if(i==0)
                 tab.setText(R.string.by_month);
-            else  tab.setText(R.string.entire_year);
+            else if(i == 1)
+                tab.setText(R.string.entire_year); 
+            //else tab.setText(R.string.custom);
         }).attach();
 
-        
         return root;
     }
 

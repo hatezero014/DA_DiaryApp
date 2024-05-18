@@ -6,19 +6,73 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.MonthFragment">
 
-    <CalendarView
-        android:id="@+id/calendarView"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="340dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/ic_rounded_calendar"
-        android:firstDayOfWeek="2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <CalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="match_parent"
+                android:layout_height="340dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/ic_rounded_calendar"
+                android:firstDayOfWeek="2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/textView"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:lineSpacingMultiplier="1.3"
+                android:text="@string/no_record"
+                android:textColor="@color/md_theme_onSurfaceVariant"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/CardViewDiary" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/CardViewDiary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/calendarView">
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.example.doan_diaryapp.ui.collection.NonScrollListView
+                android:id="@+id/list_of_day"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="32dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/CardViewDiary" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView >
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/ButtonAddMonth"
@@ -29,72 +83,7 @@
         android:layout_margin="16dp"
         android:src="@drawable/common_add_or_edit"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:lineSpacingMultiplier="1.3"
-        android:textColor="@color/md_theme_onSurfaceVariant"
-        style="@style/TextAppearance.Material3.BodyMedium"
-        android:gravity="center"
-        android:text="@string/no_record"
-        app:layout_constraintEnd_toEndOf="@+id/CardViewDiary"
-        app:layout_constraintStart_toStartOf="@+id/CardViewDiary"
-        app:layout_constraintTop_toTopOf="@+id/CardViewDiary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.15"/>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/CardViewDiary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView">
-
-        <LinearLayout
-            android:id="@+id/show_date_note"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <TextView
-                android:id="@+id/CardViewDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/md_theme_onSurface"
-                style="@style/TextAppearance.Material3.TitleMedium"/>
-            <TextView
-                android:layout_marginTop="4dp"
-                android:id="@+id/CardViewRate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/md_theme_onSurfaceVariant"
-                style="@style/TextAppearance.Material3.BodyMedium"/>
-
-            <com.google.android.material.divider.MaterialDivider
-                android:id="@+id/divider"
-                android:layout_marginTop="12dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"/>
-
-            <TextView
-                android:id="@+id/CardViewNote"
-                android:layout_marginTop="12dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:maxLines="3"
-                android:textColor="@color/md_theme_onSurfaceVariant"
-                style="@style/TextAppearance.Material3.BodyMedium"/>
-        </LinearLayout>
-
-    </com.google.android.material.card.MaterialCardView>
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,11 +11,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.CalendarView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.doan_diaryapp.ActivityNam;
+import com.example.doan_diaryapp.Adapter.EntryAdapter;
 import com.example.doan_diaryapp.Models.Entry;
 import com.example.doan_diaryapp.Models.Language;
 import com.example.doan_diaryapp.R;
@@ -43,12 +46,16 @@ public class MonthFragment extends Fragment {
     int month ;
     int dayOfMonth ;
     EntryService entryService;
+    private EntryAdapter mAdapter;
+    private EntryService mEntryService;
+    private ListView mListView;
 
     private void updateView() {
         View rootView = getView();
         if (rootView != null) {
             setCardViewDate(rootView);
             ButtonAddMonth(rootView);
+            ListViewDay(rootView);
         }
     }
 
@@ -63,94 +70,72 @@ public class MonthFragment extends Fragment {
         dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
         setCardViewDate(view);
         ButtonAddMonth(view);
+        ListViewDay(view);
 
         return view;
     }
 
 
+    private void ListViewDay(View view)
+    {
+        mListView = view.findViewById(R.id.list_of_day);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView textViewDate = view.findViewById(R.id.textViewID);
+                if (textViewDate.length()!=0) {
+                    String dateText = textViewDate.getText().toString();
+                    Intent intent = new Intent(getActivity(), RecordActivity.class);
+                    intent.putExtra("Date", dateText);
+                    startActivity(intent);
+                }
+            }
+        });
+
+    }
+
+
     private void setCardViewDate(View view)
     {
-        LinearLayout linearLayout=view.findViewById(R.id.show_date_note);
-        TextView textViewNote=view.findViewById(R.id.CardViewNote);
-        TextView textViewRate=view.findViewById(R.id.CardViewRate);
-        MaterialDivider divider = view.findViewById(R.id.divider);
-        //ShowNote(view,dayOfMonth,month,year,textViewNote,textViewRate,divider,linearLayout);
+        TextView textView= view.findViewById(R.id.textView);
+        mListView=view.findViewById(R.id.list_of_day);
+        mEntryService = new EntryService(getContext());
+        String time = String.format(Locale.ENGLISH, "%02d-%02d-%04d", dayOfMonth, month+1, year);
+        List<Entry> entryList = mEntryService.getEntriesFromDatabase(time);
 
-        TextView selectedDateTextView = view.findViewById(R.id.CardViewDate);
-        //ShowDate(view,dayOfMonth,month+1,year,selectedDateTextView);
+        if (entryList.size() == 0) {
+            textView.setVisibility(View.VISIBLE);
+        } else {
+            textView.setVisibility(View.GONE);
+        }
+
+        mAdapter = new EntryAdapter(getContext(), entryList);
+        mListView.setAdapter(mAdapter);
 
         CalendarView calendarView = view.findViewById(R.id.calendarView);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int y, int m, int d) {
                 dayOfMonth=d; month=m; year=y;
-                //ShowNote(view,d,m,y,textViewNote,textViewRate,divider,linearLayout);
-                //ShowDate(view,d,m+1,y,selectedDateTextView);
+                String time = String.format(Locale.ENGLISH, "%02d-%02d-%04d", dayOfMonth, month+1, year);
+                List<Entry> entryList = mEntryService.getEntriesFromDatabase(time);
+
+                if (entryList.size() == 0) {
+                    textView.setVisibility(View.VISIBLE);
+                } else {
+                    textView.setVisibility(View.GONE);
+                }
+                mAdapter.clear();
+                mAdapter.addAll(entryList);
+                mAdapter.notifyDataSetChanged();
+
             }
         });
     }
 
-    private void ShowDate(View view,int d,int m,int y, TextView textViewDate)
-    {
-        String date = d + "-" + m + "-" + y;
-        String fullDate = getDayOfWeek(date)+", "+date;
-        textViewDate.setText(fullDate);
-    }
 
 
-    private static Language currentLanguage;
 
-    public static void setCurrentLanguage(Language language) {
-        currentLanguage = language;
-    }
-    private String getDayOfWeek(String date) {
-
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-        Date dateTime = null;
-        try {
-            dateTime = format.parse(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Locale locale;
-        if (currentLanguage != null && currentLanguage.getCode() != null) {
-            locale = new Locale(currentLanguage.getCode());
-        } else {
-            locale = Locale.getDefault();
-        }
-
-        SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", locale);
-        return dayFormat.format(dateTime);
-    }
-
-
-    private void ShowNote(View view,int d,int m,int y,
-                          TextView textViewNote,TextView textViewRate, MaterialDivider divider,
-                          LinearLayout linearLayout)
-    {
-        StringBuilder note = new StringBuilder();
-        AtomicInteger rate = new AtomicInteger();
-        int check = entryService.getEntriesNoteFromDatabase(d,m,y,note,rate);
-        textViewNote.setText(note);
-        textViewRate.setText("Mood rating: "+rate);
-
-
-        if (note.length()==0){
-            textViewNote.setVisibility(View.GONE);
-            divider.setVisibility(View.GONE);
-        }
-        else {
-            textViewNote.setVisibility(View.VISIBLE);
-            divider.setVisibility(View.VISIBLE);
-        }
-
-        if (check==0) {
-            linearLayout.setVisibility(View.GONE);
-        }
-        else  {
-            linearLayout.setVisibility(View.VISIBLE);
-        }
-    }
 
 
 
@@ -165,6 +150,10 @@ public class MonthFragment extends Fragment {
                 if (CheckDate(dayOfMonth, month, year)) {
                     showAlertDialog();
                 } else {
+                    Calendar calendar = Calendar.getInstance();
+                    /*int year = calendar.get(Calendar.YEAR);
+                    int month = calendar.get(Calendar.MONTH);
+                    int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);*/
                     int hour = calendar.get(Calendar.HOUR_OF_DAY);
                     int minute = calendar.get(Calendar.MINUTE);
                     int second = calendar.get(Calendar.SECOND);

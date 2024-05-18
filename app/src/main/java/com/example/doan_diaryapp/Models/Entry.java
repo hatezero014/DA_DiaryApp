@@ -74,10 +74,11 @@ public class Entry {
         Sleep = sleep;
     }
 
-    public Entry(int id, String note, String date) {
+    public Entry(int id, String note, String date,String title) {
         Id = id;
         Note = note;
         Date = date;
+        Title =title;
     }
 
     public Entry(int overallScore, String date){
