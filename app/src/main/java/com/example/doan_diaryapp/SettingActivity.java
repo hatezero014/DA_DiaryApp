@@ -34,6 +34,7 @@ import androidx.fragment.app.FragmentManager;
 import com.example.doan_diaryapp.Models.Language;
 import com.example.doan_diaryapp.Service.LanguageService;
 import com.google.android.material.divider.MaterialDivider;
+import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 
@@ -45,7 +46,7 @@ public class SettingActivity extends BaseActivity {
 
     Dialog dialog;
     TextView textViewSubTheme, textViewSubLanguage, textViewNotificationAlarm;
-    Switch switchNotification, switchSecurity;
+    MaterialSwitch switchNotification, switchSecurity;
     LinearLayout layoutSecurity ,changePasswordButton, deletePasswordButton;
     private SharedPreferences sharedPreferences;
     private SharedPreferences sharedPreferences1;

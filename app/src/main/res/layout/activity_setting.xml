@@ -59,8 +59,6 @@
 
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
-            app:dividerInsetStart="16dp"
-            app:dividerInsetEnd="16dp"
             android:layout_height="wrap_content"/>
 
         <LinearLayout
@@ -107,7 +105,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="16dp"
-            android:paddingEnd="16dp"
+            android:paddingEnd="8dp"
             android:background="@drawable/background_selector"
             android:paddingTop="14dp"
             android:paddingBottom="14dp"
@@ -120,18 +118,15 @@
                 android:layout_weight="1"
                 android:textColor="@color/md_theme_onSurface_mediumContrast"
                 />
-            <Switch
+            <com.google.android.material.materialswitch.MaterialSwitch
                 android:id="@+id/switch_notification"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:ignore="UseSwitchCompatOrMaterialXml" />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
-            app:dividerInsetStart="16dp"
-            app:dividerInsetEnd="16dp"
             android:layout_height="wrap_content"/>
 
         <LinearLayout
@@ -186,18 +181,15 @@
                 android:layout_weight="1"
                 android:textColor="@color/md_theme_onSurface_mediumContrast"
                 />
-            <Switch
+            <com.google.android.material.materialswitch.MaterialSwitch
                 android:id="@+id/switch_security"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:ignore="UseSwitchCompatOrMaterialXml" />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
             android:id="@+id/div1"
-            app:dividerInsetStart="16dp"
-            app:dividerInsetEnd="16dp"
             android:layout_height="wrap_content"/>
 
         <LinearLayout
@@ -222,8 +214,6 @@
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
             android:id="@+id/div2"
-            app:dividerInsetStart="16dp"
-            app:dividerInsetEnd="16dp"
             android:layout_height="wrap_content"/>
 
         <LinearLayout

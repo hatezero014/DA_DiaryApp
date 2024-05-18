@@ -28,7 +28,8 @@
         android:contentDescription="Favorite"
         android:src="@drawable/record_star"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <TextView
         android:id="@+id/textViewNote"

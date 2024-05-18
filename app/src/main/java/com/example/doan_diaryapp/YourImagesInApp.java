@@ -43,11 +43,15 @@ public class YourImagesInApp extends AppCompatActivity {
         setContentView(R.layout.activity_your_images_in_app);
 
         ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setTitle(getString(R.string.title_YourImage));
-        }
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        if (actionBar != null) {
+//            actionBar.setTitle(getString(R.string.title_YourImage));
+//        }
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+        if (actionBar != null) {
+            actionBar.hide();
+        }
 
 
         recyclerView = findViewById(R.id.carousel_recycler_view1);
@@ -80,7 +84,6 @@ public class YourImagesInApp extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
 
     }
 
