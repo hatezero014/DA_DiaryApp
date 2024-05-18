@@ -7,7 +7,7 @@
     android:id="@+id/main">
 
     <LinearLayout
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="16dp"
         android:id="@+id/layout_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -107,8 +107,8 @@
             android:paddingStart="16dp"
             android:paddingEnd="8dp"
             android:background="@drawable/background_selector"
-            android:paddingTop="14dp"
-            android:paddingBottom="14dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="0dp"

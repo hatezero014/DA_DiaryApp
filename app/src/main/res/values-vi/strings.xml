@@ -141,7 +141,15 @@
     <string name="security_sign_in_subtitle">Mã pin không thể khôi phục</string>
     <string name="security_change_PIN">Thay đổi mã PIN</string>
     <string name="security_delete_PIN">Xóa mã PIN</string>
+    <string name="firstInputTip">Nhập mã PIN 4 số</string>
+    <string name="secondInputTip">Xác nhận mã PIN</string>
+    <string name="wrongLengthTip">Mã PIN có 4 số</string>
+    <string name="wrongInputTip">Mã PIN không khớp</string>
+    <string name="correctInputTip">Mã PIN chính xác</string>
+    <string name="loginAgain">Hãy đăng nhập lại</string>
 
     <!--  Image App  -->
     <string name="title_YourImage">Ảnh của bạn</string>
+
+
 </resources>

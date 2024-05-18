@@ -24,6 +24,8 @@ import com.example.doan_diaryapp.ui.collection.CarouselAdapter;
 import com.example.doan_diaryapp.ui.collection.CarouselModel;
 import com.example.doan_diaryapp.ui.collection.ImageModel;
 import com.example.doan_diaryapp.ui.collection.YourImagesAdapter;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.MaterialToolbar;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -53,6 +55,15 @@ public class YourImagesInApp extends AppCompatActivity {
             actionBar.hide();
         }
 
+        AppBarLayout appBarLayout = findViewById(R.id.ImageTopBar);
+        MaterialToolbar toolbar = (MaterialToolbar) appBarLayout.findViewById(R.id.toolbar);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         recyclerView = findViewById(R.id.carousel_recycler_view1);
 

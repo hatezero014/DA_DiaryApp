@@ -145,4 +145,14 @@
 
     <!--  Image App  -->
     <string name="title_YourImage">Your images</string>
+
+    <!--    PasscodeView-->
+    <string name="firstInputTip">Enter a PIN of 4 digits</string>
+    <string name="secondInputTip">Re-enter new PIN</string>
+    <string name="wrongLengthTip">Enter a PIN of 4 digits</string>
+    <string name="wrongInputTip">PIN does not match</string>
+    <string name="correctInputTip">PIN is correct</string>
+    <string name="loginAgain">Please log in again</string>
+
+
 </resources>

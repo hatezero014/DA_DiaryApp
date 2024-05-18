@@ -112,6 +112,8 @@ public class SettingActivity extends BaseActivity {
         setupSwitchNotification();
         setUpSwitchSecurity();
 
+
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(getString(R.string.setting_title));
