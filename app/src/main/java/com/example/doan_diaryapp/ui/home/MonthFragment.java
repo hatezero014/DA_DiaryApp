@@ -99,14 +99,17 @@ public class MonthFragment extends Fragment {
     {
         TextView textView= view.findViewById(R.id.textView);
         mListView=view.findViewById(R.id.list_of_day);
+
         mEntryService = new EntryService(getContext());
         String time = String.format(Locale.ENGLISH, "%02d-%02d-%04d", dayOfMonth, month+1, year);
         List<Entry> entryList = mEntryService.getEntriesFromDatabase(time);
 
         if (entryList.size() == 0) {
             textView.setVisibility(View.VISIBLE);
+            mListView.setVisibility(View.GONE);
         } else {
             textView.setVisibility(View.GONE);
+            mListView.setVisibility(View.VISIBLE);
         }
 
         mAdapter = new EntryAdapter(getContext(), entryList);
@@ -122,8 +125,10 @@ public class MonthFragment extends Fragment {
 
                 if (entryList.size() == 0) {
                     textView.setVisibility(View.VISIBLE);
+                    mListView.setVisibility(View.GONE);
                 } else {
                     textView.setVisibility(View.GONE);
+                    mListView.setVisibility(View.VISIBLE);
                 }
                 mAdapter.clear();
                 mAdapter.addAll(entryList);
