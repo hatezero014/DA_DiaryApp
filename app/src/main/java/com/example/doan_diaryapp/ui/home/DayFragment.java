@@ -2,6 +2,7 @@ package com.example.doan_diaryapp.ui.home;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -34,6 +35,7 @@ import com.example.doan_diaryapp.Service.EntryService;
 
 import com.example.doan_diaryapp.databinding.FragmentDayBinding;
 import com.github.mikephil.charting.utils.EntryXComparator;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.ParseException;
@@ -97,6 +99,36 @@ DayFragment extends Fragment {
             }
         });
 
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                TextView textViewDate = view.findViewById(R.id.textViewID);
+                if (textViewDate.length() != 0) {
+                    showAlertDialog();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+    }
+
+    private void showAlertDialog() {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
+        builder.setTitle("Thông báo")
+                .setMessage("Bạn có muốn xóa nhật kí không ?")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+        builder.create().show();
     }
 
 
