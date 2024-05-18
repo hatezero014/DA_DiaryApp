@@ -39,19 +39,20 @@ public class ImportantDayService extends BaseService {
                 int idColumnIndex = cursor.getColumnIndex("Id");
                 int noteColumnIndex = cursor.getColumnIndex("Note");
                 int dateColumnIndex = cursor.getColumnIndex("Date");
+                int titleColumnIndex = cursor.getColumnIndex("Title");
                 do {
                     int id = cursor.getInt(idColumnIndex);
                     String note = cursor.getString(noteColumnIndex).trim();
+                    String title = cursor.getString(titleColumnIndex).trim();
                     String date = cursor.getString(dateColumnIndex);
                     String day=date.substring(date.length() - 10);
 
                     if (DATE.equals(day)) {
-                        entryList.add(new Entry(id, note, date));
+                        entryList.add(new Entry(id, note, date,title));
                     } else {
                         DATE=day;
-                        String newId = UUID.randomUUID().toString();
-                        entryList.add(new Entry(id, DATE, ""));
-                        entryList.add(new Entry(id, note, date));
+                        entryList.add(new Entry(id, DATE, "",""));
+                        entryList.add(new Entry(id, note, date,title));
                     }
 
                 } while (cursor.moveToNext());

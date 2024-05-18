@@ -1,7 +1,9 @@
 package com.example.doan_diaryapp.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.icu.text.CaseMap;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -11,6 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
 
 import com.example.doan_diaryapp.Models.Entry;
 import com.example.doan_diaryapp.Models.ImportantDay;
@@ -57,14 +61,33 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
 
         TextView textViewDate = convertView.findViewById(R.id.textViewDate);
         TextView textViewNote = convertView.findViewById(R.id.textViewNote);
+        TextView textViewId = convertView.findViewById(R.id.textViewID);
         ImageView actionFavorite = convertView.findViewById(R.id.action_favorite);
+
+        textViewId.setText(entry.getDate());
 
 
         if (entry.getDate().length() == 19) {
 
-            textViewDate.setText(entry.getDate());
-            textViewNote.setText(entry.getNote());
+            String Title = entry.getTitle();
+            if (Title.length() == 0) {
+                Title = "(Chưa có chủ đề)";
+            }
 
+            String Note = entry.getNote();
+            if (Note.length()==0){
+                Note = "(Chưa có nội dung)";
+            }
+
+            String time=entry.getDate();
+            time = time.substring(0, Math.min(time.length(), 8));
+            time = time +", "+ Title;
+
+            textViewDate.setText(time);
+            textViewNote.setText(Note);
+
+            int color = ContextCompat.getColor(getContext(), R.color.md_theme_onSurfaceVariant);
+            textViewNote.setTextColor(color);
             textViewDate.setVisibility(View.VISIBLE);
             actionFavorite.setVisibility(View.VISIBLE);
             textViewNote.setTypeface(null, Typeface.NORMAL);
@@ -74,6 +97,7 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
             textViewDate.setText("");
             textViewNote.setText(getDayOfWeek(entry.getNote()));
 
+            textViewNote.setTextColor(Color.GREEN);
             textViewDate.setVisibility(View.GONE);
             actionFavorite.setVisibility(View.GONE);
             textViewNote.setTypeface(textViewNote.getTypeface(), Typeface.BOLD);
