@@ -70,88 +70,14 @@ public class MonthFragment extends Fragment {
 
     private void setCardViewDate(View view)
     {
-        LinearLayout linearLayout=view.findViewById(R.id.show_date_note);
-        TextView textViewNote=view.findViewById(R.id.CardViewNote);
-        TextView textViewRate=view.findViewById(R.id.CardViewRate);
-        MaterialDivider divider = view.findViewById(R.id.divider);
-        //ShowNote(view,dayOfMonth,month,year,textViewNote,textViewRate,divider,linearLayout);
-
-        TextView selectedDateTextView = view.findViewById(R.id.CardViewDate);
-        //ShowDate(view,dayOfMonth,month+1,year,selectedDateTextView);
-
         CalendarView calendarView = view.findViewById(R.id.calendarView);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int y, int m, int d) {
                 dayOfMonth=d; month=m; year=y;
-                //ShowNote(view,d,m,y,textViewNote,textViewRate,divider,linearLayout);
-                //ShowDate(view,d,m+1,y,selectedDateTextView);
             }
         });
     }
-
-    private void ShowDate(View view,int d,int m,int y, TextView textViewDate)
-    {
-        String date = d + "-" + m + "-" + y;
-        String fullDate = getDayOfWeek(date)+", "+date;
-        textViewDate.setText(fullDate);
-    }
-
-
-    private static Language currentLanguage;
-
-    public static void setCurrentLanguage(Language language) {
-        currentLanguage = language;
-    }
-    private String getDayOfWeek(String date) {
-
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-        Date dateTime = null;
-        try {
-            dateTime = format.parse(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Locale locale;
-        if (currentLanguage != null && currentLanguage.getCode() != null) {
-            locale = new Locale(currentLanguage.getCode());
-        } else {
-            locale = Locale.getDefault();
-        }
-
-        SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", locale);
-        return dayFormat.format(dateTime);
-    }
-
-
-    private void ShowNote(View view,int d,int m,int y,
-                          TextView textViewNote,TextView textViewRate, MaterialDivider divider,
-                          LinearLayout linearLayout)
-    {
-        StringBuilder note = new StringBuilder();
-        AtomicInteger rate = new AtomicInteger();
-        int check = entryService.getEntriesNoteFromDatabase(d,m,y,note,rate);
-        textViewNote.setText(note);
-        textViewRate.setText("Mood rating: "+rate);
-
-
-        if (note.length()==0){
-            textViewNote.setVisibility(View.GONE);
-            divider.setVisibility(View.GONE);
-        }
-        else {
-            textViewNote.setVisibility(View.VISIBLE);
-            divider.setVisibility(View.VISIBLE);
-        }
-
-        if (check==0) {
-            linearLayout.setVisibility(View.GONE);
-        }
-        else  {
-            linearLayout.setVisibility(View.VISIBLE);
-        }
-    }
-
 
 
 

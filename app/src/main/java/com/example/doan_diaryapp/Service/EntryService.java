@@ -64,34 +64,7 @@ public class EntryService extends BaseService{
         return entryList;
     }
 
-    public int getEntriesNoteFromDatabase(int day, int month, int year, StringBuilder note, AtomicInteger rate) {
-        db = this.getReadableDatabase();
-        try (Cursor cursor = db.rawQuery("SELECT * FROM Entry", null)) {
-            if (cursor != null && cursor.moveToFirst()) {
-                int dateColumnIndex = cursor.getColumnIndex("Date");
-                int noteColumnIndex = cursor.getColumnIndex("Note");
-                int overallScoreIndex = cursor.getColumnIndex("OverallScore");
-                do {
-                    String date = cursor.getString(dateColumnIndex).trim();
-                    String[] parts = date.split("-");
-                    int d = Integer.parseInt(parts[0]);
-                    int m = Integer.parseInt(parts[1]);
-                    int y = Integer.parseInt(parts[2]);
-                    if (d == day && month + 1 == m && year == y) {
-                        note.setLength(0);
-                        note.append(cursor.getString(noteColumnIndex).trim());
-                        rate.set(cursor.getInt(overallScoreIndex));
-                        return 1;
-                    }
-                } while (cursor.moveToNext());
-            }
-        } finally {
-            if (db != null) {
-                db.close();
-            }
-        }
-        return 0;
-    }
+
 
     public List<Entry>getOverallScoreByMonthYear(int month, int year){
         db = this.getReadableDatabase();

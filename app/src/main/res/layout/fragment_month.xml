@@ -56,44 +56,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calendarView">
 
-        <LinearLayout
-            android:id="@+id/show_date_note"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp">
 
-            <TextView
-                android:id="@+id/CardViewDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/md_theme_onSurface"
-                style="@style/TextAppearance.Material3.TitleMedium"/>
-            <TextView
-                android:layout_marginTop="4dp"
-                android:id="@+id/CardViewRate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/md_theme_onSurfaceVariant"
-                style="@style/TextAppearance.Material3.BodyMedium"/>
-
-            <com.google.android.material.divider.MaterialDivider
-                android:id="@+id/divider"
-                android:layout_marginTop="12dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"/>
-
-            <TextView
-                android:id="@+id/CardViewNote"
-                android:layout_marginTop="12dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:maxLines="3"
-                android:textColor="@color/md_theme_onSurfaceVariant"
-                style="@style/TextAppearance.Material3.BodyMedium"/>
-        </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
 
