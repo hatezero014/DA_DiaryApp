@@ -88,11 +88,13 @@ DayFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TextView textViewDate = view.findViewById(R.id.textViewDate);
-                String dateText = textViewDate.getText().toString();
-                dateText=dateText.substring(dateText.length() - 19);
-                Intent intent = new Intent(getActivity(), RecordActivity.class);
-                intent.putExtra("Date", dateText);
-                startActivity(intent);
+                if (textViewDate.length()!=0) {
+                    String dateText = textViewDate.getText().toString();
+                    dateText = dateText.substring(dateText.length() - 19);
+                    Intent intent = new Intent(getActivity(), RecordActivity.class);
+                    intent.putExtra("Date", dateText);
+                    startActivity(intent);
+                }
             }
         });
 

@@ -1,6 +1,8 @@
 package com.example.doan_diaryapp.Adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -58,9 +60,27 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
         ImageView actionFavorite = convertView.findViewById(R.id.action_favorite);
 
 
-        String fullDate = getDayOfWeek(entry.getDate())+", "+entry.getDate();
-        textViewDate.setText(fullDate);
-        textViewNote.setText(entry.getNote());
+        if (entry.getDate().length() == 19) {
+
+            textViewDate.setText(entry.getDate());
+            textViewNote.setText(entry.getNote());
+
+            textViewDate.setVisibility(View.VISIBLE);
+            actionFavorite.setVisibility(View.VISIBLE);
+            textViewNote.setTypeface(null, Typeface.NORMAL);
+            textViewNote.setGravity(Gravity.START | Gravity.TOP);
+        } else {
+
+            textViewDate.setText("");
+            textViewNote.setText(getDayOfWeek(entry.getNote()));
+
+            textViewDate.setVisibility(View.GONE);
+            actionFavorite.setVisibility(View.GONE);
+            textViewNote.setTypeface(textViewNote.getTypeface(), Typeface.BOLD);
+            textViewNote.setGravity(Gravity.CENTER);
+        }
+
+
         //actionFavorite.setImageResource(R.drawable.state_outlined_main_collection);
 
         importantDayService=new ImportantDayService(getContext());
@@ -107,7 +127,7 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
 
     private String getDayOfWeek(String date) {
 
-        SimpleDateFormat format = new SimpleDateFormat("hh:mm:ss dd-MM-yyyy", Locale.getDefault());
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         Date dateTime = null;
         try {
             dateTime = format.parse(date);
@@ -122,7 +142,7 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
         }
 
         SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", locale);
-        return dayFormat.format(dateTime);
+        return dayFormat.format(dateTime) + ", " + date;
     }
 
 

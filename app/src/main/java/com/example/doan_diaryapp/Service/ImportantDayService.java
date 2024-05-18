@@ -10,6 +10,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class ImportantDayService extends BaseService {
     public ImportantDayService(Context context) {
@@ -31,6 +32,7 @@ public class ImportantDayService extends BaseService {
 
     public List<Entry> getEntriesFromDatabaseQT() {
         db = this.getReadableDatabase();
+        String DATE = "";
         List<Entry> entryList = new ArrayList<>();
         try (Cursor cursor = db.rawQuery("SELECT * FROM Entry INNER JOIN ImportantDay ON Entry.Date = ImportantDay.Date ORDER BY SUBSTR(Entry.Date, 16, 4) || SUBSTR(Entry.Date, 13, 2) || SUBSTR(Entry.Date, 10, 2)||SUBSTR(Entry.Date, 1, 2) || '-' || SUBSTR(Entry.Date, 4, 2) || '-' || SUBSTR(Entry.Date, 7, 2) DESC", null)) {
             if (cursor != null && cursor.moveToFirst()) {
@@ -41,7 +43,17 @@ public class ImportantDayService extends BaseService {
                     int id = cursor.getInt(idColumnIndex);
                     String note = cursor.getString(noteColumnIndex).trim();
                     String date = cursor.getString(dateColumnIndex);
-                    entryList.add(new Entry(id, note, date));
+                    String day=date.substring(date.length() - 10);
+
+                    if (DATE.equals(day)) {
+                        entryList.add(new Entry(id, note, date));
+                    } else {
+                        DATE=day;
+                        String newId = UUID.randomUUID().toString();
+                        entryList.add(new Entry(id, DATE, ""));
+                        entryList.add(new Entry(id, note, date));
+                    }
+
                 } while (cursor.moveToNext());
             }
         }
