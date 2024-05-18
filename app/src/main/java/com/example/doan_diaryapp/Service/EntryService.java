@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.doan_diaryapp.Models.Entry;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -63,6 +64,38 @@ public class EntryService extends BaseService{
         }
         return entryList;
     }
+
+
+    public List<Entry> getEntriesFromDatabase(String time) {
+        db = this.getReadableDatabase();
+        List<Entry> entryList = new ArrayList<>();
+        try (Cursor cursor = db.rawQuery("SELECT * FROM Entry ORDER BY SUBSTR(Date, 16, 4) || SUBSTR(Date, 13, 2) || SUBSTR(Date, 10, 2)||SUBSTR(Date, 1, 2) || '-' || SUBSTR(Date, 4, 2) || '-' || SUBSTR(Date, 7, 2) DESC", null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                int idColumnIndex = cursor.getColumnIndex("Id");
+                int noteColumnIndex = cursor.getColumnIndex("Note");
+                int dateColumnIndex = cursor.getColumnIndex("Date");
+                int titleColumnIndex = cursor.getColumnIndex("Title");
+
+                do {
+
+                    int id = cursor.getInt(idColumnIndex);
+                    String note = cursor.getString(noteColumnIndex).trim();
+                    String title = cursor.getString(titleColumnIndex).trim();
+                    String date = cursor.getString(dateColumnIndex);
+                    String day=date.substring(date.length() - 10);
+                    if (day.equals(time)) {
+                        entryList.add(new Entry(id, note, date, title));
+                    }
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            if (db != null) {
+                db.close();
+            }
+        }
+        return entryList;
+    }
+
 
 
 

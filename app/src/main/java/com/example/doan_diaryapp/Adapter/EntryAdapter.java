@@ -70,6 +70,7 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
         if (entry.getDate().length() == 19) {
 
             String Title = entry.getTitle();
+            Title = Title.substring(0, Math.min(Title.length(), 20));
             if (Title.length() == 0) {
                 Title = "(Chưa có chủ đề)";
             }

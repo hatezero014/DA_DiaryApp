@@ -11,11 +11,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.CalendarView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.doan_diaryapp.ActivityNam;
+import com.example.doan_diaryapp.Adapter.EntryAdapter;
 import com.example.doan_diaryapp.Models.Entry;
 import com.example.doan_diaryapp.Models.Language;
 import com.example.doan_diaryapp.R;
@@ -43,12 +46,16 @@ public class MonthFragment extends Fragment {
     int month ;
     int dayOfMonth ;
     EntryService entryService;
+    private EntryAdapter mAdapter;
+    private EntryService mEntryService;
+    private ListView mListView;
 
     private void updateView() {
         View rootView = getView();
         if (rootView != null) {
             setCardViewDate(rootView);
             ButtonAddMonth(rootView);
+            ListViewDay(rootView);
         }
     }
 
@@ -63,21 +70,73 @@ public class MonthFragment extends Fragment {
         dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
         setCardViewDate(view);
         ButtonAddMonth(view);
+        ListViewDay(view);
 
         return view;
     }
 
 
+    private void ListViewDay(View view)
+    {
+        mListView = view.findViewById(R.id.list_of_day);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView textViewDate = view.findViewById(R.id.textViewID);
+                if (textViewDate.length()!=0) {
+                    String dateText = textViewDate.getText().toString();
+                    Intent intent = new Intent(getActivity(), RecordActivity.class);
+                    intent.putExtra("Date", dateText);
+                    startActivity(intent);
+                }
+            }
+        });
+
+    }
+
+
     private void setCardViewDate(View view)
     {
+        TextView textView= view.findViewById(R.id.textView);
+        mListView=view.findViewById(R.id.list_of_day);
+        mEntryService = new EntryService(getContext());
+        String time = String.format(Locale.ENGLISH, "%02d-%02d-%04d", dayOfMonth, month+1, year);
+        List<Entry> entryList = mEntryService.getEntriesFromDatabase(time);
+
+        if (entryList.size() == 0) {
+            textView.setVisibility(View.VISIBLE);
+        } else {
+            textView.setVisibility(View.GONE);
+        }
+
+        mAdapter = new EntryAdapter(getContext(), entryList);
+        mListView.setAdapter(mAdapter);
+
         CalendarView calendarView = view.findViewById(R.id.calendarView);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int y, int m, int d) {
                 dayOfMonth=d; month=m; year=y;
+                String time = String.format(Locale.ENGLISH, "%02d-%02d-%04d", dayOfMonth, month+1, year);
+                List<Entry> entryList = mEntryService.getEntriesFromDatabase(time);
+
+                if (entryList.size() == 0) {
+                    textView.setVisibility(View.VISIBLE);
+                } else {
+                    textView.setVisibility(View.GONE);
+                }
+                mAdapter.clear();
+                mAdapter.addAll(entryList);
+                mAdapter.notifyDataSetChanged();
+
             }
         });
     }
+
+
+
+
+
 
 
 
