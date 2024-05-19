@@ -141,19 +141,19 @@ public class MonthFragment extends Fragment {
 
     private void showAlertDialog(String date,View view) {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
-        builder.setTitle("Thông báo")
-                .setMessage("Bạn có chắc muốn xóa nhật kí không ?")
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.delete_diary)
+                .setMessage(R.string.delete)
+                .setPositiveButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .setNegativeButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mEntryService = new EntryService(getContext());
                         mEntryService.deleteDiary(date,getContext());
                         updateView();
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
                     }
                 });
         builder.create().show();

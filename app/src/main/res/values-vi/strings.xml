@@ -144,4 +144,13 @@
 
     <!--  Image App  -->
     <string name="title_YourImage">Ảnh của bạn</string>
+
+
+
+
+
+    <string name="delete_diary">Thông báo</string>
+    <string name="delete">Bạn có chắc muốn xóa nhật kí không?</string>
+    <string name="cancel">Thoát</string>
+
 </resources>
