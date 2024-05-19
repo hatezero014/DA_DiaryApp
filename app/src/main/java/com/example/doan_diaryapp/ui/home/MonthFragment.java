@@ -2,6 +2,7 @@ package com.example.doan_diaryapp.ui.home;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -29,10 +30,12 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.divider.MaterialDivider;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -51,22 +54,18 @@ public class MonthFragment extends Fragment {
     int year = calendar.get(Calendar.YEAR);
     int month = calendar.get(Calendar.MONTH);
     int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-    EntryService entryService;
     private EntryAdapter mAdapter;
     private EntryService mEntryService;
     private ListView mListView;
     private MaterialCalendarView calendarView;
     String[] Diary;
 
-
     private void updateView() {
         View rootView = getView();
-        if (rootView != null) {
-            setCardViewDate(rootView);
-            ButtonAddMonth(rootView);
-            ListViewDay(rootView);
-            ShowDiary(rootView);
-        }
+        setCardViewDate(rootView);
+        ButtonAddMonth(rootView);
+        ListViewDay(rootView);
+        ShowDiary(rootView);
     }
 
 
@@ -74,7 +73,6 @@ public class MonthFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_month, container, false);
-        entryService=new EntryService(getContext());
         setCardViewDate(view);
         ButtonAddMonth(view);
         ListViewDay(view);
@@ -90,9 +88,11 @@ public class MonthFragment extends Fragment {
 
 
     private void ShowDiary(View view) {
-        entryService = new EntryService(getContext());
+        mEntryService = new EntryService(getContext());
         Diary = new String[0];
-        Diary = entryService.getEntries();
+        Diary = mEntryService.getEntries();
+        calendarView = view.findViewById(R.id.calendarView);
+        calendarView.removeDecorators();
         for (String date : Diary) {
             String[] parts = date.split("-");
             String d = parts[0];
@@ -101,7 +101,6 @@ public class MonthFragment extends Fragment {
             int intDay = Integer.parseInt(d);
             int intMonth = Integer.parseInt(m);
             int intYear = Integer.parseInt(y);
-            calendarView = view.findViewById(R.id.calendarView);
             CalendarDay specificDate = CalendarDay.from(intYear, intMonth, intDay);
             SpecificDayDecorator specificDayDecorator = new SpecificDayDecorator(specificDate);
             calendarView.addDecorator(specificDayDecorator);
@@ -125,6 +124,39 @@ public class MonthFragment extends Fragment {
             }
         });
 
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                TextView textViewDate = view.findViewById(R.id.textViewID);
+                if (textViewDate.length() != 0) {
+                    showAlertDialog(textViewDate.getText().toString(),view);
+                    return true;
+                }
+                return false;
+            }
+        });
+
+    }
+
+    private void showAlertDialog(String date,View view) {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
+        builder.setTitle("Thông báo")
+                .setMessage("Bạn có chắc muốn xóa nhật kí không ?")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mEntryService = new EntryService(getContext());
+                        mEntryService.deleteDiary(date,getContext());
+                        updateView();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+        builder.create().show();
     }
 
 

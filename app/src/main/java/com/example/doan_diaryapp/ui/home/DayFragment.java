@@ -28,15 +28,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.doan_diaryapp.Adapter.EntryAdapter;
+import com.example.doan_diaryapp.MainActivity;
 import com.example.doan_diaryapp.Models.Entry;
 import com.example.doan_diaryapp.R;
 import com.example.doan_diaryapp.RecordActivity;
 import com.example.doan_diaryapp.Service.EntryService;
 
 import com.example.doan_diaryapp.databinding.FragmentDayBinding;
+import com.example.doan_diaryapp.databinding.FragmentMonthBinding;
 import com.github.mikephil.charting.utils.EntryXComparator;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -105,7 +109,7 @@ DayFragment extends Fragment {
 
                 TextView textViewDate = view.findViewById(R.id.textViewID);
                 if (textViewDate.length() != 0) {
-                    showAlertDialog();
+                    showAlertDialog(textViewDate.getText().toString(),view);
                     return true;
                 }
                 return false;
@@ -114,13 +118,17 @@ DayFragment extends Fragment {
 
     }
 
-    private void showAlertDialog() {
+
+    private void showAlertDialog(String date,View view) {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
         builder.setTitle("Thông báo")
-                .setMessage("Bạn có muốn xóa nhật kí không ?")
+                .setMessage("Bạn có chắc muốn xóa nhật kí không ?")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        mEntryService = new EntryService(getContext());
+                        mEntryService.deleteDiary(date,getContext());
+                        updateEntries();
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

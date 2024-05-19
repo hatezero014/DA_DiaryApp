@@ -1,5 +1,6 @@
 package com.example.doan_diaryapp.ui.collection;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -40,7 +41,6 @@ public class CollectionFragment extends Fragment {
     private CarouselAdapter carouselAdapter;
     private ListView mListView;
 
-    ImageView actionFavorite;
     private Button mButton;
     private EntryAdapter mAdapter;
 
@@ -49,6 +49,7 @@ public class CollectionFragment extends Fragment {
 
     private EntryPhotoService entryPhotoService;
 
+    EntryService mEntryService;
 
 
 
@@ -140,6 +141,40 @@ public class CollectionFragment extends Fragment {
             }
         });
 
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                TextView textViewDate = view.findViewById(R.id.textViewID);
+                if (textViewDate.length() != 0) {
+                    showAlertDialog(textViewDate.getText().toString(),view);
+                    return true;
+                }
+                return false;
+            }
+        });
+
+    }
+
+
+    private void showAlertDialog(String date,View view) {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
+        builder.setTitle("Thông báo")
+                .setMessage("Bạn có chắc muốn xóa nhật kí không ?")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mEntryService = new EntryService(getContext());
+                        mEntryService.deleteDiary(date,getContext());
+                        updateView();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+        builder.create().show();
     }
 
 
