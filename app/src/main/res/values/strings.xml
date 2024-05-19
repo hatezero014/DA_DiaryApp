@@ -146,6 +146,14 @@
     <!--  Image App  -->
     <string name="title_YourImage">Your images</string>
 
+    <!--  Full Image View  -->
+    <string name="fgm_title">Title: </string>
+    <string name="fgm_note">Note: </string>
+    <string name="fgm_overall_score">Overall Score: </string>
+    <string name="fgm_Time">Time: </string>
+    <string name="fgm_Day">Day: </string>
+
+
 
 
     <string name="delete_diary">Notification</string>
