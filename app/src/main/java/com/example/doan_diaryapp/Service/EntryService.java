@@ -5,6 +5,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.doan_diaryapp.Models.Entry;
+import com.example.doan_diaryapp.Models.EntryActivity;
+import com.example.doan_diaryapp.Models.EntryEmotion;
+import com.example.doan_diaryapp.Models.EntryPartner;
+import com.example.doan_diaryapp.Models.EntryPhoto;
+import com.example.doan_diaryapp.Models.EntryWeather;
+import com.example.doan_diaryapp.Models.ImportantDay;
 import com.example.doan_diaryapp.R;
 import com.example.doan_diaryapp.ui.home.MonthFragment;
 import com.example.doan_diaryapp.ui.home.SpecificDayDecorator;
@@ -126,6 +132,58 @@ public class EntryService extends BaseService{
             }
         }
         return Diary;
+    }
+
+
+    EntryEmotionService entryEmotionService;
+    EntryActivityService entryActivityService;
+    EntryPartnerService entryPartnerService;
+    EntryPhotoService entryPhotoService;
+    EntryWeatherService entryWeatherService;
+    ImportantDayService importantDayService;
+
+
+    public void deleteDiary(String DATE,Context context) {
+        db = this.getReadableDatabase();
+        try (Cursor cursor = db.rawQuery("SELECT * FROM Entry", null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                int dateColumnIndex = cursor.getColumnIndex("Date");
+                int idColumnIndex = cursor.getColumnIndex("Id");
+                do {
+                    String date = cursor.getString(dateColumnIndex);
+                    int id = cursor.getInt(idColumnIndex);
+                    if (DATE.equals(date)){
+
+                        entryPhotoService = new EntryPhotoService(context);
+                        entryPhotoService.DeleteByEntryId(EntryPhoto.class, id);
+
+                        entryActivityService = new EntryActivityService(context);
+                        entryActivityService.DeleteByEntryId(EntryActivity.class, id);
+
+                        entryEmotionService = new EntryEmotionService(context);
+                        entryEmotionService.DeleteByEntryId(EntryEmotion.class, id);
+
+                        entryPartnerService=new EntryPartnerService(context);
+                        entryPartnerService.DeleteByEntryId(EntryPartner.class, id);
+
+                        //entryWeatherService=new EntryWeatherService(context);
+                        //entryWeatherService.DeleteByEntryId(EntryWeather.class, id);
+
+                        importantDayService = new ImportantDayService(context);
+                        ImportantDay importantDay = importantDayService.FindByDate(new ImportantDay(),DATE);
+                        if (importantDay != null) {
+                            importantDayService.DeleteById(ImportantDay.class, importantDay.getId());
+                        }
+                        db.delete("Entry", "Id = ?", new String[]{String.valueOf(id)});
+                        return;
+                    }
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            if (db != null) {
+                db.close();
+            }
+        }
     }
 
 

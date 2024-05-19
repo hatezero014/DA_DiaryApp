@@ -1,9 +1,12 @@
 package com.example.doan_diaryapp.ui.home;
 import android.graphics.Color;
 import android.text.style.ForegroundColorSpan;
+
+import com.example.doan_diaryapp.R;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
+import com.prolificinteractive.materialcalendarview.spans.DotSpan;
 
 public class SpecificDayDecorator implements DayViewDecorator {
 
@@ -20,6 +23,6 @@ public class SpecificDayDecorator implements DayViewDecorator {
 
     @Override
     public void decorate(DayViewFacade view) {
-        view.addSpan(new ForegroundColorSpan(Color.RED)); // Đổi màu số ngày thành màu đỏ
+        view.addSpan(new DotSpan(10, Color.parseColor("#005138")));
     }
 }

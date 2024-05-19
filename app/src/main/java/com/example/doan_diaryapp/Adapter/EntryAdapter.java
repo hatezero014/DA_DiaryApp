@@ -72,27 +72,25 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
             String Title = entry.getTitle();
             Title = Title.substring(0, Math.min(Title.length(), 20));
             if (Title.length() == 0) {
-                Title = "(Chưa có chủ đề)";
-            }
-
-            String Note = entry.getNote();
-            if (Note.length()==0){
-                Note = "(Chưa có nội dung)";
+                Title = entry.getNote();
+                Title = Title.substring(0, Math.min(Title.length(), 20));
+                if (Title.length() == 0) {
+                    Title = "(Chưa có chủ đề)";
+                }
             }
 
             String time=entry.getDate();
             time = time.substring(0, Math.min(time.length(), 8));
-            time = time +", "+ Title;
 
-            textViewDate.setText(time);
-            textViewNote.setText(Note);
+            textViewDate.setText(Title);
+            textViewNote.setText(time);
 
             int color = ContextCompat.getColor(getContext(), R.color.md_theme_onSurfaceVariant);
             textViewNote.setTextColor(color);
             textViewDate.setVisibility(View.VISIBLE);
             actionFavorite.setVisibility(View.VISIBLE);
             textViewNote.setTypeface(null, Typeface.NORMAL);
-            textViewNote.setGravity(Gravity.START | Gravity.TOP);
+            textViewNote.setGravity(Gravity.END);
         } else {
 
             textViewDate.setText("");
