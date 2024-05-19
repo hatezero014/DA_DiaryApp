@@ -31,6 +31,7 @@ public class CustomFragment extends Fragment {
     private Spinner bYear;
     private Spinner aMonth;
     private Spinner aYear;
+    private boolean isUpdating = false;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -42,14 +43,14 @@ public class CustomFragment extends Fragment {
         aMonth = view.findViewById(R.id.spn_amonth);
         aYear = view.findViewById(R.id.spn_ayear);
 
+        updateSpinnerYear(view);
+        updateSpinnerMonth(view);
+
         customAdapter = new CustomAdapter(view.getContext());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         customAdapter.setData(getListStatistic());
         recyclerView.setAdapter(customAdapter);
-
-        updateSpinnerYear(view);
-        updateSpinnerMonth(view);
 
         return view;
     }
@@ -67,23 +68,25 @@ public class CustomFragment extends Fragment {
         aMonth.setAdapter(adapterMonth);
         aMonth.setSelection(Calendar.getInstance().get(Calendar.MONTH));
 
-        setupSpinnerListener(aMonth);
-        setupSpinnerListener(bMonth);
+        setOnItemSelectedListener(bMonth);
+        setOnItemSelectedListener(aMonth);
     }
 
-    private void setupSpinnerListener(Spinner spinner) {
+    private void setOnItemSelectedListener(Spinner spinner){
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                checkValidity();  // Kiểm tra tính hợp lệ khi giá trị thay đổi
+                checkValidity();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // Không cần xử lý
+
             }
         });
     }
+
+    private int prevBMonth, prevBYear, prevAMonth, prevAYear;
 
     private void checkValidity() {
         int bmonth = (Integer) bMonth.getSelectedItem();  // Tháng bắt đầu
@@ -95,8 +98,9 @@ public class CustomFragment extends Fragment {
         if (byear > ayear || (byear == ayear && bmonth > amonth)) {
             Toast.makeText(getContext(), "Ngày bắt đầu không thể lớn hơn ngày kết thúc.", Toast.LENGTH_SHORT).show();
             // Đặt lại giá trị bắt đầu thành giá trị kết thúc
-            bMonth.setSelection(aMonth.getSelectedItemPosition());
-            bYear.setSelection(aYear.getSelectedItemPosition());
+            bMonth.setSelection(prevBMonth);
+            bYear.setSelection(prevBYear);
+            isUpdating = true;
             return;
         }
 
@@ -105,22 +109,34 @@ public class CustomFragment extends Fragment {
 
         // Kiểm tra nếu số tháng vượt quá 12
         if (totalMonths > 12) {
-            Toast.makeText(getContext(), "Khoảng cách giữa các giá trị không được vượt quá 12 tháng.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Khoảng cách giữa các giá trị không được vượt quá 13 tháng.", Toast.LENGTH_SHORT).show();
             // Đặt lại tháng bắt đầu sao cho khoảng cách không vượt quá 12 tháng
-            bMonth.setSelection(aMonth.getSelectedItemPosition() - 12 % 12);
+            bMonth.setSelection(prevBMonth);
             if (aMonth.getSelectedItemPosition() < 12) {
-                bYear.setSelection(aYear.getSelectedItemPosition());
+                bYear.setSelection(prevBYear);
             } else {
-                bYear.setSelection(aYear.getSelectedItemPosition() - 1);
+                bYear.setSelection(prevBYear);
             }
+            isUpdating = true;
             return;
         }
+
+        if(!isUpdating) {
+            customAdapter.setData(getListStatistic());
+            isUpdating = false;
+        }
+        else isUpdating = false;
+
+        prevBMonth = bMonth.getSelectedItemPosition();
+        prevBYear = bYear.getSelectedItemPosition();
+        prevAMonth = aMonth.getSelectedItemPosition();
+        prevAYear = aYear.getSelectedItemPosition();
     }
 
     private void updateSpinnerYear(View view) {
         ArrayList<Integer> year = new ArrayList<>();
-        Calendar calendar = Calendar.getInstance();
-        int currentYear = calendar.get(Calendar.YEAR);
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+
         for(int i=2020;i<=currentYear;i++){
             year.add(i);
         }
@@ -128,24 +144,26 @@ public class CustomFragment extends Fragment {
         ArrayAdapter<Integer> adapterYear = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item,year);
         adapterYear.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         bYear.setAdapter(adapterYear);
-        bYear.setSelection(currentYear);
+        bYear.setSelection(adapterYear.getPosition(currentYear));
         aYear.setAdapter(adapterYear);
-        aYear.setSelection(currentYear);
+        aYear.setSelection(adapterYear.getPosition(currentYear));
 
-        setupSpinnerListener(bYear);
-        setupSpinnerListener(aYear);
+        setOnItemSelectedListener(bYear);
+        setOnItemSelectedListener(aYear);
     }
 
     private List<Custom> getListStatistic() {
         List<Custom>list = new ArrayList<>();
-//        int startMonth = (Integer) bMonth.getSelectedItem();
-//        int startYear = (Integer) bYear.getSelectedItem();
-//        int endMonth = (Integer) aMonth.getSelectedItem();
-//        int endYear = (Integer) aYear.getSelectedItem();
-//        Log.i("endyear",String.valueOf(endYear));
-        //list.add(new Custom(startYear, startMonth, endYear, endMonth, 1, null));
 
-        list.add(new Custom(2023,4,2024,5,1,null));
+        int startMonth = (Integer)bMonth.getSelectedItem();
+        int startYear = (Integer)bYear.getSelectedItem();
+        int endMonth = (Integer)aMonth.getSelectedItem();
+        int endYear = (Integer)aYear.getSelectedItem();
+
+        Log.i("hell",String.valueOf(startMonth));
+
+        list.add(new Custom(startYear, startMonth, endYear, endMonth, 1, null));
+        //list.add(new Custom(2023,4,2024,5,1,null));
 
         return list;
     }

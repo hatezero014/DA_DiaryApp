@@ -216,6 +216,34 @@ public class EntryService extends BaseService{
         return entryList;
     }
 
+    public List<Entry>getOverallScoreByDayMonthYear(int day, int month, int year){
+        db = this.getReadableDatabase();
+        List<Entry> entryList = new ArrayList<>();
+        try (Cursor cursor = db.rawQuery("SELECT * FROM Entry ORDER BY Date ASC", null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                int scoreColumnIndex = cursor.getColumnIndex("OverallScore");
+                int dateColumnIndex = cursor.getColumnIndex("Date");
+
+                do {
+                    String date = cursor.getString(dateColumnIndex).trim();
+                    String[] parts = date.split("[:\\s-]");
+                    int d = Integer.parseInt(parts[3]);
+                    int m = Integer.parseInt(parts[4]);
+                    int y = Integer.parseInt(parts[5]);
+                    int score = cursor.getInt(scoreColumnIndex);
+                    if(d == day && m == month && y == year){
+                        entryList.add(new Entry(score,date));
+                    }
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            if (db != null) {
+                db.close();
+            }
+        }
+        return entryList;
+    }
+
     public List<Entry>getOverallScoreByYear(int year){
         db = this.getReadableDatabase();
         List<Entry> entryList = new ArrayList<>();
@@ -252,9 +280,9 @@ public class EntryService extends BaseService{
 
                 do {
                     String date = cursor.getString(dateColumnIndex).trim();
-                    String[] parts = date.split("-");
-                    int y = Integer.parseInt(parts[2]);
-                    int m = Integer.parseInt(parts[1]);
+                    String[] parts = date.split("[:\\s-]");
+                    int y = Integer.parseInt(parts[5]);
+                    int m = Integer.parseInt(parts[4]);
                     int score = cursor.getInt(scoreColumnIndex);
                     boolean isAfterLower = (y > byear) || (y == byear && m >= bmonth);
 

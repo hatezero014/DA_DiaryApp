@@ -45,7 +45,7 @@ public class AnalyzeFragment extends Fragment {
                 tab.setText(R.string.by_month);
             else if(i == 1)
                 tab.setText(R.string.entire_year); 
-            //else tab.setText(R.string.custom);
+            else tab.setText(R.string.custom);
         }).attach();
 
         return root;

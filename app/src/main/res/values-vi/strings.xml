@@ -144,6 +144,7 @@
 
     <!--  Image App  -->
     <string name="title_YourImage">Ảnh của bạn</string>
+    <string name="statistics_for">Thống kê ngày</string>
 
     <!--  Full Image View  -->
     <string name="fgm_title">Tiêu đề: </string>
