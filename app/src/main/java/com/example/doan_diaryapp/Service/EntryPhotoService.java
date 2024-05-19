@@ -14,6 +14,7 @@ import com.example.doan_diaryapp.ui.collection.CarouselModel;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class EntryPhotoService extends BaseService {
@@ -88,5 +89,19 @@ public class EntryPhotoService extends BaseService {
             cursor.close();
         }
         return list;
+    }
+
+    public <T> List<T> FindBookmarkByPatternId(Class<T> clazz) {
+        db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT Entry.* FROM EntryPhoto INNER JOIN Entry ON Entry.Id = EntryPhoto.Id ", null);
+        List<T> objects = new ArrayList<>();
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                T object = CreateModelObjectFromCursor(clazz, cursor);
+                objects.add(object);
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+        return objects;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.doan_diaryapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -43,14 +44,8 @@ public class YourImagesInApp extends AppCompatActivity {
         setContentView(R.layout.activity_your_images_in_app);
 
         ActionBar actionBar = getSupportActionBar();
-//        if (actionBar != null) {
-//            actionBar.setTitle(getString(R.string.title_YourImage));
-//        }
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
         if (actionBar != null) {
-            actionBar.hide();
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
 
@@ -71,7 +66,6 @@ public class YourImagesInApp extends AppCompatActivity {
                 CarouselModel clickedModel = getListData().get(position);
                 String imagePath = clickedModel.getImagePath();
 
-                //Toast.makeText(YourImagesInApp.this, "Position" + position, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(YourImagesInApp.this, FullImageView.class);
                 intent.putExtra("pos", position);
                 intent.putExtra("image", imagePath);

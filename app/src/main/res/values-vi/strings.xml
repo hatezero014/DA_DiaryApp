@@ -144,4 +144,11 @@
 
     <!--  Image App  -->
     <string name="title_YourImage">Ảnh của bạn</string>
+
+    <!--  Full Image View  -->
+    <string name="fgm_title">Tiêu đề: </string>
+    <string name="fgm_note">Nội dung: </string>
+    <string name="fgm_overall_score">Điểm số tâm trạng: </string>
+    <string name="fgm_Time">Thời gian: </string>
+    <string name="fgm_Day"> ngày: </string>
 </resources>
