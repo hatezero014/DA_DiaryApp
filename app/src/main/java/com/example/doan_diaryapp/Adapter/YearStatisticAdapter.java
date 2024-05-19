@@ -26,9 +26,12 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -152,59 +155,7 @@ public class YearStatisticAdapter extends RecyclerView.Adapter<RecyclerView.View
             yAxis.setAxisLineWidth(2);
             yAxis.setLabelCount(10);
             yAxis.setGridLineWidth(2);
-            // test
-            //yAxis.setDrawLabels(false);
-
-//            lineChart.setOnChartGestureListener(new OnChartGestureListener() {
-//                @Override
-//                public void onChartGestureStart(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
-//
-//                }
-//
-//                @Override
-//                public void onChartGestureEnd(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
-//
-//                }
-//
-//                @Override
-//                public void onChartLongPressed(MotionEvent me) {
-//
-//                }
-//
-//                @Override
-//                public void onChartDoubleTapped(MotionEvent me) {
-//
-//                }
-//
-//                @Override
-//                public void onChartSingleTapped(MotionEvent me) {
-//                    // Lấy giá trị label khi nhấn một lần
-//                    float tappedX = me.getX();
-//                    float tappedY = me.getY();
-//
-//                    MPPointD point = lineChart.getTransformer(YAxis.AxisDependency.LEFT).getValuesByTouchPoint(tappedX, tappedY);
-//                    float xPos = (float) point.x;
-//
-//                    String label = xAxis.getValueFormatter().getAxisLabel(xPos, xAxis);
-//                    Toast.makeText(mContext, label, Toast.LENGTH_SHORT).show();
-//                }
-//
-//                @Override
-//                public void onChartFling(MotionEvent me1, MotionEvent me2, float velocityX, float velocityY) {
-//
-//                }
-//
-//                @Override
-//                public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
-//
-//                }
-//
-//                @Override
-//                public void onChartTranslate(MotionEvent me, float dX, float dY) {
-//
-//                }
-//            });
-
+            yAxis.setGranularity(1f);
         }
 
         public void setData(int year) {
@@ -288,31 +239,6 @@ public class YearStatisticAdapter extends RecyclerView.Adapter<RecyclerView.View
             barChart.notifyDataSetChanged();
             barChart.invalidate();
         }
-    }
-
-    private int getDayOfMonth(int year, int month) {
-        int dayOfMonth = 0;
-        switch (month){
-            case 4:
-            case 6:
-            case 9:
-            case 11:
-                dayOfMonth = 30;
-                break;
-            case 2:
-                if(isLeapYear(year))
-                    dayOfMonth = 29;
-                else dayOfMonth=28;
-                break;
-            default:
-                dayOfMonth = 31;
-                break;
-        }
-        return  dayOfMonth;
-    }
-
-    private boolean isLeapYear(int year) {
-        return new GregorianCalendar().isLeapYear(year);
     }
 
     public class EmotionViewHolder extends RecyclerView.ViewHolder{

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -121,6 +122,8 @@ public class ByMonthFragment extends Fragment {
         List<Statistic> mStatistic = new ArrayList<>();
         int month = (Integer)spn_monthm.getSelectedItem();
         int year = (Integer)spn_yearm.getSelectedItem();
+        Log.i("hel",String.valueOf(month));
+        Log.i("helo",String.valueOf(year));
         mStatistic.clear();
         mStatistic.add(new Statistic(year,month,1,null));
         mStatistic.add(new Statistic(year,month,2,"Mood"));

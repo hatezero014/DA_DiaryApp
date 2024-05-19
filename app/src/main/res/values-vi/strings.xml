@@ -144,4 +144,5 @@
 
     <!--  Image App  -->
     <string name="title_YourImage">Ảnh của bạn</string>
+    <string name="statistics_for">Thống kê ngày</string>
 </resources>
