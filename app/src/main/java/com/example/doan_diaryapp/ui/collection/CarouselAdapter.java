@@ -12,12 +12,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.doan_diaryapp.FullImageView;
 import com.example.doan_diaryapp.Models.EntryPhoto;
 import com.example.doan_diaryapp.Models.ImportantDay;
 import com.example.doan_diaryapp.R;
 import com.example.doan_diaryapp.RecordActivity;
 import com.example.doan_diaryapp.Service.EntryPhotoService;
 import com.example.doan_diaryapp.Service.EntryService;
+import com.example.doan_diaryapp.YourImagesInApp;
 import com.example.doan_diaryapp.databinding.CarouselLayoutBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -67,8 +69,11 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.ItemVi
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
+                        Intent intent = new Intent(context, FullImageView.class);
                         CarouselModel clickedItem = list.get(position);
-                        showDaily(clickedItem.getImagePath());
+                        intent.putExtra("pos", position);
+                        intent.putExtra("image", clickedItem.getImagePath());
+                        context.startActivity(intent);
                     }
                 }
             });
