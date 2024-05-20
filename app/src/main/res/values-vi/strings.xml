@@ -158,6 +158,6 @@
 
     <string name="delete_diary">Thông báo</string>
     <string name="delete">Bạn có chắc muốn xóa nhật kí không?</string>
-    <string name="cancel">Thoát</string>
+    <string name="cancel">Hủy</string>
 
 </resources>
