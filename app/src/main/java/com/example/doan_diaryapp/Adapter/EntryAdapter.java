@@ -62,33 +62,62 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
         TextView textViewDate = convertView.findViewById(R.id.textViewDate);
         TextView textViewNote = convertView.findViewById(R.id.textViewNote);
         TextView textViewId = convertView.findViewById(R.id.textViewID);
+        TextView textView = convertView.findViewById(R.id.textView);
         ImageView actionFavorite = convertView.findViewById(R.id.action_favorite);
 
+        assert entry != null;
         textViewId.setText(entry.getDate());
 
 
         if (entry.getDate().length() == 19) {
 
             String Title = entry.getTitle();
-            Title = Title.substring(0, Math.min(Title.length(), 20));
+
+            if (Title.length()>20) {
+                Title = Title.substring(0, Math.min(Title.length(), 20))+"...";
+            } else
+            {
+                Title = Title.substring(0, Math.min(Title.length(), 20));
+            }
+
             if (Title.length() == 0) {
                 Title = entry.getNote();
-                Title = Title.substring(0, Math.min(Title.length(), 20));
+                if (Title.length()>20) {
+                    Title = Title.substring(0, Math.min(Title.length(), 20))+"...";
+                } else
+                {
+                    Title = Title.substring(0, Math.min(Title.length(), 20));
+                }
                 if (Title.length() == 0) {
                     Title = "(Chưa có chủ đề)";
                 }
             }
+
+            String Note = entry.getNote();
+            if (Note.length()>20) {
+                Note = Note.substring(0, Math.min(Note.length(), 50))+"...";
+            } else
+            {
+                Note = Note.substring(0, Math.min(Note.length(), 50));
+            }
+            if (Note.length() == 0) {
+                Note = "(Chưa có nội dung)";
+            }
+
+
 
             String time=entry.getDate();
             time = time.substring(0, Math.min(time.length(), 8));
 
             textViewDate.setText(Title);
             textViewNote.setText(time);
+            textView.setText(Note);
 
             int color = ContextCompat.getColor(getContext(), R.color.md_theme_onSurfaceVariant);
             textViewNote.setTextColor(color);
             textViewDate.setVisibility(View.VISIBLE);
             actionFavorite.setVisibility(View.VISIBLE);
+            textView.setVisibility(View.VISIBLE);
             textViewNote.setTypeface(null, Typeface.NORMAL);
             textViewNote.setGravity(Gravity.END);
         } else {
@@ -99,6 +128,7 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
             textViewNote.setTextColor(Color.parseColor("#005138"));
             textViewDate.setVisibility(View.GONE);
             actionFavorite.setVisibility(View.GONE);
+            textView.setVisibility(View.GONE);
             textViewNote.setTypeface(textViewNote.getTypeface(), Typeface.BOLD);
             textViewNote.setGravity(Gravity.CENTER);
         }
