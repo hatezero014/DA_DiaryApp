@@ -94,11 +94,11 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
             }
 
             String Note = entry.getNote();
-            if (Note.length()>20) {
-                Note = Note.substring(0, Math.min(Note.length(), 50))+"...";
+            if (Note.length()>55) {
+                Note = Note.substring(0, Math.min(Note.length(), 55))+"...";
             } else
             {
-                Note = Note.substring(0, Math.min(Note.length(), 50));
+                Note = Note.substring(0, Math.min(Note.length(), 55));
             }
             if (Note.length() == 0) {
                 Note = "(Chưa có nội dung)";
