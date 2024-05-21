@@ -162,6 +162,19 @@
     <string name="delete">Are you sure you want to delete the log?</string>
     <string name="cancel">Cancel</string>
 
+    <!-- Alarm Clock   -->
+    <string name="add_pocket_diary">Thêm nhật kí</string>
+    <string name="add_pocket_diary_description">It is time to add the journal entry of today. Let us open the app and add the journal entry of today!</string>
+    <string name="alarm_clock">Alarm Clock</string>
+    <string name="alarm_clock_description">Alarm to log every day</string>
+    <string name="remind">Remind</string>
+    <string name="remind_description">Reminder when you have not been in the app for too long</string>
+    <string name="remind_notification">Reminder Notification</string>
+    <string name="remind_notification_desciption">Have you forgotten me? Let us turn memories into memorable journeys today</string>
+    <string name="id_AlarmReceiver">idalarmreceiver</string>
+    <string name="id_NotificationReceiver">idnotificationreceiver</string>
+
+
     <string name="from">From: </string>
     <string name="to">To: </string>
 </resources>

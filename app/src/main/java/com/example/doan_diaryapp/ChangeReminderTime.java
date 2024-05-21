@@ -1,15 +1,24 @@
 package com.example.doan_diaryapp;
 
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.os.Handler;
 import android.os.Looper;
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -19,58 +28,59 @@ import androidx.fragment.app.FragmentManager;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 import android.media.MediaPlayer;
+import android.widget.Toast;
+
 import java.util.Calendar;
 import java.util.Locale;
 
 public class ChangeReminderTime extends BaseActivity {
-
     private SharedPreferences sharedPreferences1;
-
-    private TextView textView;
-    private Button button;
-
+    private Calendar calendar;
+    private AlarmManager alarmManager;
+    private PendingIntent pendingIntent;
     private int selectedHour;
     private int selectedMinute;
-    private Handler handler = new Handler(Looper.getMainLooper());
-    private Runnable runnable;
+    TextView textView;
+    Button button;
+    private final ActivityResultLauncher<Intent> requestExactAlarmPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    if (alarmManager.canScheduleExactAlarms()) {
+                        setAlarm();
+                    } else {
+                        Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_change_reminder_time);
-        textView = findViewById(R.id.timeisSet);
+        createNotificationChannel();
         button = findViewById(R.id.btnShowDiaLog);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimePicker();
+            }
+        });
+        textView = findViewById(R.id.timeisSet);
 
-        //sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        sharedPreferences1 = getSharedPreferences("com.example.doan_diaryapp.NOTIFICATION_PREFS", MODE_PRIVATE);
-
-        NotificationHelper.createNotificationChannel(this);
-
-        Intent intent = getIntent();
-        if (intent != null && intent.getAction() != null && intent.getAction().equals("android.intent.action.VIEW")) {
-            // Xử lý khi người dùng nhấn vào thông báo
-            stopAlarmCheck(); // Tắt kiểm tra báo thức
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-            notificationManager.cancel(NotificationHelper.NOTIFICATION_ID); // Xóa thông báo
-        }
+        sharedPreferences1 = getSharedPreferences("currrentTime", MODE_PRIVATE);
 
         if (sharedPreferences1.contains("hour") && sharedPreferences1.contains("minute")) {
-            // Nếu có, đặt thời gian báo thức tương ứng
             selectedHour = sharedPreferences1.getInt("hour", 0);
             selectedMinute = sharedPreferences1.getInt("minute", 0);
-            handleSelectedTime(selectedHour, selectedMinute);
-            startAlarmCheck();
+
+//            startAlarmCheck();
         }
-        openDiaLog();
 
 
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                openDiaLog();
-//            }
-//        });
+
+
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -78,99 +88,80 @@ public class ChangeReminderTime extends BaseActivity {
         });
     }
 
-    private void openDiaLog()
-    {
-        Calendar calendar = Calendar.getInstance();
+    private void checkAndRequestExactAlarmPermission() {
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (alarmManager.canScheduleExactAlarms()) {
+                setAlarm();
+            } else {
+                Intent intent = new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                requestExactAlarmPermissionLauncher.launch(intent);
+            }
+        } else {
+            setAlarm();
+        }
+    }
+
+    private void setAlarm() {
+        Intent intent = new Intent(this, NotificationReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+        if (calendar != null) {
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            Toast.makeText(this, "Alarm Set Successfully", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Please select a time first", Toast.LENGTH_SHORT).show();
+        }
+    }
+    private void cancelAlarm() {
+        if (pendingIntent != null) {
+            alarmManager.cancel(pendingIntent);
+            pendingIntent.cancel();
+            Toast.makeText(this, "Alarm Canceled", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void showTimePicker() {
+        cancelAlarm();
+        calendar = Calendar.getInstance();
         int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
         int currentMinute = calendar.get(Calendar.MINUTE);
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        MaterialTimePicker picker = new MaterialTimePicker.Builder()
-                .setTimeFormat(TimeFormat.CLOCK_24H)
-                .setHour(currentHour)
-                .setMinute(currentMinute)
-                .setTitleText(R.string.select_reminder_time)
-                .setInputMode(MaterialTimePicker.INPUT_MODE_CLOCK)
-                .build();
-
-        picker.addOnPositiveButtonClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectedHour = picker.getHour();
-                selectedMinute = picker.getMinute();
-
-                // Lưu thời gian báo thức vào SharedPreferences
-                SharedPreferences.Editor editor = sharedPreferences1.edit();
-                editor.putInt("hour", selectedHour);
-                editor.putInt("minute", selectedMinute);
-                editor.apply();
-
-                startAlarmCheck();
-                handleSelectedTime(selectedHour, selectedMinute);
+        int futureHour = currentHour;
+        int futureMinute = currentMinute + 2;
+        if(futureMinute>59){
+            futureMinute = futureMinute-60;
+            futureHour++;
+            if(futureHour>23){
+                futureHour=0;
             }
-        });
+        }
+        SharedPreferences.Editor editor = sharedPreferences1.edit();
+        editor.putInt("hour", currentHour);
+        editor.putInt("minute", currentMinute);
+        editor.apply();
+        calendar.set(Calendar.HOUR_OF_DAY, futureHour);
+        calendar.set(Calendar.MINUTE, futureMinute);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
 
-        picker.show(fragmentManager, "tag");
+        String period = (futureHour >= 12) ? "PM" : "AM";
 
+        textView.setText(String.format("%02d:%02d %s", currentHour, currentMinute, period));
+        checkAndRequestExactAlarmPermission();
     }
 
-    private void playAlarmSound() {
-        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.alarm_sound);
-        mediaPlayer.start();
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.remind);
+            String description = getString(R.string.remind_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(getString(R.string.id_NotificationReceiver), name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
-    private void handleSelectedTime(int hour, int minute) {
-        String selectedTime = String.format("%02d:%02d", hour, minute);
-        textView.setText(selectedTime);
-    }
 
-    private void startAlarmCheck() {
-        runnable = new Runnable() {
-            @Override
-            public void run() {
-                Calendar calendar = Calendar.getInstance();
-                int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
-                int currentMinute = calendar.get(Calendar.MINUTE);
-
-                // Lấy ngày hiện tại dưới dạng một chuỗi duy nhất để lưu trữ thông tin của lần cuối cùng mà thông báo đã được gửi
-                String currentDate = String.format(Locale.getDefault(), "%04d-%02d-%02d", calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
-
-                SharedPreferences sharedPreferences2 = getSharedPreferences("com.example.doan_diaryapp.NOTIFICATION_PREFS", MODE_PRIVATE);
-                String lastNotificationDate = sharedPreferences2.getString("last_notification_date", "");
-
-                int savedHour = currentHour;
-                int savedMinute = currentMinute;
-
-                // Nếu đã có thời gian báo thức được thiết lập trước đó, sử dụng thời gian đó
-                if (sharedPreferences2.contains("hour") && sharedPreferences2.contains("minute")) {
-                    savedHour = sharedPreferences2.getInt("hour", currentHour);
-                    savedMinute = sharedPreferences2.getInt("minute", currentMinute);
-                } else {
-                    // Nếu không, không thiết lập bất kỳ báo thức nào
-                    return;
-                }
-
-                if (selectedHour == currentHour && selectedMinute == currentMinute &&
-                        (!currentDate.equals(lastNotificationDate) || (savedHour == currentHour && savedMinute == currentMinute))) {
-                    NotificationHelper.showNotification(ChangeReminderTime.this, "Báo thức", "Đã đến giờ báo thức");
-
-                    // Cập nhật thời gian cuối cùng thông báo được gửi là ngày hôm nay
-                    SharedPreferences.Editor editor = sharedPreferences1.edit();
-                    editor.putString("last_notification_date", currentDate);
-                    editor.apply();
-                    handler.removeCallbacks(this);
-                    //playAlarmSound(); // Nếu muốn phát âm thanh, bỏ comment dòng này
-                }
-                else{
-                handler.postDelayed(this, 1000);
-                }
-            }
-        };
-
-        handler.post(runnable);
-    }
-
-    private void stopAlarmCheck() {
-        handler.removeCallbacks(runnable);
-    }
 }
