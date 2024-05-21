@@ -160,4 +160,7 @@
     <string name="delete">Bạn có chắc muốn xóa nhật kí không?</string>
     <string name="cancel">Hủy</string>
 
+
+    <string name="from">Từ: </string>
+    <string name="to">Đến: </string>
 </resources>
