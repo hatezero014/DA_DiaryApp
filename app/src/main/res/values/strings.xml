@@ -161,4 +161,7 @@
     <string name="delete_diary">Notification</string>
     <string name="delete">Are you sure you want to delete the log?</string>
     <string name="cancel">Cancel</string>
+
+    <string name="from">From: </string>
+    <string name="to">To: </string>
 </resources>
