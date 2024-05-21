@@ -147,7 +147,6 @@ public class YearStatisticAdapter extends RecyclerView.Adapter<RecyclerView.View
             yAxis.setAxisLineColor(ContextCompat.getColor(mContext, R.color.statistics_grid));
             yAxis.setTextSize(14);
             yAxis.setTextColor(ContextCompat.getColor(mContext, R.color.md_theme_onSurfaceVariant));
-            xAxis.setAxisLineColor(ContextCompat.getColor(mContext, R.color.statistics_grid));
             yAxis.setGridColor(ContextCompat.getColor(mContext, R.color.statistics_grid));
             yAxis.setXOffset(10); // khoảng cách giữa cột với số
             yAxis.setAxisMinimum(0f);
