@@ -53,7 +53,7 @@ public class FullImageView extends AppCompatActivity {
     private Animation rotateClose;
     private Animation fromBottom;
     private Animation toBottom;
-    private FloatingActionButton floatingActionButtonAdd, floatingActionButtonEdit, floatingActionButtonDetails, floatingActionButtonShare;
+    private FloatingActionButton floatingActionButtonAdd, floatingActionButtonDetails, floatingActionButtonShare;
 
     private boolean clicked = false;
     @Override
@@ -71,8 +71,6 @@ public class FullImageView extends AppCompatActivity {
         floatingActionButtonAdd = findViewById(R.id.floatingActionButtonAdd);
         floatingActionButtonDetails = findViewById(R.id.floatingActionButtonDetails);
         floatingActionButtonShare = findViewById(R.id.floatingActionButtonShare);
-        floatingActionButtonEdit = findViewById(R.id.floatingActionButtonEdit);
-
 
         rotateOpen = AnimationUtils.loadAnimation(this, R.anim.rotate_open_animation);
         rotateClose = AnimationUtils.loadAnimation(this, R.anim.rotate_close_animation);
@@ -122,17 +120,18 @@ public class FullImageView extends AppCompatActivity {
             }
         });
 
-        floatingActionButtonEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDaily(file);
-            }
-        });
 
         floatingActionButtonShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+            }
+        });
+
+        floatingActionButtonShare.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return false;
             }
         });
 
@@ -198,12 +197,12 @@ public class FullImageView extends AppCompatActivity {
 
     private void setAnimation(boolean clicked) {
         if(!clicked){
-            floatingActionButtonEdit.setVisibility(View.VISIBLE);
+
             floatingActionButtonShare.setVisibility(View.VISIBLE);
             floatingActionButtonDetails.setVisibility(View.VISIBLE);
         }
         else{
-            floatingActionButtonEdit.setVisibility(View.INVISIBLE);
+
             floatingActionButtonShare.setVisibility(View.INVISIBLE);
             floatingActionButtonDetails.setVisibility(View.INVISIBLE);
         }
@@ -211,13 +210,11 @@ public class FullImageView extends AppCompatActivity {
 
     private void setVisibility(boolean clicked) {
         if(!clicked){
-            floatingActionButtonEdit.setAnimation(fromBottom);
             floatingActionButtonShare.setAnimation(fromBottom);
             floatingActionButtonDetails.setAnimation(fromBottom);
             floatingActionButtonAdd.setAnimation(rotateOpen);
         }
         else{
-            floatingActionButtonEdit.setAnimation(toBottom);
             floatingActionButtonShare.setAnimation(toBottom);
             floatingActionButtonDetails.setAnimation(toBottom);
             floatingActionButtonAdd.setAnimation(rotateClose);

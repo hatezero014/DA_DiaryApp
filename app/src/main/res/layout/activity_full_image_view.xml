@@ -46,32 +46,18 @@
         />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButtonEdit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:clickable="true"
-        app:layout_constraintBottom_toTopOf="@+id/floatingActionButtonAdd"
-        app:layout_constraintEnd_toEndOf="@+id/floatingActionButtonAdd"
-        app:srcCompat="@drawable/icon_edit"
-        android:backgroundTint="@color/md_theme_primary"
-        android:tint="@color/white"
-        android:focusable="true"
-        android:visibility="gone"/>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButtonShare"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:clickable="true"
-        app:layout_constraintBottom_toTopOf="@+id/floatingActionButtonEdit"
-        app:layout_constraintEnd_toEndOf="@+id/floatingActionButtonEdit"
-        app:srcCompat="@drawable/icon_share"
         android:backgroundTint="@color/md_theme_primary"
-        android:tint="@color/white"
+        android:clickable="true"
         android:focusable="true"
-        android:visibility="gone"/>
+        android:tint="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/floatingActionButtonAdd"
+        app:layout_constraintEnd_toEndOf="@+id/floatingActionButtonAdd"
+        app:srcCompat="@drawable/icon_share" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButtonDetails"
