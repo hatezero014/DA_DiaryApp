@@ -28,6 +28,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
+        <activity android:name=".ChangeReminderTime"
+            android:exported="true"/>
         <activity
             android:name=".ShowDayStatistic"
             android:exported="false" />
@@ -84,6 +86,7 @@
         </activity>
 
         <receiver android:name=".AlarmReceiver" />
+        <receiver android:name=".NotificationReceiver"/>
 
         <service android:name=".Service.ReminderService" />
     </application>

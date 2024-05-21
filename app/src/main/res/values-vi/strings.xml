@@ -160,4 +160,16 @@
     <string name="delete">Bạn có chắc muốn xóa nhật kí không?</string>
     <string name="cancel">Hủy</string>
 
+    <!-- Alarm Clock   -->
+    <string name="add_pocket_diary">Thêm nhật kí</string>
+    <string name="add_pocket_diary_description">Đã đến lúc thêm mục nhật ký ngày hôm nay. Hãy mở ứng dụng và thêm mục nhật ký của ngày hôm nay nào!</string>
+    <string name="alarm_clock">Báo thức</string>
+    <string name="alarm_clock_description">Thêm báo thức mỗi ngày</string>
+    <string name="remind">Nhắc nhở</string>
+    <string name="remind_description">Ứng dụng sẽ nhắc nhở khi bạn không vào ứng dụng quá lâu</string>
+    <string name="remind_notification">Thông báo nhắc nhở</string>
+    <string name="remind_notification_desciption">Bạn đã quên tôi rồi sao! Hãy biến những kỷ niệm thành những chuyến đi đáng nhớ ngay hôm nay.</string>
+    <string name="id_AlarmReceiver">idalarmreceiver</string>
+    <string name="id_NotificationReceiver">idnotificationreceiver</string>
+
 </resources>
