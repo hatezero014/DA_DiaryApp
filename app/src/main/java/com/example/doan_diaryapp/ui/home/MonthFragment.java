@@ -93,6 +93,12 @@ public class MonthFragment extends Fragment {
         Diary = mEntryService.getEntries();
         calendarView = view.findViewById(R.id.calendarView);
         calendarView.removeDecorators();
+
+        CalendarDay today = CalendarDay.today();
+        SpecificDay todayDecorator = new SpecificDay(getContext(), today);
+        calendarView.addDecorator(todayDecorator);
+
+
         for (String date : Diary) {
             String[] parts = date.split("-");
             String d = parts[0];

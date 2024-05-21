@@ -27,14 +27,13 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         if(position == 0)
             return new ByMonthFragment();
-        //else if(position == 1)
-        return new EntireYearFragment();
-        //return new CustomFragment();
+        else if(position == 1)
+            return new EntireYearFragment();
+        return new CustomFragment();
     }
 
     @Override
     public int getItemCount() {
-        //return 3;
-        return 2;
+        return 3;
     }
 }

@@ -144,6 +144,7 @@
 
     <!--  Image App  -->
     <string name="title_YourImage">Ảnh của bạn</string>
+    <string name="statistics_for">Thống kê ngày</string>
 
     <!--  Full Image View  -->
     <string name="fgm_title">Tiêu đề: </string>
@@ -157,6 +158,6 @@
 
     <string name="delete_diary">Thông báo</string>
     <string name="delete">Bạn có chắc muốn xóa nhật kí không?</string>
-    <string name="cancel">Thoát</string>
+    <string name="cancel">Hủy</string>
 
 </resources>

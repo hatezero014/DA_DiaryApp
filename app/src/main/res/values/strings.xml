@@ -145,6 +145,8 @@
 
     <!--  Image App  -->
     <string name="title_YourImage">Your images</string>
+    <string name="statistics_for">Statistics for</string>
+
 
     <!--  Full Image View  -->
     <string name="fgm_title">Title: </string>
