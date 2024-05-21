@@ -20,7 +20,7 @@ import com.example.doan_diaryapp.ui.collection.YourImagesAdapter;
 
 import java.util.ArrayList;
 
-public class YourImagesInApp extends BaseActivity {
+public class YourImageInApp1 extends BaseActivity {
 
     private YourImagesAdapter yourImagesAdapter;
     private RecyclerView recyclerView;
