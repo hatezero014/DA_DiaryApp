@@ -41,10 +41,7 @@ public class NotificationApp extends BaseActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_notification_app);
-//
-//        String chuocantruyen = "Thông báo mới";
-//        NotificationService notificationService = new NotificationService(this);
-//        notificationService.Add(new Notification(getCurrentTime(),getCurrentDay(),chuocantruyen));
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(getString(R.string.notification_title));
