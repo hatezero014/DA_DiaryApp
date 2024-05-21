@@ -175,4 +175,6 @@
     <string name="id_NotificationReceiver">idnotificationreceiver</string>
 
 
+    <string name="from">From: </string>
+    <string name="to">To: </string>
 </resources>

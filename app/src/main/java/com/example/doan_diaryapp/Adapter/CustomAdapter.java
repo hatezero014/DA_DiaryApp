@@ -1,7 +1,9 @@
 package com.example.doan_diaryapp.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,8 @@ import com.example.doan_diaryapp.Models.Custom;
 import com.example.doan_diaryapp.Models.Entry;
 import com.example.doan_diaryapp.R;
 import com.example.doan_diaryapp.Service.EntryService;
+import com.example.doan_diaryapp.ShowEmojiActivity;
+import com.example.doan_diaryapp.ui.image.Image;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -113,8 +117,20 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
 
         private void setBarChartFormat(int trucX) {
-            barChart.getAxisRight().setDrawLabels(false);
             barChart.setDragEnabled(true);
+            barChart.setDescription(null);
+            barChart.setScaleYEnabled(false); // tắt zoom trên cột Y
+            barChart.setDoubleTapToZoomEnabled(false); // tắt chạm 2 lần để zoom
+            barChart.setBackgroundColor(Color.parseColor("#00000000"));
+            barChart.setHighlightPerTapEnabled(false); // tắt highlight điểm
+            barChart.setHighlightPerDragEnabled(false); // same
+            barChart.setExtraBottomOffset(6); // chỉnh margin cạnh dưới
+            barChart.setExtraRightOffset(6);
+            barChart.getLegend().setEnabled(false);// tắt chú thích (cái màu xanh)
+            barChart.getAxisRight().setDrawLabels(false);
+            barChart.getAxisRight().setAxisLineWidth(2);
+            barChart.getAxisRight().setDrawGridLines(false);
+            barChart.getAxisRight().setAxisLineColor(ContextCompat.getColor(mContext, R.color.statistics_grid));
 
             XAxis xAxis = barChart.getXAxis();
             xAxis.setAxisMinimum(0);
@@ -123,6 +139,12 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             xAxis.setTextSize(14);
             xAxis.setLabelCount(trucX + 1);
             xAxis.setGranularity(1f);
+            xAxis.setAxisLineWidth(2);
+            xAxis.setGridLineWidth(2);
+            xAxis.setYOffset(6);
+            xAxis.setTextColor(ContextCompat.getColor(mContext, R.color.md_theme_onSurfaceVariant));
+            xAxis.setAxisLineColor(ContextCompat.getColor(mContext, R.color.statistics_grid));
+            xAxis.setGridColor(ContextCompat.getColor(mContext, R.color.statistics_grid));
 
             YAxis yAxis = barChart.getAxisLeft();
             yAxis.setAxisMaximum(10f);
@@ -130,6 +152,11 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             yAxis.setLabelCount(10);
             yAxis.setTextSize(14);
             yAxis.setGranularity(1f);
+            yAxis.setAxisLineWidth(2);
+            yAxis.setGridLineWidth(2);
+            yAxis.setAxisLineColor(ContextCompat.getColor(mContext, R.color.statistics_grid));
+            yAxis.setTextColor(ContextCompat.getColor(mContext, R.color.md_theme_onSurfaceVariant));
+            yAxis.setGridColor(ContextCompat.getColor(mContext, R.color.statistics_grid));
         }
 
         public void setData(int byear, int bmonth, int ayear, int amonth) {
@@ -248,7 +275,6 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
         public class EmotionViewHolder extends RecyclerView.ViewHolder {
-        private Context context;
         private TextView tv_emotion_type;
         private ImageView img1;
         private TextView tv1;
@@ -263,7 +289,6 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         public EmotionViewHolder(@NonNull View itemView) {
             super(itemView);
-            context = itemView.getContext();
             tv_emotion_type = itemView.findViewById(R.id.tv_emotion_type);
 
             img1 = itemView.findViewById(R.id.imageView1);
@@ -278,7 +303,61 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
 
         public void setEmotion(int byear, int bmonth, int ayear, int amonth, String emotionType) {
+            Map<String, Integer> emotionCount = new HashMap<>();
 
+            if (emotionType.equals("Mood")) {
+                emotionCount.clear();
+                tv_emotion_type.setText(mContext.getString(R.string.mood));
+                emotionCount = new Image().getMoodCustom(byear, bmonth, ayear, amonth, mContext);
+
+            } else if (emotionType.equals("Activity")) {
+                emotionCount.clear();
+                tv_emotion_type.setText(mContext.getString(R.string.activity));
+                emotionCount = new Image().getActivityCustom(byear, bmonth, ayear, amonth, mContext);
+            } else if (emotionType.equals("Partner")) {
+                emotionCount.clear();
+                tv_emotion_type.setText(mContext.getString(R.string.partner));
+                emotionCount = new Image().getPartnerCustom(byear, bmonth, ayear, amonth, mContext);
+            } else {
+                emotionCount.clear();
+                tv_emotion_type.setText(mContext.getString(R.string.weather));
+                emotionCount = new Image().getWeatherCustom(byear, bmonth, ayear, amonth, mContext);
+            }
+
+            List<Map.Entry<String, Integer>> sortedList = new ArrayList<>(emotionCount.entrySet());
+            sortedList.sort(Map.Entry.<String, Integer>comparingByValue().reversed());
+
+            for (int i = 0; i < 4 && i < sortedList.size(); i++) {
+                String icon = sortedList.get(i).getKey();
+                int imageResourceId = mContext.getResources().getIdentifier(icon, "drawable", mContext.getPackageName());
+                Drawable drawable = mContext.getDrawable(imageResourceId);
+                if (i == 0) {
+                    img1.setImageDrawable(drawable);
+                    tv1.setText("x" + sortedList.get(i).getValue());
+                } else if (i == 1) {
+                    img2.setImageDrawable(drawable);
+                    tv2.setText("x" + sortedList.get(i).getValue());
+                } else if (i == 2) {
+                    img3.setImageDrawable(drawable);
+                    tv3.setText("x" + sortedList.get(i).getValue());
+                } else {
+                    img4.setImageDrawable(drawable);
+                    tv4.setText("x" + sortedList.get(i).getValue());
+                }
+            }
+
+            btn_viewall.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), ShowEmojiActivity.class);
+                    ArrayList<String> dataList = new ArrayList<>();
+                    for (Map.Entry<String, Integer> entry : sortedList) {
+                        dataList.add(entry.getKey() + "," + entry.getValue());
+                    }
+                    intent.putStringArrayListExtra("sortedData", dataList);
+                    v.getContext().startActivity(intent);
+                }
+            });
         }
     }
 }

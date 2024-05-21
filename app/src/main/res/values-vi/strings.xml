@@ -160,6 +160,7 @@
     <string name="delete">Bạn có chắc muốn xóa nhật kí không?</string>
     <string name="cancel">Hủy</string>
 
+
     <!-- Alarm Clock   -->
     <string name="add_pocket_diary">Thêm nhật kí</string>
     <string name="add_pocket_diary_description">Đã đến lúc thêm mục nhật ký ngày hôm nay. Hãy mở ứng dụng và thêm mục nhật ký của ngày hôm nay nào!</string>
@@ -172,4 +173,8 @@
     <string name="id_AlarmReceiver">idalarmreceiver</string>
     <string name="id_NotificationReceiver">idnotificationreceiver</string>
 
+
+
+    <string name="from">Từ: </string>
+    <string name="to">Đến: </string>
 </resources>

@@ -19,7 +19,7 @@ import com.example.doan_diaryapp.Models.Statistic;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShowDayStatistic extends AppCompatActivity {
+public class ShowDayStatistic extends BaseActivity {
     private RecyclerView recyclerView;
     private DayStatisticAdapter dayStatisticAdapter;
 
@@ -57,6 +57,10 @@ public class ShowDayStatistic extends AppCompatActivity {
         int year = Integer.parseInt(part[2]);
 
         list.add(new Statistic(year,month,1,null));
+        list.add(new Statistic(year,month,2,"Mood"));
+        list.add(new Statistic(year,month,2,"Activity"));
+        list.add(new Statistic(year,month,2,"Partner"));
+        list.add(new Statistic(year,month,2,"Weather"));
 
         return list;
     }
