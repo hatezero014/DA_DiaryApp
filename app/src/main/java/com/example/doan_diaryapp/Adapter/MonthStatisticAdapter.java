@@ -3,6 +3,7 @@ package com.example.doan_diaryapp.Adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_diaryapp.Models.Entry;
@@ -114,7 +116,16 @@ public class MonthStatisticAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
 
         private void setBarchartFormat(int trucX) {
+            barChart.setDescription(null);
+            barChart.setScaleYEnabled(false); // tắt zoom trên cột Y
+            barChart.setDoubleTapToZoomEnabled(false); // tắt chạm 2 lần để zoom
+            barChart.setBackgroundColor(Color.parseColor("#00000000"));
+            barChart.setExtraBottomOffset(6); // chỉnh margin cạnh dưới
+            barChart.setExtraRightOffset(6);
             barChart.getAxisRight().setDrawLabels(false);
+            barChart.getAxisRight().setAxisLineWidth(2);
+            barChart.getAxisRight().setDrawGridLines(false);
+            barChart.getAxisRight().setAxisLineColor(ContextCompat.getColor(context, R.color.statistics_grid));
 
             XAxis xAxis = barChart.getXAxis();
             xAxis.setAxisMinimum(1f);
@@ -123,6 +134,13 @@ public class MonthStatisticAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             xAxis.setTextSize(14);
             xAxis.setLabelCount(10);
             xAxis.setGranularity(1f);
+            xAxis.setAxisLineWidth(2);
+            xAxis.setGridLineWidth(2);
+            xAxis.setYOffset(6);
+            xAxis.setGranularityEnabled(true);
+            xAxis.setTextColor(ContextCompat.getColor(context, R.color.md_theme_onSurfaceVariant));
+            xAxis.setAxisLineColor(ContextCompat.getColor(context, R.color.statistics_grid));
+            xAxis.setGridColor(ContextCompat.getColor(context, R.color.statistics_grid));
 
 
             YAxis yAxis = barChart.getAxisLeft();
@@ -131,6 +149,11 @@ public class MonthStatisticAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             yAxis.setLabelCount(10);
             yAxis.setTextSize(14);
             yAxis.setGranularity(1f);
+            yAxis.setAxisLineWidth(2);
+            yAxis.setGridLineWidth(2);
+            yAxis.setAxisLineColor(ContextCompat.getColor(context, R.color.statistics_grid));
+            yAxis.setTextColor(ContextCompat.getColor(context, R.color.md_theme_onSurfaceVariant));
+            yAxis.setGridColor(ContextCompat.getColor(context, R.color.statistics_grid));
         }
 
         public void setData(int year, int month) {
@@ -181,6 +204,7 @@ public class MonthStatisticAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
             BarDataSet barDataSet = new BarDataSet(barChartList,null);
             barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+            barDataSet.setValueTextColor(ContextCompat.getColor(context, R.color.md_theme_onSurfaceVariant));
 
             BarData barData = new BarData(barDataSet);
             barChart.setData(barData);
