@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.doan_diaryapp">
 
     <uses-permission android:name="android.permission.ACCESS_SELECTED_MEDIA" />
     <uses-permission
@@ -89,6 +90,15 @@
         <receiver android:name=".NotificationReceiver"/>
 
         <service android:name=".Service.ReminderService" />
+        <provider
+            android:authorities="com.example.doan_diaryapp"
+            android:name="androidx.core.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/paths"/>
+        </provider>
     </application>
 
 </manifest>

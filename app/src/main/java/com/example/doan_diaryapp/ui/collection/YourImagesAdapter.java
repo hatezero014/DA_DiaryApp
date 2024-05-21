@@ -69,7 +69,6 @@ public class YourImagesAdapter extends RecyclerView.Adapter<YourImagesAdapter.It
                     if(onImageClickListener!=null){
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            // Gọi phương thức của giao diện xử lý sự kiện click
                             onImageClickListener.onImageClick(position);
                         }
                     }

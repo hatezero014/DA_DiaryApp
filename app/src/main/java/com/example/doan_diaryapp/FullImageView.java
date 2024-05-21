@@ -3,7 +3,9 @@ package com.example.doan_diaryapp;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,6 +27,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -36,8 +39,10 @@ import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
-public class FullImageView extends AppCompatActivity {
+public class FullImageView extends BaseActivity {
 
     EntryPhotoService entryPhotoService;
     int position;
@@ -49,6 +54,7 @@ public class FullImageView extends AppCompatActivity {
     TextView tvDetails;
     Context context;
     String file;
+    String titleShare;
     private Animation rotateOpen;
     private Animation rotateClose;
     private Animation fromBottom;
@@ -104,7 +110,9 @@ public class FullImageView extends AppCompatActivity {
         String day = days[1];
         timeandday = getResources().getString(R.string.fgm_Time)+ " " + time + " " + getResources().getString(R.string.fgm_Day)+ " " + day;
         strDetails = title + "\n" + note + "\n" + Overrall + "\n" + timeandday;
-
+        String title1 = entry.getTitle();
+        String note1 = entry.getNote();
+        titleShare = "[" + title1 + "]" + "\n" + note1;
 
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,7 +132,7 @@ public class FullImageView extends AppCompatActivity {
         floatingActionButtonShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                shareImage(file);
             }
         });
 
@@ -147,6 +155,42 @@ public class FullImageView extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    private void shareImage(String file) {
+        BitmapDrawable bitmapDrawable = (BitmapDrawable) imageView.getDrawable();
+        Bitmap bitmap = bitmapDrawable.getBitmap();
+        shareImageAndText(bitmap);
+    }
+
+    private void shareImageAndText(Bitmap bitmap) {
+
+        Uri uri = getImageToShare(bitmap);
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_STREAM, uri);
+        intent.putExtra(Intent.EXTRA_TEXT, titleShare);
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Image Sub");
+        intent.setType("image/*");
+        startActivity(Intent.createChooser(intent, "Share Via"));
+    }
+
+    private Uri getImageToShare(Bitmap bitmap) {
+        File folder = new File(getCacheDir(), "images");
+        Uri uri = null;
+        try{
+            folder.mkdir();
+            File file = new File(folder, "image.jpg");
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, fileOutputStream);
+            fileOutputStream.flush();
+            fileOutputStream.close();
+
+            uri = FileProvider.getUriForFile(this, "com.example.doan_diaryapp", file );
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return uri;
     }
 
     private void openDetailDiaLog(int gravity) {
