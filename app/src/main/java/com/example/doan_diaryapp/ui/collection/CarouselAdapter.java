@@ -72,7 +72,7 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.ItemVi
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
-                        Intent intent = new Intent(context, FullImageView1.class);
+                        Intent intent = new Intent(context, FullImageView.class);
                         CarouselModel clickedItem = list.get(position);
 
                         ArrayList<String> imagePaths = new ArrayList<>();

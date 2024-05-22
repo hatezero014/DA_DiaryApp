@@ -1,5 +1,6 @@
 package com.example.doan_diaryapp;
 
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.ClipData;
 import android.content.Context;
@@ -16,6 +17,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -88,41 +90,45 @@ public class RecordActivity extends BaseActivity {
 
     private OnBackPressedDispatcher dispatcher;
 
-    private List<Integer> imageMoodList = Arrays.asList(
-            R.drawable.emoji_emotion_joyful, R.drawable.emoji_emotion_cool, R.drawable.emoji_emotion_melting, R.drawable.emoji_emotion_pleased,
-            R.drawable.emoji_emotion_happy, R.drawable.emoji_emotion_surprise, R.drawable.emoji_emotion_embarrassed, R.drawable.emoji_emotion_normal,
-            R.drawable.emoji_emotion_fearful, R.drawable.emoji_emotion_tired, R.drawable.emoji_emotion_worried, R.drawable.emoji_emotion_sad,
-            R.drawable.emoji_emotion_disappointed, R.drawable.emoji_emotion_sleepy, R.drawable.emoji_emotion_sick, R.drawable.emoji_emotion_bored,
-            R.drawable.emoji_emotion_annoyed, R.drawable.emoji_emotion_angry
-    );
+    private List<Integer> imageMoodList = new ArrayList<>();
+//            Arrays.asList(
+//            R.drawable.emoji_emotion_joyful, R.drawable.emoji_emotion_cool, R.drawable.emoji_emotion_melting, R.drawable.emoji_emotion_pleased,
+//            R.drawable.emoji_emotion_happy, R.drawable.emoji_emotion_surprise, R.drawable.emoji_emotion_embarrassed, R.drawable.emoji_emotion_normal,
+//            R.drawable.emoji_emotion_fearful, R.drawable.emoji_emotion_tired, R.drawable.emoji_emotion_worried, R.drawable.emoji_emotion_sad,
+//            R.drawable.emoji_emotion_disappointed, R.drawable.emoji_emotion_sleepy, R.drawable.emoji_emotion_sick, R.drawable.emoji_emotion_bored,
+//            R.drawable.emoji_emotion_annoyed, R.drawable.emoji_emotion_angry
+//    );
 
-    private List<Integer> imageActivityList = Arrays.asList(
-            R.drawable.emoji_activity_work, R.drawable.emoji_activity_study, R.drawable.emoji_activity_bake, R.drawable.emoji_activity_write,
-            R.drawable.emoji_activity_sport, R.drawable.emoji_activity_gym, R.drawable.emoji_activity_watch_movie, R.drawable.emoji_activity_game,
-            R.drawable.emoji_activity_play_instruments, R.drawable.emoji_activity_sing, R.drawable.emoji_activity_biking, R.drawable.emoji_activity_shopping,
-            R.drawable.emoji_activity_paint, R.drawable.emoji_activity_party, R.drawable.emoji_activity_photograph, R.drawable.emoji_activity_sleep,
-            R.drawable.emoji_activity_play_cards, R.drawable.emoji_activity_cook, R.drawable.emoji_activity_housework, R.drawable.emoji_activity_read
-    );
+    private List<Integer> imageActivityList = new ArrayList<>();
+//            Arrays.asList(
+//            R.drawable.emoji_activity_work, R.drawable.emoji_activity_study, R.drawable.emoji_activity_bake, R.drawable.emoji_activity_write,
+//            R.drawable.emoji_activity_sport, R.drawable.emoji_activity_gym, R.drawable.emoji_activity_watch_movie, R.drawable.emoji_activity_game,
+//            R.drawable.emoji_activity_play_instruments, R.drawable.emoji_activity_sing, R.drawable.emoji_activity_biking, R.drawable.emoji_activity_shopping,
+//            R.drawable.emoji_activity_paint, R.drawable.emoji_activity_party, R.drawable.emoji_activity_photograph, R.drawable.emoji_activity_sleep,
+//            R.drawable.emoji_activity_play_cards, R.drawable.emoji_activity_cook, R.drawable.emoji_activity_housework, R.drawable.emoji_activity_read
+//    );
 
-    private List<Integer> imageCompanionList = Arrays.asList(
-            R.drawable.emoji_companion_partner, R.drawable.emoji_companion_friends, R.drawable.emoji_companion_family, R.drawable.emoji_companion_pets
-    );
+    private List<Integer> imageCompanionList = new ArrayList<>();
+//            Arrays.asList(
+//            R.drawable.emoji_companion_partner, R.drawable.emoji_companion_friends, R.drawable.emoji_companion_family, R.drawable.emoji_companion_pets
+//    );
 
-    private final List<Integer> imageWeatherList = Arrays.asList(
-            R.drawable.emoji_weather_cloudy, R.drawable.emoji_weather_rainbow, R.drawable.emoji_weather_partly_cloudy, R.drawable.emoji_weather_rainy,
-            R.drawable.emoji_weather_sunny, R.drawable.emoji_weather_windy
-    );
+    private List<Integer> imageWeatherList = new ArrayList<>();
+//            Arrays.asList(
+//            R.drawable.emoji_weather_cloudy, R.drawable.emoji_weather_rainbow, R.drawable.emoji_weather_partly_cloudy, R.drawable.emoji_weather_rainy,
+//            R.drawable.emoji_weather_sunny, R.drawable.emoji_weather_windy
+//    );
 
     private ImageButton btnDeImgFi, btnDeImgSe, btnDeImgTh;
     private ImageView imgFirst, imgSecond, imgThird;
     int countImage = 0;
     Boolean isCheckFavorite = false, checkBeforeDone = false;
-    Drawable targetDrawable;
     Uri imgFiUri = null, imgSeUri = null, imgThUri = null;
     String date;
     private static final int PICK_IMAGES_REQUEST = 1;
     Slider slider;
-    TextView textNote, textCount, textTitle;
+    TextView textNote, textCount, textTitle, textExistedImg;
+    FrameLayout frameFirst, frameSecond, frameThird;
     Button btnDone;
     boolean checkChangedImage = false;
     List<Integer> partnerIndexes, weatherIndexes, emotionIndexes, activityIndexes;
@@ -183,11 +189,14 @@ public class RecordActivity extends BaseActivity {
         btnDeImgSe = findViewById(R.id.btnDeImgSe);
         btnDeImgTh = findViewById(R.id.btnDeImgTh);
         btnDone = findViewById(R.id.btnDone);
-        targetDrawable = imgFirst.getDrawable();
         textNote = findViewById(R.id.textNote);
         textTitle = findViewById(R.id.textTitle);
         slider = findViewById(R.id.slider);
         textCount = findViewById(R.id.txtCountImage);
+        frameFirst = findViewById(R.id.frameImageFirst);
+        frameSecond = findViewById(R.id.frameImageSecond);
+        frameThird = findViewById(R.id.frameImageThird);
+        textExistedImg = findViewById(R.id.textExistedImg);
         textCount.setText(getResources().getString(R.string.record_title_add_image, countImage, 3));
 
         RecyclerView recyclerView1 = findViewById(R.id.recyclerView1);
@@ -210,6 +219,47 @@ public class RecordActivity extends BaseActivity {
 
         SharedPreferences prefs = getSharedPreferences("Settings", android.app.Activity.MODE_PRIVATE);
         String language = prefs.getString("My_Language", "");
+
+        List<Emotion> emotionList = emotionService.GetAll(Emotion.class);
+        for (Emotion emotion : emotionList) {
+            if (emotion.getIsActive() == 0) {
+                continue;
+            }
+            int emotionIdR = getResources().getIdentifier(emotion.getIcon(), "drawable", getPackageName());
+            imageMoodList.add(emotionIdR);
+        }
+
+        List<Activity> activityList = activityService.GetAll(Activity.class);
+        for (Activity activity : activityList) {
+            if (activity.getIsActive() == 0) {
+                continue;
+            }
+            int activityIdR = getResources().getIdentifier(activity.getIcon(), "drawable", getPackageName());
+            imageActivityList.add(activityIdR);
+        }
+
+        List<Partner> partnerList = partnerService.GetAll(Partner.class);
+        for (Partner partner : partnerList) {
+            if (partner.getIsActive() == 0) {
+                continue;
+            }
+            int partnerIdR = getResources().getIdentifier(partner.getIcon(), "drawable", getPackageName());
+            imageCompanionList.add(partnerIdR);
+        }
+
+        List<Weather> weatherList = emotionService.GetAll(Weather.class);
+        for (Weather weather : weatherList) {
+            if (weather.getIsActive() == 0) {
+                continue;
+            }
+            int weatherIdR = getResources().getIdentifier(weather.getIcon(), "drawable", getPackageName());
+            imageWeatherList.add(weatherIdR);
+        }
+
+        imageMoodList.add(R.drawable.add);
+        imageActivityList.add(R.drawable.add);
+        imageCompanionList.add(R.drawable.add);
+        imageWeatherList.add(R.drawable.add);
 
         List<String> descMoodList = new ArrayList<>();
         for (Integer resourceId : imageMoodList) {
@@ -298,16 +348,16 @@ public class RecordActivity extends BaseActivity {
                 }
             }
 
-            adapter1 = new ImageRecordAdapter(imageMoodList, descMoodList, emotionIndexes);
+            adapter1 = new ImageRecordAdapter(imageMoodList, descMoodList, emotionIndexes, this);
             recyclerView1.setAdapter(adapter1);
             recyclerView1.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
-            adapter2 = new ImageRecordAdapter(imageActivityList, descActivityList, activityIndexes);
+            adapter2 = new ImageRecordAdapter(imageActivityList, descActivityList, activityIndexes, this);
             recyclerView2.setAdapter(adapter2);
             recyclerView2.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
-            adapter3 = new ImageRecordAdapter(imageCompanionList, descPartnerList, partnerIndexes);
+            adapter3 = new ImageRecordAdapter(imageCompanionList, descPartnerList, partnerIndexes, this);
             recyclerView3.setAdapter(adapter3);
             recyclerView3.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
-            adapter4 = new ImageRecordAdapter(imageWeatherList, descWeatherList, weatherIndexes);
+            adapter4 = new ImageRecordAdapter(imageWeatherList, descWeatherList, weatherIndexes, this);
             recyclerView4.setAdapter(adapter4);
             recyclerView4.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
 
@@ -319,18 +369,23 @@ public class RecordActivity extends BaseActivity {
 
                 if (i == 0) {
                     Picasso.get().load(new File(absolutePath)).into(imgFirst);
+                    imgFirst.setVisibility(View.VISIBLE);
+                    frameFirst.setVisibility(View.VISIBLE);
+                    textExistedImg.setVisibility(View.GONE);
                     countImage++;
                     btnDeImgFi.setVisibility(View.VISIBLE);
                 }
                 if (i == 1) {
                     Picasso.get().load(new File(absolutePath)).into(imgSecond);
                     imgSecond.setVisibility(View.VISIBLE);
+                    frameSecond.setVisibility(View.VISIBLE);
                     countImage++;
                     btnDeImgSe.setVisibility(View.VISIBLE);
                 }
                 if (i == 2) {
                     Picasso.get().load(new File(absolutePath)).into(imgThird);
                     imgThird.setVisibility(View.VISIBLE);
+                    frameThird.setVisibility(View.VISIBLE);
                     countImage++;
                     btnDeImgTh.setVisibility(View.VISIBLE);
                 }
@@ -345,16 +400,16 @@ public class RecordActivity extends BaseActivity {
         }
         else
         {
-            adapter1 = new ImageRecordAdapter(imageMoodList, descMoodList, null);
+            adapter1 = new ImageRecordAdapter(imageMoodList, descMoodList, null, this);
             recyclerView1.setAdapter(adapter1);
             recyclerView1.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
-            adapter2 = new ImageRecordAdapter(imageActivityList, descActivityList, null);
+            adapter2 = new ImageRecordAdapter(imageActivityList, descActivityList, null, this);
             recyclerView2.setAdapter(adapter2);
             recyclerView2.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
-            adapter3 = new ImageRecordAdapter(imageCompanionList, descPartnerList, null);
+            adapter3 = new ImageRecordAdapter(imageCompanionList, descPartnerList, null, this);
             recyclerView3.setAdapter(adapter3);
             recyclerView3.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
-            adapter4 = new ImageRecordAdapter(imageWeatherList, descWeatherList, null);
+            adapter4 = new ImageRecordAdapter(imageWeatherList, descWeatherList, null, this);
             recyclerView4.setAdapter(adapter4);
             recyclerView4.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
         }
@@ -366,8 +421,12 @@ public class RecordActivity extends BaseActivity {
                 btnDeImgFi.setVisibility(View.GONE);
                 imgFiUri = null;
                 countImage--;
+                if (countImage == 0) {
+                    textExistedImg.setVisibility(View.VISIBLE);
+                }
                 textCount.setText(getResources().getString(R.string.record_title_add_image, countImage, 3));
                 checkChangedImage = true;
+                frameFirst.setVisibility(View.GONE);
 
                 if (imgSecond.getDrawable() != null) {
                     imgFirst.setImageDrawable(imgSecond.getDrawable());
@@ -377,6 +436,8 @@ public class RecordActivity extends BaseActivity {
                     imgSecond.setVisibility(View.GONE);
                     imgFiUri = imgSeUri;
                     imgSeUri = null;
+                    frameFirst.setVisibility(View.VISIBLE);
+                    frameSecond.setVisibility(View.GONE);
                 }
 
                 if (imgThird.getDrawable() != null) {
@@ -388,11 +449,10 @@ public class RecordActivity extends BaseActivity {
                     imgThird.setVisibility(View.GONE);
                     imgSeUri = imgThUri;
                     imgThUri = null;
+                    frameSecond.setVisibility(View.VISIBLE);
+                    frameThird.setVisibility(View.GONE);
                 }
 
-                if (imgFirst.getDrawable() == null) {
-                    imgFirst.setImageDrawable(targetDrawable);
-                }
             }
         });
 
@@ -403,9 +463,10 @@ public class RecordActivity extends BaseActivity {
                 imgSecond.setVisibility(View.GONE);
                 btnDeImgSe.setVisibility(View.GONE);
                 imgSeUri = null;
-                countImage--;;
+                countImage--;
                 textCount.setText(getResources().getString(R.string.record_title_add_image, countImage, 3));
                 checkChangedImage = true;
+                frameSecond.setVisibility(View.GONE);
 
                 if (imgThird.getDrawable() != null) {
                     imgSecond.setImageDrawable(imgThird.getDrawable());
@@ -416,6 +477,8 @@ public class RecordActivity extends BaseActivity {
                     imgThird.setVisibility(View.GONE);
                     imgSeUri = imgThUri;
                     imgThUri = null;
+                    frameSecond.setVisibility(View.VISIBLE);
+                    frameThird.setVisibility(View.GONE);
                 }
             }
         });
@@ -430,6 +493,7 @@ public class RecordActivity extends BaseActivity {
                 countImage--;
                 textCount.setText(getResources().getString(R.string.record_title_add_image, countImage, 3));
                 checkChangedImage = true;
+                frameThird.setVisibility(View.GONE);
             }
         });
 
@@ -487,7 +551,7 @@ public class RecordActivity extends BaseActivity {
                             entryWeatherService.Add(new EntryWeather(id, weather.getId()));
                         }
 
-                        if (imgFirst.getDrawable() != targetDrawable) {
+                        if (imgFirst.getDrawable() != null) {
                             String relativePath = saveImageToAppDirectory(RecordActivity.this, imgFirst);
                             entryPhotoService.Add(new EntryPhoto(id, relativePath));
                         }
@@ -547,7 +611,7 @@ public class RecordActivity extends BaseActivity {
                             entryWeatherService.Add(new EntryWeather(id, weather.getId()));
                         }
 
-                        if (imgFirst.getDrawable() != targetDrawable) {
+                        if (imgFirst.getDrawable() != null) {
                             String relativePath = saveImageToAppDirectory(RecordActivity.this, imgFirst);
                             entryPhotoService.Add(new EntryPhoto(id, relativePath));
                         }
@@ -571,6 +635,83 @@ public class RecordActivity extends BaseActivity {
                 }
             }
         });
+
+        TextView toggleList1 = findViewById(R.id.list1);
+        TextView toggleList2 = findViewById(R.id.list2);
+        TextView toggleList3 = findViewById(R.id.list3);
+        TextView toggleList4 = findViewById(R.id.list4);
+
+        toggleList1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (toggleVisibility(recyclerView1)) {
+                    toggleList1.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.expand_less, 0);
+                }
+                else {
+                    toggleList1.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.expand_more, 0);
+                }
+            }
+        });
+
+        toggleList2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (toggleVisibility(recyclerView2)) {
+                    toggleList2.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.expand_less, 0);
+                }
+                else {
+                    toggleList2.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.expand_more, 0);
+                }
+            }
+        });
+
+        toggleList3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (toggleVisibility(recyclerView3)) {
+                    toggleList3.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.expand_less, 0);
+                }
+                else {
+                    toggleList3.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.expand_more, 0);
+                }
+            }
+        });
+
+        toggleList4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (toggleVisibility(recyclerView4)) {
+                    toggleList4.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.expand_less, 0);
+                }
+                else {
+                    toggleList4.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.expand_more, 0);
+                }
+            }
+        });
+
+        LinearLayout images = findViewById(R.id.linearImages);
+
+        textCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (toggleVisibility(images)) {
+                    textCount.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.expand_less, 0);
+                }
+                else {
+                    textCount.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.expand_more, 0);
+                }
+            }
+        });
+    }
+
+    private boolean toggleVisibility(View view) {
+        if (view.getVisibility() == View.GONE) {
+            view.setVisibility(View.VISIBLE);
+            return true;
+        } else {
+            view.setVisibility(View.GONE);
+            return false;
+        }
     }
 
     private String getResourceName(int resourceId) {
@@ -606,34 +747,38 @@ public class RecordActivity extends BaseActivity {
                     }
                     for (int i = 0; i < count; i++) {
                         Uri imageUri = clipData.getItemAt(i).getUri();
-                        if (imgFirst.getDrawable() == targetDrawable) {
+                        if (imgFirst.getDrawable() == null) {
                             imgFirst.setImageURI(imageUri);
                             imgFirst.setVisibility(View.VISIBLE);
+                            frameFirst.setVisibility(View.VISIBLE);
                             imgFiUri = imageUri;
                             btnDeImgFi.setVisibility(View.VISIBLE);
                             checkChangedImage = true;
                             countImage++;
+                            textExistedImg.setVisibility(View.GONE);
                             textCount.setText(getResources().getString(R.string.record_title_add_image, countImage, 3));
                         }
                         else {
                             if (imgSecond.getDrawable() == null) {
                                 imgSecond.setImageURI(imageUri);
                                 imgSecond.setVisibility(View.VISIBLE);
+                                frameSecond.setVisibility(View.VISIBLE);
                                 imgSeUri = imageUri;
                                 btnDeImgSe.setVisibility(View.VISIBLE);
                                 checkChangedImage = true;
                                 countImage++;;
-                                textCount.setText(String.format(Locale.ENGLISH, "%d/%d", countImage, 3));
+                                textCount.setText(getResources().getString(R.string.record_title_add_image, countImage, 3));
                             }
                             else {
                                 if (imgThird.getDrawable() == null) {
                                     imgThird.setImageURI(imageUri);
                                     imgThird.setVisibility(View.VISIBLE);
+                                    frameThird.setVisibility(View.VISIBLE);
                                     imgThUri = imageUri;
                                     checkChangedImage = true;
                                     btnDeImgTh.setVisibility(View.VISIBLE);
                                     countImage++;;
-                                    textCount.setText(String.format(Locale.ENGLISH, "%d/%d", countImage, 3));
+                                    textCount.setText(getResources().getString(R.string.record_title_add_image, countImage, 3));
                                 }
                             }
                         }
@@ -731,13 +876,40 @@ public class RecordActivity extends BaseActivity {
             ArrayList<EntryActivity> entryActivities = entryActivityService.GetAllByEntryId(EntryActivity.class, entryId);
             ArrayList<EntryPartner> entryPartners = entryPartnerService.GetAllByEntryId(EntryPartner.class, entryId);
             ArrayList<EntryWeather> entryWeathers = entryWeatherService.GetAllByEntryId(EntryWeather.class, entryId);
-            if (entryEmotions.size() == selectedItems1.size()
-                    && entryActivities.size() == selectedItems2.size()
-                    && entryPartners.size() == selectedItems3.size()
-                    && entryWeathers.size() == selectedItems4.size()) {
+            int countEmotion = 0, countActivity = 0, countPartner = 0, countWeather = 0;
+            for (EntryEmotion entryEmotion : entryEmotions) {
+                int id = entryEmotion .getEmotionId();
+                if (emotionService.FindById(Emotion.class, id).getIsActive() == 1) {
+                    countEmotion++;
+                }
+            }
+            for (EntryActivity entryActivity : entryActivities) {
+                int id = entryActivity .getActivityId();
+                if (entryActivityService.FindById(Activity.class, id).getIsActive() == 1) {
+                    countActivity++;
+                }
+            }
+            for (EntryPartner entryPartner : entryPartners) {
+                int id = entryPartner .getPartnerId();
+                if (partnerService.FindById(Partner.class, id).getIsActive() == 1) {
+                    countPartner++;
+                }
+            }
+            for (EntryWeather entryWeather : entryWeathers) {
+                int id = entryWeather .getWeatherId();
+                if (weatherService.FindById(Weather.class, id).getIsActive() == 1) {
+                    countWeather++;
+                }
+            }
+            if (countEmotion == selectedItems1.size()
+                    && countActivity == selectedItems2.size()
+                    && countPartner == selectedItems3.size()
+                    && countWeather == selectedItems4.size()) {
                 for (Integer imageId : selectedItems1) {
                     String icon = getResources().getResourceEntryName(imageMoodList.get(imageId));
                     Emotion emotion = emotionService.GetByIcon(new Emotion(), icon);
+                    if (emotion.IsActive == 0)
+                        continue;
                     if (entryEmotionService.FindByEntryIdAndEmotionId(EntryEmotion.class, entryId, emotion.getId()) == null) {
                         checkChanged = true;
                         break;
@@ -747,6 +919,8 @@ public class RecordActivity extends BaseActivity {
                 for (Integer imageId : selectedItems2) {
                     String icon = getResources().getResourceEntryName(imageActivityList.get(imageId));
                     Activity activity = activityService.GetByIcon(new Activity(), icon);
+                    if (activity.IsActive == 0)
+                        continue;
                     if (entryActivityService.FindByEntryIdAndActivityId(EntryActivity.class, entryId, activity.getId()) == null) {
                         checkChanged = true;
                         break;
@@ -756,6 +930,8 @@ public class RecordActivity extends BaseActivity {
                 for (Integer imageId : selectedItems3) {
                     String icon = getResources().getResourceEntryName(imageCompanionList.get(imageId));
                     Partner partner = partnerService.GetByIcon(new Partner(), icon);
+                    if (partner.IsActive == 0)
+                        continue;
                     if (entryPartnerService.FindByEntryIdAndPartnerId(EntryPartner.class, entryId, partner.getId()) == null) {
                         checkChanged = true;
                         break;
@@ -765,6 +941,8 @@ public class RecordActivity extends BaseActivity {
                 for (Integer imageId : selectedItems4) {
                     String icon = getResources().getResourceEntryName(imageWeatherList.get(imageId));
                     Weather weather = weatherService.GetByIcon(new Weather(), icon);
+                    if (weather.IsActive == 0)
+                        continue;
                     if (entryWeatherService.FindByEntryIdAndWeatherId(EntryWeather.class, entryId, weather.getId()) == null) {
                         checkChanged = true;
                         break;

@@ -4,12 +4,12 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,19 +21,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_diaryapp.Decorator.GridSpacingItemDecoration;
 import com.example.doan_diaryapp.R;
-import com.example.doan_diaryapp.RecordActivity;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
-public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.ImageViewHolder> {
+public class ImageDialogAdapter extends RecyclerView.Adapter<ImageDialogAdapter.ImageViewHolder> {
     private final List<Integer> imageList;
     private final List<String> descList;
     private SparseBooleanArray selectedItems;
     private Context context; // Thêm context vào đây
     @Nullable List<Integer> ImageSelectedList;
 
-    public ImageRecordAdapter(List<Integer> imageList, List<String> descList, @Nullable List<Integer> imageSelectedList, Context context) {
+    public ImageDialogAdapter(List<Integer> imageList, List<String> descList, @Nullable List<Integer> imageSelectedList, Context context) {
         this.imageList = imageList;
         this.descList = descList;
         this.selectedItems = new SparseBooleanArray();
@@ -49,7 +48,7 @@ public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_image_record, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_image_dialog, parent, false);
 
         DisplayMetrics displayMetrics = parent.getContext().getResources().getDisplayMetrics();
         int densityDpi = displayMetrics.densityDpi;
@@ -65,25 +64,18 @@ public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
-        Integer imageRes = imageList.get(position);
-        String desc = descList.get(position);
         if (position == getItemCount() - 1) {
-            holder.imageView.setImageResource(imageRes);
-            holder.imageView.setOnClickListener(v -> {
-                showCustomDialog();
-            });
-
             return;
         }
-        holder.textView.setText(desc);
+        Integer imageRes = imageList.get(position);
+        String desc = descList.get(position);
+        holder.editText.setText(desc);
         holder.imageView.setImageResource(imageRes);
-        holder.imageView.setAlpha(selectedItems.get(position) ? 1.0f : 0.35f);
-        holder.textView.setAlpha(selectedItems.get(position) ? 1.0f : 0.35f);
+        holder.imageTopIcon.setImageResource(selectedItems.get(position) ? R.drawable.check_box : R.drawable.check_box_outline_blank);
         holder.imageView.setOnClickListener(v -> {
             boolean isSelected = !selectedItems.get(position);
             selectedItems.put(position, isSelected);
-            holder.imageView.setAlpha(isSelected ? 1.0f : 0.35f);
-            holder.textView.setAlpha(isSelected ? 1.0f : 0.35f);
+            holder.imageTopIcon.setImageResource(selectedItems.get(position) ? R.drawable.check_box : R.drawable.check_box_outline_blank);
         });
     }
 
@@ -93,57 +85,15 @@ public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.
     }
 
     static class ImageViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView;
-        TextView textView;
+        ImageView imageView, imageTopIcon;
+        EditText editText;
 
         ImageViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView);
-            textView = itemView.findViewById(R.id.textDesc);
+            editText = itemView.findViewById(R.id.textDesc);
+            imageTopIcon = itemView.findViewById(R.id.iconTopRight);
         }
-    }
-
-    private void showCustomDialog() {
-        Dialog dialog = new Dialog(context);
-
-        LayoutInflater inflater = LayoutInflater.from(context);
-
-        View dialogView = inflater.inflate(R.layout.dialog_icon, null);
-
-        dialog.setContentView(dialogView);
-
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int width = (int) (displayMetrics.widthPixels * 0.9);
-        int height = (int) (displayMetrics.heightPixels * 0.75);
-
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().setLayout(width, height);
-            dialog.getWindow().setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.custom_background_diary));
-            dialog.setCancelable(true);
-        }
-
-        Button btnOK = dialog.findViewById(R.id.btnRight);
-        Button btnCancel = dialog.findViewById(R.id.btnLeft);
-
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        RecyclerView recyclerView = dialogView.findViewById(R.id.recyclerView1);
-        recyclerView.setLayoutManager(new GridLayoutManager(context, 4));
-
-        ImageDialogAdapter adapter = new ImageDialogAdapter(imageList, descList, ImageSelectedList, context);
-        recyclerView.setAdapter(adapter);
-
-        // Thêm decoration cho RecyclerView
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
-
-        // Hiển thị dialog
-        dialog.show();
     }
 
     public List<Integer> getSelectedItems() {

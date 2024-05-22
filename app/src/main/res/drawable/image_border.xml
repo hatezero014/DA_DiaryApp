@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Layer for the background color with transparency -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#80ACAAAA"/>
+        </shape>
+    </item>
+
+    <!-- Layer for the border -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/transparent"/>
+            <stroke
+                android:width="2dp"
+            android:color="#FF000000"/>
+            <corners android:radius="30dp" />
+        </shape>
+    </item>
+
+</layer-list>

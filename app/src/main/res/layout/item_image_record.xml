@@ -21,7 +21,6 @@
             android:id="@+id/textDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Your"
             android:layout_marginTop="3dp"
             android:layout_below="@id/imageView"
             android:textColor="@color/md_theme_onSurfaceVariant"

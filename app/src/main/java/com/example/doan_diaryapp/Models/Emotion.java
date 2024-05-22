@@ -20,11 +20,23 @@ public class Emotion {
         Icon = icon;
     }
 
-    public Emotion(String icon, String descEn, String descVi) {
+    public Emotion(String icon, String descEn, String descVi, int isActive) {
         Icon = icon;
         DescEn = descEn;
         DescVi = descVi;
+        IsActive = isActive;
     }
+
+
+    public int getIsActive() {
+        return IsActive;
+    }
+
+    public void setIsActive(int isActive) {
+        IsActive = isActive;
+    }
+
+    public int IsActive;
 
     int Id;
     String Icon;
