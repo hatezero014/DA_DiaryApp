@@ -16,7 +16,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import java.util.ArrayList;
 
-public class FullImageView extends AppCompatActivity {
+public class FullImageView1 extends AppCompatActivity {
 
     private ViewPager2 viewPager;
     private FullImagePagerAdapter adapter;
@@ -27,7 +27,7 @@ public class FullImageView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_full_image_view);
+        setContentView(R.layout.activity_full_image_view1);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -40,7 +40,7 @@ public class FullImageView extends AppCompatActivity {
             imagePaths = bundle.getStringArrayList("images");
         }
 
-        viewPager = findViewById(R.id.view_pager1);
+        viewPager = findViewById(R.id.view_pager);
         adapter = new FullImagePagerAdapter(this, imagePaths);
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(position, false);
