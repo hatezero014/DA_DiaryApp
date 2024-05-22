@@ -5,6 +5,17 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.doan_diaryapp.Models.Entry;
+import com.example.doan_diaryapp.Models.EntryActivity;
+import com.example.doan_diaryapp.Models.EntryEmotion;
+import com.example.doan_diaryapp.Models.EntryPartner;
+import com.example.doan_diaryapp.Models.EntryPhoto;
+import com.example.doan_diaryapp.Models.EntryWeather;
+import com.example.doan_diaryapp.Models.ImportantDay;
+import com.example.doan_diaryapp.R;
+import com.example.doan_diaryapp.ui.home.MonthFragment;
+import com.example.doan_diaryapp.ui.home.SpecificDayDecorator;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
 import java.sql.Time;
 import java.util.ArrayList;
@@ -96,6 +107,85 @@ public class EntryService extends BaseService{
         return entryList;
     }
 
+    private MaterialCalendarView calendarView;
+    public String[]  getEntries() {
+        db = this.getReadableDatabase();
+        String[] Diary;
+        Diary = new String[0];
+        try (Cursor cursor = db.rawQuery("SELECT * FROM Entry", null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                int dateColumnIndex = cursor.getColumnIndex("Date");
+                do {
+                    String date = cursor.getString(dateColumnIndex);
+                    String day=date.substring(date.length() - 10);
+
+                    String[] newArray = new String[Diary.length + 1];
+                    System.arraycopy(Diary, 0, newArray, 0, Diary.length);
+                    newArray[Diary.length] =day;
+                    Diary = newArray;
+
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            if (db != null) {
+                db.close();
+            }
+        }
+        return Diary;
+    }
+
+
+    EntryEmotionService entryEmotionService;
+    EntryActivityService entryActivityService;
+    EntryPartnerService entryPartnerService;
+    EntryPhotoService entryPhotoService;
+    EntryWeatherService entryWeatherService;
+    ImportantDayService importantDayService;
+
+
+    public void deleteDiary(String DATE,Context context) {
+        db = this.getReadableDatabase();
+        try (Cursor cursor = db.rawQuery("SELECT * FROM Entry", null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                int dateColumnIndex = cursor.getColumnIndex("Date");
+                int idColumnIndex = cursor.getColumnIndex("Id");
+                do {
+                    String date = cursor.getString(dateColumnIndex);
+                    int id = cursor.getInt(idColumnIndex);
+                    if (DATE.equals(date)){
+
+                        entryPhotoService = new EntryPhotoService(context);
+                        entryPhotoService.DeleteByEntryId(EntryPhoto.class, id);
+
+                        entryActivityService = new EntryActivityService(context);
+                        entryActivityService.DeleteByEntryId(EntryActivity.class, id);
+
+                        entryEmotionService = new EntryEmotionService(context);
+                        entryEmotionService.DeleteByEntryId(EntryEmotion.class, id);
+
+                        entryPartnerService=new EntryPartnerService(context);
+                        entryPartnerService.DeleteByEntryId(EntryPartner.class, id);
+
+                        //entryWeatherService=new EntryWeatherService(context);
+                        //entryWeatherService.DeleteByEntryId(EntryWeather.class, id);
+
+                        importantDayService = new ImportantDayService(context);
+                        ImportantDay importantDay = importantDayService.FindByDate(new ImportantDay(),DATE);
+                        if (importantDay != null) {
+                            importantDayService.DeleteById(ImportantDay.class, importantDay.getId());
+                        }
+                        db.delete("Entry", "Id = ?", new String[]{String.valueOf(id)});
+                        return;
+                    }
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            if (db != null) {
+                db.close();
+            }
+        }
+    }
+
 
 
 
@@ -114,6 +204,34 @@ public class EntryService extends BaseService{
                     int y = Integer.parseInt(parts[5]);
                     int score = cursor.getInt(scoreColumnIndex);
                     if(m == month && y == year){
+                        entryList.add(new Entry(score,date));
+                    }
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            if (db != null) {
+                db.close();
+            }
+        }
+        return entryList;
+    }
+
+    public List<Entry>getOverallScoreByDayMonthYear(int day, int month, int year){
+        db = this.getReadableDatabase();
+        List<Entry> entryList = new ArrayList<>();
+        try (Cursor cursor = db.rawQuery("SELECT * FROM Entry ORDER BY Date ASC", null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                int scoreColumnIndex = cursor.getColumnIndex("OverallScore");
+                int dateColumnIndex = cursor.getColumnIndex("Date");
+
+                do {
+                    String date = cursor.getString(dateColumnIndex).trim();
+                    String[] parts = date.split("[:\\s-]");
+                    int d = Integer.parseInt(parts[3]);
+                    int m = Integer.parseInt(parts[4]);
+                    int y = Integer.parseInt(parts[5]);
+                    int score = cursor.getInt(scoreColumnIndex);
+                    if(d == day && m == month && y == year){
                         entryList.add(new Entry(score,date));
                     }
                 } while (cursor.moveToNext());
@@ -162,9 +280,9 @@ public class EntryService extends BaseService{
 
                 do {
                     String date = cursor.getString(dateColumnIndex).trim();
-                    String[] parts = date.split("-");
-                    int y = Integer.parseInt(parts[2]);
-                    int m = Integer.parseInt(parts[1]);
+                    String[] parts = date.split("[:\\s-]");
+                    int y = Integer.parseInt(parts[5]);
+                    int m = Integer.parseInt(parts[4]);
                     int score = cursor.getInt(scoreColumnIndex);
                     boolean isAfterLower = (y > byear) || (y == byear && m >= bmonth);
 

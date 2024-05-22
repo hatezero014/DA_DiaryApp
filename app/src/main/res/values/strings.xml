@@ -145,14 +145,20 @@
 
     <!--  Image App  -->
     <string name="title_YourImage">Your images</string>
-
-    <!--    PasscodeView-->
-    <string name="firstInputTip">Enter a PIN of 4 digits</string>
-    <string name="secondInputTip">Re-enter new PIN</string>
-    <string name="wrongLengthTip">Enter a PIN of 4 digits</string>
-    <string name="wrongInputTip">PIN does not match</string>
-    <string name="correctInputTip">PIN is correct</string>
-    <string name="loginAgain">Please log in again</string>
+    <string name="statistics_for">Statistics for</string>
 
 
+    <!--  Full Image View  -->
+    <string name="fgm_title">Title: </string>
+    <string name="fgm_note">Note: </string>
+    <string name="fgm_overall_score">Overall Score: </string>
+    <string name="fgm_Time">Time: </string>
+    <string name="fgm_Day">Day: </string>
+
+
+
+
+    <string name="delete_diary">Notification</string>
+    <string name="delete">Are you sure you want to delete the log?</string>
+    <string name="cancel">Cancel</string>
 </resources>

@@ -87,4 +87,5 @@ public class YourImagesAdapter extends RecyclerView.Adapter<YourImagesAdapter.It
     public interface OnImageClickListener {
         void onImageClick(int position);
     }
+
 }

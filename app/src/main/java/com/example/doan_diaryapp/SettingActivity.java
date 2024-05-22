@@ -98,7 +98,6 @@ public class SettingActivity extends BaseActivity {
         }
 
         if (sharedPreferences1.contains("hour") && sharedPreferences1.contains("minute")) {
-            // Nếu có, đặt thời gian báo thức tương ứng
             selectedHour = sharedPreferences1.getInt("hour", 0);
             selectedMinute = sharedPreferences1.getInt("minute", 0);
             handleSelectedTime(selectedHour, selectedMinute);
@@ -144,24 +143,6 @@ public class SettingActivity extends BaseActivity {
 
             }
         });
-//        switchNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if(isChecked){
-//                    openDiaLog();
-//                    switchNotification.setChecked(true);
-//                    SharedPreferences.Editor editor = sharedPreferences1.edit();
-//                    editor.putBoolean("notification_switch_state", true);
-//                    editor.apply();
-//                }
-//                else {
-//                    textViewNotificationAlarm.setText(null);
-//                    SharedPreferences.Editor editor = sharedPreferences1.edit();
-//                    editor.putBoolean("notification_switch_state", false);
-//                    editor.apply();
-//                }
-//            }
-//        });
     }
 
     private void updateNotificationSwitchState() {
@@ -381,8 +362,8 @@ public class SettingActivity extends BaseActivity {
 
         }
         isPasscodeVerified = true;
-        boolean isNotificationSwitchChecked = sharedPreferences1.getBoolean("notification_switch_state", false);
-        switchNotification.setChecked(isNotificationSwitchChecked);
+//        boolean isNotificationSwitchChecked = sharedPreferences1.getBoolean("notification_switch_state", false);
+//        switchNotification.setChecked(isNotificationSwitchChecked);
 
 
     }

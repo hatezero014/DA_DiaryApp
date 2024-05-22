@@ -141,15 +141,23 @@
     <string name="security_sign_in_subtitle">Mã pin không thể khôi phục</string>
     <string name="security_change_PIN">Thay đổi mã PIN</string>
     <string name="security_delete_PIN">Xóa mã PIN</string>
-    <string name="firstInputTip">Nhập mã PIN 4 số</string>
-    <string name="secondInputTip">Xác nhận mã PIN</string>
-    <string name="wrongLengthTip">Mã PIN có 4 số</string>
-    <string name="wrongInputTip">Mã PIN không khớp</string>
-    <string name="correctInputTip">Mã PIN chính xác</string>
-    <string name="loginAgain">Hãy đăng nhập lại</string>
 
     <!--  Image App  -->
     <string name="title_YourImage">Ảnh của bạn</string>
+    <string name="statistics_for">Thống kê ngày</string>
 
+    <!--  Full Image View  -->
+    <string name="fgm_title">Tiêu đề: </string>
+    <string name="fgm_note">Nội dung: </string>
+    <string name="fgm_overall_score">Điểm số tâm trạng: </string>
+    <string name="fgm_Time">Thời gian: </string>
+    <string name="fgm_Day"> ngày: </string>
+
+
+
+
+    <string name="delete_diary">Thông báo</string>
+    <string name="delete">Bạn có chắc muốn xóa nhật kí không?</string>
+    <string name="cancel">Hủy</string>
 
 </resources>

@@ -2,6 +2,7 @@ package com.example.doan_diaryapp.Adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,22 +15,34 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_diaryapp.Models.Custom;
+import com.example.doan_diaryapp.Models.Entry;
 import com.example.doan_diaryapp.R;
 import com.example.doan_diaryapp.Service.EntryService;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
 
 public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
-    private static int type_linechart = 1;
+    private static int type_barchart = 1;
     private static int type_emotion = 2;
 
     private Context mContext;
@@ -48,12 +61,12 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if(type_linechart == viewType){
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_chart,parent,false);
-            return new CustomAdapter.LineChartViewHolder(view);
+        if(type_barchart == viewType){
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_barchart,parent,false);
+            return new BarChartViewHolder(view);
         }else if(type_emotion == viewType){
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_emotion,parent,false);
-            return new CustomAdapter.EmotionViewHolder(view);
+            return new EmotionViewHolder(view);
         }
         return null;
     }
@@ -65,11 +78,11 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             return;
         }
 
-        if(type_linechart == holder.getItemViewType()){
-            CustomAdapter.LineChartViewHolder lineChartViewHolder = (CustomAdapter.LineChartViewHolder) holder;
-            lineChartViewHolder.setData(statistic.getByear(),statistic.getBmonth(),statistic.getAyear(),statistic.getAmonth());
+        if(type_barchart == holder.getItemViewType()){
+            BarChartViewHolder barChartViewHolder = (BarChartViewHolder) holder;
+            barChartViewHolder.setData(statistic.getByear(),statistic.getBmonth(),statistic.getAyear(),statistic.getAmonth());
         }else if( type_emotion == holder.getItemViewType()){
-            CustomAdapter.EmotionViewHolder emotionViewHolder = (CustomAdapter.EmotionViewHolder) holder;
+            EmotionViewHolder emotionViewHolder = (EmotionViewHolder) holder;
             emotionViewHolder.setEmotion(statistic.getByear(),statistic.getBmonth(),statistic.getAyear(),statistic.getAmonth(),statistic.getEmotionType());
         }
     }
@@ -85,131 +98,156 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public int getItemViewType(int position) {
         Custom statistic = mStatistic.get(position);
         if(statistic.getStatisticType() == 1)
-            return type_linechart;
+            return type_barchart;
         else return type_emotion;
     }
 
-    public class LineChartViewHolder extends RecyclerView.ViewHolder{
-        private LineChart lineChart;
+    public class BarChartViewHolder extends RecyclerView.ViewHolder {
+        private BarChart barChart;
         private TextView tv_trungbinh;
-        public LineChartViewHolder(@NonNull View itemView) {
+
+        public BarChartViewHolder(@NonNull View itemView) {
             super(itemView);
-            lineChart = itemView.findViewById(R.id.lineChart);
+            barChart = itemView.findViewById(R.id.barChart);
             tv_trungbinh = itemView.findViewById(R.id.tv_average_rating);
         }
 
-        public void setData(int byear, int bmonth, int ayear, int amonth) {
-            ArrayList<Entry> entries = new ArrayList<>();
-            ArrayList<Integer> colors = new ArrayList<>();
-            ArrayList<String> labels = new ArrayList<>();
+        private void setBarChartFormat(int trucX) {
+            barChart.getAxisRight().setDrawLabels(false);
+            barChart.setDragEnabled(true);
 
-            setLineChartFormat(byear, bmonth, ayear, amonth,labels);
-
-            EntryService entryService = new EntryService(itemView.getContext());
-            List<com.example.doan_diaryapp.Models.Entry> entryList = entryService.getOverallScoreCustom(byear, bmonth, ayear, amonth);
-
-
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(byear, bmonth - 1, 1);
-
-            int index = 0;  // Chỉ số cho Entry
-
-            while (calendar.get(Calendar.YEAR) < ayear ||
-                    (calendar.get(Calendar.YEAR) == ayear && calendar.get(Calendar.MONTH) <= (amonth - 1))) {
-                int month = calendar.get(Calendar.MONTH)+1;  // Chuyển tháng từ 0-based sang 1-based
-                int year = calendar.get(Calendar.YEAR);
-
-                // Thêm nhãn cho trục x
-                labels.add(month + "/" + year);
-
-                entries.add(new Entry(index, (float) (Math.random() * 100)));  // Sử dụng giá trị ngẫu nhiên
-                index++;
-
-                // Xác định màu cho mỗi tháng tùy theo năm
-                if (year == byear) {
-                    colors.add(0xFF0000FF);  // Màu xanh cho năm bắt đầu (2023)
-                } else {
-                    colors.add(0xFFFF0000);  // Màu đỏ cho năm kết thúc (2024)
-                }
-
-                calendar.add(Calendar.MONTH, 1);
-            }
-            LineDataSet dataSet = new LineDataSet(entries, "Dữ liệu hàng tháng");
-            dataSet.setColors(colors);  // Áp dụng màu tùy theo năm
-
-            LineData lineData = new LineData(dataSet);
-
-            // Đặt dữ liệu cho LineChart
-            lineChart.setData(lineData);
-        }
-
-        private void setLineChartFormat(int byear, int bmonth, int ayear, int amonth, ArrayList<String> labels) {
-            int trucX = 0;
-            if((ayear-byear)!=0){
-                trucX = (ayear-byear)*12+(amonth-bmonth);
-            }
-            else trucX = Math.abs(amonth-bmonth);
-            lineChart.setDescription(null);
-            lineChart.setScaleYEnabled(false); // tắt zoom trên cột Y
-            lineChart.setDoubleTapToZoomEnabled(false); // tắt chạm 2 lần để zoom
-            lineChart.setBackgroundColor(Color.parseColor("#00000000"));
-            lineChart.setHighlightPerTapEnabled(false); // tắt highlight điểm
-            lineChart.setHighlightPerDragEnabled(false); // same
-            lineChart.setExtraBottomOffset(6); // chỉnh margin cạnh dưới
-            lineChart.setExtraRightOffset(6);
-            lineChart.getLegend().setEnabled(false);// tắt chú thích (cái màu xanh)
-            lineChart.getAxisRight().setDrawLabels(false);
-            lineChart.getAxisRight().setAxisLineWidth(2);
-            lineChart.getAxisRight().setDrawGridLines(false);
-            lineChart.getAxisRight().setAxisLineColor(ContextCompat.getColor(mContext, R.color.statistics_grid));
-            // lineChart.getXAxis().setDrawGridLines(false); // tắt vẽ lưới
-            // lineChart.getAxisLeft().setDrawGridLines(false); // tắt vẽ lưới
-
-            XAxis xAxis = lineChart.getXAxis();
+            XAxis xAxis = barChart.getXAxis();
+            xAxis.setAxisMinimum(0);
+            xAxis.setAxisMaximum(trucX);
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
             xAxis.setTextSize(14);
-            xAxis.setTextColor(ContextCompat.getColor(mContext, R.color.md_theme_onSurfaceVariant));
-            xAxis.setAxisLineColor(ContextCompat.getColor(mContext, R.color.statistics_grid));
-            xAxis.setGridColor(ContextCompat.getColor(mContext, R.color.statistics_grid));
-            xAxis.setAxisLineWidth(2);
+            xAxis.setLabelCount(trucX + 1);
             xAxis.setGranularity(1f);
-            xAxis.setGridLineWidth(2);
-            xAxis.setYOffset(6); // thêm khoảng cách giữa cột với số
-            xAxis.setAxisMinimum(0f);
-            xAxis.setAxisMaximum(trucX);
-            xAxis.setLabelCount(trucX+1);
-            xAxis.setGranularityEnabled(true);
-            // test
 
-            YAxis yAxis = lineChart.getAxisLeft();
-            yAxis.setAxisLineColor(ContextCompat.getColor(mContext, R.color.statistics_grid));
-            yAxis.setTextSize(14);
-            yAxis.setTextColor(ContextCompat.getColor(mContext, R.color.md_theme_onSurfaceVariant));
-            xAxis.setAxisLineColor(ContextCompat.getColor(mContext, R.color.statistics_grid));
-            yAxis.setGridColor(ContextCompat.getColor(mContext, R.color.statistics_grid));
-            yAxis.setXOffset(10); // khoảng cách giữa cột với số
-            yAxis.setAxisMinimum(0f);
+            YAxis yAxis = barChart.getAxisLeft();
             yAxis.setAxisMaximum(10f);
-            yAxis.setAxisLineWidth(2);
+            yAxis.setAxisMinimum(0f);
             yAxis.setLabelCount(10);
-            yAxis.setGridLineWidth(2);
+            yAxis.setTextSize(14);
+            yAxis.setGranularity(1f);
+        }
 
+        public void setData(int byear, int bmonth, int ayear, int amonth) {
+            int trucX = 0;
+            if ((ayear - byear) != 0) {
+                trucX = (ayear - byear) * 12 + (amonth - bmonth);
+            } else trucX = Math.abs(amonth - bmonth);
 
-            xAxis.setValueFormatter(new ValueFormatter() {
-                @Override
-                public String getFormattedValue(float value) {
-                    int index = (int) value;
-                    if (index >= 0 && index < labels.size()) {
-                        return labels.get(index);  // Trả lại nhãn cho giá trị x
-                    } else {
-                        return "";
-                    }
+            ArrayList<String> labels = new ArrayList<>();
+            setBarChartFormat(trucX);
+
+            EntryService entryService = new EntryService(mContext);
+            List<Entry> entryList = entryService.getOverallScoreCustom(byear, bmonth, ayear, amonth);
+
+            Map<String,Integer> dmyValues = new HashMap<>();
+            Map<String,Integer> dmyCounts = new HashMap<>();
+            for(Entry entry : entryList){
+                String date = entry.getDate().trim();
+                String[] part = date.split("[:\\s-]");
+                int d = Integer.parseInt(part[3]);
+                int m = Integer.parseInt(part[4]);
+                int y = Integer.parseInt(part[5]);
+                String day = d+"-"+m+"-"+y;
+                int score = entry.getOverallScore();
+                if (dmyValues.containsKey(day)) {
+                    dmyValues.put(day, dmyValues.get(day) + score);
+                    dmyCounts.put(day, dmyCounts.get(day) + 1);
+                } else {
+                    dmyValues.put(day, score);
+                    dmyCounts.put(day, 1);
                 }
-            });
+            }
+
+            Map<Integer,Float> values = new HashMap<>();
+            Map<Integer,Integer> counts = new HashMap<>();
+
+            Set<String> key = dmyValues.keySet();
+
+            for(String day : key){
+                String[] part = day.split("-");
+                String skey;
+                if(part[1].length() == 1){
+                    skey = part[2]+"0"+part[1];
+                }else skey = part[2]+part[1];
+
+                int ikey = Integer.parseInt(skey);
+                float score = (float)dmyValues.get(day)/dmyCounts.get(day);
+
+                if (values.containsKey(ikey)) {
+                    values.put(ikey, values.get(ikey) + score);
+                    counts.put(ikey, counts.get(ikey) + 1);
+                } else {
+                    values.put(ikey, score);
+                    counts.put(ikey, 1);
+                }
+            }
+
+            List<Map.Entry<Integer, Float>> entries = new ArrayList<>(values.entrySet());
+
+            entries.sort(Comparator.comparingInt(Map.Entry::getKey));
+
+            Map<Integer, Float> sortedMap = new LinkedHashMap<>();
+
+            for (Map.Entry<Integer, Float> entry : entries) {
+                sortedMap.put(entry.getKey(), entry.getValue());
+            }
+
+            // Tạo calendar cho thời gian bắt đầu và kết thúc
+            Calendar start = Calendar.getInstance();
+            start.set(byear, bmonth - 1, 1);  // Calendar sử dụng tháng từ 0-11, do đó cần -1
+            Calendar end = Calendar.getInstance();
+            end.set(ayear, amonth - 1, 1);  // Tương tự, tháng -1
+
+
+            //thêm dữ liệu vào biểu đồ
+            float tb = 0;
+            List<BarEntry> barEntries = new ArrayList<>();
+            int index = 0;
+
+            // Duyệt qua từng tháng từ thời gian bắt đầu đến thời gian kết thúc
+            while (start.before(end) || start.equals(end)) {
+                int month = start.get(Calendar.MONTH) + 1; // Lấy tháng (0-11) + 1 để đúng định dạng mm
+                int year = start.get(Calendar.YEAR);
+
+                // Định dạng mm-yyyy và thêm vào labels
+                labels.add(String.format("%02d/%d", month, year));
+
+                // Tăng tháng lên 1
+                start.add(Calendar.MONTH, 1);
+
+                String skey = String.format("%d%02d",year,month);
+                int ikey = Integer.parseInt(skey);
+                if(sortedMap.containsKey(ikey)){
+                    float value = sortedMap.get(ikey);
+                    value = value/counts.get(ikey);
+                    barEntries.add(new BarEntry(index,value));
+                    tb+=value;
+                }
+
+                index++;
+            }
+            tb/=sortedMap.size();
+            tv_trungbinh.setText(itemView.getResources().getString(R.string.average_rating)+": "+String.format("%.2f",tb));
+
+            BarDataSet barDataSet = new BarDataSet(barEntries, null);
+            barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+
+            BarData barData = new BarData(barDataSet);
+            barChart.setData(barData);
+            barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
+            barChart.notifyDataSetChanged();
+            if(trucX>5)
+                barChart.setVisibleXRangeMaximum(5f);
+            barChart.invalidate();
         }
     }
 
-    public class EmotionViewHolder extends RecyclerView.ViewHolder {
+        public class EmotionViewHolder extends RecyclerView.ViewHolder {
         private Context context;
         private TextView tv_emotion_type;
         private ImageView img1;
@@ -240,6 +278,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
 
         public void setEmotion(int byear, int bmonth, int ayear, int amonth, String emotionType) {
+
         }
     }
 }

@@ -4,12 +4,14 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +20,7 @@ import com.example.doan_diaryapp.Models.Entry;
 import com.example.doan_diaryapp.Models.Statistic;
 import com.example.doan_diaryapp.R;
 import com.example.doan_diaryapp.Service.EntryService;
+import com.example.doan_diaryapp.ShowDayStatistic;
 import com.example.doan_diaryapp.ShowEmojiActivity;
 import com.example.doan_diaryapp.ui.image.Image;
 import com.github.mikephil.charting.charts.BarChart;
@@ -26,6 +29,9 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
@@ -124,6 +130,7 @@ public class MonthStatisticAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             yAxis.setAxisMinimum(0f);
             yAxis.setLabelCount(10);
             yAxis.setTextSize(14);
+            yAxis.setGranularity(1f);
         }
 
         public void setData(int year, int month) {
@@ -179,6 +186,23 @@ public class MonthStatisticAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             barChart.setData(barData);
             barChart.notifyDataSetChanged();
             barChart.invalidate();
+
+            barChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+                @Override
+                public void onValueSelected(com.github.mikephil.charting.data.Entry e, Highlight h) {
+                    Intent intent = new Intent(context, ShowDayStatistic.class);
+                    String date = (int)e.getX()+"/"+month+"/"+year;
+                    Bundle bundle = new Bundle();
+                    bundle.putString("date",date);
+                    intent.putExtras(bundle);
+                    context.startActivity(intent);
+                }
+
+                @Override
+                public void onNothingSelected() {
+
+                }
+            });
         }
 
     }

@@ -13,11 +13,12 @@
 
     <TextView
         android:id="@+id/textViewDate"
-        android:maxLines="1"
         style="@style/TextAppearance.Material3.TitleMedium"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:maxLines="1"
         android:textColor="@color/md_theme_onSurface"
+        app:layout_constraintEnd_toStartOf="@+id/action_favorite"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,8 +30,20 @@
         android:contentDescription="Favorite"
         android:src="@drawable/record_star"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        style="@style/TextAppearance.Material3.BodyMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="60dp"
+        android:maxLines="2"
+        android:textColor="@color/md_theme_onSurfaceVariant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDate" />
+
 
     <TextView
         android:id="@+id/textViewNote"
@@ -38,11 +51,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lineSpacingMultiplier="1.3"
-        android:maxLines="2"
+        android:maxLines="1"
         android:textColor="@color/md_theme_onSurfaceVariant"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDate" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 
     <TextView

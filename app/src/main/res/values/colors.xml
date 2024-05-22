@@ -149,4 +149,6 @@
     <color name="md_theme_surfaceContainer_highContrast">#EAEFE9</color>
     <color name="md_theme_surfaceContainerHigh_highContrast">#E4EAE4</color>
     <color name="md_theme_surfaceContainerHighest_highContrast">#DEE4DE</color>
+    <color name="primary_Pink">#C90CEA</color>
+    <color name="darker_gray">#8A888A</color>
 </resources>

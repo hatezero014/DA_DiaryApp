@@ -1,0 +1,10 @@
+<!-- res/drawable/ic_circle_border.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <stroke
+        android:width="2dp"
+        android:color="#005138"/>
+    <size
+        android:width="40dp"
+        android:height="40dp"/>
+</shape>
