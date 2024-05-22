@@ -11,6 +11,7 @@
     <string name="title_home">Trang chủ</string>
     <string name="title_collection">Bộ sưu tập</string>
     <string name="title_analyze">Thống kê</string>
+    <string name="title_notification">Thông báo</string>
 
     <!--  ChangeLanguage   -->
     <string name="change_language">Ngôn ngữ ứng dụng</string>

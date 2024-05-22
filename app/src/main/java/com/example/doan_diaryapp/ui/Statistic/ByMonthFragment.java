@@ -12,12 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListPopupWindow;
 import android.widget.Spinner;
 
 import com.example.doan_diaryapp.Adapter.MonthStatisticAdapter;
 import com.example.doan_diaryapp.Models.Statistic;
 import com.example.doan_diaryapp.R;
+import com.jaredrummler.materialspinner.MaterialSpinner;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -80,7 +83,7 @@ public class ByMonthFragment extends Fragment {
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         ArrayList<Integer> years = new ArrayList<>();
 
-        for(int i = 2023; i <=currentYear;i++){
+        for(int i = 2000; i <=currentYear;i++){
             years.add(i);
         }
 
@@ -122,8 +125,6 @@ public class ByMonthFragment extends Fragment {
         List<Statistic> mStatistic = new ArrayList<>();
         int month = (Integer)spn_monthm.getSelectedItem();
         int year = (Integer)spn_yearm.getSelectedItem();
-        Log.i("hel",String.valueOf(month));
-        Log.i("helo",String.valueOf(year));
         mStatistic.clear();
         mStatistic.add(new Statistic(year,month,1,null));
         mStatistic.add(new Statistic(year,month,2,"Mood"));
