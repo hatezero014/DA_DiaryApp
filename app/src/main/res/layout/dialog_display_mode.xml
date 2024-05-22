@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/md_theme_onPrimaryContainer"
                 android:paddingLeft="10dp"
-                android:paddingRight="220dp"
+                android:minWidth="300dp"
                 android:text="@string/display_mode_dark" />
 
             <RadioButton

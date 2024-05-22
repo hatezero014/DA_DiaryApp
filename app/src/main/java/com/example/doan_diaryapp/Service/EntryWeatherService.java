@@ -37,6 +37,7 @@ public class EntryWeatherService extends BaseService {
                 int iconColumnIndex = cursor.getColumnIndex("Icon");
                 int descEnColumnIndex = cursor.getColumnIndex("DescEn");
                 int descViColumnIndex = cursor.getColumnIndex("DescVi");
+                int isActiveColumnIndex = cursor.getColumnIndex("IsActive");
 
                 do {
                     String date = cursor.getString(dateColumnIndex).trim();
@@ -46,8 +47,9 @@ public class EntryWeatherService extends BaseService {
                     String icon = cursor.getString(iconColumnIndex);
                     String descEn = cursor.getString(descEnColumnIndex);
                     String descVi = cursor.getString(descViColumnIndex);
+                    int isActive = cursor.getInt(isActiveColumnIndex);
                     if(m == month && y == year){
-                        entryList.add(new Weather(icon, descEn, descVi));
+                        entryList.add(new Weather(icon, descEn, descVi, isActive));
                     }
                 } while (cursor.moveToNext());
             }
@@ -68,6 +70,7 @@ public class EntryWeatherService extends BaseService {
                 int iconColumnIndex = cursor.getColumnIndex("Icon");
                 int descEnColumnIndex = cursor.getColumnIndex("DescEn");
                 int descViColumnIndex = cursor.getColumnIndex("DescVi");
+                int isActiveColumnIndex = cursor.getColumnIndex("IsActive");
 
                 do {
                     String date = cursor.getString(dateColumnIndex).trim();
@@ -76,8 +79,9 @@ public class EntryWeatherService extends BaseService {
                     String icon = cursor.getString(iconColumnIndex);
                     String descEn = cursor.getString(descEnColumnIndex);
                     String descVi = cursor.getString(descViColumnIndex);
+                    int isActive = cursor.getInt(isActiveColumnIndex);
                     if(y == year){
-                        entryList.add(new Weather(icon, descEn, descVi));
+                        entryList.add(new Weather(icon, descEn, descVi, isActive));
                     }
                 } while (cursor.moveToNext());
             }
@@ -98,6 +102,7 @@ public class EntryWeatherService extends BaseService {
                 int iconColumnIndex = cursor.getColumnIndex("Icon");
                 int descEnColumnIndex = cursor.getColumnIndex("DescEn");
                 int descViColumnIndex = cursor.getColumnIndex("DescVi");
+                int isActiveColumnIndex = cursor.getColumnIndex("IsActive");
 
                 do {
                     String date = cursor.getString(dateColumnIndex).trim();
@@ -108,8 +113,9 @@ public class EntryWeatherService extends BaseService {
                     String icon = cursor.getString(iconColumnIndex);
                     String descEn = cursor.getString(descEnColumnIndex);
                     String descVi = cursor.getString(descViColumnIndex);
+                    int isActive = cursor.getInt(isActiveColumnIndex);
                     if(d == day && m == month && y == year){
-                        entryList.add(new Weather(icon, descEn, descVi));
+                        entryList.add(new Weather(icon, descEn, descVi, isActive));
                     }
                 } while (cursor.moveToNext());
             }
@@ -130,6 +136,7 @@ public class EntryWeatherService extends BaseService {
                 int iconColumnIndex = cursor.getColumnIndex("Icon");
                 int descEnColumnIndex = cursor.getColumnIndex("DescEn");
                 int descViColumnIndex = cursor.getColumnIndex("DescVi");
+                int isActiveColumnIndex = cursor.getColumnIndex("IsActive");
 
                 do {
                     String date = cursor.getString(dateColumnIndex).trim();
@@ -139,13 +146,14 @@ public class EntryWeatherService extends BaseService {
                     String icon = cursor.getString(iconColumnIndex);
                     String descEn = cursor.getString(descEnColumnIndex);
                     String descVi = cursor.getString(descViColumnIndex);
+                    int isActive = cursor.getInt(isActiveColumnIndex);
 
                     boolean isAfterLower = (y > byear) || (y == byear && m >= bmonth);
 
                     boolean isBeforeUpper = (y < ayear) || (y == ayear && m <= amonth);
 
                     if(isBeforeUpper && isAfterLower){
-                        entryList.add(new Weather(icon, descEn, descVi));
+                        entryList.add(new Weather(icon, descEn, descVi, isActive));
                     }
                 } while (cursor.moveToNext());
             }
