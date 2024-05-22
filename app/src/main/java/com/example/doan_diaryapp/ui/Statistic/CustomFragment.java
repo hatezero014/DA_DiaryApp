@@ -163,7 +163,10 @@ public class CustomFragment extends Fragment {
         Log.i("hell",String.valueOf(startMonth));
 
         list.add(new Custom(startYear, startMonth, endYear, endMonth, 1, null));
-        //list.add(new Custom(2023,4,2024,5,1,null));
+        list.add(new Custom(startYear, startMonth, endYear, endMonth, 2, "Mood"));
+        list.add(new Custom(startYear, startMonth, endYear, endMonth, 2, "Activity"));
+        list.add(new Custom(startYear, startMonth, endYear, endMonth, 2, "Partner"));
+        list.add(new Custom(startYear, startMonth, endYear, endMonth, 2, "Weather"));
 
         return list;
     }

@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="@drawable/background_white_corner"
     android:layout_margin="16dp">
 
     <TextView
@@ -27,12 +27,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp">
 
         <Button
             android:id="@+id/btnCancel1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginEnd="15dp"
             android:layout_weight="1"
             app:backgroundTint="@null"
@@ -47,6 +49,7 @@
             android:layout_weight="1"
             app:backgroundTint="@null"
             android:theme="@null"
+            android:layout_marginEnd="16dp"
             android:background="@drawable/background_md_theme_primary_radius_all"
             android:text="Đi đến nhật kí"/>
 
