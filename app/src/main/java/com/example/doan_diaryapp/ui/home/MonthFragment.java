@@ -4,9 +4,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.ColorFilter;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -63,7 +65,6 @@ public class MonthFragment extends Fragment {
     private void updateView() {
         View rootView = getView();
         setCardViewDate(rootView);
-        ButtonAddMonth(rootView);
         ListViewDay(rootView);
         ShowDiary(rootView);
     }
@@ -74,7 +75,6 @@ public class MonthFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_month, container, false);
         setCardViewDate(view);
-        ButtonAddMonth(view);
         ListViewDay(view);
         ShowDiary(view);
 
@@ -108,7 +108,8 @@ public class MonthFragment extends Fragment {
             int intMonth = Integer.parseInt(m);
             int intYear = Integer.parseInt(y);
             CalendarDay specificDate = CalendarDay.from(intYear, intMonth, intDay);
-            SpecificDayDecorator specificDayDecorator = new SpecificDayDecorator(specificDate);
+            int dotColor = ContextCompat.getColor(getContext(), R.color.md_theme_primary);
+            SpecificDayDecorator specificDayDecorator = new SpecificDayDecorator(specificDate, dotColor);
             calendarView.addDecorator(specificDayDecorator);
         }
     }
@@ -149,12 +150,12 @@ public class MonthFragment extends Fragment {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
         builder.setTitle(R.string.delete_diary)
                 .setMessage(R.string.delete)
-                .setPositiveButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     }
                 })
-                .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mEntryService = new EntryService(getContext());
@@ -213,35 +214,6 @@ public class MonthFragment extends Fragment {
     }
 
 
-
-
-    private void ButtonAddMonth(View view)
-    {
-        FloatingActionButton buttonAddMonth = view.findViewById(R.id.ButtonAddMonth);
-        buttonAddMonth.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (CheckDate(dayOfMonth, month, year)) {
-                    showAlertDialog();
-                } else {
-                    Calendar calendar = Calendar.getInstance();
-                    /*int year = calendar.get(Calendar.YEAR);
-                    int month = calendar.get(Calendar.MONTH);
-                    int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);*/
-                    int hour = calendar.get(Calendar.HOUR_OF_DAY);
-                    int minute = calendar.get(Calendar.MINUTE);
-                    int second = calendar.get(Calendar.SECOND);
-                    Intent intent = new Intent(getActivity(), RecordActivity.class);
-                    intent.putExtra("Date", String.format(Locale.ENGLISH,
-                            "%02d:%02d:%02d %02d-%02d-%04d", hour,minute,second,dayOfMonth, month + 1, year));
-                    startActivity(intent);
-                }
-            }
-        });
-
-    }
-
-
     private Boolean CheckDate(int dayOfMonth,int month,int year) {
         int y = calendar.get(Calendar.YEAR);
         int m = calendar.get(Calendar.MONTH);
@@ -251,17 +223,6 @@ public class MonthFragment extends Fragment {
         if (year==y && month==m && dayOfMonth<=d)  return false;
         return true;
     }
-
-
-    private void showAlertDialog() {
-        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
-        builder.setTitle(R.string.month_alert_title)
-                .setMessage(R.string.month_alert_message)
-                .setPositiveButton("OK", null);
-        builder.create().show();
-    }
-
-
 
 
     @Override

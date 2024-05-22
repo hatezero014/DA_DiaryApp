@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
             app:title="@string/title_analyze"
-            app:menu="@menu/toolbar_collection_and_stats"
+            app:menu="@menu/toolbar_home"
             app:titleCentered="false"/>
 
         <com.google.android.material.tabs.TabLayout
@@ -40,6 +40,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/analyse_TopAppBar" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

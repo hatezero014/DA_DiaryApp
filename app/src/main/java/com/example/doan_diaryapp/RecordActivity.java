@@ -723,14 +723,7 @@ public class RecordActivity extends BaseActivity {
     }
 
     void showSnackBar(String content) {
-        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),
-                content, BaseTransientBottomBar.LENGTH_SHORT);
-
-        View snackbarView = snackbar.getView();
-        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) snackbarView.getLayoutParams();
-        params.gravity = Gravity.BOTTOM;
-        snackbarView.setLayoutParams(params);
-        snackbar.show();
+        Toast.makeText(RecordActivity.this, content, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -965,7 +958,7 @@ public class RecordActivity extends BaseActivity {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
         builder.setMessage(R.string.record_alert_message)
                 .setTitle(R.string.record_alert_title)
-                .setNegativeButton(R.string.button_cancel, (dialog, which) -> dialog.dismiss())
+                .setNegativeButton(R.string.cancel, (dialog, which) -> dialog.dismiss())
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         finish();

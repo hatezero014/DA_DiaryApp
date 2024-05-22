@@ -26,14 +26,10 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -256,7 +252,7 @@ public class YearStatisticAdapter extends RecyclerView.Adapter<RecyclerView.View
         public EmotionViewHolder(@NonNull View itemView) {
             super(itemView);
             context = itemView.getContext();
-            tv_emotion_type = itemView.findViewById(R.id.tv_emotion_type);
+            tv_emotion_type = itemView.findViewById(R.id.tv_most_choosen);
 
             img1 = itemView.findViewById(R.id.imageView1);
             tv1 = itemView.findViewById(R.id.tv_img1);
@@ -275,23 +271,23 @@ public class YearStatisticAdapter extends RecyclerView.Adapter<RecyclerView.View
 
             if(emotionType.equals("Mood")){
                 emotionCount.clear();
-                tv_emotion_type.setText(context.getString(R.string.mood));
+                tv_emotion_type.setText(context.getString(R.string.most_recorded_mood));
                 emotionCount = new Image().getMood(year,month,context);
 
             }
             else if(emotionType.equals("Activity")){
                 emotionCount.clear();
-                tv_emotion_type.setText(context.getString(R.string.activity));
+                tv_emotion_type.setText(context.getString(R.string.most_recorded_activity));
                 emotionCount = new Image().getActivity(year,month,context);
             }
             else if(emotionType.equals("Partner")){
                 emotionCount.clear();
-                tv_emotion_type.setText(context.getString(R.string.partner));
+                tv_emotion_type.setText(context.getString(R.string.most_recorded_partner));
                 emotionCount = new Image().getPartner(year,month,context);
             }
             else {
                 emotionCount.clear();
-                tv_emotion_type.setText(context.getString(R.string.weather));
+                tv_emotion_type.setText(context.getString(R.string.most_recorded_weather));
                 emotionCount = new Image().getWeather(year,month,context);
             }
 

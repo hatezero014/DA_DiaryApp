@@ -118,14 +118,7 @@ public class ContactActivity extends BaseActivity {
     }
 
     void showSnackBar(String content) {
-        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),
-                content, 2000);
-
-        View snackbarView = snackbar.getView();
-        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) snackbarView.getLayoutParams();
-        params.gravity = Gravity.BOTTOM;
-        snackbarView.setLayoutParams(params);
-        snackbar.show();
+        Toast.makeText(ContactActivity.this, content, Toast.LENGTH_SHORT).show();
     }
 
     protected void sendEmail() {

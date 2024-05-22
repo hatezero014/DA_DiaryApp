@@ -62,17 +62,17 @@
 
     <string name="your_mood_chart">Your mood chart</string>
     <string name="view_all">View all</string>
-    <string name="choose_multiple">Choose multiple</string>
+    <string name="most_recorded">Most recorded</string>
 
-    <string name="mood">Mood</string>
-    <string name="weather">Weather</string>
-    <string name="activity">Activity</string>
-    <string name="partner">Partner</string>
+    <string name="most_recorded_mood">Most recorded - Mood</string>
+    <string name="most_recorded_weather">Most recorded - Weather</string>
+    <string name="most_recorded_activity">Most recorded - Activity</string>
+    <string name="most_recorded_partner">Most recorded - Partner</string>
 
     <!--  Collection-->
     <string name="recent_photos">Recent photos</string>
     <string name="see_more_photos">See more</string>
-    <string name="important_days">Important days</string>
+    <string name="important_records">Important records</string>
 
     <!--  Record  -->
     <string name="record">Record</string>
@@ -89,7 +89,7 @@
     <string name="record_note">Your notes</string>
     <string name="record_title">Your title</string>
     <string name="record_done">Done</string>
-    <string name="record_images">You have not added any photos!</string>
+    <string name="record_images">You have not added any photo</string>
     <string name="record_title_add_image">Number of photos added %d/%d</string>
     <string name="record_toast_fail">Record failed!</string>
     <string name="record_alert_title">Exit confirmation</string>
@@ -122,7 +122,7 @@
     <string name="setting_theme">Theme</string>
     <string name="setting_other">Others</string>
     <string name="setting_feedback">Send feedback</string>
-    <string name="setting_sub_feedback">Help improve this application</string>
+    <string name="setting_sub_feedback">Help us to improve this application</string>
 
     <!-- Notification -->
     <string name="notification_title">Notification</string>
@@ -144,6 +144,13 @@
     <string name="security_sign_in_subtitle">PIN cannot be recovered</string>
     <string name="security_change_PIN">Change your PIN</string>
     <string name="security_delete_PIN">Delete your PIN</string>
+    <string name="firstInputTip">Enter a PIN of 4 digits</string>
+    <string name="secondInputTip">Re-enter new PIN</string>
+    <string name="wrongLengthTip">Your PIN should have 4 digits!</string>
+    <string name="wrongInputTip">Pin does not match</string>
+    <string name="correctInputTip">PIN is correct</string>
+    <string name="loginAgain">Please log in again</string>
+
 
     <!--  Image App  -->
     <string name="title_YourImage">Your images</string>
@@ -155,22 +162,22 @@
     <string name="fgm_note">Note: </string>
     <string name="fgm_overall_score">Overall Score: </string>
     <string name="fgm_Time">Time: </string>
-    <string name="fgm_Day">Day: </string>
+    <string name="fgm_Day">Day </string>
 
 
     <string name="delete_diary">Notification</string>
-    <string name="delete">Are you sure you want to delete the log?</string>
+    <string name="delete">Are you sure you want to delete this record?</string>
     <string name="cancel">Cancel</string>
 
     <!-- Alarm Clock   -->
-    <string name="add_pocket_diary">Thêm nhật kí</string>
-    <string name="add_pocket_diary_description">It is time to add the journal entry of today. Let us open the app and add the journal entry of today!</string>
+    <string name="add_pocket_diary">Add a record</string>
+    <string name="add_pocket_diary_description">It is time to add the journal entry of today. Let\'s open the app and add the journal entry of today!</string>
     <string name="alarm_clock">Alarm Clock</string>
     <string name="alarm_clock_description">Alarm to log every day</string>
     <string name="remind">Remind</string>
     <string name="remind_description">Reminder when you have not been in the app for too long</string>
     <string name="remind_notification">Reminder Notification</string>
-    <string name="remind_notification_desciption">Have you forgotten me? Let us turn memories into memorable journeys today</string>
+    <string name="remind_notification_description">Have you forgotten me? Let us turn memories into memorable journeys today</string>
     <string name="id_AlarmReceiver">idalarmreceiver</string>
     <string name="id_NotificationReceiver">idnotificationreceiver</string>
 
@@ -179,8 +186,11 @@
     <string name="to">To: </string>
 
 
-    <string name="no_diary">The diary is empty.\nLet is create your diary</string>
-    <string name="no_photo">There are no photos yet.\nLet is create a diary entry containing the image.</string>
-    <string name="no_important">Important diary dates are empty.\nCreate an important diary or mark important ones.</string>
+    <string name="no_diary">Your diary is empty.\nLet\'s create a record.</string>
+    <string name="no_photo">There is no photo yet.\nLet\'s add some images to your diary.</string>
+    <string name="no_important">There is currently no important record.</string>
+    <string name="record_details_title">Record details</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

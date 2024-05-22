@@ -35,12 +35,10 @@
         android:layout_marginBottom="16dp"
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
+        style="@style/ThemeOverlay.Material3.FloatingActionButton.Primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/icon_add"
-        android:backgroundTint="@color/md_theme_inversePrimary_highContrast"
-        android:tint="@color/white"
         android:focusable="true"
-
         />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -48,10 +46,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/md_theme_primary"
+        style="@style/ThemeOverlay.Material3.FloatingActionButton.Secondary"
         android:clickable="true"
         android:focusable="true"
-        android:tint="@color/white"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/floatingActionButtonAdd"
         app:layout_constraintEnd_toEndOf="@+id/floatingActionButtonAdd"
@@ -66,8 +63,7 @@
         app:layout_constraintBottom_toTopOf="@+id/floatingActionButtonShare"
         app:layout_constraintEnd_toEndOf="@+id/floatingActionButtonShare"
         app:srcCompat="@drawable/new_icon_details"
-        android:backgroundTint="@color/md_theme_primary"
-        android:tint="@color/white"
+        style="@style/ThemeOverlay.Material3.FloatingActionButton.Secondary"
         android:focusable="true"
         android:visibility="gone"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

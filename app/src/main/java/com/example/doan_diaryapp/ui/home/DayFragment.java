@@ -82,7 +82,6 @@ DayFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_day, container, false);
-        ButtonAddDay(view);
         ListViewDay(view);
 
         mListView = view.findViewById(R.id.ListDay);
@@ -136,17 +135,16 @@ DayFragment extends Fragment {
 
     }
 
-
     private void showAlertDialog(String date,View view) {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
         builder.setTitle(R.string.delete_diary)
                 .setMessage(R.string.delete)
-                .setPositiveButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     }
                 })
-                .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mEntryService = new EntryService(getContext());
@@ -155,28 +153,6 @@ DayFragment extends Fragment {
                     }
                 });
         builder.create().show();
-    }
-
-
-    private void ButtonAddDay(View view)
-    {
-        FloatingActionButton buttonAddMonth = view.findViewById(R.id.ButtonAddDay);
-        buttonAddMonth.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Calendar calendar = Calendar.getInstance();
-                int year = calendar.get(Calendar.YEAR);
-                int month = calendar.get(Calendar.MONTH);
-                int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-                int hour = calendar.get(Calendar.HOUR_OF_DAY);
-                int minute = calendar.get(Calendar.MINUTE);
-                int second = calendar.get(Calendar.SECOND);
-                Intent intent = new Intent(getActivity(), RecordActivity.class);
-                intent.putExtra("Date", String.format(Locale.ENGLISH,
-                        "%02d:%02d:%02d %02d-%02d-%04d", hour,minute,second,dayOfMonth, month+1, year));
-                startActivity(intent);
-            }
-        });
     }
 
     @Override

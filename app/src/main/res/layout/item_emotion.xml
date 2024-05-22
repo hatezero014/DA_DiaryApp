@@ -14,26 +14,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_margin="12dp"
         android:background="@drawable/radius_item_emotion">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="8dp">
 
             <TextView
                 android:id="@+id/tv_most_choosen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:layout_marginStart="15dp"
+                android:textColor="@color/md_theme_onSurfaceVariant"
+                style="@style/TextAppearance.Material3.TitleMedium"
+                android:layout_marginStart="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="@string/choose_multiple"/>
+                android:text="@string/most_recorded"/>
 
             <TextView
                 android:id="@+id/tv_emotion_type"
@@ -52,7 +51,9 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp">
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -61,16 +62,16 @@
 
                 <ImageView
                     android:id="@+id/imageView1"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="54dp"
+                    android:layout_height="54dp"
                     android:src="@drawable/emoji_activity_read"/>
 
                 <TextView
                     android:id="@+id/tv_img1"
+                    style="@style/TextAppearance.Material3.LabelMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:textSize="16sp"
                     android:layout_gravity="center"/>
 
             </LinearLayout>
@@ -83,16 +84,16 @@
 
                 <ImageView
                     android:id="@+id/imageView2"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="54dp"
+                    android:layout_height="54dp"
                     android:src="@drawable/emoji_activity_read"/>
 
                 <TextView
                     android:id="@+id/tv_img2"
+                    style="@style/TextAppearance.Material3.LabelMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:textSize="16sp"
                     android:layout_gravity="center"/>
 
             </LinearLayout>
@@ -105,16 +106,16 @@
 
                 <ImageView
                     android:id="@+id/imageView3"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="54dp"
+                    android:layout_height="54dp"
                     android:src="@drawable/emoji_activity_read"/>
 
                 <TextView
                     android:id="@+id/tv_img3"
+                    style="@style/TextAppearance.Material3.LabelMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:textSize="16sp"
                     android:layout_gravity="center"/>
 
             </LinearLayout>
@@ -127,16 +128,16 @@
 
                 <ImageView
                     android:id="@+id/imageView4"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="54dp"
+                    android:layout_height="54dp"
                     android:src="@drawable/emoji_activity_read" />
 
                 <TextView
                     android:id="@+id/tv_img4"
+                    style="@style/TextAppearance.Material3.LabelMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:textSize="16sp"
                     android:layout_gravity="center"/>
 
             </LinearLayout>
@@ -149,7 +150,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_margin="16dp"
+            android:layout_margin="12dp"
             android:text="@string/view_all" />
     </LinearLayout>
 

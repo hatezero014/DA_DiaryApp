@@ -173,11 +173,12 @@ public class ShareActivity extends BaseActivity {
                     outputStream.close();
                 }
 
-                Snackbar.make(findViewById(android.R.id.content), R.string.image_saved, BaseTransientBottomBar.LENGTH_SHORT).show();
+                Toast.makeText(ShareActivity.this, R.string.image_saved, Toast.LENGTH_SHORT).show();
             }
+
         }
         catch (Exception e) {
-            Snackbar.make(findViewById(android.R.id.content), R.string.image_not_saved, BaseTransientBottomBar.LENGTH_SHORT).show();
+            Toast.makeText(ShareActivity.this, R.string.image_not_saved, Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }

@@ -197,7 +197,7 @@ public class DayStatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         public EmotionViewHolder(@NonNull View itemView) {
             super(itemView);
-            tv_emotion_type = itemView.findViewById(R.id.tv_emotion_type);
+            tv_emotion_type = itemView.findViewById(R.id.tv_most_choosen);
 
             img1 = itemView.findViewById(R.id.imageView1);
             tv1 = itemView.findViewById(R.id.tv_img1);
@@ -221,20 +221,20 @@ public class DayStatisticAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             if (emotionType.equals("Mood")) {
                 emotionCount.clear();
-                tv_emotion_type.setText(context.getString(R.string.mood));
+                tv_emotion_type.setText(context.getString(R.string.most_recorded_mood));
                 emotionCount = new Image().getMoodByDate(year, month, day, context);
 
             } else if (emotionType.equals("Activity")) {
                 emotionCount.clear();
-                tv_emotion_type.setText(context.getString(R.string.activity));
+                tv_emotion_type.setText(context.getString(R.string.most_recorded_activity));
                 emotionCount = new Image().getActivityByDate(year, month, day, context);
             } else if (emotionType.equals("Partner")) {
                 emotionCount.clear();
-                tv_emotion_type.setText(context.getString(R.string.partner));
+                tv_emotion_type.setText(context.getString(R.string.most_recorded_partner));
                 emotionCount = new Image().getPartnerByDate(year, month, day, context);
             } else {
                 emotionCount.clear();
-                tv_emotion_type.setText(context.getString(R.string.weather));
+                tv_emotion_type.setText(context.getString(R.string.most_recorded_weather));
                 emotionCount = new Image().getWeatherByDate(year, month, day, context);
             }
 

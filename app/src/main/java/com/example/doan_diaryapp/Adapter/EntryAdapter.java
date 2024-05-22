@@ -105,7 +105,6 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
             }
 
 
-
             String time=entry.getDate();
             time = time.substring(0, Math.min(time.length(), 8));
 

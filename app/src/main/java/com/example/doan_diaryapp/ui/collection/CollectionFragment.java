@@ -135,11 +135,6 @@ public class CollectionFragment extends Fragment {
         }
     }
 
-
-
-
-
-
     private void Button(View view)
     {
         mButton=view.findViewById(R.id.button);
@@ -189,12 +184,13 @@ public class CollectionFragment extends Fragment {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
         builder.setTitle(R.string.delete_diary)
                 .setMessage(R.string.delete)
-                .setPositiveButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
                     }
                 })
-                .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mEntryService = new EntryService(getContext());
@@ -204,13 +200,6 @@ public class CollectionFragment extends Fragment {
                 });
         builder.create().show();
     }
-
-
-
-
-
-
-
 
     @Override
     public void onResume() {

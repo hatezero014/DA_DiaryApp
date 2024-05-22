@@ -7,12 +7,10 @@ import android.content.Intent;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import androidx.core.content.ContextCompat;
 
 import static android.Manifest.permission.POST_NOTIFICATIONS;
-import androidx.appcompat.app.AppCompatActivity;
 
 
 public class NotificationReceiver extends BroadcastReceiver {
@@ -25,7 +23,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, context.getString(R.string.id_NotificationReceiver))
                 .setSmallIcon(R.drawable.icon_noti)
                 .setContentTitle(context.getString(R.string.remind_notification))
-                .setContentText(context.getString(R.string.remind_notification_desciption))
+                .setContentText(context.getString(R.string.remind_notification_description))
                 .setAutoCancel(true)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent);

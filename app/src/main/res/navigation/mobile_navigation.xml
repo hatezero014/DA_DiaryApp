@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_navigation_home_to_navigation_analyze"
             app:destination="@id/navigation_analyze" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_notification"
+            app:destination="@id/navigation_notification"/>
     </fragment>
 
     <fragment
@@ -29,5 +32,11 @@
         android:name="com.example.doan_diaryapp.ui.analyze.AnalyzeFragment"
         android:label="@string/title_analyze"
         tools:layout="@layout/fragment_analyze" />
+
+    <fragment
+        android:id="@+id/navigation_notification"
+        android:name="com.example.doan_diaryapp.ui.notification.NotificationFragment"
+        android:label="Notification"
+        tools:layout="@layout/fragment_main_notification"/>
 
 </navigation>
