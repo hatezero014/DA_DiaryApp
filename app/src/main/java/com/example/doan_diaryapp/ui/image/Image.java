@@ -28,6 +28,8 @@ public class Image {
         List<Emotion> emotions = emotionService.GetAll(Emotion.class);
 
         for(Emotion emotion: emotions){
+            if(emotion.getIcon().equals("add"))
+                continue;
             emotionCount.put(emotion.getIcon(),0);
         }
 
@@ -61,6 +63,8 @@ public class Image {
         List<Activity> activities = activityService.GetAll(Activity.class);
 
         for(Activity activity : activities){
+            if(activity.getIcon().equals("add"))
+                continue;
             activityCount.put(activity.getIcon(),0);
         }
 
@@ -94,6 +98,8 @@ public class Image {
         List<Partner>partners = partnerService.GetAll(Partner.class);
 
         for(Partner partner:partners){
+            if(partner.getIcon().equals("add"))
+                continue;
             partnerCount.put(partner.getIcon(),0);
         }
 
@@ -127,6 +133,8 @@ public class Image {
         List<Weather> weathers = weatherService.GetAll(Weather.class);
 
         for(Weather weather:weathers){
+            if(weather.getIcon().equals("add"))
+                continue;
             weatherCount.put(weather.getIcon(),0);
         }
 
@@ -160,6 +168,8 @@ public class Image {
         List<Emotion> emotions = emotionService.GetAll(Emotion.class);
 
         for(Emotion emotion: emotions){
+            if(emotion.getIcon().equals("add"))
+                continue;
             emotionCount.put(emotion.getIcon(),0);
         }
 
@@ -182,6 +192,8 @@ public class Image {
         List<Activity> activities = activityService.GetAll(Activity.class);
 
         for(Activity activity : activities){
+            if(activity.getIcon().equals("add"))
+                continue;
             activityCount.put(activity.getIcon(),0);
         }
 
@@ -205,6 +217,8 @@ public class Image {
         List<Partner>partners = partnerService.GetAll(Partner.class);
 
         for(Partner partner:partners){
+            if(partner.getIcon().equals("add"))
+                continue;
             partnerCount.put(partner.getIcon(),0);
         }
 
@@ -227,6 +241,8 @@ public class Image {
         List<Weather> weathers = weatherService.GetAll(Weather.class);
 
         for(Weather weather:weathers){
+            if(weather.getIcon().equals("add"))
+                continue;
             weatherCount.put(weather.getIcon(),0);
         }
 
@@ -249,6 +265,8 @@ public class Image {
         List<Emotion> emotions = emotionService.GetAll(Emotion.class);
 
         for(Emotion emotion: emotions){
+            if(emotion.getIcon().equals("add"))
+                continue;
             emotionCount.put(emotion.getIcon(),0);
         }
 
@@ -271,6 +289,8 @@ public class Image {
         List<Activity> activities = activityService.GetAll(Activity.class);
 
         for(Activity activity : activities){
+            if(activity.getIcon().equals("add"))
+                continue;
             activityCount.put(activity.getIcon(),0);
         }
 
@@ -294,6 +314,8 @@ public class Image {
         List<Partner>partners = partnerService.GetAll(Partner.class);
 
         for(Partner partner:partners){
+            if(partner.getIcon().equals("add"))
+                continue;
             partnerCount.put(partner.getIcon(),0);
         }
 
@@ -316,6 +338,8 @@ public class Image {
         List<Weather> weathers = weatherService.GetAll(Weather.class);
 
         for(Weather weather:weathers){
+            if(weather.getIcon().equals("add"))
+                continue;
             weatherCount.put(weather.getIcon(),0);
         }
 
