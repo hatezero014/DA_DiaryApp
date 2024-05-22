@@ -34,6 +34,16 @@ public class Activity {
     public Activity() {
     }
 
+    public int getIsActive() {
+        return IsActive;
+    }
+
+    public void setIsActive(int isActive) {
+        IsActive = isActive;
+    }
+
+    public int IsActive;
+
     public String getIcon() {
         return Icon;
     }
@@ -42,9 +52,10 @@ public class Activity {
         Icon = icon;
     }
 
-    public Activity(String icon, String descEn, String descVi) {
+    public Activity(String icon, String descEn, String descVi, int isActive) {
         Icon = icon;
         DescEn = descEn;
         DescVi = descVi;
+        IsActive = isActive;
     }
 }

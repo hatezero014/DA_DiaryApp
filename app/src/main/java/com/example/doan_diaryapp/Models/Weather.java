@@ -20,10 +20,11 @@ public class Weather {
     public Weather() {
     }
 
-    public Weather(String icon, String descEn, String descVi) {
+    public Weather(String icon, String descEn, String descVi, int isActive) {
         Icon = icon;
         DescEn = descEn;
         DescVi = descVi;
+        IsActive = isActive;
     }
 
     String DescEn;
@@ -36,6 +37,15 @@ public class Weather {
         DescEn = descEn;
     }
 
+    public int getIsActive() {
+        return IsActive;
+    }
+
+    public void setIsActive(int isActive) {
+        IsActive = isActive;
+    }
+
+    public int IsActive;
     public String getDescVi() {
         return DescVi;
     }

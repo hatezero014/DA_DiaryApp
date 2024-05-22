@@ -43,9 +43,20 @@ public class Partner {
         Icon = icon;
     }
 
-    public Partner(String icon, String descEn, String descVi) {
+    public int getIsActive() {
+        return IsActive;
+    }
+
+    public void setIsActive(int isActive) {
+        IsActive = isActive;
+    }
+
+    public int IsActive;
+
+    public Partner(String icon, String descEn, String descVi, int isActive) {
         Icon = icon;
         DescEn = descEn;
         DescVi = descVi;
+        IsActive = isActive;
     }
 }
