@@ -57,7 +57,7 @@ public class CollectionFragment extends Fragment {
         View view = binding.getRoot();
         ListViewDayQT(view);
         Button(view);
-        updateListView();
+        updateListView(view);
         RecyclerView recyclerView = view.findViewById(R.id.carousel_recycler_view);
         ViewGroup.LayoutParams layoutParams = recyclerView.getLayoutParams();
         layoutParams.height = (int) getResources().getDimension(R.dimen.recyclerview_height);
@@ -66,6 +66,12 @@ public class CollectionFragment extends Fragment {
         ArrayList<CarouselModel> list = entryPhotoService.getPhotoFromDatabase();
         carouselAdapter = new CarouselAdapter(list, requireContext());
         recyclerView.setAdapter(carouselAdapter);
+        TextView textView1 = view.findViewById(R.id.text2);
+        if (list.size() == 0) {
+            textView1.setVisibility(View.VISIBLE);
+        } else {
+            textView1.setVisibility(View.GONE);
+        }
 
     }
 
@@ -86,25 +92,47 @@ public class CollectionFragment extends Fragment {
         carouselAdapter = new CarouselAdapter(list, requireContext());
         recyclerView.setAdapter(carouselAdapter);
 
+        TextView textView1 = view.findViewById(R.id.text2);
+        if (list.size() == 0) {
+            textView1.setVisibility(View.VISIBLE);
+        } else {
+            textView1.setVisibility(View.GONE);
+        }
+
+
+
         mListView = view.findViewById(R.id.ListDayQT);
         importantDayService = new ImportantDayService(getContext());
         List<Entry> entryList = importantDayService.getEntriesFromDatabaseQT();
         mAdapter = new EntryAdapter(getContext(), entryList);
         mListView.setAdapter(mAdapter);
 
+        TextView textView = view.findViewById(R.id.text3);
+        if (entryList.size() == 0) {
+            textView.setVisibility(View.VISIBLE);
+        } else {
+            textView.setVisibility(View.GONE);
+        }
+
         mAdapter.setOnFavoriteClickListener(new EntryAdapter.OnFavoriteClickListener() {
             @Override
             public void onFavoriteClick(Entry entry) {
-                updateListView();
+                updateListView(view);
             }
         });
 
         return view;
     }
 
-    private void updateListView() {
+    private void updateListView(View view) {
         List<Entry> entryList = importantDayService.getEntriesFromDatabaseQT();
         mAdapter.updateEntries1(entryList);
+        TextView textView = view.findViewById(R.id.text3);
+        if (entryList.size() == 0) {
+            textView.setVisibility(View.VISIBLE);
+        } else {
+            textView.setVisibility(View.GONE);
+        }
     }
 
 

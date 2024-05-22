@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.doan_diaryapp.FullImageView;
+import com.example.doan_diaryapp.FullImageView1;
 import com.example.doan_diaryapp.Models.EntryPhoto;
 import com.example.doan_diaryapp.Models.ImportantDay;
 import com.example.doan_diaryapp.R;
@@ -31,6 +32,7 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.ItemVi
     private ArrayList<CarouselModel> list;
     private Context context;
     EntryPhotoService entryPhotoService;
+    private ArrayList<CarouselModel> imageList;
 
     public CarouselAdapter(ArrayList<CarouselModel> list, Context context) {
         this.list = list;
@@ -64,15 +66,21 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.ItemVi
             this.binding = binding;
 
             // Set OnClickListener for the whole item view
+            imageList = getListData();
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
-                        Intent intent = new Intent(context, FullImageView.class);
+                        Intent intent = new Intent(context, FullImageView1.class);
                         CarouselModel clickedItem = list.get(position);
+
+                        ArrayList<String> imagePaths = new ArrayList<>();
+                        for (CarouselModel model : imageList) {
+                            imagePaths.add(model.getImagePath());
+                        }
                         intent.putExtra("pos", position);
-                        intent.putExtra("image", clickedItem.getImagePath());
+                        intent.putStringArrayListExtra("images", imagePaths);
                         context.startActivity(intent);
                     }
                 }
@@ -93,4 +101,11 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.ItemVi
         intent.putExtra("Date", date);
         context.startActivity(intent);
     }
+
+    private ArrayList<CarouselModel> getListData() {
+        EntryPhotoService entryPhotoService = new EntryPhotoService(context);
+        ArrayList<CarouselModel> entryPhotos = entryPhotoService.getPhotoFromDatabase();
+        return entryPhotos;
+    }
+
 }

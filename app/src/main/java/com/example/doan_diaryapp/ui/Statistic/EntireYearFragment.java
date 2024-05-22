@@ -50,7 +50,7 @@ public class EntireYearFragment extends Fragment {
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         ArrayList<Integer> years = new ArrayList<>();
 
-        for(int i = 1990; i<=currentYear;i++){
+        for(int i = 2000; i<=currentYear;i++){
             years.add(i);
         }
 
