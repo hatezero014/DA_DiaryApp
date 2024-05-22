@@ -30,14 +30,14 @@ public class YourImagesInApp extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_your_image_in_app1);
+        setContentView(R.layout.activity_your_images_in_app);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        recyclerView = findViewById(R.id.carousel_recycler_view111);
+        recyclerView = findViewById(R.id.carousel_recycler_view1);
 
         GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
         recyclerView.setLayoutManager(layoutManager);
