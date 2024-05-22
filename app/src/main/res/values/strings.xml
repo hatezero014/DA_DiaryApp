@@ -11,6 +11,7 @@
     <string name="title_home">Home</string>
     <string name="title_collection">Collection</string>
     <string name="title_analyze">Analyze</string>
+    <string name="title_notification">Notification</string>
 
     <!--  ChangeLanguage   -->
     <string name="change_language">App language</string>
@@ -154,8 +155,6 @@
     <string name="fgm_overall_score">Overall Score: </string>
     <string name="fgm_Time">Time: </string>
     <string name="fgm_Day">Day: </string>
-
-
 
 
     <string name="delete_diary">Notification</string>

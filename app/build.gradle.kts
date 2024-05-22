@@ -67,4 +67,5 @@ dependencies {
     implementation("com.github.prolificinteractive:material-calendarview:2.0.0")
     implementation("com.github.prolificinteractive:material-calendarview:2.0.1")
     implementation("com.jakewharton.threetenabp:threetenabp:1.3.1")
+    implementation ("com.jaredrummler:material-spinner:1.3.1")
 }
