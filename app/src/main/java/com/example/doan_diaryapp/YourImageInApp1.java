@@ -26,6 +26,7 @@ public class YourImageInApp1 extends BaseActivity {
     private RecyclerView recyclerView;
     private ArrayList<CarouselModel> imageList;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
