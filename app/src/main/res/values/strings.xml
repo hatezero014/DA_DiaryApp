@@ -175,4 +175,10 @@
 
     <string name="from">From: </string>
     <string name="to">To: </string>
+
+
+    <string name="no_diary">The diary is empty.\nLet is create your diary</string>
+    <string name="no_photo">There are no photos yet.\nLet is create a diary entry containing the image.</string>
+    <string name="no_important">Important diary dates are empty.\nCreate an important diary or mark important ones.</string>
+
 </resources>

@@ -177,4 +177,10 @@
 
     <string name="from">Từ: </string>
     <string name="to">Đến: </string>
+
+
+    <string name="no_diary">Nhật ký trống rỗng.\nHãy tạo nhật ký của bạn</string>
+    <string name="no_photo">Chưa có ảnh nào.\nHãy tạo một mục nhật ký có chứa hình ảnh.</string>
+    <string name="no_important">Ngày nhật ký quan trọng trống rỗng.\nTạo một cuốn nhật ký quan trọng hoặc đánh dấu những nhật kí quan trọng.</string>
+
 </resources>

@@ -67,6 +67,14 @@ DayFragment extends Fragment {
         mAdapter.clear();
         mAdapter.addAll(entryList);
         mAdapter.notifyDataSetChanged();
+        TextView textView = getView().findViewById(R.id.text1);
+        if (entryList.size() == 0) {
+            textView.setVisibility(View.VISIBLE);
+            mListView.setVisibility(View.GONE);
+        } else {
+            textView.setVisibility(View.GONE);
+            mListView.setVisibility(View.VISIBLE);
+        }
     }
 
 
@@ -76,11 +84,21 @@ DayFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_day, container, false);
         ButtonAddDay(view);
         ListViewDay(view);
+
         mListView = view.findViewById(R.id.ListDay);
         mEntryService = new EntryService(getContext());
         List<Entry> entryList = mEntryService.getEntriesFromDatabase();
         mAdapter = new EntryAdapter(getContext(), entryList);
         mListView.setAdapter(mAdapter);
+
+        TextView textView = view.findViewById(R.id.text1);
+        if (entryList.size() == 0) {
+            textView.setVisibility(View.VISIBLE);
+            mListView.setVisibility(View.GONE);
+        } else {
+            textView.setVisibility(View.GONE);
+            mListView.setVisibility(View.VISIBLE);
+        }
         return view;
     }
 
