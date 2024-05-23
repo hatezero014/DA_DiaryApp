@@ -31,7 +31,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.doan_diaryapp.Models.Notification;
 import com.example.doan_diaryapp.Service.EntryPhotoService;
+import com.example.doan_diaryapp.Service.NotificationService;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -39,7 +41,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 
-public class FullImageView extends AppCompatActivity {
+public class FullImageView extends BaseActivity {
 
     private EntryPhotoService entryPhotoService;
     PhotoView imageView;
@@ -185,6 +187,9 @@ public class FullImageView extends AppCompatActivity {
         WindowManager.LayoutParams windowAttibutes = window.getAttributes();
         windowAttibutes.gravity = gravity;
         window.setAttributes(windowAttibutes);
+
+//        NotificationService notificationService = new NotificationService(this);
+//        notificationService.Add(new Notification(getCurrentTime(), getCurrentDay(), 3, "5;7.77"));
 
         if(Gravity.BOTTOM == gravity){
             dialog.setCancelable(true);
