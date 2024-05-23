@@ -34,6 +34,7 @@
         android:backgroundTint="@color/md_theme_inversePrimary_highContrast"
         android:tint="@color/white"
         android:focusable="true"
+        android:visibility="visible"
 
         />
 

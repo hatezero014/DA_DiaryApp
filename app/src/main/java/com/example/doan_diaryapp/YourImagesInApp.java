@@ -60,7 +60,7 @@ public class YourImagesInApp extends BaseActivity {
         recyclerView.setAdapter(yourImagesAdapter);
 
         yourImagesAdapter.setOnImageClickListener(position -> {
-            Intent intent = new Intent(this, FullImageView1.class);
+            Intent intent = new Intent(this, FullImageView.class);
             ArrayList<String> imagePaths = new ArrayList<>();
             for (CarouselModel model : imageList) {
                 imagePaths.add(model.getImagePath());
