@@ -75,6 +75,30 @@ public class EntryPhotoService extends BaseService {
     }
 
 
+    public List<String> getAllPhoto(int ID) {
+        db = this.getReadableDatabase();
+        List<String> entryPhotoList = new ArrayList<>();
+        try (Cursor cursor = db.rawQuery("SELECT * FROM EntryPhoto", null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                int idColumnIndex = cursor.getColumnIndex("EntryId");
+                int photoScoreIndex = cursor.getColumnIndex("Photo");
+                do {
+                    int id = cursor.getInt(idColumnIndex);
+                    String photo = cursor.getString(photoScoreIndex);
+                    if (ID==id) {
+                        entryPhotoList.add("/data/user/0/com.example.doan_diaryapp/files/" + photo);
+                    }
+                    } while (cursor.moveToNext());
+            }
+        } finally {
+            if (db != null) {
+                db.close();
+            }
+        }
+        return entryPhotoList;
+    }
+
+
     public <T> ArrayList<T> GetAllImagesOrderByDESC(Class<T> clazz, String desc) {
         ArrayList<T> list = new ArrayList<>();
         db = this.getReadableDatabase();
