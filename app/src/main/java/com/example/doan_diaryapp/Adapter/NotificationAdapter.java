@@ -1,5 +1,6 @@
 package com.example.doan_diaryapp.Adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,9 +36,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public void onBindViewHolder(@NonNull NotificationHolder holder, int position) {
         Notification notification = notificationList.get(position);
         if(notification==null) return;
+        Context context = holder.imageView.getContext();
         holder.imageView.setImageResource(R.drawable.icon_noti);
         holder.Date.setText(notification.getTime());
-//        holder.Content.setText(notification.getContent());
         if(notification.getContent() == 1){
             holder.Content.setText(R.string.notification_1);
         }
@@ -45,7 +46,52 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             holder.Content.setText(R.string.notification_2);
         }
         else if(notification.getContent() == 3){
-            holder.Content.setText(R.string.notification_3);
+            String []sub = notification.getSub().split(";");
+            String month = sub[0];
+            String score = sub[1];
+            String month1 ="";
+            int number = Integer.parseInt(month);
+            switch (number) {
+                case 1:
+                    month1 = context.getString(R.string.January);
+                    break;
+                case 2:
+                    month1 = context.getString(R.string.February);
+                    break;
+                case 3:
+                    month1 = context.getString(R.string.March);
+                    break;
+                case 4:
+                    month1 = context.getString(R.string.April);
+                    break;
+                case 5:
+                    month1 = context.getString(R.string.May);
+                    break;
+                case 6:
+                    month1 = context.getString(R.string.June);
+                    break;
+                case 7:
+                    month1 = context.getString(R.string.July);
+                    break;
+                case 8:
+                    month1 = context.getString(R.string.August);
+                    break;
+                case 9:
+                    month1 = context.getString(R.string.September);
+                    break;
+                case 10:
+                    month1 = context.getString(R.string.October);
+                    break;
+                case 11:
+                    month1 = context.getString(R.string.November);
+                    break;
+                case 12:
+                    month1 = context.getString(R.string.December);
+                    break;
+            }
+
+            String textNotification = context.getString(R.string.notification_3_1) + " " + month1 + " " + context.getString(R.string.notification_3_2) + " " + score;
+            holder.Content.setText(textNotification);
         }
         else if(notification.getContent() == 4){
             holder.Content.setText(R.string.notification_4);

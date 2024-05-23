@@ -28,6 +28,10 @@
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.Material3.BodyLarge"
                 app:boxBackgroundMode="outline"
+                app:boxCornerRadiusTopStart="25dp"
+                app:boxCornerRadiusTopEnd="25dp"
+                app:boxCornerRadiusBottomStart="25dp"
+                app:boxCornerRadiusBottomEnd="25dp"
                 android:hint="@string/record_title"
                 android:textColorHint="@color/md_theme_onSurfaceVariant"
                 >
@@ -78,6 +82,10 @@
                 style="@style/TextAppearance.Material3.BodyLarge"
                 android:layout_marginTop="10dp"
                 app:boxBackgroundMode="outline"
+                app:boxCornerRadiusTopStart="25dp"
+                app:boxCornerRadiusTopEnd="25dp"
+                app:boxCornerRadiusBottomStart="25dp"
+                app:boxCornerRadiusBottomEnd="25dp"
                 android:hint="@string/record_note"
                 android:textColorHint="@color/md_theme_onSurfaceVariant"
                 >

@@ -91,33 +91,12 @@ public class RecordActivity extends BaseActivity {
     private OnBackPressedDispatcher dispatcher;
 
     private List<Integer> imageMoodList = new ArrayList<>();
-//            Arrays.asList(
-//            R.drawable.emoji_emotion_joyful, R.drawable.emoji_emotion_cool, R.drawable.emoji_emotion_melting, R.drawable.emoji_emotion_pleased,
-//            R.drawable.emoji_emotion_happy, R.drawable.emoji_emotion_surprise, R.drawable.emoji_emotion_embarrassed, R.drawable.emoji_emotion_normal,
-//            R.drawable.emoji_emotion_fearful, R.drawable.emoji_emotion_tired, R.drawable.emoji_emotion_worried, R.drawable.emoji_emotion_sad,
-//            R.drawable.emoji_emotion_disappointed, R.drawable.emoji_emotion_sleepy, R.drawable.emoji_emotion_sick, R.drawable.emoji_emotion_bored,
-//            R.drawable.emoji_emotion_annoyed, R.drawable.emoji_emotion_angry
-//    );
 
     private List<Integer> imageActivityList = new ArrayList<>();
-//            Arrays.asList(
-//            R.drawable.emoji_activity_work, R.drawable.emoji_activity_study, R.drawable.emoji_activity_bake, R.drawable.emoji_activity_write,
-//            R.drawable.emoji_activity_sport, R.drawable.emoji_activity_gym, R.drawable.emoji_activity_watch_movie, R.drawable.emoji_activity_game,
-//            R.drawable.emoji_activity_play_instruments, R.drawable.emoji_activity_sing, R.drawable.emoji_activity_biking, R.drawable.emoji_activity_shopping,
-//            R.drawable.emoji_activity_paint, R.drawable.emoji_activity_party, R.drawable.emoji_activity_photograph, R.drawable.emoji_activity_sleep,
-//            R.drawable.emoji_activity_play_cards, R.drawable.emoji_activity_cook, R.drawable.emoji_activity_housework, R.drawable.emoji_activity_read
-//    );
 
     private List<Integer> imageCompanionList = new ArrayList<>();
-//            Arrays.asList(
-//            R.drawable.emoji_companion_partner, R.drawable.emoji_companion_friends, R.drawable.emoji_companion_family, R.drawable.emoji_companion_pets
-//    );
 
     private List<Integer> imageWeatherList = new ArrayList<>();
-//            Arrays.asList(
-//            R.drawable.emoji_weather_cloudy, R.drawable.emoji_weather_rainbow, R.drawable.emoji_weather_partly_cloudy, R.drawable.emoji_weather_rainy,
-//            R.drawable.emoji_weather_sunny, R.drawable.emoji_weather_windy
-//    );
 
     private ImageButton btnDeImgFi, btnDeImgSe, btnDeImgTh;
     private ImageView imgFirst, imgSecond, imgThird;
@@ -145,6 +124,9 @@ public class RecordActivity extends BaseActivity {
     PartnerService partnerService;
     WeatherService weatherService;
     ImportantDayService importantDayService;
+
+    RecyclerView recyclerView1, recyclerView2, recyclerView3, recyclerView4;
+    String language;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,6 +164,24 @@ public class RecordActivity extends BaseActivity {
         weatherService = new WeatherService(this);
         importantDayService = new ImportantDayService(this);
 
+        List<Integer> emotionGetAllIndex;
+        List<String> emotionGetAllDesc;
+        List<Integer> emotionGetAllIsActive;
+        List<String> emotionGetAllIcon;
+        List<Integer> activityGetAllIndex;
+        List<String> activityGetAllDesc;
+        List<Integer> activityGetAllIsActive;
+        List<String> activityGetAllIcon;
+        List<Integer> partnerGetAllIndex;
+        List<Integer> partnerGetAllIsActive;
+        List<String> partnerGetAllDesc;
+        List<String> partnerGetAllIcon;
+        List<Integer> weatherGetAllIndex;
+        List<String> weatherGetAllDesc;
+        List<Integer> weatherGetAllIsActive;
+        List<String> weatherGetAllIcon;
+        List<String> descMoodList, descActivityList, descPartnerList, descWeatherList;
+
         imgFirst = findViewById(R.id.imageFirst);
         imgSecond = findViewById(R.id.imageSecond);
         imgThird = findViewById(R.id.imageThird);
@@ -198,61 +198,114 @@ public class RecordActivity extends BaseActivity {
         frameThird = findViewById(R.id.frameImageThird);
         textExistedImg = findViewById(R.id.textExistedImg);
         textCount.setText(getResources().getString(R.string.record_title_add_image, countImage, 3));
-
-        RecyclerView recyclerView1 = findViewById(R.id.recyclerView1);
+        recyclerView1 = findViewById(R.id.recyclerView1);
         recyclerView1.setLayoutManager(new GridLayoutManager(this, 4));
 
-        RecyclerView recyclerView2 = findViewById(R.id.recyclerView2);
+        recyclerView2 = findViewById(R.id.recyclerView2);
         recyclerView2.setLayoutManager(new GridLayoutManager(this, 4));
 
-        RecyclerView recyclerView3 = findViewById(R.id.recyclerView3);
+        recyclerView3 = findViewById(R.id.recyclerView3);
         recyclerView3.setLayoutManager(new GridLayoutManager(this, 4));
 
-        RecyclerView recyclerView4 = findViewById(R.id.recyclerView4);
+        recyclerView4 = findViewById(R.id.recyclerView4);
         recyclerView4.setLayoutManager(new GridLayoutManager(this, 4));
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle(date);
+            String dateNew = date.split(" ")[1];
+            actionBar.setTitle(dateNew);
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         SharedPreferences prefs = getSharedPreferences("Settings", android.app.Activity.MODE_PRIVATE);
-        String language = prefs.getString("My_Language", "");
+        language = prefs.getString("My_Language", "");
+
+        emotionGetAllIndex = new ArrayList<>();
+        emotionGetAllDesc = new ArrayList<>();
+        emotionGetAllIsActive = new ArrayList<>();
+        emotionGetAllIcon = new ArrayList<>();
+        activityGetAllIndex = new ArrayList<>();
+        activityGetAllDesc = new ArrayList<>();
+        activityGetAllIcon = new ArrayList<>();
+        activityGetAllIsActive = new ArrayList<>();
+        partnerGetAllIndex = new ArrayList<>();
+        partnerGetAllDesc = new ArrayList<>();
+        partnerGetAllIsActive = new ArrayList<>();
+        partnerGetAllIcon = new ArrayList<>();
+        weatherGetAllIcon = new ArrayList<>();
+        weatherGetAllIndex = new ArrayList<>();
+        weatherGetAllDesc = new ArrayList<>();
+        weatherGetAllIsActive = new ArrayList<>();
 
         List<Emotion> emotionList = emotionService.GetAll(Emotion.class);
         for (Emotion emotion : emotionList) {
+            if (emotion.getIcon().equals("add"))
+                continue;
+            emotionGetAllIcon.add(emotion.getIcon());
+            int emotionIdR = getResources().getIdentifier(emotion.getIcon(), "drawable", getPackageName());
+            emotionGetAllIndex.add(emotionIdR);
+            String desc = emotion.getDescEn();
+            if (language.equals("vi"))
+                desc = emotion.getDescVi();
+            emotionGetAllDesc.add(desc);
             if (emotion.getIsActive() == 0) {
                 continue;
             }
-            int emotionIdR = getResources().getIdentifier(emotion.getIcon(), "drawable", getPackageName());
+            emotionGetAllIsActive.add(emotion.getId() - 1);
             imageMoodList.add(emotionIdR);
         }
 
         List<Activity> activityList = activityService.GetAll(Activity.class);
         for (Activity activity : activityList) {
+            if (activity.getIcon().equals("add"))
+                continue;
+            activityGetAllIcon.add(activity.getIcon());
+            int activityIdR = getResources().getIdentifier(activity.getIcon(), "drawable", getPackageName());
+            activityGetAllIndex.add(activityIdR);
+            String desc = activity.getDescEn();
+            if (language.equals("vi"))
+                desc = activity.getDescVi();
+            activityGetAllDesc.add(desc);
             if (activity.getIsActive() == 0) {
                 continue;
             }
-            int activityIdR = getResources().getIdentifier(activity.getIcon(), "drawable", getPackageName());
+            activityGetAllIsActive.add(activity.getId() - 1);
             imageActivityList.add(activityIdR);
         }
 
         List<Partner> partnerList = partnerService.GetAll(Partner.class);
         for (Partner partner : partnerList) {
+            if (partner.getIcon().equals("add"))
+                continue;
+            partnerGetAllIcon.add(partner.getIcon());
+            int partnerIdR = getResources().getIdentifier(partner.getIcon(), "drawable", getPackageName());
+            partnerGetAllIndex.add(partnerIdR);
+            String desc = partner.getDescEn();
+            if (language.equals("vi"))
+                desc = partner.getDescVi();
+            partnerGetAllDesc.add(desc);
             if (partner.getIsActive() == 0) {
                 continue;
             }
-            int partnerIdR = getResources().getIdentifier(partner.getIcon(), "drawable", getPackageName());
+            partnerGetAllIsActive.add(partner.getId() - 1);
             imageCompanionList.add(partnerIdR);
         }
 
         List<Weather> weatherList = emotionService.GetAll(Weather.class);
         for (Weather weather : weatherList) {
+            if (weather.getIcon().equals("add"))
+                continue;
+            weatherGetAllIcon.add(weather.getIcon());
+            int weatherIdR = getResources().getIdentifier(weather.getIcon(), "drawable", getPackageName());
+            weatherGetAllIndex.add(weatherIdR);
+            String desc = weather.getDescEn();
+            if (language.equals("vi"))
+                desc = weather.getDescVi();
+            weatherGetAllDesc.add(desc);
             if (weather.getIsActive() == 0) {
                 continue;
             }
-            int weatherIdR = getResources().getIdentifier(weather.getIcon(), "drawable", getPackageName());
+            weatherGetAllIsActive.add(weather.getId() - 1);
             imageWeatherList.add(weatherIdR);
         }
 
@@ -261,7 +314,7 @@ public class RecordActivity extends BaseActivity {
         imageCompanionList.add(R.drawable.add);
         imageWeatherList.add(R.drawable.add);
 
-        List<String> descMoodList = new ArrayList<>();
+        descMoodList = new ArrayList<>();
         for (Integer resourceId : imageMoodList) {
             String resourceName = getResourceName(resourceId);
             Emotion emotion = emotionService.FindByIcon(Emotion.class, resourceName);
@@ -271,7 +324,7 @@ public class RecordActivity extends BaseActivity {
             descMoodList.add(desc);
         }
 
-        List<String> descActivityList = new ArrayList<>();
+        descActivityList = new ArrayList<>();
         for (Integer resourceId : imageActivityList) {
             String resourceName = getResourceName(resourceId);
             Activity activity = activityService.FindByIcon(Activity.class, resourceName);
@@ -281,7 +334,7 @@ public class RecordActivity extends BaseActivity {
             descActivityList.add(desc);
         }
 
-        List<String> descPartnerList = new ArrayList<>();
+        descPartnerList = new ArrayList<>();
         for (Integer resourceId : imageCompanionList) {
             String resourceName = getResourceName(resourceId);
             Partner partner = partnerService.FindByIcon(Partner.class, resourceName);
@@ -291,7 +344,7 @@ public class RecordActivity extends BaseActivity {
             descPartnerList.add(desc);
         }
 
-        List<String> descWeatherList = new ArrayList<>();
+        descWeatherList = new ArrayList<>();
         for (Integer resourceId : imageWeatherList) {
             String resourceName = getResourceName(resourceId);
             Weather weather = weatherService.FindByIcon(Weather.class, resourceName);
@@ -348,16 +401,16 @@ public class RecordActivity extends BaseActivity {
                 }
             }
 
-            adapter1 = new ImageRecordAdapter(imageMoodList, descMoodList, emotionIndexes, this);
+            adapter1 = new ImageRecordAdapter("Emotion", language, imageMoodList, descMoodList, emotionIndexes, emotionGetAllIndex, emotionGetAllDesc, emotionGetAllIsActive, emotionGetAllIcon, this, this);
             recyclerView1.setAdapter(adapter1);
             recyclerView1.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
-            adapter2 = new ImageRecordAdapter(imageActivityList, descActivityList, activityIndexes, this);
+            adapter2 = new ImageRecordAdapter("Activity", language, imageActivityList, descActivityList, activityIndexes, activityGetAllIndex, activityGetAllDesc, activityGetAllIsActive, activityGetAllIcon, this, this);
             recyclerView2.setAdapter(adapter2);
             recyclerView2.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
-            adapter3 = new ImageRecordAdapter(imageCompanionList, descPartnerList, partnerIndexes, this);
+            adapter3 = new ImageRecordAdapter("Partner", language, imageCompanionList, descPartnerList, partnerIndexes, partnerGetAllIndex, partnerGetAllDesc, partnerGetAllIsActive, partnerGetAllIcon, this, this);
             recyclerView3.setAdapter(adapter3);
             recyclerView3.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
-            adapter4 = new ImageRecordAdapter(imageWeatherList, descWeatherList, weatherIndexes, this);
+            adapter4 = new ImageRecordAdapter("Weather", language, imageWeatherList, descWeatherList, weatherIndexes, weatherGetAllIndex, weatherGetAllDesc, weatherGetAllIsActive, weatherGetAllIcon, this, this);
             recyclerView4.setAdapter(adapter4);
             recyclerView4.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
 
@@ -400,16 +453,16 @@ public class RecordActivity extends BaseActivity {
         }
         else
         {
-            adapter1 = new ImageRecordAdapter(imageMoodList, descMoodList, null, this);
+            adapter1 = new ImageRecordAdapter("Emotion", language, imageMoodList, descMoodList, null, emotionGetAllIndex, emotionGetAllDesc, emotionGetAllIsActive, emotionGetAllIcon, this, this);
             recyclerView1.setAdapter(adapter1);
             recyclerView1.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
-            adapter2 = new ImageRecordAdapter(imageActivityList, descActivityList, null, this);
+            adapter2 = new ImageRecordAdapter("Activity", language, imageActivityList, descActivityList, null, activityGetAllIndex, activityGetAllDesc, activityGetAllIsActive, activityGetAllIcon, this, this);
             recyclerView2.setAdapter(adapter2);
             recyclerView2.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
-            adapter3 = new ImageRecordAdapter(imageCompanionList, descPartnerList, null, this);
+            adapter3 = new ImageRecordAdapter("Partner", language, imageCompanionList, descPartnerList, null, partnerGetAllIndex, partnerGetAllDesc, partnerGetAllIsActive, partnerGetAllIcon, this, this);
             recyclerView3.setAdapter(adapter3);
             recyclerView3.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
-            adapter4 = new ImageRecordAdapter(imageWeatherList, descWeatherList, null, this);
+            adapter4 = new ImageRecordAdapter("Weather", language, imageWeatherList, descWeatherList, null, weatherGetAllIndex, weatherGetAllDesc, weatherGetAllIsActive, weatherGetAllIcon, this, this);
             recyclerView4.setAdapter(adapter4);
             recyclerView4.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
         }
@@ -704,6 +757,215 @@ public class RecordActivity extends BaseActivity {
         });
     }
 
+    public void updateRecyclerView1() {
+        List<Integer> emotionGetAllIndex;
+        List<String> emotionGetAllDesc;
+        List<Integer> emotionGetAllIsActive;
+        List<String> emotionGetAllIcon;
+        List<String> descMoodList;
+        emotionGetAllIndex = new ArrayList<>();
+        emotionGetAllDesc = new ArrayList<>();
+        emotionGetAllIsActive = new ArrayList<>();
+        emotionGetAllIcon = new ArrayList<>();
+        List<Emotion> emotionList = emotionService.GetAll(Emotion.class);
+        imageMoodList = new ArrayList<>();
+        for (Emotion emotion : emotionList) {
+            if (emotion.getIcon().equals("add"))
+                continue;
+            emotionGetAllIcon.add(emotion.getIcon());
+            int emotionIdR = getResources().getIdentifier(emotion.getIcon(), "drawable", getPackageName());
+            emotionGetAllIndex.add(emotionIdR);
+            String desc = emotion.getDescEn();
+            if (language.equals("vi"))
+                desc = emotion.getDescVi();
+            emotionGetAllDesc.add(desc);
+            if (emotion.getIsActive() == 0) {
+                continue;
+            }
+            emotionGetAllIsActive.add(emotion.getId() - 1);
+            imageMoodList.add(emotionIdR);
+        }
+        imageMoodList.add(R.drawable.add);
+        descMoodList = new ArrayList<>();
+        for (Integer resourceId : imageMoodList) {
+            String resourceName = getResourceName(resourceId);
+            Emotion emotion = emotionService.FindByIcon(Emotion.class, resourceName);
+            String desc = emotion.getDescEn();
+            if (language.equals("vi"))
+                desc = emotion.getDescVi();
+            descMoodList.add(desc);
+        }
+        emotionIndexes = new ArrayList<>();
+        if (result != null) {
+            ArrayList<EntryEmotion> entryEmotions = entryEmotionService.GetAllByEntryId(EntryEmotion.class, result.getId());
+            for (EntryEmotion entity : entryEmotions) {
+                Emotion emotion = emotionService.FindById(Emotion.class, entity.getEmotionId());
+                int index = imageMoodList.indexOf(getDrawableResourceId(this, emotion.getIcon()));
+                if (index != -1) {
+                    emotionIndexes.add(index);
+                }
+            }
+        }
+        adapter1 = new ImageRecordAdapter("Emotion", language, imageMoodList, descMoodList, emotionIndexes, emotionGetAllIndex, emotionGetAllDesc, emotionGetAllIsActive, emotionGetAllIcon, this, this);
+        recyclerView1.setAdapter(adapter1);
+    }
+
+    public void updateRecyclerView2() {
+        List<Integer> activityGetAllIndex;
+        List<String> activityGetAllDesc;
+        List<Integer> activityGetAllIsActive;
+        List<String> activityGetAllIcon;
+        activityGetAllIndex = new ArrayList<>();
+        activityGetAllDesc = new ArrayList<>();
+        activityGetAllIcon = new ArrayList<>();
+        activityGetAllIsActive = new ArrayList<>();
+        List<Activity> activityList = activityService.GetAll(Activity.class);
+        imageActivityList = new ArrayList<>();
+        for (Activity activity : activityList) {
+            if (activity.getIcon().equals("add"))
+                continue;
+            activityGetAllIcon.add(activity.getIcon());
+            int activityIdR = getResources().getIdentifier(activity.getIcon(), "drawable", getPackageName());
+            activityGetAllIndex.add(activityIdR);
+            String desc = activity.getDescEn();
+            if (language.equals("vi"))
+                desc = activity.getDescVi();
+            activityGetAllDesc.add(desc);
+            if (activity.getIsActive() == 0) {
+                continue;
+            }
+            activityGetAllIsActive.add(activity.getId() - 1);
+            imageActivityList.add(activityIdR);
+        }
+        imageActivityList.add(R.drawable.add);
+        List<String> descActivityList = new ArrayList<>();
+        for (Integer resourceId : imageActivityList) {
+            String resourceName = getResourceName(resourceId);
+            Activity activity = activityService.FindByIcon(Activity.class, resourceName);
+            String desc = activity.getDescEn();
+            if (language.equals("vi"))
+                desc = activity.getDescVi();
+            descActivityList.add(desc);
+        }
+        activityIndexes = new ArrayList<>();
+        if (result != null) {
+            ArrayList<EntryActivity> entryActivities = entryActivityService.GetAllByEntryId(EntryActivity.class, result.getId());            for (EntryActivity entity : entryActivities) {
+                Activity activity = activityService.FindById(Activity.class, entity.getActivityId());
+                int index = imageActivityList.indexOf(getDrawableResourceId(this, activity.getIcon()));
+                if (index != -1) {
+                    activityIndexes.add(index);
+                }
+            }
+        }
+        adapter2 = new ImageRecordAdapter("Activity", language, imageActivityList, descActivityList, activityIndexes, activityGetAllIndex, activityGetAllDesc, activityGetAllIsActive, activityGetAllIcon, this, this);
+        recyclerView2.setAdapter(adapter2);
+    }
+
+    public void updateRecyclerView3() {
+        List<Integer> partnerGetAllIndex;
+        List<Integer> partnerGetAllIsActive;
+        List<String> partnerGetAllDesc;
+        List<String> partnerGetAllIcon;
+        partnerGetAllIndex = new ArrayList<>();
+        partnerGetAllDesc = new ArrayList<>();
+        partnerGetAllIsActive = new ArrayList<>();
+        partnerGetAllIcon = new ArrayList<>();
+        List<Partner> partnerList = partnerService.GetAll(Partner.class);
+        imageCompanionList = new ArrayList<>();
+        for (Partner partner : partnerList) {
+            if (partner.getIcon().equals("add"))
+                continue;
+            partnerGetAllIcon.add(partner.getIcon());
+            int partnerIdR = getResources().getIdentifier(partner.getIcon(), "drawable", getPackageName());
+            partnerGetAllIndex.add(partnerIdR);
+            String desc = partner.getDescEn();
+            if (language.equals("vi"))
+                desc = partner.getDescVi();
+            partnerGetAllDesc.add(desc);
+            if (partner.getIsActive() == 0) {
+                continue;
+            }
+            partnerGetAllIsActive.add(partner.getId() - 1);
+            imageCompanionList.add(partnerIdR);
+        }
+        imageCompanionList.add(R.drawable.add);
+        List<String> descPartnerList = new ArrayList<>();
+        for (Integer resourceId : imageCompanionList) {
+            String resourceName = getResourceName(resourceId);
+            Partner partner = partnerService.FindByIcon(Partner.class, resourceName);
+            String desc = partner.getDescEn();
+            if (language.equals("vi"))
+                desc = partner.getDescVi();
+            descPartnerList.add(desc);
+        }
+        if (result != null) {
+            ArrayList<EntryPartner> entryPartners = entryPartnerService.GetAllByEntryId(EntryPartner.class, result.getId());
+            partnerIndexes = new ArrayList<>();
+            for (EntryPartner entity : entryPartners) {
+                Partner partner = partnerService.FindById(Partner.class, entity.getPartnerId());
+                int index = imageCompanionList.indexOf(getDrawableResourceId(this, partner.getIcon()));
+                if (index != -1) {
+                    partnerIndexes.add(index);
+                }
+            }
+        }
+        adapter3 = new ImageRecordAdapter("Partner", language, imageCompanionList, descPartnerList, partnerIndexes, partnerGetAllIndex, partnerGetAllDesc, partnerGetAllIsActive, partnerGetAllIcon, this, this);
+        recyclerView3.setAdapter(adapter3);
+    }
+
+    public void updateRecyclerView4() {
+        List<Integer> weatherGetAllIndex;
+        List<String> weatherGetAllDesc;
+        List<Integer> weatherGetAllIsActive;
+        List<String> weatherGetAllIcon;
+        weatherGetAllIcon = new ArrayList<>();
+        weatherGetAllIndex = new ArrayList<>();
+        weatherGetAllDesc = new ArrayList<>();
+        weatherGetAllIsActive = new ArrayList<>();
+        List<Weather> weatherList = emotionService.GetAll(Weather.class);
+        imageWeatherList = new ArrayList<>();
+        for (Weather weather : weatherList) {
+            if (weather.getIcon().equals("add"))
+                continue;
+            weatherGetAllIcon.add(weather.getIcon());
+            int weatherIdR = getResources().getIdentifier(weather.getIcon(), "drawable", getPackageName());
+            weatherGetAllIndex.add(weatherIdR);
+            String desc = weather.getDescEn();
+            if (language.equals("vi"))
+                desc = weather.getDescVi();
+            weatherGetAllDesc.add(desc);
+            if (weather.getIsActive() == 0) {
+                continue;
+            }
+            weatherGetAllIsActive.add(weather.getId() - 1);
+            imageWeatherList.add(weatherIdR);
+        }
+        imageWeatherList.add(R.drawable.add);
+        List<String> descWeatherList = new ArrayList<>();
+        for (Integer resourceId : imageWeatherList) {
+            String resourceName = getResourceName(resourceId);
+            Weather weather = weatherService.FindByIcon(Weather.class, resourceName);
+            String desc = weather.getDescEn();
+            if (language.equals("vi"))
+                desc = weather.getDescVi();
+            descWeatherList.add(desc);
+        }
+        if (result != null) {
+            ArrayList<EntryWeather> entryWeathers = entryWeatherService.GetAllByEntryId(EntryWeather.class, result.getId());
+            weatherIndexes = new ArrayList<>();
+            for (EntryWeather entity : entryWeathers) {
+                Weather weather = weatherService.FindById(Weather.class, entity.getWeatherId());
+                int index = imageWeatherList.indexOf(getDrawableResourceId(this, weather.getIcon()));
+                if (index != -1) {
+                    weatherIndexes.add(index);
+                }
+            }
+        }
+        adapter4 = new ImageRecordAdapter("Weather", language, imageWeatherList, descWeatherList, weatherIndexes, weatherGetAllIndex, weatherGetAllDesc, weatherGetAllIsActive, weatherGetAllIcon, this, this);
+        recyclerView4.setAdapter(adapter4);
+    }
+
+
     private boolean toggleVisibility(View view) {
         if (view.getVisibility() == View.GONE) {
             view.setVisibility(View.VISIBLE);
@@ -844,15 +1106,6 @@ public class RecordActivity extends BaseActivity {
         List<Integer> selectedItems2 = adapter2.getSelectedItems();
         List<Integer> selectedItems3 = adapter3.getSelectedItems();
         List<Integer> selectedItems4 = adapter4.getSelectedItems();
-//        Calendar calendar = Calendar.getInstance();
-//        String[] dateInto = date.split(" ");
-//        int day = Integer.parseInt(dateInto[1].split("-")[0]);
-//        int month = Integer.parseInt(dateInto[1].split("-")[1]);
-//        int year = Integer.parseInt(dateInto[1].split("-")[2]);
-//        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-//        int minute = calendar.get(Calendar.MINUTE);
-//        int second = calendar.get(Calendar.SECOND);
-//        String currentTime = String.format(Locale.ENGLISH, "%02d:%02d:%02d %02d-%02d-%04d", hour, minute, second, day, month, year);
         Entry entity = new Entry(title, notes, date, overallScore, wakeUp, sleep);
         if (result == null) {
             return !notes.isEmpty() || !title.isEmpty() || overallScore != 5

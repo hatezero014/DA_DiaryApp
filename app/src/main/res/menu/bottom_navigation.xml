@@ -15,13 +15,13 @@
         android:title=""/>
 
     <item
-        android:id="@+id/navigation_notification"
-        android:icon="@drawable/icon_noti"
-        android:title="@string/title_notification" />
-
-    <item
         android:id="@+id/navigation_analyze"
         android:icon="@drawable/main_stats"
         android:title="@string/title_analyze" />
+
+    <item
+        android:id="@+id/navigation_notification"
+        android:icon="@drawable/icon_noti"
+        android:title="@string/title_notification" />
 
 </menu>

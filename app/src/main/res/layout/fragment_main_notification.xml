@@ -27,18 +27,20 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginStart="15dp"
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="50dp" />
 
     <TextView
+        android:textSize="20sp"
         android:id="@+id/tv_content_null"
-        android:text="Nội dung còn trống"
+        android:text="@string/notification_null"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="300dp"
         android:gravity="center_horizontal"/>
 
 </RelativeLayout>

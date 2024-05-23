@@ -6,13 +6,24 @@ public class Notification {
     String Day;
     int Content;
 
+    String Sub;
+
+    public String getSub() {
+        return Sub;
+    }
+
+    public void setSub(String sub) {
+        Sub = sub;
+    }
+
     public Notification() {
     }
 
-    public Notification(String time, String day, int content) {
+    public Notification(String time, String day, int content, String sub) {
         Time = time;
         Day = day;
         Content = content;
+        Sub = sub;
     }
 
     public int getId() {

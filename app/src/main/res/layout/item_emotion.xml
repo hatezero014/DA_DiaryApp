@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="12dp">
 
             <TextView
                 android:id="@+id/tv_most_choosen"
@@ -52,8 +52,7 @@
             android:orientation="horizontal"
             android:layout_gravity="center"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="16dp">
+            android:layout_marginEnd="16dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -68,7 +67,7 @@
 
                 <TextView
                     android:id="@+id/tv_img1"
-                    style="@style/TextAppearance.Material3.LabelMedium"
+                    style="@style/TextAppearance.Material3.TitleSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -90,7 +89,7 @@
 
                 <TextView
                     android:id="@+id/tv_img2"
-                    style="@style/TextAppearance.Material3.LabelMedium"
+                    style="@style/TextAppearance.Material3.TitleSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -112,7 +111,7 @@
 
                 <TextView
                     android:id="@+id/tv_img3"
-                    style="@style/TextAppearance.Material3.LabelMedium"
+                    style="@style/TextAppearance.Material3.TitleSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -134,7 +133,7 @@
 
                 <TextView
                     android:id="@+id/tv_img4"
-                    style="@style/TextAppearance.Material3.LabelMedium"
+                    style="@style/TextAppearance.Material3.TitleSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
