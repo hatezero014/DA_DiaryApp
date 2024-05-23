@@ -130,13 +130,15 @@
     <string name="notification_day">Ngày</string>
 
     <string name="notification_1">Bạn đã thêm nhật kí hôm nay!</string>
-    <string name="notification_2">Bạn đã thêm nhật kí hôm nay và hôm nay là ngày quan trọng!</string>
+    <string name="notification_2">Bạn đã thêm nhật kí hôm nay và đánh dấu hôm nay là ngày quan trọng!</string>
     <string name="notification_3_1">Điểm số tâm trạng tháng </string>
     <string name="notification_3_2">của bạn là: </string>
     <string name="notification_4">Bạn đã thiết lập mật khẩu! Nếu bạn không phải là người thiết lập nó, hãy liên hệ với chúng tôi để được hỗ trợ!</string>
     <string name="notification_5">Bạn đã thay đổi mật khẩu, hãy kiểm tra lại. Nếu bạn không phải là người thay đổi, hãy liên hệ với chúng tôi để được hỗ trợ!</string>
     <string name="notification_6">Bạn đã xóa mật khẩu!</string>
     <string name="notification_null">Không có thông báo!</string>
+    <string name="notification_7">Bạn đã chỉnh sửa nhật kí hôm nay!</string>
+    <string name="notification_8">Bạn đã chỉnh sửa nhật kí hôm nay và đánh dấu hôm nay là ngày quan trọng!</string>
 
     <!--   Month -->
     <string name="January">1</string>
@@ -193,7 +195,7 @@
     <string name="remind">Nhắc nhở</string>
     <string name="remind_description">Ứng dụng sẽ nhắc nhở khi bạn không vào ứng dụng quá lâu</string>
     <string name="remind_notification">Thông báo nhắc nhở</string>
-    <string name="remind_notification_description">Bạn đã quên tôi rồi sao! Hãy biến những kỷ niệm thành những chuyến đi đáng nhớ ngay hôm nay.</string>
+    <string name="remind_notification_description">Bạn à, Pocket Diary nhớ bạn lắm đấy! Đã đến lúc quay lại và ghi lại những kỉ niệm tuyệt vời rồi đó nha bạn thân yêu ơi!</string>
     <string name="id_AlarmReceiver">idalarmreceiver</string>
     <string name="id_NotificationReceiver">idnotificationreceiver</string>
 
