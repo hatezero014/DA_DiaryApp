@@ -89,6 +89,10 @@
     <string name="record_note">Your notes</string>
     <string name="record_title">Your title</string>
     <string name="record_done">Done</string>
+    <string name="record_emotion_title">Added to Status</string>
+    <string name="record_activity_title">Added to Activity</string>
+    <string name="record_partner_title">Added to Partner</string>
+    <string name="record_weather_title">Added to Weather</string>
     <string name="record_images">You have not added any photo</string>
     <string name="record_title_add_image">Number of photos added %d/%d</string>
     <string name="record_toast_fail">Record failed!</string>

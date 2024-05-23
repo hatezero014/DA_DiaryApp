@@ -79,6 +79,10 @@
     <string name="record_title_add_image">Số ảnh đã thêm %d/%d</string>
     <string name="select_time">Chọn thời gian</string>
     <string name="record_note">Ghi chú của bạn</string>
+    <string name="record_emotion_title">Thêm vào Trạng thái</string>
+    <string name="record_activity_title">Thêm vào Hoạt động</string>
+    <string name="record_partner_title">Thêm vào Bạn đồng hành</string>
+    <string name="record_weather_title">Thêm vào Thời tiết</string>
     <string name="record_title">Tiêu đề của bạn</string>
     <string name="record_allow_image">Bạn chỉ có thể chọn tối đa 3 ảnh</string>
     <string name="record_alert_title">Xác nhận thoát</string>

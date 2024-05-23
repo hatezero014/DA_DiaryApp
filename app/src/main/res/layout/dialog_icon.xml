@@ -24,7 +24,6 @@
             android:layout_height="wrap_content"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:text="Thêm vào Hoạt động"
             android:textColor="@color/md_theme_onSecondaryContainer" />
 
         <androidx.recyclerview.widget.RecyclerView

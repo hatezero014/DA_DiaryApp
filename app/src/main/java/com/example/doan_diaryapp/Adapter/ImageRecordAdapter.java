@@ -92,7 +92,6 @@ public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.
         return new ImageViewHolder(view);
     }
 
-
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
         Integer imageRes = imageList.get(position);
@@ -100,6 +99,7 @@ public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.
         if (position == getItemCount() - 1) {
             holder.imageView.setBackgroundResource(R.drawable.circle_background);
             holder.imageView.setImageResource(imageRes);
+            holder.textView.setVisibility(View.GONE);
             holder.imageView.setOnClickListener(v -> {
                 showCustomDialog();
             });
@@ -157,6 +157,19 @@ public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.
 
         Button btnOK = dialog.findViewById(R.id.btnRight);
         Button btnCancel = dialog.findViewById(R.id.btnLeft);
+        TextView textView = dialog.findViewById(R.id.list1);
+        if (type.equals("Emotion")) {
+            textView.setText(R.string.record_emotion_title);
+        }
+        if (type.equals("Activity")) {
+            textView.setText(R.string.record_activity_title);
+        }
+        if (type.equals("Partner")) {
+            textView.setText(R.string.record_partner_title);
+        }
+        if (type.equals("Weather")) {
+            textView.setText(R.string.record_weather_title);
+        }
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
