@@ -11,7 +11,7 @@
     <string name="title_home">Home</string>
     <string name="title_collection">Collection</string>
     <string name="title_analyze">Analyze</string>
-    <string name="title_notification">Notification</string>
+    <string name="title_setting">Setting</string>
 
     <!--  ChangeLanguage   -->
     <string name="change_language">App language</string>
@@ -218,5 +218,6 @@
         <item>Item 2</item>
         <item>Item 3</item>
     </string-array>
+
 
 </resources>

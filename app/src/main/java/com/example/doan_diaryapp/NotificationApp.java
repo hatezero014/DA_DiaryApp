@@ -33,7 +33,7 @@ public class NotificationApp extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.fragment_main_notification);
+        setContentView(R.layout.activity_show_emoji);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -41,8 +41,8 @@ public class NotificationApp extends BaseActivity {
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        recyclerView = findViewById(R.id.recyclerView);
-        textView = findViewById(R.id.tv_content_null);
+        recyclerView = findViewById(R.id.rcv_emoji);
+        //textView = findViewById(R.id.tv_content_null);
         categoryAdapter = new CategoryAdapter(this);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
@@ -64,9 +64,9 @@ public class NotificationApp extends BaseActivity {
         NotificationService notificationService = new NotificationService(this);;
         List<Category> categoryList = new ArrayList<>();
         List<DayDistinct> days = notificationService.DayDistinct(DayDistinct.class);
-        if(days.size()==0){
-            textView.setVisibility(View.VISIBLE);
-        }
+//        if(days.size()==0){
+//            textView.setVisibility(View.VISIBLE);
+//        }
         for(DayDistinct day : days){
             String temp = day.getDay();
             String whereClause = "Day = ?";

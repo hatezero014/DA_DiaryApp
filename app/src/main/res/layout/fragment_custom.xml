@@ -86,7 +86,7 @@
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:hint="@string/entire_year"
-                    android:layout_marginStart="25dp"
+                    android:layout_marginStart="5dp"
                     android:id="@+id/til_ayear"
                     app:shapeAppearance="@style/ShapeAppearanceOverlay.Material3.Chip"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
