@@ -56,7 +56,7 @@ public class EntryPhotoService extends BaseService {
 
     public String getDate(String Photo) {
         db = this.getReadableDatabase();
-        try (Cursor cursor = db.rawQuery("SELECT  * FROM EntryPhoto INNER JOIN Entry ON EntryPhoto.EntryId = Entry.Id ", null)) {
+        try (Cursor cursor = db.rawQuery("SELECT  * FROM EntryPhoto INNER JOIN Entry ON EntryPhoto.EntryId = Entry.Id", null)) {
             if (cursor != null && cursor.moveToFirst()) {
                 int photoScoreIndex = cursor.getColumnIndex("Photo");
                 int dateScoreIndex = cursor.getColumnIndex("Date");
@@ -75,17 +75,17 @@ public class EntryPhotoService extends BaseService {
     }
 
 
-    public List<String> getAllPhoto(int ID) {
+    public List<String> getAllPhoto(String DATE) {
         db = this.getReadableDatabase();
         List<String> entryPhotoList = new ArrayList<>();
-        try (Cursor cursor = db.rawQuery("SELECT * FROM EntryPhoto", null)) {
+        try (Cursor cursor = db.rawQuery("SELECT  * FROM EntryPhoto INNER JOIN Entry ON EntryPhoto.EntryId = Entry.Id ", null)) {
             if (cursor != null && cursor.moveToFirst()) {
-                int idColumnIndex = cursor.getColumnIndex("EntryId");
                 int photoScoreIndex = cursor.getColumnIndex("Photo");
+                int dateScoreIndex = cursor.getColumnIndex("Date");
                 do {
-                    int id = cursor.getInt(idColumnIndex);
+                    String date = cursor.getString(dateScoreIndex);
                     String photo = cursor.getString(photoScoreIndex);
-                    if (ID==id) {
+                    if (DATE.equals(date)) {
                         entryPhotoList.add("/data/user/0/com.example.doan_diaryapp/files/" + photo);
                     }
                     } while (cursor.moveToNext());

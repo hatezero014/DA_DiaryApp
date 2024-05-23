@@ -191,7 +191,7 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
             @Override
             public void onClick(View v) {
                 entryPhotoService = new EntryPhotoService(getContext());
-                entryPhotoList=entryPhotoService.getAllPhoto(entry.getId());
+                entryPhotoList=entryPhotoService.getAllPhoto(entry.getDate());
                 String titleShare = "[" + entry.getTitle() + "]" + "\n" + entry.getNote();
                 shareImage(entryPhotoList,titleShare);
             }
