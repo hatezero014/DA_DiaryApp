@@ -2,6 +2,7 @@ package com.example.doan_diaryapp.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import com.example.doan_diaryapp.Models.Entry;
 import com.example.doan_diaryapp.Models.Statistic;
 import com.example.doan_diaryapp.R;
 import com.example.doan_diaryapp.Service.EntryService;
+import com.example.doan_diaryapp.ShowEmojiActivity;
 import com.example.doan_diaryapp.ui.image.Image;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -314,7 +316,18 @@ public class YearStatisticAdapter extends RecyclerView.Adapter<RecyclerView.View
                     tv4.setText("x"+sortedList.get(i).getValue());}
             }
 
-
+            btn_viewall.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), ShowEmojiActivity.class);
+                    ArrayList<String> dataList = new ArrayList<>();
+                    for (Map.Entry<String, Integer> entry : sortedList) {
+                        dataList.add(entry.getKey() + "," + entry.getValue());
+                    }
+                    intent.putStringArrayListExtra("sortedData", dataList);
+                    v.getContext().startActivity(intent);
+                }
+            });
         }
     }
 }
