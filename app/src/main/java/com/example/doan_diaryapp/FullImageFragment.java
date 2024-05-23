@@ -2,13 +2,16 @@
 package com.example.doan_diaryapp;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +35,7 @@ import com.example.doan_diaryapp.Service.EntryService;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 
@@ -128,6 +132,13 @@ public class FullImageFragment extends Fragment {
         titleShare = "[" + entry.getTitle() + "]" + "\n" + entry.getNote();
 
         //tvDetails.setText(strDetails);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString("titleShare", titleShare);
+        editor.putString("file", file);
+        editor.putString("strDetails", strDetails);
+        editor.apply();
 
         return view;
     }

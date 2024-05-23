@@ -114,7 +114,13 @@ public class BaseActivity  extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
-        CurrentTime = hour + ":" + minute;
+        if(minute == 0 ||minute == 1|| minute == 2|| minute == 3|| minute == 4|| minute == 5|| minute == 6|| minute == 7|| minute == 8|| minute == 9  ){
+            CurrentTime = hour + ":0" + minute;
+        }
+        else{
+            CurrentTime = hour + ":" + minute;
+        }
+
         return CurrentTime;
     }
 

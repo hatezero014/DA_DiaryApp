@@ -8,7 +8,10 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class PasswordActivity extends AppCompatActivity {
+import com.example.doan_diaryapp.Models.Notification;
+import com.example.doan_diaryapp.Service.NotificationService;
+
+public class PasswordActivity extends BaseActivity {
 
     private Button createPasswordButton, changePasswordButton, deletePasswordButton;
     // String savedPasscode = null;
@@ -23,7 +26,7 @@ public class PasswordActivity extends AppCompatActivity {
         deletePasswordButton = findViewById(R.id.DeletePassWord);
         sharedPreferences = getSharedPreferences("Passcode", MODE_PRIVATE);
 
-        // Initially hide ChangePassword and DeletePassword buttons
+
         changePasswordButton.setVisibility(View.GONE);
         deletePasswordButton.setVisibility(View.GONE);
 
@@ -59,9 +62,7 @@ public class PasswordActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         String savedPasscode = sharedPreferences.getString("passcode", null);
-        // Check if password is set
         if (savedPasscode != null) {
-            // If password is set, hide CreatePassword button and show ChangePassword and DeletePassword buttons
             createPasswordButton.setVisibility(View.GONE);
             changePasswordButton.setVisibility(View.VISIBLE);
             deletePasswordButton.setVisibility(View.VISIBLE);
@@ -70,7 +71,6 @@ public class PasswordActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else {
-            // If password is not set, show CreatePassword button and hide ChangePassword and DeletePassword buttons
             createPasswordButton.setVisibility(View.VISIBLE);
             changePasswordButton.setVisibility(View.GONE);
             deletePasswordButton.setVisibility(View.GONE);

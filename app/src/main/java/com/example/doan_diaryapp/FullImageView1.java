@@ -40,7 +40,7 @@ public class FullImageView1 extends AppCompatActivity {
             imagePaths = bundle.getStringArrayList("images");
         }
 
-        viewPager = findViewById(R.id.view_pager);
+        viewPager = findViewById(R.id.view_pager1);
         adapter = new FullImagePagerAdapter(this, imagePaths);
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(position, false);

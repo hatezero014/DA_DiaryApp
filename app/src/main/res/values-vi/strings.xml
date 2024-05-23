@@ -131,10 +131,27 @@
 
     <string name="notification_1">Bạn đã thêm nhật kí hôm nay!</string>
     <string name="notification_2">Bạn đã thêm nhật kí hôm nay và hôm nay là ngày quan trọng!</string>
-    <string name="notification_3">Điểm số tâm trạng tháng này của bạn là:</string>
+    <string name="notification_3_1">Điểm số tâm trạng tháng </string>
+    <string name="notification_3_2">của bạn là: </string>
     <string name="notification_4">Bạn đã thiết lập mật khẩu! Nếu bạn không phải là người thiết lập nó, hãy liên hệ với chúng tôi để được hỗ trợ!</string>
     <string name="notification_5">Bạn đã thay đổi mật khẩu, hãy kiểm tra lại. Nếu bạn không phải là người thay đổi, hãy liên hệ với chúng tôi để được hỗ trợ!</string>
     <string name="notification_6">Bạn đã xóa mật khẩu!</string>
+    <string name="notification_null">Không có thông báo!</string>
+
+    <!--   Month -->
+    <string name="January">1</string>
+    <string name="February">2</string>
+    <string name="March">3</string>
+    <string name="April">4</string>
+    <string name="May">5</string>
+    <string name="June">6</string>
+    <string name="July">7</string>
+    <string name="August">8</string>
+    <string name="September">9</string>
+    <string name="October">10</string>
+    <string name="November">11</string>
+    <string name="December">12</string>
+
 
 
     <!-- Security -->
