@@ -212,6 +212,7 @@
     <string name="no_important">There is currently no important record.</string>
     <string name="record_details_title">Record details</string>
 
+    <string name="btn_search">Search</string>
     <string-array name="my_string_array">
         <item></item>
         <item>Item 2</item>

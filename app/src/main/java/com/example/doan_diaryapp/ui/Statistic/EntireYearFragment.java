@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Spinner;
 
 import com.example.doan_diaryapp.Adapter.YearStatisticAdapter;
@@ -26,15 +27,14 @@ public class EntireYearFragment extends Fragment {
 
     private RecyclerView recyclerView_year;
     private YearStatisticAdapter yearStatisticAdapter;
-    private Spinner spn_yeary;
-
+    private AutoCompleteTextView act_yyear;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_entire_year, container, false);
 
-        spn_yeary = view.findViewById(R.id.spn_yeary);
+        act_yyear = view.findViewById(R.id.act_yyear);
         updateSpinnerYear(view);
 
         recyclerView_year = view.findViewById(R.id.rcv_thong_ke_nam);
@@ -54,21 +54,17 @@ public class EntireYearFragment extends Fragment {
             years.add(i);
         }
 
-        ArrayAdapter<Integer> adapterYear = new ArrayAdapter<Integer>(container.getContext(), android.R.layout.simple_spinner_item,years);
+        ArrayAdapter<Integer> adapterYear = new ArrayAdapter<>(container.getContext(), R.layout.item_drop_down, years);
 
-        adapterYear.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spn_yeary.setAdapter(adapterYear);
-        spn_yeary.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        act_yyear.setAdapter(adapterYear);
+        act_yyear.setText(String.valueOf(currentYear),false);
+        act_yyear.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 yearStatisticAdapter.setData(getListStatistic());
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
         });
+
         setDefaultYear(adapterYear);
     }
 
@@ -85,12 +81,13 @@ public class EntireYearFragment extends Fragment {
             adapterYear.add(currentYear);
             adapterYear.notifyDataSetChanged();
         }
-        spn_yeary.setSelection(adapterYear.getPosition(currentYear));
+        act_yyear.setText(String.valueOf(currentYear),false);
     }
 
     private List<Statistic> getListStatistic() {
         List<Statistic> mStatistic = new ArrayList<>();
-        int year =(Integer) spn_yeary.getSelectedItem();
+        String selectedYear = act_yyear.getText().toString();
+        int year = Integer.parseInt(selectedYear);
         mStatistic.clear();
 
         mStatistic.add(new Statistic(year,1,null));
@@ -100,5 +97,25 @@ public class EntireYearFragment extends Fragment {
         mStatistic.add(new Statistic(year,2,"Weather"));
 
         return mStatistic;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Init();
+    }
+
+    public void Init(){
+        View view = getView();
+        updateSpinnerYear(view);
+
+        recyclerView_year = view.findViewById(R.id.rcv_thong_ke_nam);
+        yearStatisticAdapter = new YearStatisticAdapter(view.getContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
+        recyclerView_year.setLayoutManager(linearLayoutManager);
+        yearStatisticAdapter.setData(getListStatistic());
+        recyclerView_year.setAdapter(yearStatisticAdapter);
+
+        yearStatisticAdapter.notifyDataSetChanged();
     }
 }

@@ -3,15 +3,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".ui.Statistic.EntireYearFragment">
 
-    <Spinner
-        android:id="@+id/spn_yeary"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="20dp"/>
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/entire_year"
+            android:layout_margin="10dp"
+            android:id="@+id/til_yyear"
+            app:shapeAppearance="@style/ShapeAppearanceOverlay.Material3.Chip"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+
+            <AutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/act_yyear"
+                android:inputType="none"
+                android:dropDownHeight="200dp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_thong_ke_nam"

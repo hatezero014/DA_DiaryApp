@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ListPopupWindow;
 import android.widget.Spinner;
 
@@ -30,8 +31,8 @@ public class ByMonthFragment extends Fragment {
 
     private RecyclerView recyclerView_month;
     private MonthStatisticAdapter monthStatisticAdapter;
-    private Spinner spn_yearm;
-    private Spinner spn_monthm;
+    private AutoCompleteTextView act_mmonth;
+    private AutoCompleteTextView act_myear;
 
 
     @Override
@@ -42,8 +43,8 @@ public class ByMonthFragment extends Fragment {
 
         recyclerView_month = view.findViewById(R.id.rcv_thong_ke_thang);
 
-        spn_yearm = view.findViewById(R.id.spn_yearm);
-        spn_monthm = view.findViewById(R.id.spn_monthm);
+        act_mmonth = view.findViewById(R.id.act_mmonth);
+        act_myear = view.findViewById(R.id.act_myear);
 
         updateSpinnerYear(view);
         updateSpinnerMonth(view);
@@ -62,19 +63,15 @@ public class ByMonthFragment extends Fragment {
             aMonth.add(i);
         }
 
-        ArrayAdapter<Integer> adapterMonth = new ArrayAdapter<>(container.getContext(), android.R.layout.simple_spinner_item,aMonth);
-        adapterMonth.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spn_monthm.setAdapter(adapterMonth);
-        spn_monthm.setSelection(Calendar.getInstance().get(Calendar.MONTH));
-        spn_monthm.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        ArrayAdapter<Integer> adapterMonth = new ArrayAdapter<>(container.getContext(), R.layout.item_drop_down, aMonth);
+        act_mmonth.setAdapter(adapterMonth);
+
+        act_mmonth.setText(String.valueOf(Calendar.getInstance().get(Calendar.MONTH)+1),false);
+
+        act_mmonth.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 monthStatisticAdapter.setData(getListStatistic());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
     }
@@ -87,21 +84,18 @@ public class ByMonthFragment extends Fragment {
             years.add(i);
         }
 
-        ArrayAdapter<Integer> adapterYear = new ArrayAdapter<Integer>(container.getContext(), android.R.layout.simple_spinner_item,years);
+        ArrayAdapter<Integer> adapterYear = new ArrayAdapter<>(container.getContext(), R.layout.item_drop_down,years);
+        act_myear.setAdapter(adapterYear);
 
-        adapterYear.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spn_yearm.setAdapter(adapterYear);
-        spn_yearm.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        act_myear.setText(String.valueOf(currentYear),false);
+
+        act_myear.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 monthStatisticAdapter.setData(getListStatistic());
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
         });
+
         setDefaultYear(adapterYear);
     }
 
@@ -118,13 +112,15 @@ public class ByMonthFragment extends Fragment {
             adapterYear.add(currentYear);
             adapterYear.notifyDataSetChanged();
         }
-        spn_yearm.setSelection(adapterYear.getPosition(currentYear));
+        act_myear.setText(String.valueOf(currentYear),false);
     }
 
     private List<Statistic> getListStatistic() {
         List<Statistic> mStatistic = new ArrayList<>();
-        int month = (Integer)spn_monthm.getSelectedItem();
-        int year = (Integer)spn_yearm.getSelectedItem();
+        String selectedYear = act_myear.getText().toString();
+        int year = Integer.parseInt(selectedYear);
+        String selectedMonth = act_mmonth.getText().toString();
+        int month = Integer.parseInt(selectedMonth);
         mStatistic.clear();
         mStatistic.add(new Statistic(year,month,1,null));
         mStatistic.add(new Statistic(year,month,2,"Mood"));
@@ -135,5 +131,24 @@ public class ByMonthFragment extends Fragment {
         return mStatistic;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Init();
+    }
 
+    public void Init(){
+        View view = getView();
+
+        monthStatisticAdapter = new MonthStatisticAdapter(view.getContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
+        recyclerView_month.setLayoutManager(linearLayoutManager);
+        monthStatisticAdapter.setData(getListStatistic());
+        recyclerView_month.setAdapter(monthStatisticAdapter);
+
+        updateSpinnerYear(view);
+        updateSpinnerMonth(view);
+
+        monthStatisticAdapter.notifyDataSetChanged();
+    }
 }
