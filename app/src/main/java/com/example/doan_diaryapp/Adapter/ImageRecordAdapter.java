@@ -171,6 +171,7 @@ public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.
         ImageDialogAdapter adapter = new ImageDialogAdapter(type, language, imageListGetAll, descListGetAll,
                                                                 isActiveItems, iconListGetAll, context);
         recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
 
         btnOK.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -302,8 +303,6 @@ public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.
                 dialog.dismiss();
             }
         });
-
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
 
         dialog.show();
     }

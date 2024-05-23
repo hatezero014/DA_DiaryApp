@@ -212,7 +212,8 @@ public class RecordActivity extends BaseActivity {
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle(date);
+            String dateNew = date.split(" ")[1];
+            actionBar.setTitle(dateNew);
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
