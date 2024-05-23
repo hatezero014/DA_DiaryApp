@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.setting.SettingFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/layout_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="12dp">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/setting_appBarLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="?attr/actionBarSize"
+                    app:menu="@menu/toolbar_home"
+                    app:title="@string/title_setting"
+                    app:titleCentered="false" />
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_display"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                style="@style/TextAppearance.Material3.TitleSmall"
+                android:textColor="@color/md_theme_onSurfaceVariant"
+                />
+
+            <LinearLayout
+                android:id="@+id/layoutTheme"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="14dp"
+                android:background="@drawable/background_selector"
+                android:paddingBottom="14dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textviewTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextAppearance.Material3.BodyLarge"
+                    android:textColor="@color/md_theme_onSurface_mediumContrast"
+                    android:text="@string/setting_theme"/>
+
+                <TextView
+                    android:id="@+id/textviewSubTheme"
+                    android:layout_width="wrap_content"
+                    style="@style/TextAppearance.Material3.BodyMedium"
+                    android:textColor="@color/md_theme_onSurfaceVariant"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:id="@+id/layoutLanguage"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:onClick="onLayoutLanguageClick"
+                android:layout_width="match_parent"
+                android:background="@drawable/background_selector"
+                android:layout_height="wrap_content"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textviewLanguage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextAppearance.Material3.BodyLarge"
+                    android:textColor="@color/md_theme_onSurface_mediumContrast"
+                    android:text="@string/change_language"/>
+
+                <TextView
+                    android:id="@+id/textviewSubLanguage"
+                    android:layout_width="wrap_content"
+                    style="@style/TextAppearance.Material3.BodyMedium"
+                    android:textColor="@color/md_theme_onSurfaceVariant"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/notification_title"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:layout_marginTop="16dp"
+                style="@style/TextAppearance.Material3.TitleSmall"
+                android:textColor="@color/md_theme_onSurfaceVariant"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:paddingEnd="8dp"
+                android:background="@drawable/background_selector"
+                android:paddingTop="16dp"
+                android:paddingBottom="8dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/notification_daily_reminder"
+                    style="@style/TextAppearance.Material3.BodyLarge"
+                    android:layout_weight="1"
+                    android:textColor="@color/md_theme_onSurface_mediumContrast"
+                    />
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/switch_notification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:background="@drawable/background_selector"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/notification_reminder_time"
+                    style="@style/TextAppearance.Material3.BodyLarge"
+                    android:textColor="@color/md_theme_onSurface_mediumContrast"
+                    />
+                <TextView
+                    android:id="@+id/notification_alarm_clock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/security_title"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:layout_marginTop="16dp"
+                style="@style/TextAppearance.Material3.TitleSmall"
+                android:textColor="@color/md_theme_onSurfaceVariant"/>
+            <LinearLayout
+                android:id="@+id/layout_Security"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:background="@drawable/background_selector"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/security_sign_in"
+                    style="@style/TextAppearance.Material3.BodyLarge"
+                    android:layout_weight="1"
+                    android:textColor="@color/md_theme_onSurface_mediumContrast"
+                    />
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/switch_security"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:id="@+id/div1"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:id="@+id/change_PIN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:background="@drawable/background_selector"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/security_change_PIN"
+                    style="@style/TextAppearance.Material3.BodyLarge"
+                    android:textColor="@color/md_theme_onSurface_mediumContrast"
+                    />
+            </LinearLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:id="@+id/div2"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:id="@+id/delete_PIN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:background="@drawable/background_selector"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/security_delete_PIN"
+                    style="@style/TextAppearance.Material3.BodyLarge"
+                    android:textColor="@color/md_theme_onSurface_mediumContrast"
+                    />
+            </LinearLayout>
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_other"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:layout_marginTop="16dp"
+                style="@style/TextAppearance.Material3.TitleSmall"
+                android:textColor="@color/md_theme_onSurfaceVariant"
+                />
+
+            <LinearLayout
+                android:id="@+id/layoutFeedback"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/background_selector"
+                android:onClick="onLayoutFeedbackClick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="14dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="14dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textviewFeedback"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextAppearance.Material3.BodyLarge"
+                    android:textColor="@color/md_theme_onSurface_mediumContrast"
+                    android:text="@string/setting_feedback"/>
+
+                <TextView
+                    android:id="@+id/textviewSubFeedback"
+                    android:layout_width="wrap_content"
+                    style="@style/TextAppearance.Material3.BodyMedium"
+                    android:textColor="@color/md_theme_onSurfaceVariant"
+                    android:text="@string/setting_sub_feedback"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</FrameLayout>

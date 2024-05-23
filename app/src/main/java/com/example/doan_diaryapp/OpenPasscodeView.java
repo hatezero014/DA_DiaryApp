@@ -115,7 +115,7 @@ public class OpenPasscodeView extends BaseActivity {
                             sharedPreferences.edit().remove("passcode").apply();
                             NotificationService notificationService = new NotificationService(OpenPasscodeView.this);
                             notificationService.Add(new Notification(getCurrentTime(), getCurrentDay(), 6, null ));
-                            startActivity(new Intent(OpenPasscodeView.this, SettingActivity.class));
+                            //startActivity(new Intent(OpenPasscodeView.this, SettingActivity.class));
                             finish();
                         }
                     }
