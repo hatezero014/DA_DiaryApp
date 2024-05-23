@@ -30,6 +30,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                     .setSmallIcon(R.drawable.icon_noti)
                     .setContentTitle(context.getString(R.string.add_pocket_diary))
                     .setContentText(context.getString(R.string.add_pocket_diary_description))
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(context.getString(R.string.add_pocket_diary_description)))
                     .setAutoCancel(true)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setContentIntent(pendingIntent);

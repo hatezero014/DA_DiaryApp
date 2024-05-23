@@ -23,6 +23,7 @@ public class OpenPasscodeView extends BaseActivity {
     PasscodeView passcodeView;
     String action;
     SharedPreferences sharedPreferences;
+    Boolean passChange;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class OpenPasscodeView extends BaseActivity {
 
         action = getIntent().getStringExtra("action");
         sharedPreferences = getSharedPreferences("Passcode", MODE_PRIVATE);
+        passChange = sharedPreferences.getBoolean("passChange", false);
 
         boolean fromMainActivity = getIntent().getBooleanExtra("fromMainActivity", false);
 
@@ -74,16 +76,20 @@ public class OpenPasscodeView extends BaseActivity {
                     public void onSuccess(String number) {
                         Log.i("OpenPasscodeView", "Mật khẩu đúng, setpasscode");
                         sharedPreferences.edit().putString("passcode", number).apply();
-                        NotificationService notificationService = new NotificationService(OpenPasscodeView.this);
-                        notificationService.Add(new Notification(getCurrentTime(), getCurrentDay(), 4, null ));
+                        if(!passChange){
+                            NotificationService notificationService = new NotificationService(OpenPasscodeView.this);
+                            notificationService.Add(new Notification(getCurrentTime(), getCurrentDay(), 4, null ));
+                        }
+                        sharedPreferences.edit().putBoolean("passChange", false).apply();
                         Toast.makeText(getBaseContext(), R.string.loginAgain, Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(OpenPasscodeView.this, PasswordActivity.class));
+                        startActivity(new Intent(OpenPasscodeView.this, SettingActivity.class));
                         finish();
                     }
                 });
     }
 
     private void VerifyPassCode() {
+
         final String savedPasscode = sharedPreferences.getString("passcode", "");
         passcodeView.setPasscodeLength(4)
                 .setLocalPasscode(savedPasscode)
@@ -100,6 +106,7 @@ public class OpenPasscodeView extends BaseActivity {
                             Intent intent = new Intent(OpenPasscodeView.this, OpenPasscodeView.class);
                             NotificationService notificationService = new NotificationService(OpenPasscodeView.this);
                             notificationService.Add(new Notification(getCurrentTime(), getCurrentDay(), 5, null ));
+                            sharedPreferences.edit().putBoolean("passChange", true).apply();
                             intent.putExtra("action", "create");
                             startActivity(intent);
                             finish();
@@ -116,6 +123,7 @@ public class OpenPasscodeView extends BaseActivity {
     }
 
     private void VerifyPassword() {
+
         passcodeView.setPasscodeLength(4)
                 .setLocalPasscode(sharedPreferences.getString("passcode", ""))
                 .setListener(new PasscodeView.PasscodeViewListener() {
@@ -127,7 +135,8 @@ public class OpenPasscodeView extends BaseActivity {
                     @Override
                     public void onSuccess(String number) {
                         Intent intent = new Intent(OpenPasscodeView.this, MainActivity.class);
-
+                        boolean receivedBoolean = getIntent().getBooleanExtra("isChecked", true);
+                        sharedPreferences.edit().putBoolean("mainIsChecked", receivedBoolean).apply();
                         intent.putExtra("isCheckMainActivity", true);
                         startActivity(intent);
                         finish();

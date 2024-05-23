@@ -24,6 +24,7 @@ public class NotificationReceiver extends BroadcastReceiver {
                 .setSmallIcon(R.drawable.icon_noti)
                 .setContentTitle(context.getString(R.string.remind_notification))
                 .setContentText(context.getString(R.string.remind_notification_description))
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(context.getString(R.string.remind_notification_description)))
                 .setAutoCancel(true)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent);

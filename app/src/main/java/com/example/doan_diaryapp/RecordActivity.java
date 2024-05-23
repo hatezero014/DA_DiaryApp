@@ -1,6 +1,10 @@
 package com.example.doan_diaryapp;
 
+import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.ClipData;
 import android.content.Context;
@@ -13,7 +17,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -33,6 +39,8 @@ import androidx.activity.OnBackPressedCallback;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedDispatcher;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -53,6 +61,7 @@ import com.example.doan_diaryapp.Models.EntryPartner;
 import com.example.doan_diaryapp.Models.EntryPhoto;
 import com.example.doan_diaryapp.Models.EntryWeather;
 import com.example.doan_diaryapp.Models.ImportantDay;
+import com.example.doan_diaryapp.Models.Notification;
 import com.example.doan_diaryapp.Models.Partner;
 import com.example.doan_diaryapp.Models.Weather;
 import com.example.doan_diaryapp.Service.ActivityService;
@@ -64,6 +73,7 @@ import com.example.doan_diaryapp.Service.EntryPhotoService;
 import com.example.doan_diaryapp.Service.EntryService;
 import com.example.doan_diaryapp.Service.EntryWeatherService;
 import com.example.doan_diaryapp.Service.ImportantDayService;
+import com.example.doan_diaryapp.Service.NotificationService;
 import com.example.doan_diaryapp.Service.PartnerService;
 import com.example.doan_diaryapp.Service.WeatherService;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -128,6 +138,15 @@ public class RecordActivity extends BaseActivity {
     RecyclerView recyclerView1, recyclerView2, recyclerView3, recyclerView4;
     String language;
 
+    private SharedPreferences sharedPreferences1;
+    private Calendar calendar;
+    private AlarmManager alarmManager;
+    private PendingIntent pendingIntent;
+    private int selectedYear;
+    private int selectedMonth;
+    private int selectedDay;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,6 +157,14 @@ public class RecordActivity extends BaseActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        createNotificationChannel();
+        sharedPreferences1 = getSharedPreferences("currrentTime", MODE_PRIVATE);
+
+        if (sharedPreferences1.contains("hour") && sharedPreferences1.contains("minute")) {
+            selectedYear = sharedPreferences1.getInt("year", 0);
+            selectedMonth = sharedPreferences1.getInt("month", 0);
+            selectedDay = sharedPreferences1.getInt("day", 0);
+        }
 
         dispatcher = getOnBackPressedDispatcher();
         dispatcher.addCallback(this, new OnBackPressedCallback(true) {
@@ -618,6 +645,22 @@ public class RecordActivity extends BaseActivity {
                             String relativePath = saveImageToAppDirectory(RecordActivity.this, imgThird);
                             entryPhotoService.Add(new EntryPhoto(id, relativePath));
                         }
+                        try {
+                            if(isCheckFavorite) {
+                                NotificationService notificationService = new NotificationService(RecordActivity.this);
+                                notificationService.Add(new Notification(getCurrentTime(), getCurrentDay(), 2, null ));
+                            }
+                            else {
+                                NotificationService notificationService = new NotificationService(RecordActivity.this);
+                                notificationService.Add(new Notification(getCurrentTime(), getCurrentDay(), 1, null));
+                            }
+                        }
+
+                        catch (Exception e) {
+                            Toast.makeText(RecordActivity.this, R.string.record_toast_fail, Toast.LENGTH_SHORT).show();
+                            e.printStackTrace();
+                        }
+                        showTimePicker();
                     }
                     else {
                         int id = result.getId();
@@ -678,7 +721,22 @@ public class RecordActivity extends BaseActivity {
                             String relativePath = saveImageToAppDirectory(RecordActivity.this, imgThird);
                             entryPhotoService.Add(new EntryPhoto(id, relativePath));
                         }
+                        try {
+                            NotificationService notificationService = new NotificationService(RecordActivity.this);
+                            notificationService.DeleteById(Notification.class, id);
+                            if(isCheckFavorite) {
+                                notificationService.Add(new Notification(getCurrentTime(), getCurrentDay(), 8, null ));
+                            }
+                            else {
+                                notificationService.Add(new Notification(getCurrentTime(), getCurrentDay(), 7, null));
+                            }
+                        }
+                        catch (Exception e) {
+                            Toast.makeText(RecordActivity.this, R.string.record_toast_fail, Toast.LENGTH_SHORT).show();
+                            e.printStackTrace();
+                        }
                     }
+
                     Toast.makeText(RecordActivity.this, R.string.record_toast_success, Toast.LENGTH_SHORT).show();
                     finish();
                 }
@@ -1257,4 +1315,140 @@ public class RecordActivity extends BaseActivity {
 
         return "images/" + fileName;
     }
+
+    private final ActivityResultLauncher<Intent> requestExactAlarmPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    if (alarmManager.canScheduleExactAlarms()) {
+                        setAlarm();
+                    } else {
+                        Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+    private void checkAndRequestExactAlarmPermission() {
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (alarmManager.canScheduleExactAlarms()) {
+                setAlarm();
+            } else {
+                Intent intent = new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                requestExactAlarmPermissionLauncher.launch(intent);
+            }
+        } else {
+            setAlarm();
+        }
+    }
+
+    private void setAlarm() {
+        Intent intent = new Intent(this, NotificationReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+        if (calendar != null) {
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        } else {
+            Toast.makeText(this, "Please select a time first", Toast.LENGTH_SHORT).show();
+        }
+    }
+    private void cancelAlarm() {
+        if (pendingIntent != null) {
+            alarmManager.cancel(pendingIntent);
+            pendingIntent.cancel();
+        }
+    }
+
+    private void showTimePicker() {
+        cancelAlarm();
+        calendar = Calendar.getInstance();
+//        int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+//        int currentMinute = calendar.get(Calendar.MINUTE);
+        int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
+        int currentMonth = calendar.get(Calendar.MONTH) + 1;
+        int currentYear = calendar.get(Calendar.YEAR);
+//        int futureHour = currentHour;
+//        int futureMinute = currentMinute + 2;
+//        if(futureMinute>59){
+//            futureMinute = futureMinute-60;
+//            futureHour++;
+//            if(futureHour>23){
+//                futureHour=0;
+//            }
+//        }
+        int futureYear = currentYear;
+        int futureMonth = currentMonth;
+        int futureDay = currentDay + 7;
+
+        switch (currentMonth){
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:
+                if(futureDay>31){
+                    futureDay = futureDay -31;
+                    futureMonth++;
+                }
+                if(futureMonth>12){
+                    futureMonth = 1;
+                    futureYear++;
+                }
+                break;
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+                if(futureDay>30){
+                    futureDay = futureDay -30;
+                    futureMonth++;
+                }
+                break;
+            case 2:
+                if((currentYear % 4 == 0 && currentYear % 100 !=0) || currentYear % 400 ==0)
+                {
+                    if(futureDay>29){
+                        futureDay = futureDay -29;
+                        futureMonth++;
+                    }
+                }
+                else {
+                    if(futureDay>28){
+                        futureDay = futureDay -28;
+                        futureMonth++;
+                    }
+                }
+                break;
+        }
+        SharedPreferences.Editor editor = sharedPreferences1.edit();
+        editor.putInt("year", futureYear);
+        editor.putInt("month", futureMonth);
+        editor.putInt("day", futureDay);
+        editor.apply();
+        calendar.set(Calendar.YEAR, futureYear);
+        calendar.set(Calendar.MONTH, futureMonth - 1);
+        calendar.set(Calendar.DAY_OF_MONTH, futureDay);
+        calendar.set(Calendar.HOUR_OF_DAY, 20);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+//        String period = (futureHour >= 12) ? "PM" : "AM";
+        checkAndRequestExactAlarmPermission();
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.remind);
+            String description = getString(R.string.remind_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(getString(R.string.id_NotificationReceiver), name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
 }

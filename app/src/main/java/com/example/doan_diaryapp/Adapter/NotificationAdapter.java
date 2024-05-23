@@ -102,6 +102,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         else if(notification.getContent() == 6){
             holder.Content.setText(R.string.notification_6);
         }
+        else if(notification.getContent() == 7){
+            holder.Content.setText(R.string.notification_7);
+        }
+        else if(notification.getContent() == 8){
+            holder.Content.setText(R.string.notification_8);
+        }
     }
 
     @Override
