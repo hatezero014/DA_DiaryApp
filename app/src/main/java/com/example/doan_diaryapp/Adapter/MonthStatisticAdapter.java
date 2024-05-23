@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -32,7 +31,6 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
@@ -116,16 +114,14 @@ public class MonthStatisticAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
 
         private void setBarchartFormat(int trucX) {
-            barChart.setDescription(null);
+            barChart.getLegend().setEnabled(false);
+            barChart.getDescription().setEnabled(false);
             barChart.setScaleYEnabled(false); // tắt zoom trên cột Y
             barChart.setDoubleTapToZoomEnabled(false); // tắt chạm 2 lần để zoom
             barChart.setBackgroundColor(Color.parseColor("#00000000"));
             barChart.setExtraBottomOffset(6); // chỉnh margin cạnh dưới
             barChart.setExtraRightOffset(6);
-            barChart.getAxisRight().setDrawLabels(false);
-            barChart.getAxisRight().setAxisLineWidth(2);
-            barChart.getAxisRight().setDrawGridLines(false);
-            barChart.getAxisRight().setAxisLineColor(ContextCompat.getColor(context, R.color.statistics_grid));
+            barChart.getAxisRight().setEnabled(false);
 
             XAxis xAxis = barChart.getXAxis();
             xAxis.setAxisMinimum(1f);
@@ -274,7 +270,7 @@ public class MonthStatisticAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         public EmotionViewHolder(@NonNull View itemView) {
             super(itemView);
             context = itemView.getContext();
-            tv_emotion_type = itemView.findViewById(R.id.tv_emotion_type);
+            tv_emotion_type = itemView.findViewById(R.id.tv_most_choosen);
 
             img1 = itemView.findViewById(R.id.imageView1);
             tv1 = itemView.findViewById(R.id.tv_img1);
@@ -293,20 +289,20 @@ public class MonthStatisticAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
             if (emotionType.equals("Mood")) {
                 emotionCount.clear();
-                tv_emotion_type.setText(context.getString(R.string.mood));
+                tv_emotion_type.setText(context.getString(R.string.most_recorded_mood));
                 emotionCount = new Image().getMood(year, month, context);
 
             } else if (emotionType.equals("Activity")) {
                 emotionCount.clear();
-                tv_emotion_type.setText(context.getString(R.string.activity));
+                tv_emotion_type.setText(context.getString(R.string.most_recorded_activity));
                 emotionCount = new Image().getActivity(year, month, context);
             } else if (emotionType.equals("Partner")) {
                 emotionCount.clear();
-                tv_emotion_type.setText(context.getString(R.string.partner));
+                tv_emotion_type.setText(context.getString(R.string.most_recorded_partner));
                 emotionCount = new Image().getPartner(year, month, context);
             } else {
                 emotionCount.clear();
-                tv_emotion_type.setText(context.getString(R.string.weather));
+                tv_emotion_type.setText(context.getString(R.string.most_recorded_weather));
                 emotionCount = new Image().getWeather(year, month, context);
             }
 

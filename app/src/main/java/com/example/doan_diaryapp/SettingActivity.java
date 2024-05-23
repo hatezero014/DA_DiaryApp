@@ -56,9 +56,6 @@ public class SettingActivity extends BaseActivity {
     int selectedMinute;
     MaterialDivider div1, div2;
 
-
-
-
     private MaterialTimePicker materialTimePicker;
     private Calendar calendar;
     private AlarmManager alarmManager;
@@ -446,7 +443,5 @@ public class SettingActivity extends BaseActivity {
         String selectedTime = String.format("%02d:%02d", hour, minute);
         textViewNotificationAlarm.setText(selectedTime);
     }
-
-
 
 }

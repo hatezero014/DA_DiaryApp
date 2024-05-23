@@ -6,9 +6,25 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".NotificationApp"
-    android:layout_marginStart="20dp"
-    android:layout_marginBottom="20dp">
+    tools:context=".ui.notification.NotificationFragment"
+    style="@style/Theme.Material3.DayNight.NoActionBar">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            app:menu="@menu/toolbar_home"
+            app:title="@string/notification_title"
+            app:titleCentered="false" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="?attr/actionBarSize"
-                app:menu="@menu/toolbar_collection_and_stats"
+                app:menu="@menu/toolbar_home"
                 app:title="@string/title_collection"
                 app:titleCentered="false" />
 
@@ -75,15 +75,15 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="@string/important_days"
+            android:text="@string/important_records"
             android:textColor="@color/md_theme_onSurface"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button" />
 
 
-
         <com.example.doan_diaryapp.ui.collection.NonScrollListView
             android:id="@+id/ListDayQT"
+            android:layout_marginTop="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"

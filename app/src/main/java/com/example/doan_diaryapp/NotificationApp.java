@@ -1,8 +1,6 @@
 package com.example.doan_diaryapp;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -10,24 +8,19 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_diaryapp.Adapter.CategoryAdapter;
-import com.example.doan_diaryapp.Adapter.NotificationAdapter;
-import com.example.doan_diaryapp.Controllers.DataHolderController;
 import com.example.doan_diaryapp.Models.Category;
 import com.example.doan_diaryapp.Models.DayDistinct;
 import com.example.doan_diaryapp.Models.Notification;
 import com.example.doan_diaryapp.Service.NotificationService;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class NotificationApp extends BaseActivity {
@@ -40,7 +33,7 @@ public class NotificationApp extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_notification_app);
+        setContentView(R.layout.fragment_main_notification);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
