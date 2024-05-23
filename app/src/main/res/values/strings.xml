@@ -94,10 +94,10 @@
     <string name="record_toast_fail">Record failed!</string>
     <string name="record_alert_title">Exit confirmation</string>
     <string name="record_alert_message">Are you sure you want to exit?\nChanges will not be saved.</string>
-    <string name="record_toast_success">Record successful!</string>
+    <string name="record_toast_success">Recorded successfully!</string>
 
     <!--Other (remove)-->
-    <string name="by_month">By Month</string>
+    <string name="by_month">Month</string>
     <string name="entire_year">Year</string>
     <string name="custom">Custom</string>
     <string name="Go">Go</string>
@@ -190,7 +190,11 @@
     <string name="no_photo">There is no photo yet.\nLet\'s add some images to your diary.</string>
     <string name="no_important">There is currently no important record.</string>
     <string name="record_details_title">Record details</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="my_string_array">
+        <item></item>
+        <item>Item 2</item>
+        <item>Item 3</item>
+    </string-array>
 
 </resources>

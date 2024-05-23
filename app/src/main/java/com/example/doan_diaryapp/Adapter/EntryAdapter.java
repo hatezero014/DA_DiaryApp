@@ -42,11 +42,10 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
     public EntryAdapter(Context context, List<Entry> entries) {
         super(context, 0, entries);
     }
+
     public void setOnFavoriteClickListener(OnFavoriteClickListener listener) {
         this.favoriteClickListener = listener;
     }
-
-
 
 
     @Override
@@ -124,12 +123,12 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
             textViewDate.setText("");
             textViewNote.setText(getDayOfWeek(entry.getNote()));
 
-            textViewNote.setTextColor(Color.parseColor("#005138"));
+            textViewNote.setTextColor(getContext().getColor(R.color.md_theme_onSurfaceVariant));
             textViewDate.setVisibility(View.GONE);
             actionFavorite.setVisibility(View.GONE);
             textView.setVisibility(View.GONE);
-            textViewNote.setTypeface(textViewNote.getTypeface(), Typeface.BOLD);
             textViewNote.setGravity(Gravity.CENTER);
+            textViewNote.setTypeface(textViewNote.getTypeface(), Typeface.BOLD);
         }
 
 
@@ -215,6 +214,4 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
     public interface OnFavoriteClickListener {
         void onFavoriteClick(Entry entry);
     }
-
-
 }
