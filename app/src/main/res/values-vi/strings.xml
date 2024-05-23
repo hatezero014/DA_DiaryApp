@@ -63,7 +63,7 @@
     <!--  Collection-->
     <string name="recent_photos">Ảnh gần đây</string>
     <string name="see_more_photos">Xem thêm</string>
-    <string name="important_days">Ngày quan trọng</string>
+    <string name="important_records">Ngày quan trọng</string>
 
     <!--  Record  -->
     <string name="record">Nhật ký</string>
@@ -75,13 +75,13 @@
     <string name="record_sleep">Giấc ngủ</string>
     <string name="record_go_bed">Đi ngủ</string>
     <string name="record_wake_up">Thức dậy</string>
-    <string name="record_images">Bạn chưa thêm ảnh!</string>
+    <string name="record_images">Bạn chưa thêm ảnh</string>
     <string name="record_title_add_image">Số ảnh đã thêm %d/%d</string>
     <string name="select_time">Chọn thời gian</string>
     <string name="record_note">Ghi chú của bạn</string>
     <string name="record_title">Tiêu đề của bạn</string>
     <string name="record_allow_image">Bạn chỉ có thể chọn tối đa 3 ảnh</string>
-    <string name="record_alert_title">Xác nhận thoa</string>
+    <string name="record_alert_title">Xác nhận thoát</string>
     <string name="record_alert_message">Bạn có chắc muốn thoát không?\nCác thay đổi sẽ không được lưu.</string>
     <string name="record_done">Hoàn thành</string>
     <string name="record_toast_fail">Ghi nhật ký thất bại!</string>
@@ -97,12 +97,12 @@
 
     <string name="your_mood_chart">Biểu đồ tâm trạng của bạn</string>
     <string name="view_all">Xem tất cả</string>
-    <string name="choose_multiple">Chọn nhiều nhất</string>
+    <string name="most_recorded">Ghi nhiều nhất</string>
 
-    <string name="mood">Cảm xúc</string>
-    <string name="weather">Thời tiết</string>
-    <string name="activity">Hoạt động</string>
-    <string name="partner">Bạn đồng hành</string>
+    <string name="most_recorded_mood">Chọn nhiều nhất - Cảm xúc</string>
+    <string name="most_recorded_weather">Chọn nhiều nhất - Thời tiết</string>
+    <string name="most_recorded_activity">Chọn nhiều nhất - Hoạt động</string>
+    <string name="most_recorded_partner">Chọn nhiều nhất - Bạn đồng hành</string>
 
     <!--Month(Add diary)-->
     <string name="month_alert_title">Không thể tạo</string>
@@ -160,6 +160,13 @@
     <string name="security_sign_in_subtitle">Mã pin không thể khôi phục</string>
     <string name="security_change_PIN">Thay đổi mã PIN</string>
     <string name="security_delete_PIN">Xóa mã PIN</string>
+    <string name="firstInputTip">Nhập mã PIN có 4 số</string>
+    <string name="secondInputTip">Xác nhận mã PIN mới</string>
+    <string name="wrongLengthTip">Mã PIN có 4 số!</string>
+    <string name="wrongInputTip">Mã PIN không khớp</string>
+    <string name="correctInputTip">Mã PIN chính xác</string>
+    <string name="loginAgain">Please log in again</string>
+
 
     <!--  Image App  -->
     <string name="title_YourImage">Ảnh của bạn</string>
@@ -171,8 +178,6 @@
     <string name="fgm_overall_score">Điểm số tâm trạng: </string>
     <string name="fgm_Time">Thời gian: </string>
     <string name="fgm_Day"> ngày: </string>
-
-
 
 
     <string name="delete_diary">Thông báo</string>
@@ -188,7 +193,7 @@
     <string name="remind">Nhắc nhở</string>
     <string name="remind_description">Ứng dụng sẽ nhắc nhở khi bạn không vào ứng dụng quá lâu</string>
     <string name="remind_notification">Thông báo nhắc nhở</string>
-    <string name="remind_notification_desciption">Bạn đã quên tôi rồi sao! Hãy biến những kỷ niệm thành những chuyến đi đáng nhớ ngay hôm nay.</string>
+    <string name="remind_notification_description">Bạn đã quên tôi rồi sao! Hãy biến những kỷ niệm thành những chuyến đi đáng nhớ ngay hôm nay.</string>
     <string name="id_AlarmReceiver">idalarmreceiver</string>
     <string name="id_NotificationReceiver">idnotificationreceiver</string>
 
@@ -197,9 +202,9 @@
     <string name="from">Từ: </string>
     <string name="to">Đến: </string>
 
-
-    <string name="no_diary">Nhật ký trống rỗng.\nHãy tạo nhật ký của bạn</string>
-    <string name="no_photo">Chưa có ảnh nào.\nHãy tạo một mục nhật ký có chứa hình ảnh.</string>
-    <string name="no_important">Ngày nhật ký quan trọng trống rỗng.\nTạo một cuốn nhật ký quan trọng hoặc đánh dấu những nhật kí quan trọng.</string>
+    <string name="no_diary">Nhật kí trống rỗng.\nHãy tạo nhật ký của bạn</string>
+    <string name="no_photo">Chưa có ảnh nào.\nHãy thêm ảnh vào nhật kí của bạn.</string>
+    <string name="no_important">Chưa có nhật kí quan trọng.</string>
+    <string name="record_details_title">Thông tin chi tiết</string>
 
 </resources>

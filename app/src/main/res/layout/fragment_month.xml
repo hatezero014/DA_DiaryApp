@@ -28,8 +28,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:mcv_dateTextAppearance="@color/md_theme_surfaceContainerLowest"
-                />
+                app:mcv_selectionColor="@color/md_theme_primary"
+                app:mcv_dateTextAppearance="@color/md_theme_onSurface"/>
+<!--                app:mcv_dateTextAppearance="@color/md_theme_surfaceContainerLowest"-->
 
             <TextView
                 android:id="@+id/textView"
@@ -37,7 +38,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:lineSpacingMultiplier="1.3"
                 android:text="@string/no_record"
                 android:textColor="@color/md_theme_onSurfaceVariant"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -49,7 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/calendarView">
@@ -62,7 +62,7 @@
                 android:background="@drawable/border"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="32dp"
 
@@ -74,17 +74,5 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView >
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/ButtonAddMonth"
-        style="@style/ThemeOverlay.Material3.FloatingActionButton.Primary"
-        android:contentDescription="@string/add_record"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:src="@drawable/common_add_or_edit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

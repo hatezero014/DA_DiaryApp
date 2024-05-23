@@ -1,7 +1,9 @@
 package com.example.doan_diaryapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -32,7 +34,15 @@ public class OpenPasscodeView extends BaseActivity {
             getSupportActionBar().hide();
         }
 
+        Resources resources = getResources();
+
         passcodeView = findViewById(R.id.passcodeView1);
+        passcodeView.setFirstInputTip(resources.getString(R.string.firstInputTip))
+                .setSecondInputTip(resources.getString(R.string.secondInputTip))
+                .setWrongLengthTip(resources.getString(R.string.wrongLengthTip))
+                .setWrongInputTip(resources.getString(R.string.wrongInputTip))
+                .setCorrectInputTip(resources.getString(R.string.correctInputTip));
+
         action = getIntent().getStringExtra("action");
         sharedPreferences = getSharedPreferences("Passcode", MODE_PRIVATE);
 
@@ -62,10 +72,11 @@ public class OpenPasscodeView extends BaseActivity {
 
                     @Override
                     public void onSuccess(String number) {
-                        Log.i("OpenPasscodeView", "Mật khẩu đúng");
+                        Log.i("OpenPasscodeView", "Mật khẩu đúng, setpasscode");
                         sharedPreferences.edit().putString("passcode", number).apply();
                         NotificationService notificationService = new NotificationService(OpenPasscodeView.this);
                         notificationService.Add(new Notification(getCurrentTime(), getCurrentDay(), 4, null ));
+                        Toast.makeText(getBaseContext(), R.string.loginAgain, Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(OpenPasscodeView.this, PasswordActivity.class));
                         finish();
                     }
@@ -110,7 +121,6 @@ public class OpenPasscodeView extends BaseActivity {
                 .setListener(new PasscodeView.PasscodeViewListener() {
                     @Override
                     public void onFail() {
-
 //                        finish();
                     }
 

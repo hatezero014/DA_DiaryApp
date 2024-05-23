@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/md_theme_primary"
-        app:firstInputTip="Enter a passcode of 4 digits "
         app:correctStateColor="#71bb4d"
         app:wrongStateColor="#ea2b46"
         app:normalStateColor="#ffffff"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <solid android:color="@android:color/transparent"/> <!-- Nền trong suốt -->
-    <stroke android:width="2dp" android:color="#005138"/> <!-- Viền màu đen dày 2dp -->
+    <stroke android:width="1dp" android:color="@color/md_theme_outlineVariant"/> <!-- Viền màu đen dày 2dp -->
     <padding android:left="4dp" android:top="4dp" android:right="4dp" android:bottom="4dp"/> <!-- Padding -->
     <corners android:radius="8dp"/> <!-- Bo tròn góc -->
 </shape>

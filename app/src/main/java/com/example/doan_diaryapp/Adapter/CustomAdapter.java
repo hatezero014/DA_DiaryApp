@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,16 +22,12 @@ import com.example.doan_diaryapp.Service.EntryService;
 import com.example.doan_diaryapp.ShowEmojiActivity;
 import com.example.doan_diaryapp.ui.image.Image;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
@@ -42,7 +37,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 
 public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
@@ -289,7 +283,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         public EmotionViewHolder(@NonNull View itemView) {
             super(itemView);
-            tv_emotion_type = itemView.findViewById(R.id.tv_emotion_type);
+            tv_emotion_type = itemView.findViewById(R.id.tv_most_choosen);
 
             img1 = itemView.findViewById(R.id.imageView1);
             tv1 = itemView.findViewById(R.id.tv_img1);
@@ -307,20 +301,20 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             if (emotionType.equals("Mood")) {
                 emotionCount.clear();
-                tv_emotion_type.setText(mContext.getString(R.string.mood));
+                tv_emotion_type.setText(mContext.getString(R.string.most_recorded_mood));
                 emotionCount = new Image().getMoodCustom(byear, bmonth, ayear, amonth, mContext);
 
             } else if (emotionType.equals("Activity")) {
                 emotionCount.clear();
-                tv_emotion_type.setText(mContext.getString(R.string.activity));
+                tv_emotion_type.setText(mContext.getString(R.string.most_recorded_activity));
                 emotionCount = new Image().getActivityCustom(byear, bmonth, ayear, amonth, mContext);
             } else if (emotionType.equals("Partner")) {
                 emotionCount.clear();
-                tv_emotion_type.setText(mContext.getString(R.string.partner));
+                tv_emotion_type.setText(mContext.getString(R.string.most_recorded_partner));
                 emotionCount = new Image().getPartnerCustom(byear, bmonth, ayear, amonth, mContext);
             } else {
                 emotionCount.clear();
-                tv_emotion_type.setText(mContext.getString(R.string.weather));
+                tv_emotion_type.setText(mContext.getString(R.string.most_recorded_weather));
                 emotionCount = new Image().getWeatherCustom(byear, bmonth, ayear, amonth, mContext);
             }
 

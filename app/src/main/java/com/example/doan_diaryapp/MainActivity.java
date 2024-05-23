@@ -1,12 +1,10 @@
 package com.example.doan_diaryapp;
 
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -16,12 +14,16 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.doan_diaryapp.databinding.ActivityMainBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.Calendar;
+import java.util.Locale;
 
 
 public class MainActivity extends BaseActivity {
     SharedPreferences sharedPreferences;
     String passCode;
-
+    FloatingActionButton fab;
 
     private ActivityMainBinding binding;
     @Override
@@ -38,7 +40,7 @@ public class MainActivity extends BaseActivity {
 
         boolean receivedBoolean = getIntent().getBooleanExtra("isCheckMainActivity", false);
         passCode = sharedPreferences.getString("passcode", null);
-        if(passCode!=null && !receivedBoolean){
+        if(passCode != null && !receivedBoolean){
             Intent intent = new Intent(MainActivity.this, OpenPasscodeView.class);
             intent.putExtra("action", "verify");
             startActivity(intent);
@@ -49,11 +51,29 @@ public class MainActivity extends BaseActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_collection, R.id.navigation_analyze, R.id.navigation_setting)
+                R.id.navigation_home, R.id.navigation_collection, R.id.navigation_analyze, R.id.navigation_notification)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+
+        fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+                int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                int minute = calendar.get(Calendar.MINUTE);
+                int second = calendar.get(Calendar.SECOND);
+                Intent intent = new Intent(MainActivity.this, RecordActivity.class);
+                intent.putExtra("Date", String.format(Locale.ENGLISH,
+                        "%02d:%02d:%02d %02d-%02d-%04d", hour,minute,second,dayOfMonth, month+1, year));
+                startActivity(intent);
+            }
+        });
     }
 
     public void Setting_onClick(MenuItem item) {

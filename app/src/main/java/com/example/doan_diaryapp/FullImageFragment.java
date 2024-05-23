@@ -2,7 +2,6 @@
 package com.example.doan_diaryapp;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -14,7 +13,6 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -24,7 +22,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -121,7 +118,7 @@ public class FullImageFragment extends Fragment {
         entryPhotoService = new EntryPhotoService(getContext());
         entryService = new EntryService(getContext());
 
-        Entry entry = getLisEntry(file);
+        Entry entry = getListEntry(file);
         String title = getResources().getString(R.string.fgm_title) + " " + entry.getTitle();
         String note = getResources().getString(R.string.fgm_note) + " " + entry.getNote();
         String overall = getResources().getString(R.string.fgm_overall_score) + " " + entry.getOverallScore();
@@ -129,7 +126,7 @@ public class FullImageFragment extends Fragment {
         String[] days = timeAndDay.split(" ");
         String time = days[0];
         String day = days[1];
-        timeAndDay = getResources().getString(R.string.fgm_Time) + " " + time + " " + getResources().getString(R.string.fgm_Day) + " " + day;
+        timeAndDay = getResources().getString(R.string.fgm_Time) + " " + time + " " + day;
         strDetails = title + "\n" + note + "\n" + overall + "\n" + timeAndDay;
         titleShare = "[" + entry.getTitle() + "]" + "\n" + entry.getNote();
 
@@ -145,7 +142,7 @@ public class FullImageFragment extends Fragment {
         return view;
     }
 
-    private Entry getLisEntry(String imagePath) {
+    private Entry getListEntry(String imagePath) {
         String date = entryPhotoService.getDate(imagePath);
         return entryService.FindByDate(new Entry(), date);
     }
