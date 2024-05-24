@@ -214,6 +214,15 @@
     <string name="no_important">There is currently no important record.</string>
     <string name="record_details_title">Record details</string>
 
+    <string name="no_data_year">Statistics for this year are not yet available.\nPlease create a log to view them.</string>
+    <string name="no_data_month">Statistics for this month are not yet available.\nPlease create a log to view them.</string>
+    <string name="no_data_custom">Statistics for this value are not currently available.\nPlease create a log to view them.</string>
+    <string name="over_date">The value you selected is invalid, please select again to view the statistics.</string>
+
+    <string name="noti_custom_date">The start date cannot be greater than the end date.</string>
+    <string name="noti_custom_distance">The distance between values must not exceed 13 months.</string>
+    <string name="noti_month_selected">The value of the month you selected is greater than the current month value.</string>
+
     <string name="btn_search">Search</string>
     <string-array name="my_string_array">
         <item></item>

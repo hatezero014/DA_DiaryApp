@@ -214,4 +214,14 @@
     <string name="record_details_title">Thông tin chi tiết</string>
 
     <string name="btn_search">Tìm kiếm</string>
+
+    <string name="no_data_year">Thống kê năm này hiện tại chưa có.\nHãy tạo nhật ký để có thể xem nào.</string>
+    <string name="no_data_month">Thống kê tháng này hiện tại chưa có.\nHãy tạo nhật ký để có thể xem nào.</string>
+    <string name="no_data_custom">Giá trị này hiện tại không có thống kê.\nHãy tạo nhật ký để có thể xem nào. </string>
+    <string name="over_date">Giá trị bạn chọn không hợp lệ, vui lòng chọn lại để xem thống kê.</string>
+
+    <string name="noti_custom_date">Ngày bắt đầu không thể lớn hơn ngày kết thúc.</string>
+    <string name="noti_custom_distance">Khoảng cách giữa các giá trị không được vượt quá 13 tháng.</string>
+    <string name="noti_month_selected">Giá trị tháng bạn chọn lớn hơn giá trị tháng hiện tại.</string>
+
 </resources>

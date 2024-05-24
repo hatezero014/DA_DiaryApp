@@ -55,5 +55,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:textSize="20sp"
+        android:id="@+id/tv_statistic_month"
+        android:layout_marginTop="200dp"
+        android:textColor="@color/md_theme_onSurfaceVariant"
+        android:visibility="gone"
+        style="@style/TextAppearance.Material3.BodyMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="normal"
+        android:lineSpacingMultiplier="2"
+        android:gravity="center_horizontal"/>
     
 </LinearLayout>
