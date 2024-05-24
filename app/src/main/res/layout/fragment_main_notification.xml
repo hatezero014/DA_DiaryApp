@@ -9,29 +9,12 @@
     tools:context=".ui.notification.NotificationFragment"
     style="@style/Theme.Material3.DayNight.NoActionBar">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        >
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize"
-            app:menu="@menu/toolbar_home"
-            app:title="@string/notification_title"
-            app:titleCentered="false" />
-
-    </com.google.android.material.appbar.AppBarLayout>
-
     <androidx.recyclerview.widget.RecyclerView
         android:layout_marginStart="15dp"
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp" />
+        android:layout_marginTop="15dp" />
 
     <TextView
         android:textSize="20sp"

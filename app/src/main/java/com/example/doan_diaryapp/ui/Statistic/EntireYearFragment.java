@@ -13,11 +13,15 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.doan_diaryapp.Adapter.YearStatisticAdapter;
+import com.example.doan_diaryapp.Models.Entry;
 import com.example.doan_diaryapp.Models.Statistic;
 import com.example.doan_diaryapp.R;
+import com.example.doan_diaryapp.Service.EntryService;
 
+import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -28,6 +32,8 @@ public class EntireYearFragment extends Fragment {
     private RecyclerView recyclerView_year;
     private YearStatisticAdapter yearStatisticAdapter;
     private AutoCompleteTextView act_yyear;
+    private EntryService entryService;
+    private TextView tv_statistic_year;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -37,12 +43,30 @@ public class EntireYearFragment extends Fragment {
         act_yyear = view.findViewById(R.id.act_yyear);
         updateSpinnerYear(view);
 
+        entryService = new EntryService(getContext());
+
+        tv_statistic_year = view.findViewById(R.id.tv_statistic_year);
         recyclerView_year = view.findViewById(R.id.rcv_thong_ke_nam);
         yearStatisticAdapter = new YearStatisticAdapter(view.getContext());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
         recyclerView_year.setLayoutManager(linearLayoutManager);
         yearStatisticAdapter.setData(getListStatistic());
         recyclerView_year.setAdapter(yearStatisticAdapter);
+
+        String selectedYear = act_yyear.getText().toString();
+        int year = Integer.parseInt(selectedYear);
+        List<Entry> entryList = entryService.getOverallScoreByYear(year);
+
+        if(entryList.isEmpty()){
+            recyclerView_year.setVisibility(View.GONE);
+            tv_statistic_year.setVisibility(View.VISIBLE);
+            tv_statistic_year.setText(R.string.no_data_year);
+        }
+        else {
+            recyclerView_year.setVisibility(View.VISIBLE);
+            tv_statistic_year.setVisibility(View.GONE);
+        }
+
         return view;
     }
 
@@ -50,7 +74,7 @@ public class EntireYearFragment extends Fragment {
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         ArrayList<Integer> years = new ArrayList<>();
 
-        for(int i = 2000; i<=currentYear;i++){
+        for(int i = 2020; i<=currentYear;i++){
             years.add(i);
         }
 
@@ -109,7 +133,6 @@ public class EntireYearFragment extends Fragment {
         View view = getView();
         updateSpinnerYear(view);
 
-        recyclerView_year = view.findViewById(R.id.rcv_thong_ke_nam);
         yearStatisticAdapter = new YearStatisticAdapter(view.getContext());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
         recyclerView_year.setLayoutManager(linearLayoutManager);
@@ -117,5 +140,19 @@ public class EntireYearFragment extends Fragment {
         recyclerView_year.setAdapter(yearStatisticAdapter);
 
         yearStatisticAdapter.notifyDataSetChanged();
+
+        String selectedYear = act_yyear.getText().toString();
+        int year = Integer.parseInt(selectedYear);
+        List<Entry> entryList = entryService.getOverallScoreByYear(year);
+
+        if(entryList.isEmpty()){
+            recyclerView_year.setVisibility(View.GONE);
+            tv_statistic_year.setVisibility(View.VISIBLE);
+            tv_statistic_year.setText(R.string.no_data_year);
+        }
+        else {
+            recyclerView_year.setVisibility(View.VISIBLE);
+            tv_statistic_year.setVisibility(View.GONE);
+        }
     }
 }

@@ -15,11 +15,14 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.doan_diaryapp.Adapter.CustomAdapter;
 import com.example.doan_diaryapp.Models.Custom;
+import com.example.doan_diaryapp.Models.Entry;
 import com.example.doan_diaryapp.R;
+import com.example.doan_diaryapp.Service.EntryService;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,7 +37,8 @@ public class CustomFragment extends Fragment {
     private AutoCompleteTextView aMonth;
     private AutoCompleteTextView aYear;
     private Button btn_search;
-    private boolean isUpdating = false;
+    private TextView tv_statistic_custom;
+    private EntryService entryService;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,17 +50,40 @@ public class CustomFragment extends Fragment {
         aMonth = view.findViewById(R.id.act_amonth);
         aYear = view.findViewById(R.id.act_ayear);
         btn_search = view.findViewById(R.id.btn_search);
+        tv_statistic_custom = view.findViewById(R.id.tv_statistic_custom);
 
         setOnClickListener(btn_search);
 
         updateSpinnerYear(view);
         updateSpinnerMonth(view);
 
+        entryService = new EntryService(getContext());
+
         customAdapter = new CustomAdapter(view.getContext());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         customAdapter.setData(getListStatistic());
         recyclerView.setAdapter(customAdapter);
+
+        String selectedbYear = bYear.getText().toString();
+        int startYear = Integer.parseInt(selectedbYear);
+        String selectedbMonth = bMonth.getText().toString();
+        int startMonth = Integer.parseInt(selectedbMonth);
+        String selectedaYear = aYear.getText().toString();
+        int endYear = Integer.parseInt(selectedaYear);
+        String selectedaMonth = aMonth.getText().toString();
+        int endMonth = Integer.parseInt(selectedaMonth);
+
+        List<Entry> entryList = entryService.getOverallScoreCustom(startYear,startMonth,endYear,endMonth);
+        if(entryList.isEmpty()){
+            recyclerView.setVisibility(View.GONE);
+            tv_statistic_custom.setVisibility(View.VISIBLE);
+            tv_statistic_custom.setText(R.string.no_data_custom);
+        }
+        else{
+            recyclerView.setVisibility(View.VISIBLE);
+            tv_statistic_custom.setVisibility(View.GONE);
+        }
 
         return view;
     }
@@ -80,11 +107,21 @@ public class CustomFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(checkValidity()){
-                    customAdapter.setData(getListStatistic());
+                    if(checkData()){
+                        recyclerView.setVisibility(View.VISIBLE);
+                        tv_statistic_custom.setVisibility(View.GONE);
+                        customAdapter.setData(getListStatistic());
+                    }
+                    else{
+                        return;
+                    }
                 }
                 else
                 {
                     customAdapter.clearData();
+                    recyclerView.setVisibility(View.GONE);
+                    tv_statistic_custom.setVisibility(View.VISIBLE);
+                    tv_statistic_custom.setText(R.string.over_date);
                 }
             }
         });
@@ -102,7 +139,7 @@ public class CustomFragment extends Fragment {
 
         // Kiểm tra xem tháng và năm bắt đầu có lớn hơn tháng và năm kết thúc không
         if (byear > ayear || (byear == ayear && bmonth > amonth)) {
-            Toast.makeText(getContext(), "Ngày bắt đầu không thể lớn hơn ngày kết thúc.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.noti_custom_date), Toast.LENGTH_SHORT).show();
             // Đặt lại giá trị bắt đầu thành giá trị kết thúc
             return false;
         }
@@ -112,7 +149,7 @@ public class CustomFragment extends Fragment {
 
         // Kiểm tra nếu số tháng vượt quá 12
         if (totalMonths > 12) {
-            Toast.makeText(getContext(), "Khoảng cách giữa các giá trị không được vượt quá 13 tháng.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.noti_custom_distance), Toast.LENGTH_SHORT).show();
 
             return false;
         }
@@ -171,5 +208,53 @@ public class CustomFragment extends Fragment {
         list.add(new Custom(startYear, startMonth, endYear, endMonth, 2, "Weather"));
 
         return list;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Init();
+    }
+
+    public void Init(){
+        View view = getView();
+        setOnClickListener(btn_search);
+
+        updateSpinnerYear(view);
+        updateSpinnerMonth(view);
+
+        customAdapter = new CustomAdapter(view.getContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        customAdapter.setData(getListStatistic());
+        recyclerView.setAdapter(customAdapter);
+
+        customAdapter.notifyDataSetChanged();
+
+        boolean check = checkData();
+    }
+
+    public boolean checkData(){
+        String selectedbYear = bYear.getText().toString();
+        int startYear = Integer.parseInt(selectedbYear);
+        String selectedbMonth = bMonth.getText().toString();
+        int startMonth = Integer.parseInt(selectedbMonth);
+        String selectedaYear = aYear.getText().toString();
+        int endYear = Integer.parseInt(selectedaYear);
+        String selectedaMonth = aMonth.getText().toString();
+        int endMonth = Integer.parseInt(selectedaMonth);
+
+        List<Entry> entryList = entryService.getOverallScoreCustom(startYear,startMonth,endYear,endMonth);
+        if(entryList.isEmpty()){
+            recyclerView.setVisibility(View.GONE);
+            tv_statistic_custom.setVisibility(View.VISIBLE);
+            tv_statistic_custom.setText(R.string.no_data_custom);
+            return false;
+        }
+        else{
+            recyclerView.setVisibility(View.VISIBLE);
+            tv_statistic_custom.setVisibility(View.GONE);
+            return true;
+        }
     }
 }
