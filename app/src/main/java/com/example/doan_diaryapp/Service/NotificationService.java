@@ -42,5 +42,21 @@ public class NotificationService extends BaseService {
         }
         return objects;
     }
+
+    public <T> List<T> GetcountNotificationisnotRead(Class<T> clazz) {
+        db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from Notification where isRead=1", null);
+        List<T> objects = new ArrayList<>();
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                T object = CreateModelObjectFromCursor(clazz, cursor);
+                objects.add(object);
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+        return objects;
+    }
+
+
 }
 

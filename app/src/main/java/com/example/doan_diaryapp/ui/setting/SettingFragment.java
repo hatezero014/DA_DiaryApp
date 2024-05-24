@@ -32,15 +32,18 @@ import com.example.doan_diaryapp.AlarmReceiver;
 import com.example.doan_diaryapp.ChangeLanguage;
 import com.example.doan_diaryapp.ContactActivity;
 import com.example.doan_diaryapp.Models.Language;
+import com.example.doan_diaryapp.Models.Notification;
 import com.example.doan_diaryapp.OpenPasscodeView;
 import com.example.doan_diaryapp.R;
 import com.example.doan_diaryapp.Service.LanguageService;
+import com.example.doan_diaryapp.Service.NotificationService;
 import com.google.android.material.divider.MaterialDivider;
 import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 
 import java.util.Calendar;
+import java.util.List;
 
 
 public class SettingFragment extends Fragment {
@@ -61,6 +64,7 @@ public class SettingFragment extends Fragment {
     private PendingIntent pendingIntent;
 
     private LinearLayout layoutFeedback, layoutLanguage, layoutTheme;
+    TextView tv_count_notification;
 
     private final ActivityResultLauncher<Intent> requestExactAlarmPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -103,6 +107,7 @@ public class SettingFragment extends Fragment {
         layoutFeedback = view.findViewById(R.id.layoutFeedback);
         layoutLanguage = view.findViewById(R.id.layoutLanguage);
         layoutTheme = view.findViewById(R.id.layoutTheme);
+        tv_count_notification = view.findViewById(R.id.count_notification3);
 
         onLayoutThemeClick(layoutTheme);
         onLayoutLanguageClick(layoutLanguage);
@@ -127,6 +132,7 @@ public class SettingFragment extends Fragment {
         customDialog();
         setupSwitchNotification();
         setUpSwitchSecurity();
+        CountNotification();
 
         return view;
     }
@@ -362,6 +368,7 @@ public class SettingFragment extends Fragment {
         isPasscodeVerified = true;
         boolean isNotificationSwitchChecked = sharedPreferences1.getBoolean("notification_switch_state", false);
         switchNotification.setChecked(isNotificationSwitchChecked);
+        CountNotification();
     }
 
     private void openDiaLog()
@@ -445,5 +452,37 @@ public class SettingFragment extends Fragment {
     private void handleSelectedTime(int hour, int minute) {
         String selectedTime = String.format("%02d:%02d", hour, minute);
         textViewNotificationAlarm.setText(selectedTime);
+    }
+
+    public void CountNotification(){
+        List<Notification> list = getListNotification();
+        int countNotification = list.size();
+        int length = String.valueOf(countNotification).length();
+        if(countNotification==0 || list == null){
+            tv_count_notification.setVisibility(View.GONE);
+        }
+        else if(length == 1){
+            tv_count_notification.setPadding(20,3,20,3);
+            tv_count_notification.setVisibility(View.VISIBLE);
+            tv_count_notification.setText(String.valueOf(countNotification));
+        }
+        else if(length == 2){
+            tv_count_notification.setPadding(13,3,13,3);
+            tv_count_notification.setVisibility(View.VISIBLE);
+            tv_count_notification.setText(String.valueOf(countNotification));
+        }
+        else if(length > 2){
+            tv_count_notification.setPadding(6,3,6,3);
+            tv_count_notification.setVisibility(View.VISIBLE);
+            tv_count_notification.setText("99+");
+        }
+
+    }
+
+    public List<Notification> getListNotification(){
+        NotificationService notificationService = new NotificationService(getContext());
+        List<Notification> list = notificationService.GetcountNotificationisnotRead(Notification.class);
+        return list;
+
     }
 }

@@ -78,7 +78,7 @@ public class OpenPasscodeView extends BaseActivity {
                         sharedPreferences.edit().putString("passcode", number).apply();
                         if(!passChange){
                             NotificationService notificationService = new NotificationService(OpenPasscodeView.this);
-                            notificationService.Add(new Notification(getCurrentTime(), getCurrentDay(), 4, null ));
+                            notificationService.Add(new Notification(getCurrentTime(), getCurrentDay(), 4, null, 1 ));
                         }
                         sharedPreferences.edit().putBoolean("passChange", false).apply();
                         Toast.makeText(getBaseContext(), R.string.loginAgain, Toast.LENGTH_SHORT).show();
@@ -105,7 +105,7 @@ public class OpenPasscodeView extends BaseActivity {
                         if ("change".equals(action)) {
                             Intent intent = new Intent(OpenPasscodeView.this, OpenPasscodeView.class);
                             NotificationService notificationService = new NotificationService(OpenPasscodeView.this);
-                            notificationService.Add(new Notification(getCurrentTime(), getCurrentDay(), 5, null ));
+                            notificationService.Add(new Notification(getCurrentTime(), getCurrentDay(), 5, null, 1 ));
                             sharedPreferences.edit().putBoolean("passChange", true).apply();
                             intent.putExtra("action", "create");
                             startActivity(intent);
@@ -114,7 +114,7 @@ public class OpenPasscodeView extends BaseActivity {
                         else if ("delete".equals(action)) {
                             sharedPreferences.edit().remove("passcode").apply();
                             NotificationService notificationService = new NotificationService(OpenPasscodeView.this);
-                            notificationService.Add(new Notification(getCurrentTime(), getCurrentDay(), 6, null ));
+                            notificationService.Add(new Notification(getCurrentTime(), getCurrentDay(), 6, null, 1 ));
                             //startActivity(new Intent(OpenPasscodeView.this, SettingActivity.class));
                             finish();
                         }

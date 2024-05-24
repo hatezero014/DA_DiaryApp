@@ -151,4 +151,6 @@
     <color name="md_theme_surfaceContainerHighest_highContrast">#DEE4DE</color>
     <color name="primary_Pink">#C90CEA</color>
     <color name="darker_gray">#8A888A</color>
+    <color name="blue_notification">#0A89ED</color>
+    <color name="background_cardview_notification">#C3C0C0</color>
 </resources>
