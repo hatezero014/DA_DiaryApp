@@ -153,7 +153,30 @@ public class CustomFragment extends Fragment {
 
             return false;
         }
+
+        boolean isFeature_b = isFutureDate(byear, bmonth);
+        boolean isFeature_a = isFutureDate(ayear, amonth);
+
+        if(isFeature_a || isFeature_b){
+            Toast.makeText(getContext(),getString(R.string.noti_month_selected),Toast.LENGTH_SHORT).show();
+
+            return false;
+        }
+
         return true;
+    }
+
+    public boolean isFutureDate(int year, int month) {
+        // Get the current date
+        Calendar currentDate = Calendar.getInstance();
+
+        // Create a calendar object for the given date
+        Calendar givenDate = Calendar.getInstance();
+        givenDate.set(Calendar.YEAR, year);
+        givenDate.set(Calendar.MONTH, month - 1); // Calendar.MONTH is zero-based (0 = January)
+
+        // Compare the dates
+        return givenDate.after(currentDate);
     }
 
     private void updateSpinnerYear(View view) {
