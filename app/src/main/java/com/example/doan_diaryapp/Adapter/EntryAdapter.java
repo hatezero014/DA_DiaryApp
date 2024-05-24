@@ -142,7 +142,7 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
 
             textViewDate.setText("");
             textViewNote.setText(getDayOfWeek(entry.getNote()));
-            textViewNote.setTextColor(Color.parseColor("#005138"));
+            textViewNote.setTextColor(ContextCompat.getColor(getContext(), R.color.md_theme_onSurfaceVariant));
             textViewNote.setVisibility(View.VISIBLE);
             textViewDate.setVisibility(View.GONE);
             actionFavorite.setVisibility(View.GONE);
