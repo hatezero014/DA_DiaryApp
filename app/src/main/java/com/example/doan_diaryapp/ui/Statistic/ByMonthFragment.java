@@ -39,6 +39,7 @@ public class ByMonthFragment extends Fragment {
     private AutoCompleteTextView act_myear;
     private EntryService entryService;
     private TextView tv_statistic_month;
+    private List<Entry>entryList;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -62,21 +63,7 @@ public class ByMonthFragment extends Fragment {
         monthStatisticAdapter.setData(getListStatistic());
         recyclerView_month.setAdapter(monthStatisticAdapter);
 
-        String selectedYear = act_myear.getText().toString();
-        int year = Integer.parseInt(selectedYear);
-        String selectedMonth = act_mmonth.getText().toString();
-        int month = Integer.parseInt(selectedMonth);
-
-        List<Entry> entryList = entryService.getOverallScoreByMonthYear(month, year);
-        if(entryList.isEmpty()){
-            recyclerView_month.setVisibility(View.GONE);
-            tv_statistic_month.setVisibility(View.VISIBLE);
-            tv_statistic_month.setText(R.string.no_data_month);
-        }
-        else{
-            recyclerView_month.setVisibility(View.VISIBLE);
-            tv_statistic_month.setVisibility(View.GONE);
-        }
+        checkData();
 
         return view;
     }
@@ -96,8 +83,10 @@ public class ByMonthFragment extends Fragment {
         act_mmonth.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(checkMonthYear())
+                if(checkMonthYear()){
+                    checkData();
                     monthStatisticAdapter.setData(getListStatistic());
+                }
             }
         });
     }
@@ -151,8 +140,10 @@ public class ByMonthFragment extends Fragment {
         act_myear.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(checkMonthYear())
+                if(checkMonthYear()) {
+                    checkData();
                     monthStatisticAdapter.setData(getListStatistic());
+                }
             }
         });
 
@@ -211,12 +202,16 @@ public class ByMonthFragment extends Fragment {
 
         monthStatisticAdapter.notifyDataSetChanged();
 
+        checkData();
+    }
+
+    public void checkData(){
         String selectedYear = act_myear.getText().toString();
         int year = Integer.parseInt(selectedYear);
         String selectedMonth = act_mmonth.getText().toString();
         int month = Integer.parseInt(selectedMonth);
 
-        List<Entry> entryList = entryService.getOverallScoreByMonthYear(month, year);
+        entryList = entryService.getOverallScoreByMonthYear(month, year);
         if(entryList.isEmpty()){
             recyclerView_month.setVisibility(View.GONE);
             tv_statistic_month.setVisibility(View.VISIBLE);
