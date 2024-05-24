@@ -40,7 +40,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/icon_add"
         android:focusable="true"
-        android:visibility="gone"
+        android:visibility="visible"
         />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
