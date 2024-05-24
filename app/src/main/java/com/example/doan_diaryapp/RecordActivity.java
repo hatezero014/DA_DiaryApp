@@ -142,10 +142,6 @@ public class RecordActivity extends BaseActivity {
     private Calendar calendar;
     private AlarmManager alarmManager;
     private PendingIntent pendingIntent;
-    private int selectedYear;
-    private int selectedMonth;
-    private int selectedDay;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,12 +155,6 @@ public class RecordActivity extends BaseActivity {
         });
         createNotificationChannel();
         sharedPreferences1 = getSharedPreferences("currrentTime", MODE_PRIVATE);
-
-        if (sharedPreferences1.contains("hour") && sharedPreferences1.contains("minute")) {
-            selectedYear = sharedPreferences1.getInt("year", 0);
-            selectedMonth = sharedPreferences1.getInt("month", 0);
-            selectedDay = sharedPreferences1.getInt("day", 0);
-        }
 
         dispatcher = getOnBackPressedDispatcher();
         dispatcher.addCallback(this, new OnBackPressedCallback(true) {
@@ -263,6 +253,10 @@ public class RecordActivity extends BaseActivity {
         weatherGetAllIndex = new ArrayList<>();
         weatherGetAllDesc = new ArrayList<>();
         weatherGetAllIsActive = new ArrayList<>();
+        List<Integer> idEmotionList = new ArrayList<>();
+        List<Integer> idActivityList = new ArrayList<>();
+        List<Integer> idPartnerList = new ArrayList<>();
+        List<Integer> idWeatherList = new ArrayList<>();
 
         List<Emotion> emotionList = emotionService.GetAll(Emotion.class);
         for (Emotion emotion : emotionList) {
@@ -280,6 +274,7 @@ public class RecordActivity extends BaseActivity {
             }
             emotionGetAllIsActive.add(emotion.getId() - 1);
             imageMoodList.add(emotionIdR);
+            idEmotionList.add(emotion.getId());
         }
 
         List<Activity> activityList = activityService.GetAll(Activity.class);
@@ -298,6 +293,7 @@ public class RecordActivity extends BaseActivity {
             }
             activityGetAllIsActive.add(activity.getId() - 1);
             imageActivityList.add(activityIdR);
+            idActivityList.add(activity.getId());
         }
 
         List<Partner> partnerList = partnerService.GetAll(Partner.class);
@@ -316,6 +312,7 @@ public class RecordActivity extends BaseActivity {
             }
             partnerGetAllIsActive.add(partner.getId() - 1);
             imageCompanionList.add(partnerIdR);
+            idPartnerList.add(partner.getId());
         }
 
         List<Weather> weatherList = emotionService.GetAll(Weather.class);
@@ -334,12 +331,17 @@ public class RecordActivity extends BaseActivity {
             }
             weatherGetAllIsActive.add(weather.getId() - 1);
             imageWeatherList.add(weatherIdR);
+            idWeatherList.add(weather.getId());
         }
 
         imageMoodList.add(R.drawable.add);
         imageActivityList.add(R.drawable.add);
         imageCompanionList.add(R.drawable.add);
         imageWeatherList.add(R.drawable.add);
+        idEmotionList.add(-1);
+        idActivityList.add(-1);
+        idPartnerList.add(-1);
+        idWeatherList.add(-1);
 
         descMoodList = new ArrayList<>();
         for (Integer resourceId : imageMoodList) {
@@ -395,49 +397,37 @@ public class RecordActivity extends BaseActivity {
             activityIndexes = new ArrayList<>();
             for (EntryActivity entity : entryActivities) {
                 Activity activity = activityService.FindById(Activity.class, entity.getActivityId());
-                int index = imageActivityList.indexOf(getDrawableResourceId(this, activity.getIcon()));
-                if (index != -1) {
-                    activityIndexes.add(index);
-                }
+                activityIndexes.add(activity.getId());
             }
 
             emotionIndexes = new ArrayList<>();
             for (EntryEmotion entity : entryEmotions) {
                 Emotion emotion = emotionService.FindById(Emotion.class, entity.getEmotionId());
-                int index = imageMoodList.indexOf(getDrawableResourceId(this, emotion.getIcon()));
-                if (index != -1) {
-                    emotionIndexes.add(index);
-                }
+                emotionIndexes.add(emotion.getId());
             }
 
             partnerIndexes = new ArrayList<>();
             for (EntryPartner entity : entryPartners) {
                 Partner partner = partnerService.FindById(Partner.class, entity.getPartnerId());
-                int index = imageCompanionList.indexOf(getDrawableResourceId(this, partner.getIcon()));
-                if (index != -1) {
-                    partnerIndexes.add(index);
-                }
+                partnerIndexes.add(partner.getId());
             }
 
             weatherIndexes = new ArrayList<>();
             for (EntryWeather entity : entryWeathers) {
                 Weather weather = weatherService.FindById(Weather.class, entity.getWeatherId());
-                int index = imageWeatherList.indexOf(getDrawableResourceId(this, weather.getIcon()));
-                if (index != -1) {
-                    weatherIndexes.add(index);
-                }
+                weatherIndexes.add(weather.getId());
             }
 
-            adapter1 = new ImageRecordAdapter("Emotion", language, imageMoodList, descMoodList, emotionIndexes, emotionGetAllIndex, emotionGetAllDesc, emotionGetAllIsActive, emotionGetAllIcon, this, this);
+            adapter1 = new ImageRecordAdapter("Emotion", language, idEmotionList, imageMoodList, descMoodList, emotionIndexes, emotionGetAllIndex, emotionGetAllDesc, emotionGetAllIsActive, emotionGetAllIcon, this, this);
             recyclerView1.setAdapter(adapter1);
             recyclerView1.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
-            adapter2 = new ImageRecordAdapter("Activity", language, imageActivityList, descActivityList, activityIndexes, activityGetAllIndex, activityGetAllDesc, activityGetAllIsActive, activityGetAllIcon, this, this);
+            adapter2 = new ImageRecordAdapter("Activity", language, idActivityList, imageActivityList, descActivityList, activityIndexes, activityGetAllIndex, activityGetAllDesc, activityGetAllIsActive, activityGetAllIcon, this, this);
             recyclerView2.setAdapter(adapter2);
             recyclerView2.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
-            adapter3 = new ImageRecordAdapter("Partner", language, imageCompanionList, descPartnerList, partnerIndexes, partnerGetAllIndex, partnerGetAllDesc, partnerGetAllIsActive, partnerGetAllIcon, this, this);
+            adapter3 = new ImageRecordAdapter("Partner", language, idPartnerList, imageCompanionList, descPartnerList, partnerIndexes, partnerGetAllIndex, partnerGetAllDesc, partnerGetAllIsActive, partnerGetAllIcon, this, this);
             recyclerView3.setAdapter(adapter3);
             recyclerView3.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
-            adapter4 = new ImageRecordAdapter("Weather", language, imageWeatherList, descWeatherList, weatherIndexes, weatherGetAllIndex, weatherGetAllDesc, weatherGetAllIsActive, weatherGetAllIcon, this, this);
+            adapter4 = new ImageRecordAdapter("Weather", language, idWeatherList, imageWeatherList, descWeatherList, weatherIndexes, weatherGetAllIndex, weatherGetAllDesc, weatherGetAllIsActive, weatherGetAllIcon, this, this);
             recyclerView4.setAdapter(adapter4);
             recyclerView4.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
 
@@ -480,16 +470,16 @@ public class RecordActivity extends BaseActivity {
         }
         else
         {
-            adapter1 = new ImageRecordAdapter("Emotion", language, imageMoodList, descMoodList, null, emotionGetAllIndex, emotionGetAllDesc, emotionGetAllIsActive, emotionGetAllIcon, this, this);
+            adapter1 = new ImageRecordAdapter("Emotion", language, idEmotionList, imageMoodList, descMoodList, null, emotionGetAllIndex, emotionGetAllDesc, emotionGetAllIsActive, emotionGetAllIcon, this, this);
             recyclerView1.setAdapter(adapter1);
             recyclerView1.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
-            adapter2 = new ImageRecordAdapter("Activity", language, imageActivityList, descActivityList, null, activityGetAllIndex, activityGetAllDesc, activityGetAllIsActive, activityGetAllIcon, this, this);
+            adapter2 = new ImageRecordAdapter("Activity", language, idActivityList, imageActivityList, descActivityList, null, activityGetAllIndex, activityGetAllDesc, activityGetAllIsActive, activityGetAllIcon, this, this);
             recyclerView2.setAdapter(adapter2);
             recyclerView2.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
-            adapter3 = new ImageRecordAdapter("Partner", language, imageCompanionList, descPartnerList, null, partnerGetAllIndex, partnerGetAllDesc, partnerGetAllIsActive, partnerGetAllIcon, this, this);
+            adapter3 = new ImageRecordAdapter("Partner", language, idPartnerList, imageCompanionList, descPartnerList, null, partnerGetAllIndex, partnerGetAllDesc, partnerGetAllIsActive, partnerGetAllIcon, this, this);
             recyclerView3.setAdapter(adapter3);
             recyclerView3.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
-            adapter4 = new ImageRecordAdapter("Weather", language, imageWeatherList, descWeatherList, null, weatherGetAllIndex, weatherGetAllDesc, weatherGetAllIsActive, weatherGetAllIcon, this, this);
+            adapter4 = new ImageRecordAdapter("Weather", language, idWeatherList, imageWeatherList, descWeatherList, null, weatherGetAllIndex, weatherGetAllDesc, weatherGetAllIsActive, weatherGetAllIcon, this, this);
             recyclerView4.setAdapter(adapter4);
             recyclerView4.addItemDecoration(new GridSpacingItemDecoration(4, 60, false));
         }
@@ -590,15 +580,6 @@ public class RecordActivity extends BaseActivity {
                     List<Integer> selectedItems2 = adapter2.getSelectedItems();
                     List<Integer> selectedItems3 = adapter3.getSelectedItems();
                     List<Integer> selectedItems4 = adapter4.getSelectedItems();
-//                    Calendar calendar = Calendar.getInstance();
-//                    String[] dateInto = date.split(" ");
-//                    int day = Integer.parseInt(dateInto[1].split("-")[0]);
-//                    int month = Integer.parseInt(dateInto[1].split("-")[1]);
-//                    int year = Integer.parseInt(dateInto[1].split("-")[2]);
-//                    int hour = calendar.get(Calendar.HOUR_OF_DAY);
-//                    int minute = calendar.get(Calendar.MINUTE);
-//                    int second = calendar.get(Calendar.SECOND);
-//                    String currentTime = String.format(Locale.ENGLISH, "%02d:%02d:%02d %02d-%02d-%04d", hour, minute, second, day, month, year);
                     if (result == null) {
                         Entry entity = new Entry(title, notes, date, overallScore, wakeUp, sleep);
                         entryService.Add(entity);
@@ -608,27 +589,19 @@ public class RecordActivity extends BaseActivity {
 
                         int id = entryService.FindByDate(new Entry(), date).getId();
                         for (Integer imageId : selectedItems1) {
-                            String icon = getResources().getResourceEntryName(imageMoodList.get(imageId));
-                            Emotion emotion = emotionService.GetByIcon(new Emotion(), icon);
-                            entryEmotionService.Add(new EntryEmotion(id, emotion.getId()));
+                            entryEmotionService.Add(new EntryEmotion(id, imageId));
                         }
 
                         for (Integer imageId : selectedItems2) {
-                            String icon = getResources().getResourceEntryName(imageActivityList.get(imageId));
-                            Activity activity = activityService.GetByIcon(new Activity(), icon);
-                            entryActivityService.Add(new EntryActivity(id, activity.getId()));
+                            entryActivityService.Add(new EntryActivity(id, imageId));
                         }
 
                         for (Integer imageId : selectedItems3) {
-                            String icon = getResources().getResourceEntryName(imageCompanionList.get(imageId));
-                            Partner partner = partnerService.GetByIcon(new Partner(), icon);
-                            entryPartnerService.Add(new EntryPartner(id, partner.getId()));
+                            entryPartnerService.Add(new EntryPartner(id, imageId));
                         }
 
                         for (Integer imageId : selectedItems4) {
-                            String icon = getResources().getResourceEntryName(imageWeatherList.get(imageId));
-                            Weather weather = weatherService.GetByIcon(new Weather(), icon);
-                            entryWeatherService.Add(new EntryWeather(id, weather.getId()));
+                            entryWeatherService.Add(new EntryWeather(id, imageId));
                         }
 
                         if (imgFirst.getDrawable() != null) {
@@ -684,27 +657,19 @@ public class RecordActivity extends BaseActivity {
                         }
 
                         for (Integer imageId : selectedItems1) {
-                            String icon = getResources().getResourceEntryName(imageMoodList.get(imageId));
-                            Emotion emotion = emotionService.GetByIcon(new Emotion(), icon);
-                            entryEmotionService.Add(new EntryEmotion(id, emotion.getId()));
+                            entryEmotionService.Add(new EntryEmotion(id, imageId));
                         }
 
                         for (Integer imageId : selectedItems2) {
-                            String icon = getResources().getResourceEntryName(imageActivityList.get(imageId));
-                            Activity activity = activityService.GetByIcon(new Activity(), icon);
-                            entryActivityService.Add(new EntryActivity(id, activity.getId()));
+                            entryActivityService.Add(new EntryActivity(id, imageId));
                         }
 
                         for (Integer imageId : selectedItems3) {
-                            String icon = getResources().getResourceEntryName(imageCompanionList.get(imageId));
-                            Partner partner = partnerService.GetByIcon(new Partner(), icon);
-                            entryPartnerService.Add(new EntryPartner(id, partner.getId()));
+                            entryPartnerService.Add(new EntryPartner(id, imageId));
                         }
 
                         for (Integer imageId : selectedItems4) {
-                            String icon = getResources().getResourceEntryName(imageWeatherList.get(imageId));
-                            Weather weather = weatherService.GetByIcon(new Weather(), icon);
-                            entryWeatherService.Add(new EntryWeather(id, weather.getId()));
+                            entryWeatherService.Add(new EntryWeather(id, imageId));
                         }
 
                         if (imgFirst.getDrawable() != null) {
@@ -816,6 +781,7 @@ public class RecordActivity extends BaseActivity {
     }
 
     public void updateRecyclerView1() {
+        List<Integer> idEmotionList = new ArrayList<>();
         List<Integer> emotionGetAllIndex;
         List<String> emotionGetAllDesc;
         List<Integer> emotionGetAllIsActive;
@@ -842,8 +808,10 @@ public class RecordActivity extends BaseActivity {
             }
             emotionGetAllIsActive.add(emotion.getId() - 1);
             imageMoodList.add(emotionIdR);
+            idEmotionList.add(emotion.getId());
         }
         imageMoodList.add(R.drawable.add);
+        idEmotionList.add(-1);
         descMoodList = new ArrayList<>();
         for (Integer resourceId : imageMoodList) {
             String resourceName = getResourceName(resourceId);
@@ -853,22 +821,13 @@ public class RecordActivity extends BaseActivity {
                 desc = emotion.getDescVi();
             descMoodList.add(desc);
         }
-        emotionIndexes = new ArrayList<>();
-        if (result != null) {
-            ArrayList<EntryEmotion> entryEmotions = entryEmotionService.GetAllByEntryId(EntryEmotion.class, result.getId());
-            for (EntryEmotion entity : entryEmotions) {
-                Emotion emotion = emotionService.FindById(Emotion.class, entity.getEmotionId());
-                int index = imageMoodList.indexOf(getDrawableResourceId(this, emotion.getIcon()));
-                if (index != -1) {
-                    emotionIndexes.add(index);
-                }
-            }
-        }
-        adapter1 = new ImageRecordAdapter("Emotion", language, imageMoodList, descMoodList, emotionIndexes, emotionGetAllIndex, emotionGetAllDesc, emotionGetAllIsActive, emotionGetAllIcon, this, this);
+        emotionIndexes = adapter1.getSelectedItems();
+        adapter1 = new ImageRecordAdapter("Emotion", language, idEmotionList, imageMoodList, descMoodList, emotionIndexes, emotionGetAllIndex, emotionGetAllDesc, emotionGetAllIsActive, emotionGetAllIcon, this, this);
         recyclerView1.setAdapter(adapter1);
     }
 
     public void updateRecyclerView2() {
+        List<Integer> idActivityList = new ArrayList<>();
         List<Integer> activityGetAllIndex;
         List<String> activityGetAllDesc;
         List<Integer> activityGetAllIsActive;
@@ -894,8 +853,10 @@ public class RecordActivity extends BaseActivity {
             }
             activityGetAllIsActive.add(activity.getId() - 1);
             imageActivityList.add(activityIdR);
+            idActivityList.add(activity.getId());
         }
         imageActivityList.add(R.drawable.add);
+        idActivityList.add(-1);
         List<String> descActivityList = new ArrayList<>();
         for (Integer resourceId : imageActivityList) {
             String resourceName = getResourceName(resourceId);
@@ -905,21 +866,13 @@ public class RecordActivity extends BaseActivity {
                 desc = activity.getDescVi();
             descActivityList.add(desc);
         }
-        activityIndexes = new ArrayList<>();
-        if (result != null) {
-            ArrayList<EntryActivity> entryActivities = entryActivityService.GetAllByEntryId(EntryActivity.class, result.getId());            for (EntryActivity entity : entryActivities) {
-                Activity activity = activityService.FindById(Activity.class, entity.getActivityId());
-                int index = imageActivityList.indexOf(getDrawableResourceId(this, activity.getIcon()));
-                if (index != -1) {
-                    activityIndexes.add(index);
-                }
-            }
-        }
-        adapter2 = new ImageRecordAdapter("Activity", language, imageActivityList, descActivityList, activityIndexes, activityGetAllIndex, activityGetAllDesc, activityGetAllIsActive, activityGetAllIcon, this, this);
+        activityIndexes = adapter2.getSelectedItems();
+        adapter2 = new ImageRecordAdapter("Activity", language, idActivityList, imageActivityList, descActivityList, activityIndexes, activityGetAllIndex, activityGetAllDesc, activityGetAllIsActive, activityGetAllIcon, this, this);
         recyclerView2.setAdapter(adapter2);
     }
 
     public void updateRecyclerView3() {
+        List<Integer> idPartnerList = new ArrayList<>();
         List<Integer> partnerGetAllIndex;
         List<Integer> partnerGetAllIsActive;
         List<String> partnerGetAllDesc;
@@ -945,8 +898,10 @@ public class RecordActivity extends BaseActivity {
             }
             partnerGetAllIsActive.add(partner.getId() - 1);
             imageCompanionList.add(partnerIdR);
+            idPartnerList.add(partner.getId());
         }
         imageCompanionList.add(R.drawable.add);
+        idPartnerList.add(-1);
         List<String> descPartnerList = new ArrayList<>();
         for (Integer resourceId : imageCompanionList) {
             String resourceName = getResourceName(resourceId);
@@ -956,22 +911,13 @@ public class RecordActivity extends BaseActivity {
                 desc = partner.getDescVi();
             descPartnerList.add(desc);
         }
-        if (result != null) {
-            ArrayList<EntryPartner> entryPartners = entryPartnerService.GetAllByEntryId(EntryPartner.class, result.getId());
-            partnerIndexes = new ArrayList<>();
-            for (EntryPartner entity : entryPartners) {
-                Partner partner = partnerService.FindById(Partner.class, entity.getPartnerId());
-                int index = imageCompanionList.indexOf(getDrawableResourceId(this, partner.getIcon()));
-                if (index != -1) {
-                    partnerIndexes.add(index);
-                }
-            }
-        }
-        adapter3 = new ImageRecordAdapter("Partner", language, imageCompanionList, descPartnerList, partnerIndexes, partnerGetAllIndex, partnerGetAllDesc, partnerGetAllIsActive, partnerGetAllIcon, this, this);
+        partnerIndexes = adapter3.getSelectedItems();
+        adapter3 = new ImageRecordAdapter("Partner", language, idPartnerList, imageCompanionList, descPartnerList, partnerIndexes, partnerGetAllIndex, partnerGetAllDesc, partnerGetAllIsActive, partnerGetAllIcon, this, this);
         recyclerView3.setAdapter(adapter3);
     }
 
     public void updateRecyclerView4() {
+        List<Integer> idWeatherList = new ArrayList<>();
         List<Integer> weatherGetAllIndex;
         List<String> weatherGetAllDesc;
         List<Integer> weatherGetAllIsActive;
@@ -997,8 +943,10 @@ public class RecordActivity extends BaseActivity {
             }
             weatherGetAllIsActive.add(weather.getId() - 1);
             imageWeatherList.add(weatherIdR);
+            idWeatherList.add(weather.getId());
         }
         imageWeatherList.add(R.drawable.add);
+        idWeatherList.add(-1);
         List<String> descWeatherList = new ArrayList<>();
         for (Integer resourceId : imageWeatherList) {
             String resourceName = getResourceName(resourceId);
@@ -1008,18 +956,8 @@ public class RecordActivity extends BaseActivity {
                 desc = weather.getDescVi();
             descWeatherList.add(desc);
         }
-        if (result != null) {
-            ArrayList<EntryWeather> entryWeathers = entryWeatherService.GetAllByEntryId(EntryWeather.class, result.getId());
-            weatherIndexes = new ArrayList<>();
-            for (EntryWeather entity : entryWeathers) {
-                Weather weather = weatherService.FindById(Weather.class, entity.getWeatherId());
-                int index = imageWeatherList.indexOf(getDrawableResourceId(this, weather.getIcon()));
-                if (index != -1) {
-                    weatherIndexes.add(index);
-                }
-            }
-        }
-        adapter4 = new ImageRecordAdapter("Weather", language, imageWeatherList, descWeatherList, weatherIndexes, weatherGetAllIndex, weatherGetAllDesc, weatherGetAllIsActive, weatherGetAllIcon, this, this);
+        weatherIndexes = adapter4.getSelectedItems();
+        adapter4 = new ImageRecordAdapter("Weather", language, idWeatherList, imageWeatherList, descWeatherList, weatherIndexes, weatherGetAllIndex, weatherGetAllDesc, weatherGetAllIsActive, weatherGetAllIcon, this, this);
         recyclerView4.setAdapter(adapter4);
     }
 
@@ -1036,10 +974,6 @@ public class RecordActivity extends BaseActivity {
 
     private String getResourceName(int resourceId) {
         return getResources().getResourceEntryName(resourceId);
-    }
-
-    private int getDrawableResourceId(Context context, String drawableName) {
-        return context.getResources().getIdentifier(drawableName, "drawable", context.getPackageName());
     }
 
     void showSnackBar(String content) {
@@ -1120,8 +1054,6 @@ public class RecordActivity extends BaseActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_addphoto) {
-            // showSnackBar(getString(R.string.record_allow_image));
-
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
             intent.setType("image/*");
             intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
@@ -1138,10 +1070,7 @@ public class RecordActivity extends BaseActivity {
             if (isSelected) {
                 isCheckFavorite = true;
                 item.setIcon(R.drawable.state_filled_record_star);
-                //importantDayService.Add(new ImportantDay(date));
             } else {
-                //int idDay = importantDayService.FindByDate(new ImportantDay(), date).getId();
-                //importantDayService.DeleteById(ImportantDay.class, idDay);
                 item.setIcon(R.drawable.state_outlined_record_star);
                 isCheckFavorite = false;
             }
@@ -1210,8 +1139,7 @@ public class RecordActivity extends BaseActivity {
                     && countPartner == selectedItems3.size()
                     && countWeather == selectedItems4.size()) {
                 for (Integer imageId : selectedItems1) {
-                    String icon = getResources().getResourceEntryName(imageMoodList.get(imageId));
-                    Emotion emotion = emotionService.GetByIcon(new Emotion(), icon);
+                    Emotion emotion = emotionService.FindById(Emotion.class, imageId);
                     if (emotion.IsActive == 0)
                         continue;
                     if (entryEmotionService.FindByEntryIdAndEmotionId(EntryEmotion.class, entryId, emotion.getId()) == null) {
@@ -1221,8 +1149,7 @@ public class RecordActivity extends BaseActivity {
                 }
 
                 for (Integer imageId : selectedItems2) {
-                    String icon = getResources().getResourceEntryName(imageActivityList.get(imageId));
-                    Activity activity = activityService.GetByIcon(new Activity(), icon);
+                    Activity activity = activityService.FindById(Activity.class, imageId);
                     if (activity.IsActive == 0)
                         continue;
                     if (entryActivityService.FindByEntryIdAndActivityId(EntryActivity.class, entryId, activity.getId()) == null) {
@@ -1232,8 +1159,7 @@ public class RecordActivity extends BaseActivity {
                 }
 
                 for (Integer imageId : selectedItems3) {
-                    String icon = getResources().getResourceEntryName(imageCompanionList.get(imageId));
-                    Partner partner = partnerService.GetByIcon(new Partner(), icon);
+                    Partner partner = partnerService.FindById(Partner.class, imageId);
                     if (partner.IsActive == 0)
                         continue;
                     if (entryPartnerService.FindByEntryIdAndPartnerId(EntryPartner.class, entryId, partner.getId()) == null) {
@@ -1243,8 +1169,7 @@ public class RecordActivity extends BaseActivity {
                 }
 
                 for (Integer imageId : selectedItems4) {
-                    String icon = getResources().getResourceEntryName(imageWeatherList.get(imageId));
-                    Weather weather = weatherService.GetByIcon(new Weather(), icon);
+                    Weather weather = weatherService.FindById(Weather.class, imageId);
                     if (weather.IsActive == 0)
                         continue;
                     if (entryWeatherService.FindByEntryIdAndWeatherId(EntryWeather.class, entryId, weather.getId()) == null) {
@@ -1434,7 +1359,6 @@ public class RecordActivity extends BaseActivity {
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
 
-//        String period = (futureHour >= 12) ? "PM" : "AM";
         checkAndRequestExactAlarmPermission();
     }
 
