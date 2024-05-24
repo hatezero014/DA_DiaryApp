@@ -112,7 +112,8 @@ public class FullImageView extends BaseActivity implements FullImageFragment.OnP
                 if (state == ViewPager2.SCROLL_STATE_IDLE) {
                     floatingActionButtonAdd.setVisibility(View.GONE);
                 } else if (state == ViewPager2.SCROLL_STATE_DRAGGING || state == ViewPager2.SCROLL_STATE_SETTLING) {
-                    floatingActionButtonAdd.setVisibility(View.VISIBLE);
+                    floatingActionButtonAdd.
+                            setVisibility(View.VISIBLE);
                 }
             }
         });

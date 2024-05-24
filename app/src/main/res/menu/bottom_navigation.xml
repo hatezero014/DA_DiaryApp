@@ -20,8 +20,8 @@
         android:title="@string/title_analyze" />
 
     <item
-        android:id="@+id/navigation_notification"
-        android:icon="@drawable/icon_noti"
-        android:title="@string/title_notification" />
+        android:id="@+id/navigation_setting"
+        android:icon="@drawable/common_settings"
+        android:title="@string/title_setting" />
 
 </menu>

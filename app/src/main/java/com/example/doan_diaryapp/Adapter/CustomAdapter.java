@@ -56,6 +56,13 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         notifyDataSetChanged();
     }
 
+    public void clearData(){
+        if(mStatistic != null){
+            mStatistic.clear();
+            notifyDataSetChanged();
+        }
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

@@ -23,11 +23,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.doan_diaryapp.Adapter.EntryAdapter;
 import com.example.doan_diaryapp.Models.Entry;
 import com.example.doan_diaryapp.Models.ImportantDay;
+import com.example.doan_diaryapp.Models.Notification;
 import com.example.doan_diaryapp.R;
 import com.example.doan_diaryapp.RecordActivity;
 import com.example.doan_diaryapp.Service.EntryPhotoService;
 import com.example.doan_diaryapp.Service.EntryService;
 import com.example.doan_diaryapp.Service.ImportantDayService;
+import com.example.doan_diaryapp.Service.NotificationService;
 import com.example.doan_diaryapp.YourImagesInApp;
 import com.example.doan_diaryapp.databinding.FragmentCollectionBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -50,6 +52,7 @@ public class CollectionFragment extends Fragment {
     private EntryPhotoService entryPhotoService;
 
     EntryService mEntryService;
+    TextView tv_count_notification;
 
 
 
@@ -72,6 +75,7 @@ public class CollectionFragment extends Fragment {
         } else {
             textView1.setVisibility(View.GONE);
         }
+        CountNotification();
 
     }
 
@@ -100,7 +104,7 @@ public class CollectionFragment extends Fragment {
         }
 
 
-
+        tv_count_notification = view.findViewById(R.id.count_notification);
         mListView = view.findViewById(R.id.ListDayQT);
         importantDayService = new ImportantDayService(getContext());
         List<Entry> entryList = importantDayService.getEntriesFromDatabaseQT();
@@ -120,6 +124,7 @@ public class CollectionFragment extends Fragment {
                 updateListView(view);
             }
         });
+        CountNotification();
 
         return view;
     }
@@ -213,4 +218,38 @@ public class CollectionFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+    public void CountNotification(){
+        List<Notification> list = getListNotification();
+        int countNotification = list.size();
+        int length = String.valueOf(countNotification).length();
+        if(countNotification==0 || list == null){
+            tv_count_notification.setVisibility(View.GONE);
+        }
+        else if(length == 1){
+            tv_count_notification.setPadding(20,3,20,3);
+            tv_count_notification.setVisibility(View.VISIBLE);
+            tv_count_notification.setText(String.valueOf(countNotification));
+        }
+        else if(length == 2){
+            tv_count_notification.setPadding(13,3,13,3);
+            tv_count_notification.setVisibility(View.VISIBLE);
+            tv_count_notification.setText(String.valueOf(countNotification));
+        }
+        else if(length > 2){
+            tv_count_notification.setPadding(6,3,6,3);
+            tv_count_notification.setVisibility(View.VISIBLE);
+            tv_count_notification.setText("99+");
+        }
+
+    }
+
+    public List<Notification> getListNotification(){
+        NotificationService notificationService = new NotificationService(getContext());
+        List<Notification> list = notificationService.GetcountNotificationisnotRead(Notification.class);
+        return list;
+
+    }
+
+
 }

@@ -12,12 +12,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ListPopupWindow;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.doan_diaryapp.Adapter.MonthStatisticAdapter;
+import com.example.doan_diaryapp.Models.Entry;
 import com.example.doan_diaryapp.Models.Statistic;
 import com.example.doan_diaryapp.R;
+import com.example.doan_diaryapp.Service.EntryService;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import java.lang.reflect.Field;
@@ -30,10 +35,11 @@ public class ByMonthFragment extends Fragment {
 
     private RecyclerView recyclerView_month;
     private MonthStatisticAdapter monthStatisticAdapter;
-    private Spinner spn_yearm;
-    private Spinner spn_monthm;
-
-
+    private AutoCompleteTextView act_mmonth;
+    private AutoCompleteTextView act_myear;
+    private EntryService entryService;
+    private TextView tv_statistic_month;
+    private List<Entry>entryList;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -41,18 +47,24 @@ public class ByMonthFragment extends Fragment {
         View view =  lf.inflate(R.layout.fragment_by_month, container, false); //pass the correct layout name for the fragment
 
         recyclerView_month = view.findViewById(R.id.rcv_thong_ke_thang);
+        tv_statistic_month = view.findViewById(R.id.tv_statistic_month);
 
-        spn_yearm = view.findViewById(R.id.spn_yearm);
-        spn_monthm = view.findViewById(R.id.spn_monthm);
+        act_mmonth = view.findViewById(R.id.act_mmonth);
+        act_myear = view.findViewById(R.id.act_myear);
 
         updateSpinnerYear(view);
         updateSpinnerMonth(view);
+
+        entryService = new EntryService(getContext());
 
         monthStatisticAdapter = new MonthStatisticAdapter(view.getContext());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
         recyclerView_month.setLayoutManager(linearLayoutManager);
         monthStatisticAdapter.setData(getListStatistic());
         recyclerView_month.setAdapter(monthStatisticAdapter);
+
+        checkData();
+
         return view;
     }
 
@@ -62,46 +74,79 @@ public class ByMonthFragment extends Fragment {
             aMonth.add(i);
         }
 
-        ArrayAdapter<Integer> adapterMonth = new ArrayAdapter<>(container.getContext(), android.R.layout.simple_spinner_item,aMonth);
-        adapterMonth.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spn_monthm.setAdapter(adapterMonth);
-        spn_monthm.setSelection(Calendar.getInstance().get(Calendar.MONTH));
-        spn_monthm.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                monthStatisticAdapter.setData(getListStatistic());
-            }
+        ArrayAdapter<Integer> adapterMonth = new ArrayAdapter<>(container.getContext(), R.layout.item_drop_down, aMonth);
+        act_mmonth.setAdapter(adapterMonth);
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+        act_mmonth.setText(String.valueOf(Calendar.getInstance().get(Calendar.MONTH)+1),false);
 
+        prevMonth = Calendar.getInstance().get(Calendar.MONTH)+1;
+        act_mmonth.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(checkMonthYear()){
+                    checkData();
+                    monthStatisticAdapter.setData(getListStatistic());
+                }
             }
         });
+    }
+
+    private int prevMonth, prevYear;
+    public boolean checkMonthYear(){
+        String selectedYear = act_myear.getText().toString();
+        int year = Integer.parseInt(selectedYear);
+        String selectedMonth = act_mmonth.getText().toString();
+        int month = Integer.parseInt(selectedMonth);
+
+        boolean isFeature = isFutureDate(year, month);
+        if(isFeature){
+            Toast.makeText(getContext(),getString(R.string.noti_month_selected),Toast.LENGTH_SHORT).show();
+            act_mmonth.setText(String.valueOf(prevMonth),false);
+            act_myear.setText(String.valueOf(prevYear),false);
+            return false;
+        }
+        prevMonth = month;
+        prevYear = year;
+        return true;
+    }
+
+    public boolean isFutureDate(int year, int month) {
+        // Get the current date
+        Calendar currentDate = Calendar.getInstance();
+
+        // Create a calendar object for the given date
+        Calendar givenDate = Calendar.getInstance();
+        givenDate.set(Calendar.YEAR, year);
+        givenDate.set(Calendar.MONTH, month - 1); // Calendar.MONTH is zero-based (0 = January)
+
+        // Compare the dates
+        return givenDate.after(currentDate);
     }
 
     private void updateSpinnerYear(View container) {
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         ArrayList<Integer> years = new ArrayList<>();
 
-        for(int i = 2000; i <=currentYear;i++){
+        for(int i = 2020; i <=currentYear;i++){
             years.add(i);
         }
 
-        ArrayAdapter<Integer> adapterYear = new ArrayAdapter<Integer>(container.getContext(), android.R.layout.simple_spinner_item,years);
+        ArrayAdapter<Integer> adapterYear = new ArrayAdapter<>(container.getContext(), R.layout.item_drop_down,years);
+        act_myear.setAdapter(adapterYear);
 
-        adapterYear.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spn_yearm.setAdapter(adapterYear);
-        spn_yearm.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        act_myear.setText(String.valueOf(currentYear),false);
+        prevYear = Calendar.getInstance().get(Calendar.YEAR);
+
+        act_myear.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                monthStatisticAdapter.setData(getListStatistic());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(checkMonthYear()) {
+                    checkData();
+                    monthStatisticAdapter.setData(getListStatistic());
+                }
             }
         });
+
         setDefaultYear(adapterYear);
     }
 
@@ -118,13 +163,15 @@ public class ByMonthFragment extends Fragment {
             adapterYear.add(currentYear);
             adapterYear.notifyDataSetChanged();
         }
-        spn_yearm.setSelection(adapterYear.getPosition(currentYear));
+        act_myear.setText(String.valueOf(currentYear),false);
     }
 
     private List<Statistic> getListStatistic() {
         List<Statistic> mStatistic = new ArrayList<>();
-        int month = (Integer)spn_monthm.getSelectedItem();
-        int year = (Integer)spn_yearm.getSelectedItem();
+        String selectedYear = act_myear.getText().toString();
+        int year = Integer.parseInt(selectedYear);
+        String selectedMonth = act_mmonth.getText().toString();
+        int month = Integer.parseInt(selectedMonth);
         mStatistic.clear();
         mStatistic.add(new Statistic(year,month,1,null));
         mStatistic.add(new Statistic(year,month,2,"Mood"));
@@ -135,5 +182,44 @@ public class ByMonthFragment extends Fragment {
         return mStatistic;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Init();
+    }
 
+    public void Init(){
+        View view = getView();
+
+        updateSpinnerYear(view);
+        updateSpinnerMonth(view);
+
+        monthStatisticAdapter = new MonthStatisticAdapter(view.getContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
+        recyclerView_month.setLayoutManager(linearLayoutManager);
+        monthStatisticAdapter.setData(getListStatistic());
+        recyclerView_month.setAdapter(monthStatisticAdapter);
+
+        monthStatisticAdapter.notifyDataSetChanged();
+
+        checkData();
+    }
+
+    public void checkData(){
+        String selectedYear = act_myear.getText().toString();
+        int year = Integer.parseInt(selectedYear);
+        String selectedMonth = act_mmonth.getText().toString();
+        int month = Integer.parseInt(selectedMonth);
+
+        entryList = entryService.getOverallScoreByMonthYear(month, year);
+        if(entryList.isEmpty()){
+            recyclerView_month.setVisibility(View.GONE);
+            tv_statistic_month.setVisibility(View.VISIBLE);
+            tv_statistic_month.setText(R.string.no_data_month);
+        }
+        else{
+            recyclerView_month.setVisibility(View.VISIBLE);
+            tv_statistic_month.setVisibility(View.GONE);
+        }
+    }
 }

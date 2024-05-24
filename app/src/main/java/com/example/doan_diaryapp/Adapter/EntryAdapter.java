@@ -132,6 +132,7 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
             int color = ContextCompat.getColor(getContext(), R.color.md_theme_onSurfaceVariant);
             textViewNote.setTextColor(color);
             textViewDate.setVisibility(View.VISIBLE);
+            textViewNote.setVisibility(View.GONE);
             actionFavorite.setVisibility(View.VISIBLE);
             actionShare.setVisibility(View.VISIBLE);
             textView.setVisibility(View.VISIBLE);
@@ -141,8 +142,8 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
 
             textViewDate.setText("");
             textViewNote.setText(getDayOfWeek(entry.getNote()));
-
-            textViewNote.setTextColor(Color.parseColor("#005138"));
+            textViewNote.setTextColor(ContextCompat.getColor(getContext(), R.color.md_theme_onSurfaceVariant));
+            textViewNote.setVisibility(View.VISIBLE);
             textViewDate.setVisibility(View.GONE);
             actionFavorite.setVisibility(View.GONE);
             textView.setVisibility(View.GONE);

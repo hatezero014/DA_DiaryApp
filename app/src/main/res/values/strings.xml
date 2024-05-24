@@ -11,7 +11,7 @@
     <string name="title_home">Home</string>
     <string name="title_collection">Collection</string>
     <string name="title_analyze">Analyze</string>
-    <string name="title_notification">Notification</string>
+    <string name="title_setting">Settings</string>
 
     <!--  ChangeLanguage   -->
     <string name="change_language">App language</string>
@@ -27,7 +27,7 @@
     <!-- Accessibility -->
     <string name="title_share">Share</string>
     <string name="add_record">Add record</string>
-    <string name="share_image">Share image</string>
+    <string name="share_image">Share photo</string>
     <string name="download_image">Download image</string>
     <string name="new_record">New record</string>
     <string name="title_settings">Settings</string>
@@ -55,7 +55,7 @@
     <string name="contact_title">Contact us</string>
     <string name="contact_text_hint">Your message</string>
     <string name="contact_max_image">You selected the maximum number of images"</string>
-    <string name="contact_allow_image">You can only select up to 1 images</string>
+    <string name="contact_allow_image">You can only select up to 1 image</string>
 
     <!--  Reminder  -->
     <string name="select_reminder_time">Change reminder time</string>
@@ -72,7 +72,7 @@
     <!--  Collection-->
     <string name="recent_photos">Recent photos</string>
     <string name="see_more_photos">See more</string>
-    <string name="important_records">Important records</string>
+    <string name="saved_records">Saved records</string>
 
     <!--  Record  -->
     <string name="record">Record</string>
@@ -89,6 +89,10 @@
     <string name="record_note">Your notes</string>
     <string name="record_title">Your title</string>
     <string name="record_done">Done</string>
+    <string name="record_emotion_title">Added to Status</string>
+    <string name="record_activity_title">Added to Activity</string>
+    <string name="record_partner_title">Added to Partner</string>
+    <string name="record_weather_title">Added to Weather</string>
     <string name="record_images">You have not added any photo</string>
     <string name="record_title_add_image">Number of photos added %d/%d</string>
     <string name="record_toast_fail">Record failed!</string>
@@ -135,7 +139,7 @@
     <string name="notification_3_1">Your mood score for </string>
     <string name="notification_3_2"> is: </string>
     <string name="notification_4">You have set a password! If you were not the one who set it up, contact us for support!</string>
-    <string name="notification_5">You have changed your password, please check again. If you are not a changemaker, contact us for support!</string>
+    <string name="notification_5">You have changed your password, please check again. If you did not make this change, contact us for support!</string>
     <string name="notification_6">You have deleted your password!</string>
     <string name="notification_null">No notifications!</string>
     <string name="notification_7">You edited your diary today!</string>
@@ -172,8 +176,8 @@
 
 
     <!--  Image App  -->
-    <string name="title_YourImage">Your images</string>
-    <string name="statistics_for">Statistics for</string>
+    <string name="title_YourImage">Your photos</string>
+    <string name="statistics_for">Statistics</string>
 
 
     <!--  Full Image View  -->
@@ -207,13 +211,18 @@
 
     <string name="no_diary">Your diary is empty.\nLet\'s create a record.</string>
     <string name="no_photo">There is no photo yet.\nLet\'s add some images to your diary.</string>
-    <string name="no_important">There is currently no important record.</string>
+    <string name="no_important">You haven\'t saved any record.</string>
     <string name="record_details_title">Record details</string>
 
-    <string-array name="my_string_array">
-        <item></item>
-        <item>Item 2</item>
-        <item>Item 3</item>
-    </string-array>
+    <string name="no_data_year">Statistics for this year are not yet available.\nPlease create a record to view them.</string>
+    <string name="no_data_month">Statistics for this month are not yet available.\nPlease create a record to view them.</string>
+    <string name="no_data_custom">Statistics for this value are not currently available.\nPlease create a record to view them.</string>
+    <string name="over_date">The value you selected is invalid, please select again to view the statistics.</string>
+
+    <string name="noti_custom_date">The start date cannot be greater than the end date.</string>
+    <string name="noti_custom_distance">The distance between values must not exceed 13 months.</string>
+    <string name="noti_month_selected">The value of the month you selected is greater than the current month value.</string>
+
+    <string name="btn_search">Search</string>
 
 </resources>

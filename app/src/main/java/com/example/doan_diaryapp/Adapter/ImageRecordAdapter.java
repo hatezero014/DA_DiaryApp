@@ -52,14 +52,16 @@ public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.
     String language;
     String type;
     RecordActivity activity;
+    List<Integer> idList;
 
-    public ImageRecordAdapter(String type, String language, List<Integer> imageList, List<String> descList,
+    public ImageRecordAdapter(String type, String language, List<Integer> idList, List<Integer> imageList, List<String> descList,
                               @Nullable List<Integer> imageSelectedList, @Nullable List<Integer> imageListGetAll,
                               @Nullable List<String> descListGetAll, @Nullable List<Integer> isActiveItems,
                               @Nullable List<String> iconListGetAll, Context context, RecordActivity activity) {
         this.type = type;
         this.imageList = imageList;
         this.descList = descList;
+        this.idList = new ArrayList<>(idList);
         this.selectedItems = new SparseBooleanArray();
         if (imageSelectedList != null) {
             for (int index : imageSelectedList) {
@@ -92,7 +94,6 @@ public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.
         return new ImageViewHolder(view);
     }
 
-
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
         Integer imageRes = imageList.get(position);
@@ -100,6 +101,7 @@ public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.
         if (position == getItemCount() - 1) {
             holder.imageView.setBackgroundResource(R.drawable.circle_background);
             holder.imageView.setImageResource(imageRes);
+            holder.textView.setVisibility(View.GONE);
             holder.imageView.setOnClickListener(v -> {
                 showCustomDialog();
             });
@@ -107,16 +109,15 @@ public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.
         }
         holder.textView.setText(desc);
         holder.imageView.setImageResource(imageRes);
-        holder.imageView.setAlpha(selectedItems.get(position) ? 1.0f : 0.35f);
-        holder.textView.setAlpha(selectedItems.get(position) ? 1.0f : 0.35f);
+        holder.imageView.setAlpha(selectedItems.get(idList.get(position)) ? 1.0f : 0.35f);
+        holder.textView.setAlpha(selectedItems.get(idList.get(position)) ? 1.0f : 0.35f);
 
         holder.imageView.setOnClickListener(v -> {
-            boolean isSelected = !selectedItems.get(position);
-            selectedItems.put(position, isSelected);
+            boolean isSelected = !selectedItems.get(idList.get(position));
+            selectedItems.put(idList.get(position), isSelected);
             holder.imageView.setAlpha(isSelected ? 1.0f : 0.35f);
             holder.textView.setAlpha(isSelected ? 1.0f : 0.35f);
         });
-
     }
 
     @Override
@@ -157,6 +158,19 @@ public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.
 
         Button btnOK = dialog.findViewById(R.id.btnRight);
         Button btnCancel = dialog.findViewById(R.id.btnLeft);
+        TextView textView = dialog.findViewById(R.id.list1);
+        if (type.equals("Emotion")) {
+            textView.setText(R.string.record_emotion_title);
+        }
+        if (type.equals("Activity")) {
+            textView.setText(R.string.record_activity_title);
+        }
+        if (type.equals("Partner")) {
+            textView.setText(R.string.record_partner_title);
+        }
+        if (type.equals("Weather")) {
+            textView.setText(R.string.record_weather_title);
+        }
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -300,6 +314,7 @@ public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.
                     }
                     activity.updateRecyclerView3();
                 }
+
                 dialog.dismiss();
             }
         });
@@ -310,8 +325,10 @@ public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.
     public List<Integer> getSelectedItems() {
         List<Integer> result = new ArrayList<>();
         for (int i = 0; i < imageList.size(); i++) {
-            if (selectedItems.get(i)) {
-                result.add(i);
+            if (idList.get(i) == -1)
+                continue;
+            if (selectedItems.get(idList.get(i))) {
+                result.add(idList.get(i));
             }
         }
         return result;

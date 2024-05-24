@@ -10,10 +10,12 @@ import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_diaryapp.Models.Notification;
 import com.example.doan_diaryapp.R;
+import com.example.doan_diaryapp.Service.NotificationService;
 
 import java.util.List;
 
@@ -28,7 +30,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     @NonNull
     @Override
     public NotificationHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.notification_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.new_layout_notification, parent, false);
         return new NotificationHolder(view);
     }
 
@@ -37,13 +39,23 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         Notification notification = notificationList.get(position);
         if(notification==null) return;
         Context context = holder.imageView.getContext();
-        holder.imageView.setImageResource(R.drawable.icon_noti);
+        if(notification.getIsRead() == 1){
+            holder.imageView.setVisibility(View.VISIBLE);
+            holder.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.background_cardview_notification));
+            NotificationService notificationService = new NotificationService(context);
+            notificationService.UpdateById(new Notification(notification.getTime(), notification.getDay(), notification.getContent(), notification.getSub(), 0), notification.getId() );
+        }
+//        if(notification.getIsRead() == 0){
+//            holder.imageView.setVisibility(View.GONE);
+//        }
+        holder.imageView.setImageResource(R.drawable.icon_blue_notification);
         holder.Date.setText(notification.getTime());
+
         if(notification.getContent() == 1){
-            holder.Content.setText(R.string.notification_1);
+            holder.textView.setText(R.string.notification_1);
         }
         else if(notification.getContent() == 2){
-            holder.Content.setText(R.string.notification_2);
+            holder.textView.setText(R.string.notification_2);
         }
         else if(notification.getContent() == 3){
             String []sub = notification.getSub().split(";");
@@ -91,22 +103,22 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             }
 
             String textNotification = context.getString(R.string.notification_3_1) + " " + month1 + " " + context.getString(R.string.notification_3_2) + " " + score;
-            holder.Content.setText(textNotification);
+            holder.textView.setText(textNotification);
         }
         else if(notification.getContent() == 4){
-            holder.Content.setText(R.string.notification_4);
+            holder.textView.setText(R.string.notification_4);
         }
         else if(notification.getContent() == 5){
-            holder.Content.setText(R.string.notification_5);
+            holder.textView.setText(R.string.notification_5);
         }
         else if(notification.getContent() == 6){
-            holder.Content.setText(R.string.notification_6);
+            holder.textView.setText(R.string.notification_6);
         }
         else if(notification.getContent() == 7){
-            holder.Content.setText(R.string.notification_7);
+            holder.textView.setText(R.string.notification_7);
         }
         else if(notification.getContent() == 8){
-            holder.Content.setText(R.string.notification_8);
+            holder.textView.setText(R.string.notification_8);
         }
     }
 
@@ -118,14 +130,14 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     class NotificationHolder extends RecyclerView.ViewHolder{
         CardView cardView;
         ImageView imageView;
-        TextView Content;
+        TextView textView;
         TextView Date;
         public NotificationHolder(@NonNull View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.item_notification);
-            Content = itemView.findViewById(R.id.text_notification);
-            Date = itemView.findViewById(R.id.date);
-            cardView = itemView.findViewById(R.id.cardView);
+            imageView = itemView.findViewById(R.id.icon_blue_noti);
+            textView = itemView.findViewById(R.id.new_details);
+            Date = itemView.findViewById(R.id.currrentTime);
+            cardView = itemView.findViewById(R.id.card_view_notification);
         }
     }
 

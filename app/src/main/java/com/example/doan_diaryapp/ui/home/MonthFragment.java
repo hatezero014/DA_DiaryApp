@@ -8,6 +8,7 @@ import android.graphics.ColorFilter;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -22,6 +24,7 @@ import android.widget.TextView;
 
 import com.example.doan_diaryapp.ActivityNam;
 import com.example.doan_diaryapp.Adapter.EntryAdapter;
+import com.example.doan_diaryapp.MainActivity;
 import com.example.doan_diaryapp.Models.Entry;
 import com.example.doan_diaryapp.Models.Language;
 import com.example.doan_diaryapp.R;
@@ -84,6 +87,66 @@ public class MonthFragment extends Fragment {
                 calendar.get(Calendar.MONTH)+1, calendar.get(Calendar.DAY_OF_MONTH)));
 
         return view;
+    }
+
+
+
+    private void ButtonAddDay()
+    {
+        FloatingActionButton fab = getActivity().findViewById(R.id.fab);
+        if (fab != null) {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (CheckDate(dayOfMonth,month,year))
+                    {
+                        showAlertDialog();
+
+                    } else {
+                        Calendar calendar = Calendar.getInstance();
+                        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                        int minute = calendar.get(Calendar.MINUTE);
+                        int second = calendar.get(Calendar.SECOND);
+                        Intent intent = new Intent(getContext(), RecordActivity.class);
+                        intent.putExtra("Date", String.format(Locale.ENGLISH,
+                                "%02d:%02d:%02d %02d-%02d-%04d", hour, minute, second, dayOfMonth, month + 1, year));
+                        startActivity(intent);
+                    }
+                }
+            });
+        }
+    }
+
+    private void showAlertDialog() {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
+        builder.setTitle(R.string.month_alert_title)
+                .setMessage(R.string.month_alert_message)
+                .setPositiveButton("OK", null);
+        builder.create().show();
+    }
+
+
+    private void ButtonAddDay1()
+    {
+        FloatingActionButton fab = getActivity().findViewById(R.id.fab);
+        if (fab != null) {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Calendar calendar = Calendar.getInstance();
+                    int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                    int minute = calendar.get(Calendar.MINUTE);
+                    int second = calendar.get(Calendar.SECOND);
+                    int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+                    int month = calendar.get(Calendar.MONTH);
+                    int year = calendar.get(Calendar.YEAR);
+                    Intent intent = new Intent(getContext(), RecordActivity.class);
+                    intent.putExtra("Date", String.format(Locale.ENGLISH,
+                            "%02d:%02d:%02d %02d-%02d-%04d", hour, minute, second, dayOfMonth, month + 1, year));
+                    startActivity(intent);
+                }
+            });
+        }
     }
 
 
@@ -229,6 +292,12 @@ public class MonthFragment extends Fragment {
     public void onResume() {
         super.onResume();
         updateView();
+        ButtonAddDay();
+    }
+
+    public void onPause() {
+        super.onPause();
+        ButtonAddDay1();
     }
 
 

@@ -8,6 +8,16 @@ public class Notification {
 
     String Sub;
 
+    public int getIsRead() {
+        return isRead;
+    }
+
+    public void setIsRead(int isRead) {
+        this.isRead = isRead;
+    }
+
+    int isRead;
+
     public String getSub() {
         return Sub;
     }
@@ -19,11 +29,12 @@ public class Notification {
     public Notification() {
     }
 
-    public Notification(String time, String day, int content, String sub) {
+    public Notification(String time, String day, int content, String sub, int read) {
         Time = time;
         Day = day;
         Content = content;
         Sub = sub;
+        isRead = read;
     }
 
     public int getId() {

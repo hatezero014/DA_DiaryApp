@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.doan_diaryapp.ui.setting.SettingFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -51,7 +53,7 @@ public class MainActivity extends BaseActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_collection, R.id.navigation_analyze, R.id.navigation_notification)
+                R.id.navigation_home, R.id.navigation_collection, R.id.navigation_analyze, R.id.navigation_setting)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -74,7 +76,36 @@ public class MainActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+
+        navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                Bundle bundle = new Bundle();
+                if(menuItem.getItemId() == R.id.navigation_setting){
+                    bundle.putBoolean("myBooleanKey", false);
+                    navController.navigate(R.id.navigation_setting, bundle);
+                    return true;
+                }
+                else if(menuItem.getItemId() == R.id.navigation_collection)
+                {
+                    navController.navigate(R.id.navigation_collection);
+                    return true;
+                }
+                else if(menuItem.getItemId() == R.id.navigation_analyze)
+                {
+                    navController.navigate(R.id.navigation_analyze);
+                    return true;
+                }
+                else if(menuItem.getItemId() == R.id.navigation_home)
+                {
+                    navController.navigate(R.id.navigation_home);
+                    return true;
+                }
+                return false;
+            }
+        });
     }
+
 
     public void Setting_onClick(MenuItem item) {
         Intent intent = new Intent(MainActivity.this, SettingActivity.class);
