@@ -63,7 +63,7 @@
     <!--  Collection-->
     <string name="recent_photos">Ảnh gần đây</string>
     <string name="see_more_photos">Xem thêm</string>
-    <string name="important_records">Ngày quan trọng</string>
+    <string name="saved_records">Bản ghi đã lưu</string>
 
     <!--  Record  -->
     <string name="record">Nhật ký</string>
@@ -197,12 +197,11 @@
     <string name="alarm_clock">Báo thức</string>
     <string name="alarm_clock_description">Thêm báo thức mỗi ngày</string>
     <string name="remind">Nhắc nhở</string>
-    <string name="remind_description">Ứng dụng sẽ nhắc nhở khi bạn không vào ứng dụng quá lâu</string>
+    <string name="remind_description">Ứng dụng sẽ nhắc nhở khi bạn không sử dụng quá lâu</string>
     <string name="remind_notification">Thông báo nhắc nhở</string>
     <string name="remind_notification_description">Bạn à, Pocket Diary nhớ bạn lắm đấy! Đã đến lúc quay lại và ghi lại những kỉ niệm tuyệt vời rồi đó nha bạn thân yêu ơi!</string>
     <string name="id_AlarmReceiver">idalarmreceiver</string>
     <string name="id_NotificationReceiver">idnotificationreceiver</string>
-
 
 
     <string name="from">Từ: </string>
@@ -210,7 +209,7 @@
 
     <string name="no_diary">Nhật kí trống rỗng.\nHãy tạo nhật ký của bạn</string>
     <string name="no_photo">Chưa có ảnh nào.\nHãy thêm ảnh vào nhật kí của bạn.</string>
-    <string name="no_important">Chưa có nhật kí quan trọng.</string>
+    <string name="no_important">Bạn chua lưu bản ghi nào.</string>
     <string name="record_details_title">Thông tin chi tiết</string>
 
     <string name="btn_search">Tìm kiếm</string>

@@ -6,7 +6,7 @@
         android:id="@+id/action_settings"
         android:onClick="Notification_onClick"
         android:title="@string/notification_title"
-        android:icon="@drawable/icon_noti"
+        android:icon="@drawable/state_normal_main_notification"
         app:showAsAction="ifRoom"/>
 
 </menu>
