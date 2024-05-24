@@ -28,6 +28,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.doan_diaryapp.Models.Entry;
 import com.example.doan_diaryapp.Service.EntryPhotoService;
@@ -63,6 +64,31 @@ public class FullImageFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+    public interface OnPageChangeListener {
+        void onPageScrollStateChanged(int state);
+    }
+
+    private OnPageChangeListener pageChangeListener;
+
+    public void setOnPageChangeListener(OnPageChangeListener listener) {
+        this.pageChangeListener = listener;
+    }
+
+    // Gọi phương thức trong interface khi trạng thái cuộn thay đổi
+    public void notifyPageScrollStateChanged(int state) {
+        if (pageChangeListener != null) {
+            pageChangeListener.onPageScrollStateChanged(state);
+        }
+        if (state == ViewPager2.SCROLL_STATE_IDLE) {
+            floatingActionButtonAdd.setVisibility(View.VISIBLE);
+        } else if (state == ViewPager2.SCROLL_STATE_DRAGGING || state == ViewPager2.SCROLL_STATE_SETTLING) {
+            floatingActionButtonAdd.setVisibility(View.GONE);
+            floatingActionButtonShare.setVisibility(View.GONE);
+            floatingActionButtonDetails.setVisibility(View.GONE);
+        }
+    }
+
+
 
     @Nullable
     @Override

@@ -11,6 +11,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,7 +42,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 
-public class FullImageView extends BaseActivity {
+public class FullImageView extends BaseActivity implements FullImageFragment.OnPageChangeListener {
 
     private EntryPhotoService entryPhotoService;
     PhotoView imageView;
@@ -89,13 +90,39 @@ public class FullImageView extends BaseActivity {
         adapter = new FullImagePagerAdapter(this, imagePaths);
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(position, false);
-
-        floatingActionButtonAdd.setOnClickListener(new View.OnClickListener() {
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
-            public void onClick(View v) {
-                onAddButtonAddClick();
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                super.onPageScrollStateChanged(state);
+                FullImageFragment currentFragment = (FullImageFragment) getSupportFragmentManager()
+                        .findFragmentByTag("f" + viewPager.getCurrentItem());
+                if (currentFragment != null) {
+                    currentFragment.notifyPageScrollStateChanged(state);
+                }
+                if (state == ViewPager2.SCROLL_STATE_IDLE) {
+                    floatingActionButtonAdd.setVisibility(View.GONE);
+                } else if (state == ViewPager2.SCROLL_STATE_DRAGGING || state == ViewPager2.SCROLL_STATE_SETTLING) {
+                    floatingActionButtonAdd.setVisibility(View.VISIBLE);
+                }
             }
         });
+
+//        floatingActionButtonAdd.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onAddButtonAddClick();
+//            }
+//        });
 
 
         floatingActionButtonShare.setOnClickListener(new View.OnClickListener() {
@@ -257,4 +284,8 @@ public class FullImageView extends BaseActivity {
         this.startActivity(intent);
     }
 
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
 }

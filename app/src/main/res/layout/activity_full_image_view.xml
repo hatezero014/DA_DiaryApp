@@ -34,7 +34,7 @@
         app:srcCompat="@drawable/icon_add"
         android:tint="@color/white"
         android:focusable="true"
-        android:visibility="visible"
+        android:visibility="gone"
 
         />
 
