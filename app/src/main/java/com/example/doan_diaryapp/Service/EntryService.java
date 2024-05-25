@@ -194,9 +194,10 @@ public class EntryService extends BaseService{
     }
 
     public  List<Drawable> getAllIcon(String DATE,Context context) {
-        db = this.getReadableDatabase();
         List<Drawable> iconList = new ArrayList<>();
-        try (Cursor cursor = db.rawQuery("SELECT * FROM EntryActivity INNER JOIN Activity ON Activity.Id = EntryActivity.ActivityId INNER JOIN Entry ON Entry.Id = EntryActivity.EntryId", null)) {
+
+        db = this.getReadableDatabase();
+        try (Cursor cursor = db.rawQuery("SELECT * FROM EntryEmotion INNER JOIN Emotion ON Emotion.Id = EntryEmotion.EmotionId INNER JOIN Entry ON Entry.Id = EntryEmotion.EntryId", null)) {
             if (cursor != null && cursor.moveToFirst()) {
                 int dateColumnIndex = cursor.getColumnIndex("Date");
                 int IconColumnIndex = cursor.getColumnIndex("Icon");
@@ -218,7 +219,7 @@ public class EntryService extends BaseService{
         }
 
         db = this.getReadableDatabase();
-        try (Cursor cursor = db.rawQuery("SELECT * FROM EntryEmotion INNER JOIN Emotion ON Emotion.Id = EntryEmotion.EmotionId INNER JOIN Entry ON Entry.Id = EntryEmotion.EntryId", null)) {
+        try (Cursor cursor = db.rawQuery("SELECT * FROM EntryActivity INNER JOIN Activity ON Activity.Id = EntryActivity.ActivityId INNER JOIN Entry ON Entry.Id = EntryActivity.EntryId", null)) {
             if (cursor != null && cursor.moveToFirst()) {
                 int dateColumnIndex = cursor.getColumnIndex("Date");
                 int IconColumnIndex = cursor.getColumnIndex("Icon");
