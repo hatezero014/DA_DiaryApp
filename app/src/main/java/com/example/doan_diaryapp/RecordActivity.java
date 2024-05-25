@@ -573,15 +573,13 @@ public class RecordActivity extends BaseActivity {
                 try {
                     String notes = textNote.getText().toString();
                     String title = textTitle.getText().toString();
-                    String wakeUp = "6:30";
-                    String sleep = "6:30";
                     int overallScore = (int) slider.getValue();
                     List<Integer> selectedItems1 = adapter1.getSelectedItems();
                     List<Integer> selectedItems2 = adapter2.getSelectedItems();
                     List<Integer> selectedItems3 = adapter3.getSelectedItems();
                     List<Integer> selectedItems4 = adapter4.getSelectedItems();
                     if (result == null) {
-                        Entry entity = new Entry(title, notes, date, overallScore, wakeUp, sleep);
+                        Entry entity = new Entry(title, notes, date, overallScore);
                         entryService.Add(entity);
                         if (isCheckFavorite) {
                             importantDayService.Add(new ImportantDay(date));
@@ -637,7 +635,7 @@ public class RecordActivity extends BaseActivity {
                     }
                     else {
                         int id = result.getId();
-                        Entry entity = new Entry(title, notes, date, overallScore, wakeUp, sleep);
+                        Entry entity = new Entry(title, notes, date, overallScore);
                         ImportantDay importantDay = importantDayService.FindByDate(new ImportantDay(),date);
                         entryService.UpdateById(entity, id);
                         entryPhotoService.DeleteByEntryId(EntryPhoto.class, id);
@@ -1086,14 +1084,12 @@ public class RecordActivity extends BaseActivity {
     private boolean isDataChanged() {
         String notes = textNote.getText().toString();
         String title = textTitle.getText().toString();
-        String wakeUp = "6:30";
-        String sleep = "6:30";
         int overallScore = (int) slider.getValue();
         List<Integer> selectedItems1 = adapter1.getSelectedItems();
         List<Integer> selectedItems2 = adapter2.getSelectedItems();
         List<Integer> selectedItems3 = adapter3.getSelectedItems();
         List<Integer> selectedItems4 = adapter4.getSelectedItems();
-        Entry entity = new Entry(title, notes, date, overallScore, wakeUp, sleep);
+        Entry entity = new Entry(title, notes, date, overallScore);
         if (result == null) {
             return !notes.isEmpty() || !title.isEmpty() || overallScore != 5
                     || !selectedItems1.isEmpty() || !selectedItems2.isEmpty()

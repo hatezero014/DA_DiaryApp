@@ -49,29 +49,11 @@ public class Entry {
         OverallScore = overallScore;
     }
 
-    public String getWakeUp() {
-        return WakeUp;
-    }
-
-    public void setWakeUp(String wakeUp) {
-        WakeUp = wakeUp;
-    }
-
-    public String getSleep() {
-        return Sleep;
-    }
-
-    public void setSleep(String sleep) {
-        Sleep = sleep;
-    }
-
-    public Entry(String title, String note, String date, int overallScore, String wakeUp, String sleep) {
+    public Entry(String title, String note, String date, int overallScore) {
         Title = title;
         Note = note;
         Date = date;
         OverallScore = overallScore;
-        WakeUp = wakeUp;
-        Sleep = sleep;
     }
 
     public Entry(int id, String note, String date,String title) {
@@ -88,6 +70,4 @@ public class Entry {
 
     String Date;
     int OverallScore;
-    String WakeUp;
-    String Sleep;
 }
