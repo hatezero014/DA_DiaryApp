@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +22,12 @@ import java.util.List;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotificationHolder> {
     List<Notification> notificationList;
+    private boolean showCheckboxes = false;
+    public void setShowCheckboxes(boolean show) {
+        showCheckboxes = show;
+        notifyDataSetChanged();
+    }
+
 
     public void setData(List<Notification> list){
         notificationList =list;
@@ -45,9 +52,17 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             NotificationService notificationService = new NotificationService(context);
             notificationService.UpdateById(new Notification(notification.getTime(), notification.getDay(), notification.getContent(), notification.getSub(), 0), notification.getId() );
         }
-//        if(notification.getIsRead() == 0){
-//            holder.imageView.setVisibility(View.GONE);
-//        }
+//        holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                holder.checkBox.setVisibility(View.VISIBLE);
+//                return false;
+//            }
+//        });
+
+        if(notification.getIsRead() == 0){
+            holder.imageView.setVisibility(View.GONE);
+        }
         holder.imageView.setImageResource(R.drawable.icon_blue_notification);
         holder.Date.setText(notification.getTime());
 
@@ -120,6 +135,21 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         else if(notification.getContent() == 8){
             holder.textView.setText(R.string.notification_8);
         }
+
+        if(showCheckboxes) {
+            holder.checkBox.setVisibility(View.VISIBLE);
+        } else {
+            holder.checkBox.setVisibility(View.GONE);
+        }
+
+        // Xử lý long click listener cho cardView để hiển thị checkbox
+        holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                setShowCheckboxes(true);
+                return true;
+            }
+        });
     }
 
     @Override
@@ -132,13 +162,16 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         ImageView imageView;
         TextView textView;
         TextView Date;
+        CheckBox checkBox;
         public NotificationHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.icon_blue_noti);
             textView = itemView.findViewById(R.id.new_details);
             Date = itemView.findViewById(R.id.currrentTime);
             cardView = itemView.findViewById(R.id.card_view_notification);
+            checkBox = itemView.findViewById(R.id.checkBox);
         }
+
     }
 
     @Override
