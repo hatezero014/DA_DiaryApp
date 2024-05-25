@@ -3,6 +3,13 @@ package com.example.doan_diaryapp.Service;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.Drawable;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.ImageSpan;
+
+import androidx.core.content.ContextCompat;
 
 import com.example.doan_diaryapp.Models.Entry;
 import com.example.doan_diaryapp.Models.EntryActivity;
@@ -184,6 +191,99 @@ public class EntryService extends BaseService{
                 db.close();
             }
         }
+    }
+
+    public  List<Drawable> getAllIcon(String DATE,Context context) {
+        db = this.getReadableDatabase();
+        List<Drawable> iconList = new ArrayList<>();
+        try (Cursor cursor = db.rawQuery("SELECT * FROM EntryActivity INNER JOIN Activity ON Activity.Id = EntryActivity.ActivityId INNER JOIN Entry ON Entry.Id = EntryActivity.EntryId", null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                int dateColumnIndex = cursor.getColumnIndex("Date");
+                int IconColumnIndex = cursor.getColumnIndex("Icon");
+                do {
+                    String Icon = cursor.getString(IconColumnIndex);
+                    String date = cursor.getString(dateColumnIndex);
+                    int iconResourceId = context.getResources().getIdentifier(Icon, "drawable", context.getPackageName());
+                    Drawable iconDrawable = ContextCompat.getDrawable(context, iconResourceId);
+                    if (iconDrawable != null && DATE.equals(date)) {
+                        iconList.add(iconDrawable);
+                    }
+                } while (cursor.moveToNext());
+            }
+        }
+        finally {
+            if (db != null) {
+                db.close();
+            }
+        }
+
+        db = this.getReadableDatabase();
+        try (Cursor cursor = db.rawQuery("SELECT * FROM EntryEmotion INNER JOIN Emotion ON Emotion.Id = EntryEmotion.EmotionId INNER JOIN Entry ON Entry.Id = EntryEmotion.EntryId", null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                int dateColumnIndex = cursor.getColumnIndex("Date");
+                int IconColumnIndex = cursor.getColumnIndex("Icon");
+                do {
+                    String Icon = cursor.getString(IconColumnIndex);
+                    String date = cursor.getString(dateColumnIndex);
+                    int iconResourceId = context.getResources().getIdentifier(Icon, "drawable", context.getPackageName());
+                    Drawable iconDrawable = ContextCompat.getDrawable(context, iconResourceId);
+                    if (iconDrawable != null && DATE.equals(date)) {
+                        iconList.add(iconDrawable);
+                    }
+                } while (cursor.moveToNext());
+            }
+        }
+        finally {
+            if (db != null) {
+                db.close();
+            }
+        }
+
+        db = this.getReadableDatabase();
+        try (Cursor cursor = db.rawQuery("SELECT * FROM EntryPartner INNER JOIN Partner ON Partner.Id = EntryPartner.PartnerId INNER JOIN Entry ON Entry.Id = EntryPartner.EntryId", null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                int dateColumnIndex = cursor.getColumnIndex("Date");
+                int IconColumnIndex = cursor.getColumnIndex("Icon");
+                do {
+                    String Icon = cursor.getString(IconColumnIndex);
+                    String date = cursor.getString(dateColumnIndex);
+                    int iconResourceId = context.getResources().getIdentifier(Icon, "drawable", context.getPackageName());
+                    Drawable iconDrawable = ContextCompat.getDrawable(context, iconResourceId);
+                    if (iconDrawable != null && DATE.equals(date)) {
+                        iconList.add(iconDrawable);
+                    }
+                } while (cursor.moveToNext());
+            }
+        }
+        finally {
+            if (db != null) {
+                db.close();
+            }
+        }
+
+        db = this.getReadableDatabase();
+        try (Cursor cursor = db.rawQuery("SELECT * FROM EntryWeather INNER JOIN Weather ON Weather.Id = EntryWeather.WeatherId INNER JOIN Entry ON Entry.Id = EntryWeather.EntryId", null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                int dateColumnIndex = cursor.getColumnIndex("Date");
+                int IconColumnIndex = cursor.getColumnIndex("Icon");
+                do {
+                    String Icon = cursor.getString(IconColumnIndex);
+                    String date = cursor.getString(dateColumnIndex);
+                    int iconResourceId = context.getResources().getIdentifier(Icon, "drawable", context.getPackageName());
+                    Drawable iconDrawable = ContextCompat.getDrawable(context, iconResourceId);
+                    if (iconDrawable != null && DATE.equals(date)) {
+                        iconList.add(iconDrawable);
+                    }
+                } while (cursor.moveToNext());
+            }
+        }
+        finally {
+            if (db != null) {
+                db.close();
+            }
+        }
+
+        return iconList;
     }
 
 

@@ -8,8 +8,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.icu.text.CaseMap;
 import android.net.Uri;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.ImageSpan;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -17,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -28,6 +34,7 @@ import com.example.doan_diaryapp.Models.ImportantDay;
 import com.example.doan_diaryapp.Models.Language;
 import com.example.doan_diaryapp.R;
 import com.example.doan_diaryapp.Service.EntryPhotoService;
+import com.example.doan_diaryapp.Service.EntryService;
 import com.example.doan_diaryapp.Service.ImportantDayService;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -51,6 +58,8 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
     ImportantDayService importantDayService;
 
     EntryPhotoService entryPhotoService;
+
+    EntryService entryService;
     List<String> entryPhotoList;
 
 
@@ -76,6 +85,7 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
 
         TextView textViewDate = convertView.findViewById(R.id.textViewDate);
         TextView textViewNote = convertView.findViewById(R.id.textViewNote);
+        LinearLayout linearLayoutIcons = convertView.findViewById(R.id.textViewIcon);
         TextView textViewId = convertView.findViewById(R.id.textViewID);
         TextView textView = convertView.findViewById(R.id.textView);
         ImageView actionFavorite = convertView.findViewById(R.id.action_favorite);
@@ -125,6 +135,10 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
             String time=entry.getDate();
             time = time.substring(0, Math.min(time.length(), 8));
 
+            entryService=new EntryService(getContext());
+            List<Drawable> iconList=entryService.getAllIcon(entry.getDate(),getContext());
+            setDrawableForLayout(iconList, linearLayoutIcons);
+
             textViewDate.setText(Title);
             textViewNote.setText(time);
             textView.setText(Note);
@@ -135,10 +149,12 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
                 textViewNote.setVisibility(View.VISIBLE);
             }
 
+
             int color = ContextCompat.getColor(getContext(), R.color.md_theme_onSurfaceVariant);
             textViewNote.setTextColor(color);
             textViewDate.setVisibility(View.VISIBLE);
             actionFavorite.setVisibility(View.VISIBLE);
+            linearLayoutIcons.setVisibility(View.VISIBLE);
             actionShare.setVisibility(View.VISIBLE);
             textView.setVisibility(View.VISIBLE);
             textViewNote.setTypeface(null, Typeface.NORMAL);
@@ -150,6 +166,7 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
             textViewNote.setTextColor(ContextCompat.getColor(getContext(), R.color.md_theme_onSurfaceVariant));
             textViewNote.setVisibility(View.VISIBLE);
             textViewDate.setVisibility(View.GONE);
+            linearLayoutIcons.setVisibility(View.GONE);
             actionFavorite.setVisibility(View.GONE);
             textView.setVisibility(View.GONE);
             actionShare.setVisibility(View.GONE);
@@ -204,6 +221,22 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
         });
 
         return convertView;
+    }
+
+
+    public void setDrawableForLayout(List<Drawable> iconList, LinearLayout linearLayout) {
+        linearLayout.removeAllViews();
+        int count = Math.min(iconList.size(), 8);
+        for (int i = 0; i < count; i++) {
+            Drawable icon = iconList.get(i);
+            ImageView imageView = new ImageView(getContext());
+            imageView.setImageDrawable(icon);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(50, 50);
+            params.setMargins(10, 0, 10, 0);
+            imageView.setLayoutParams(params);
+            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            linearLayout.addView(imageView);
+        }
     }
 
 
