@@ -129,10 +129,15 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
             textViewNote.setText(time);
             textView.setText(Note);
 
+            if (entry.getDate().charAt(2)=='-') {
+                textViewNote.setVisibility(View.GONE);
+            } else {
+                textViewNote.setVisibility(View.VISIBLE);
+            }
+
             int color = ContextCompat.getColor(getContext(), R.color.md_theme_onSurfaceVariant);
             textViewNote.setTextColor(color);
             textViewDate.setVisibility(View.VISIBLE);
-            textViewNote.setVisibility(View.GONE);
             actionFavorite.setVisibility(View.VISIBLE);
             actionShare.setVisibility(View.VISIBLE);
             textView.setVisibility(View.VISIBLE);
