@@ -226,7 +226,7 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
 
     public void setDrawableForLayout(List<Drawable> iconList, LinearLayout linearLayout) {
         linearLayout.removeAllViews();
-        int count = Math.min(iconList.size(), 8);
+        int count = Math.min(iconList.size(), 5);
         for (int i = 0; i < count; i++) {
             Drawable icon = iconList.get(i);
             ImageView imageView = new ImageView(getContext());
