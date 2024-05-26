@@ -107,9 +107,21 @@ public class MonthFragment extends Fragment {
                         int hour = calendar.get(Calendar.HOUR_OF_DAY);
                         int minute = calendar.get(Calendar.MINUTE);
                         int second = calendar.get(Calendar.SECOND);
+                        int d = calendar.get(Calendar.DAY_OF_MONTH);
+                        int m = calendar.get(Calendar.MONTH);
+                        int y = calendar.get(Calendar.YEAR);
+
+                        String TIME;
+                        if (d == dayOfMonth && m ==month && y == year) {
+                            TIME=String.format(Locale.ENGLISH, "%02d:%02d:%02d %02d-%02d-%04d",
+                                    hour, minute, second, dayOfMonth, month + 1, year);
+                        } else {
+                            TIME=String.format(Locale.ENGLISH, "%02d-%02d:%02d %02d-%02d-%04d",
+                                    hour, minute, second, dayOfMonth, month + 1, year);
+                        }
+
                         Intent intent = new Intent(getContext(), RecordActivity.class);
-                        intent.putExtra("Date", String.format(Locale.ENGLISH,
-                                "%02d:%02d:%02d %02d-%02d-%04d", hour, minute, second, dayOfMonth, month + 1, year));
+                        intent.putExtra("Date", TIME);
                         startActivity(intent);
                     }
                 }

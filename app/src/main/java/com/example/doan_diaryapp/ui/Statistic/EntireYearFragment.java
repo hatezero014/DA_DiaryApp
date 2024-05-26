@@ -33,7 +33,6 @@ public class EntireYearFragment extends Fragment {
     private YearStatisticAdapter yearStatisticAdapter;
     private AutoCompleteTextView act_yyear;
     private EntryService entryService;
-    private TextView tv_statistic_year;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -45,15 +44,12 @@ public class EntireYearFragment extends Fragment {
 
         entryService = new EntryService(getContext());
 
-        tv_statistic_year = view.findViewById(R.id.tv_statistic_year);
         recyclerView_year = view.findViewById(R.id.rcv_thong_ke_nam);
         yearStatisticAdapter = new YearStatisticAdapter(view.getContext());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
         recyclerView_year.setLayoutManager(linearLayoutManager);
         yearStatisticAdapter.setData(getListStatistic());
         recyclerView_year.setAdapter(yearStatisticAdapter);
-
-        checkData();
 
         return view;
     }
@@ -73,7 +69,6 @@ public class EntireYearFragment extends Fragment {
         act_yyear.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                checkData();
                 yearStatisticAdapter.setData(getListStatistic());
             }
         });
@@ -130,22 +125,5 @@ public class EntireYearFragment extends Fragment {
 
         yearStatisticAdapter.notifyDataSetChanged();
 
-        checkData();
-    }
-
-    public void checkData(){
-        String selectedYear = act_yyear.getText().toString();
-        int year = Integer.parseInt(selectedYear);
-        List<Entry> entryList = entryService.getOverallScoreByYear(year);
-
-        if(entryList.isEmpty()){
-            recyclerView_year.setVisibility(View.GONE);
-            tv_statistic_year.setVisibility(View.VISIBLE);
-            tv_statistic_year.setText(R.string.no_data_year);
-        }
-        else {
-            recyclerView_year.setVisibility(View.VISIBLE);
-            tv_statistic_year.setVisibility(View.GONE);
-        }
     }
 }

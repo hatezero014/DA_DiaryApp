@@ -3,14 +3,14 @@ package com.example.doan_diaryapp.Models;
 public class Activity {
     int Id;
     String Icon;
-    String DescEn;
+    String Desc;
 
-    public String getDescEn() {
-        return DescEn;
+    public String getDesc() {
+        return Desc;
     }
 
-    public void setDescEn(String descEn) {
-        DescEn = descEn;
+    public void setDesc(String desc) {
+        Desc = desc;
     }
 
     public String getDescVi() {
@@ -52,9 +52,9 @@ public class Activity {
         Icon = icon;
     }
 
-    public Activity(String icon, String descEn, String descVi, int isActive) {
+    public Activity(String icon, String desc, String descVi, int isActive) {
         Icon = icon;
-        DescEn = descEn;
+        Desc = desc;
         DescVi = descVi;
         IsActive = isActive;
     }

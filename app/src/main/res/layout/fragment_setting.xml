@@ -306,15 +306,13 @@
         android:id="@+id/count_notification3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:text="99"
-        android:layout_marginBottom="32dp"
+        android:text="99+"
+        android:layout_gravity="end"
         android:background="@drawable/icon_blue_notification_red"
-        android:textSize="10dp"
+        android:textSize="10sp"
         android:gravity="center"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="3dp"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/setting_appBarLayout"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:textColor="@color/white" />
 
 </FrameLayout>

@@ -3,6 +3,7 @@ package com.example.doan_diaryapp.ui.Statistic;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,8 +39,9 @@ public class ByMonthFragment extends Fragment {
     private AutoCompleteTextView act_mmonth;
     private AutoCompleteTextView act_myear;
     private EntryService entryService;
-    private TextView tv_statistic_month;
     private List<Entry>entryList;
+    private int index = 1;
+    private int prevMonth;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -47,7 +49,6 @@ public class ByMonthFragment extends Fragment {
         View view =  lf.inflate(R.layout.fragment_by_month, container, false); //pass the correct layout name for the fragment
 
         recyclerView_month = view.findViewById(R.id.rcv_thong_ke_thang);
-        tv_statistic_month = view.findViewById(R.id.tv_statistic_month);
 
         act_mmonth = view.findViewById(R.id.act_mmonth);
         act_myear = view.findViewById(R.id.act_myear);
@@ -63,64 +64,49 @@ public class ByMonthFragment extends Fragment {
         monthStatisticAdapter.setData(getListStatistic());
         recyclerView_month.setAdapter(monthStatisticAdapter);
 
-        checkData();
 
         return view;
     }
 
     private void updateSpinnerMonth(View container) {
-        ArrayList<Integer> aMonth = new ArrayList<>();
-        for(int i=1;i<=12;i++){
-            aMonth.add(i);
+        ArrayList<Integer> aMonth;
+        String sYear = act_myear.getText().toString();
+        int iYear = Integer.parseInt(sYear);
+
+        int curYear = Calendar.getInstance().get(Calendar.YEAR);
+        int curMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
+
+        if(iYear == curYear){
+            aMonth = new ArrayList<>();
+            for(int i = 1; i <= curMonth; i++){
+                aMonth.add(i);
+            }
+        }
+        else{
+            aMonth = new ArrayList<>();
+            for(int i=1;i<=12;i++){
+                aMonth.add(i);
+            }
         }
 
         ArrayAdapter<Integer> adapterMonth = new ArrayAdapter<>(container.getContext(), R.layout.item_drop_down, aMonth);
         act_mmonth.setAdapter(adapterMonth);
 
-        act_mmonth.setText(String.valueOf(Calendar.getInstance().get(Calendar.MONTH)+1),false);
-
-        prevMonth = Calendar.getInstance().get(Calendar.MONTH)+1;
+        if(index == 1 ){
+            act_mmonth.setText(String.valueOf(Calendar.getInstance().get(Calendar.MONTH) + 1),false);
+        }
+        else if(iYear == curYear && prevMonth > curMonth){
+            act_mmonth.setText(String.valueOf(Calendar.getInstance().get(Calendar.MONTH) + 1),false);
+            monthStatisticAdapter.setData(getListStatistic());
+        }
         act_mmonth.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(checkMonthYear()){
-                    checkData();
-                    monthStatisticAdapter.setData(getListStatistic());
-                }
+                monthStatisticAdapter.setData(getListStatistic());
+                String sMonth = act_mmonth.getText().toString();
+                prevMonth = Integer.parseInt(sMonth);
             }
         });
-    }
-
-    private int prevMonth, prevYear;
-    public boolean checkMonthYear(){
-        String selectedYear = act_myear.getText().toString();
-        int year = Integer.parseInt(selectedYear);
-        String selectedMonth = act_mmonth.getText().toString();
-        int month = Integer.parseInt(selectedMonth);
-
-        boolean isFeature = isFutureDate(year, month);
-        if(isFeature){
-            Toast.makeText(getContext(),getString(R.string.noti_month_selected),Toast.LENGTH_SHORT).show();
-            act_mmonth.setText(String.valueOf(prevMonth),false);
-            act_myear.setText(String.valueOf(prevYear),false);
-            return false;
-        }
-        prevMonth = month;
-        prevYear = year;
-        return true;
-    }
-
-    public boolean isFutureDate(int year, int month) {
-        // Get the current date
-        Calendar currentDate = Calendar.getInstance();
-
-        // Create a calendar object for the given date
-        Calendar givenDate = Calendar.getInstance();
-        givenDate.set(Calendar.YEAR, year);
-        givenDate.set(Calendar.MONTH, month - 1); // Calendar.MONTH is zero-based (0 = January)
-
-        // Compare the dates
-        return givenDate.after(currentDate);
     }
 
     private void updateSpinnerYear(View container) {
@@ -135,15 +121,13 @@ public class ByMonthFragment extends Fragment {
         act_myear.setAdapter(adapterYear);
 
         act_myear.setText(String.valueOf(currentYear),false);
-        prevYear = Calendar.getInstance().get(Calendar.YEAR);
 
         act_myear.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(checkMonthYear()) {
-                    checkData();
-                    monthStatisticAdapter.setData(getListStatistic());
-                }
+                index = 2;
+                updateSpinnerMonth(container);
+                monthStatisticAdapter.setData(getListStatistic());
             }
         });
 
@@ -202,24 +186,5 @@ public class ByMonthFragment extends Fragment {
 
         monthStatisticAdapter.notifyDataSetChanged();
 
-        checkData();
-    }
-
-    public void checkData(){
-        String selectedYear = act_myear.getText().toString();
-        int year = Integer.parseInt(selectedYear);
-        String selectedMonth = act_mmonth.getText().toString();
-        int month = Integer.parseInt(selectedMonth);
-
-        entryList = entryService.getOverallScoreByMonthYear(month, year);
-        if(entryList.isEmpty()){
-            recyclerView_month.setVisibility(View.GONE);
-            tv_statistic_month.setVisibility(View.VISIBLE);
-            tv_statistic_month.setText(R.string.no_data_month);
-        }
-        else{
-            recyclerView_month.setVisibility(View.VISIBLE);
-            tv_statistic_month.setVisibility(View.GONE);
-        }
     }
 }

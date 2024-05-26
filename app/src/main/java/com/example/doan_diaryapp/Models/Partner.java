@@ -7,14 +7,14 @@ public class Partner {
     public Partner() {
     }
 
-    String DescEn;
+    String Desc;
 
-    public String getDescEn() {
-        return DescEn;
+    public String getDesc() {
+        return Desc;
     }
 
-    public void setDescEn(String descEn) {
-        DescEn = descEn;
+    public void setDesc(String desc) {
+        Desc = desc;
     }
 
     public String getDescVi() {
@@ -53,9 +53,9 @@ public class Partner {
 
     public int IsActive;
 
-    public Partner(String icon, String descEn, String descVi, int isActive) {
+    public Partner(String icon, String desc, String descVi, int isActive) {
         Icon = icon;
-        DescEn = descEn;
+        Desc = desc;
         DescVi = descVi;
         IsActive = isActive;
     }

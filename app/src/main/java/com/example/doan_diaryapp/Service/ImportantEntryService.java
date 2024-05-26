@@ -4,23 +4,20 @@ import android.content.Context;
 import android.database.Cursor;
 
 import com.example.doan_diaryapp.Models.Entry;
-import com.example.doan_diaryapp.Models.ImportantDay;
-import com.example.doan_diaryapp.R;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.example.doan_diaryapp.Models.ImportantEntry;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
-public class ImportantDayService extends BaseService {
-    public ImportantDayService(Context context) {
+public class ImportantEntryService extends BaseService {
+    public ImportantEntryService(Context context) {
         super(context);
     }
 
-    public ImportantDay FindByDate(ImportantDay clazz, String date) {
+    public ImportantEntry FindByDate(ImportantEntry clazz, String date) {
         db = this.getReadableDatabase();
         Cursor cursor = db.query("ImportantDay", null, "Date=?", new String[]{date}, null, null, null);
-        ImportantDay object = null;
+        ImportantEntry object = null;
         if (cursor != null && cursor.moveToFirst()) {
             object = CreateModelObjectFromCursor(clazz.getClass(), cursor);
             cursor.close();
@@ -34,7 +31,7 @@ public class ImportantDayService extends BaseService {
         db = this.getReadableDatabase();
         String DATE = "";
         List<Entry> entryList = new ArrayList<>();
-        try (Cursor cursor = db.rawQuery("SELECT * FROM Entry INNER JOIN ImportantDay ON Entry.Date = ImportantDay.Date ORDER BY SUBSTR(Entry.Date, 16, 4) || SUBSTR(Entry.Date, 13, 2) || SUBSTR(Entry.Date, 10, 2)||SUBSTR(Entry.Date, 1, 2) || '-' || SUBSTR(Entry.Date, 4, 2) || '-' || SUBSTR(Entry.Date, 7, 2) DESC", null)) {
+        try (Cursor cursor = db.rawQuery("SELECT * FROM Entry INNER JOIN ImportantEntry ON Entry.Id = ImportantEntry.EntryId ORDER BY SUBSTR(Entry.Date, 16, 4) || SUBSTR(Entry.Date, 13, 2) || SUBSTR(Entry.Date, 10, 2)||SUBSTR(Entry.Date, 1, 2) || '-' || SUBSTR(Entry.Date, 4, 2) || '-' || SUBSTR(Entry.Date, 7, 2) DESC", null)) {
             if (cursor != null && cursor.moveToFirst()) {
                 int idColumnIndex = cursor.getColumnIndex("Id");
                 int noteColumnIndex = cursor.getColumnIndex("Note");
@@ -69,7 +66,7 @@ public class ImportantDayService extends BaseService {
     public boolean checkImportant(String checkDate) {
         db = this.getReadableDatabase();
         int d=0;
-        try (Cursor cursor = db.rawQuery("SELECT * FROM ImportantDay", null)) {
+        try (Cursor cursor = db.rawQuery("SELECT * FROM Entry INNER JOIN ImportantEntry ON Entry.Id = ImportantEntry.EntryId", null)) {
             if (cursor != null && cursor.moveToFirst()) {
                 int dateColumnIndex = cursor.getColumnIndex("Date");
                 do {

@@ -205,7 +205,7 @@ public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.
                         EmotionService emotionService = new EmotionService(context);
                         Emotion emotion = emotionService.FindByIcon(Emotion.class, iconListGetAll.get(position));
                         if (language.equals("vi")) {
-                            emotionService.UpdateById(new Emotion(emotion.getIcon(), emotion.getDescEn(),
+                            emotionService.UpdateById(new Emotion(emotion.getIcon(), emotion.getDesc(),
                                     item.getText(), 1), emotion.getId());
                         }
                         else {
@@ -218,7 +218,7 @@ public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.
                         WeatherService weatherService = new WeatherService(context);
                         Weather weather = weatherService.FindByIcon(Weather.class, iconListGetAll.get(position));
                         if (language.equals("vi")) {
-                            weatherService.UpdateById(new Weather(weather.getIcon(), weather.getDescEn(),
+                            weatherService.UpdateById(new Weather(weather.getIcon(), weather.getDesc(),
                                     item.getText(), 1), weather.getId());
                         }
                         else {
@@ -231,7 +231,7 @@ public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.
                         ActivityService activityService = new ActivityService(context);
                         com.example.doan_diaryapp.Models.Activity activity = activityService.FindByIcon(com.example.doan_diaryapp.Models.Activity.class, iconListGetAll.get(position));
                         if (language.equals("vi")) {
-                            activityService.UpdateById(new com.example.doan_diaryapp.Models.Activity(activity.getIcon(), activity.getDescEn(),
+                            activityService.UpdateById(new com.example.doan_diaryapp.Models.Activity(activity.getIcon(), activity.getDesc(),
                                     item.getText(), 1), activity.getId());
                         }
                         else {
@@ -244,7 +244,7 @@ public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.
                         PartnerService partnerService = new PartnerService(context);
                         Partner partner = partnerService.FindByIcon(Partner.class, iconListGetAll.get(position));
                         if (language.equals("vi")) {
-                            partnerService.UpdateById(new Partner(partner.getIcon(), partner.getDescEn(),
+                            partnerService.UpdateById(new Partner(partner.getIcon(), partner.getDesc(),
                                     item.getText(), 1), partner.getId());
                         }
                         else {
@@ -259,11 +259,11 @@ public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.
                         EmotionService emotionService = new EmotionService(context);
                         Emotion emotion = emotionService.FindByIcon(Emotion.class, iconListGetAll.get(id));
                         if (language.equals("vi")) {
-                            emotionService.UpdateById(new Emotion(emotion.getIcon(), emotion.getDescEn(),
+                            emotionService.UpdateById(new Emotion(emotion.getIcon(), emotion.getDesc(),
                                     emotion.getDescVi(), 0), emotion.getId());
                         }
                         else {
-                            emotionService.UpdateById(new Emotion(emotion.getIcon(), emotion.getDescEn(),
+                            emotionService.UpdateById(new Emotion(emotion.getIcon(), emotion.getDesc(),
                                     emotion.getDescVi(), 0), emotion.getId());
                         }
                     }
@@ -274,11 +274,11 @@ public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.
                         WeatherService weatherService = new WeatherService(context);
                         Weather weather = weatherService.FindByIcon(Weather.class, iconListGetAll.get(id));
                         if (language.equals("vi")) {
-                            weatherService.UpdateById(new Weather(weather.getIcon(), weather.getDescEn(),
+                            weatherService.UpdateById(new Weather(weather.getIcon(), weather.getDesc(),
                                     weather.getDescVi(), 0), weather.getId());
                         }
                         else {
-                            weatherService.UpdateById(new Weather(weather.getIcon(), weather.getDescEn(),
+                            weatherService.UpdateById(new Weather(weather.getIcon(), weather.getDesc(),
                                     weather.getDescVi(), 0), weather.getId());
                         }
                     }
@@ -289,11 +289,11 @@ public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.
                         ActivityService activityService = new ActivityService(context);
                         com.example.doan_diaryapp.Models.Activity activity = activityService.FindByIcon(com.example.doan_diaryapp.Models.Activity.class, iconListGetAll.get(id));
                         if (language.equals("vi")) {
-                            activityService.UpdateById(new com.example.doan_diaryapp.Models.Activity(activity.getIcon(), activity.getDescEn(),
+                            activityService.UpdateById(new com.example.doan_diaryapp.Models.Activity(activity.getIcon(), activity.getDesc(),
                                     activity.getDescVi(), 0), activity.getId());
                         }
                         else {
-                            activityService.UpdateById(new com.example.doan_diaryapp.Models.Activity(activity.getIcon(), activity.getDescEn(),
+                            activityService.UpdateById(new com.example.doan_diaryapp.Models.Activity(activity.getIcon(), activity.getDesc(),
                                     activity.getDescVi(), 0), activity.getId());
                         }
                     }
@@ -304,11 +304,11 @@ public class ImageRecordAdapter extends RecyclerView.Adapter<ImageRecordAdapter.
                         PartnerService partnerService = new PartnerService(context);
                         Partner partner = partnerService.FindByIcon(Partner.class, iconListGetAll.get(id));
                         if (language.equals("vi")) {
-                            partnerService.UpdateById(new Partner(partner.getIcon(), partner.getDescEn(),
+                            partnerService.UpdateById(new Partner(partner.getIcon(), partner.getDesc(),
                                     partner.getDescVi(), 0), partner.getId());
                         }
                         else {
-                            partnerService.UpdateById(new Partner(partner.getIcon(), partner.getDescEn(),
+                            partnerService.UpdateById(new Partner(partner.getIcon(), partner.getDesc(),
                                     partner.getDescVi(), 0), partner.getId());
                         }
                     }
