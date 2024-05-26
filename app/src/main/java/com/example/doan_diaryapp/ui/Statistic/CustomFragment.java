@@ -39,6 +39,8 @@ public class CustomFragment extends Fragment {
     private Button btn_search;
     private TextView tv_statistic_custom;
     private EntryService entryService;
+    private int prevMonth, prevYear, afMonth, afYear;
+    private int index = 1;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -52,10 +54,17 @@ public class CustomFragment extends Fragment {
         btn_search = view.findViewById(R.id.btn_search);
         tv_statistic_custom = view.findViewById(R.id.tv_statistic_custom);
 
-        setOnClickListener(btn_search);
+        prevMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
+        prevYear = Calendar.getInstance().get(Calendar.YEAR);
+        afMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
+        afYear = Calendar.getInstance().get(Calendar.YEAR);
 
-        updateSpinnerYear(view);
-        updateSpinnerMonth(view);
+        updateSpinnerYear(view, aYear, aMonth);
+        updateSpinnerYear(view, bYear, bMonth);
+        updateSpinnerMonth(view, aYear, aMonth);
+        updateSpinnerMonth(view, bYear, bMonth);
+
+        setOnClickListener(btn_search);
 
         entryService = new EntryService(getContext());
 
@@ -88,33 +97,15 @@ public class CustomFragment extends Fragment {
         return view;
     }
 
-    private void updateSpinnerMonth(View view) {
-        ArrayList<Integer> month = new ArrayList<>();
-        for(int i=1;i<=12;i++){
-            month.add(i);
-        }
-
-        ArrayAdapter<Integer> adapterMonth = new ArrayAdapter<>(view.getContext(), R.layout.item_drop_down, month);
-        bMonth.setAdapter(adapterMonth);
-        bMonth.setText(String.valueOf(Calendar.getInstance().get(Calendar.MONTH)+1),false);
-        aMonth.setAdapter(adapterMonth);
-        aMonth.setText(String.valueOf(Calendar.getInstance().get(Calendar.MONTH)+1),false);
-    }
-
     public void setOnClickListener(Button button)
     {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(checkValidity()){
-                    if(checkData()){
-                        recyclerView.setVisibility(View.VISIBLE);
-                        tv_statistic_custom.setVisibility(View.GONE);
-                        customAdapter.setData(getListStatistic());
-                    }
-                    else{
-                        return;
-                    }
+                    recyclerView.setVisibility(View.VISIBLE);
+                    tv_statistic_custom.setVisibility(View.GONE);
+                    customAdapter.setData(getListStatistic());
                 }
                 else
                 {
@@ -122,6 +113,134 @@ public class CustomFragment extends Fragment {
                     recyclerView.setVisibility(View.GONE);
                     tv_statistic_custom.setVisibility(View.VISIBLE);
                     tv_statistic_custom.setText(R.string.over_date);
+                }
+            }
+        });
+    }
+
+    private void updateSpinnerMonth(View container, AutoCompleteTextView year, AutoCompleteTextView month) {
+        ArrayList<Integer> arrayMonth;
+
+        String sYear = year.getText().toString();
+        int iYear = Integer.parseInt(sYear);
+
+        int curYear = Calendar.getInstance().get(Calendar.YEAR);
+        int curMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
+
+        if (month == aMonth) {
+            if (iYear == curYear) {
+                arrayMonth = new ArrayList<>();
+                for (int i = 1; i <= curMonth; i++) {
+                    arrayMonth.add(i);
+                }
+            } else {
+                arrayMonth = new ArrayList<>();
+                for (int i = 1; i <= 12; i++) {
+                    arrayMonth.add(i);
+                }
+            }
+        } else {
+            if (iYear == afYear) {
+                arrayMonth = new ArrayList<>();
+                for (int i = 1; i <= afMonth; i++) {
+                    arrayMonth.add(i);
+                }
+            } else {
+                arrayMonth = new ArrayList<>();
+                for (int i = 1; i <= 12; i++) {
+                    arrayMonth.add(i);
+                }
+            }
+        }
+
+        ArrayAdapter<Integer> arrayAdapter = new ArrayAdapter<>(container.getContext(), R.layout.item_drop_down, arrayMonth);
+        month.setAdapter(arrayAdapter);
+        if(index==1){
+            month.setText(String.valueOf(arrayMonth.get(arrayMonth.size() - 1)), false);
+        }
+        else{
+            if((iYear == curYear || bYear.getText().toString().equals(aYear.getText().toString())) && month == bMonth){
+                if(Integer.parseInt(bMonth.getText().toString()) > Integer.parseInt(aMonth.getText().toString())){
+                    bMonth.setText(aMonth.getText().toString(), false);
+                }
+            }
+            else if(iYear == curYear && year == aYear && Integer.parseInt(aMonth.getText().toString()) > curMonth){
+                aMonth.setText(String.valueOf(curMonth), false);
+            }
+        }
+
+        month.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int selectedMonth = arrayMonth.get(position);
+                if (month == aMonth) {
+                    afMonth = selectedMonth;
+                    index = 2;
+
+                    // Cập nhật lại bMonth
+                    updateSpinnerMonth(container, bYear, bMonth);
+
+                    // Logic điều chỉnh giá trị tháng bắt đầu và tháng kết thúc
+                    String sBMonth = bMonth.getText().toString();
+                    int bMonthValue = Integer.parseInt(sBMonth);
+
+                    if (iYear == afYear && afMonth < bMonthValue) {
+                        bMonth.setText(String.valueOf(afMonth), false);
+                    }
+                } else if (month == bMonth) {
+                    index = 2;
+                    bMonth.setText(String.valueOf(selectedMonth), false);
+                }
+            }
+        });
+    }
+
+    private void updateSpinnerYear(View container, AutoCompleteTextView year, AutoCompleteTextView month) {
+        ArrayList<Integer> arrayYear;
+        int curYear = Calendar.getInstance().get(Calendar.YEAR);
+        if(year == aYear){
+            arrayYear = new ArrayList<>();
+            for(int i = 2020; i <= curYear; i++){
+                arrayYear.add(i);
+            }
+        }
+        else {
+            arrayYear = new ArrayList<>();
+            for(int i = 2020; i <= afYear; i++){
+                arrayYear.add(i);
+            }
+        }
+
+        ArrayAdapter<Integer> arrayAdapter = new ArrayAdapter<>(container.getContext(),R.layout.item_drop_down, arrayYear);
+        year.setAdapter(arrayAdapter);
+        if(index == 1){
+            year.setText(String.valueOf(arrayYear.get(arrayYear.size() - 1)), false);
+        }
+
+        year.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int selectedYear = arrayYear.get(position);
+                if(year == aYear){
+                    String sAYear = aYear.getText().toString();
+                    afYear = Integer.parseInt(sAYear);
+                    index = 2;
+                    updateSpinnerYear(container, bYear, bMonth);
+
+                    String selectedbYear = bYear.getText().toString();
+                    int startYear = Integer.parseInt(selectedbYear);
+                    String selectedaYear = aYear.getText().toString();
+                    int endYear = Integer.parseInt(selectedaYear);
+
+                    if(startYear > endYear)
+                        bYear.setText(selectedaYear,false);
+
+                    updateSpinnerMonth(container, aYear, aMonth);
+                    updateSpinnerMonth(container, bYear, bMonth);
+                }
+                else {
+                    index = 2;
+                    updateSpinnerMonth(container, bYear, bMonth);
                 }
             }
         });
@@ -154,61 +273,7 @@ public class CustomFragment extends Fragment {
             return false;
         }
 
-        boolean isFeature_b = isFutureDate(byear, bmonth);
-        boolean isFeature_a = isFutureDate(ayear, amonth);
-
-        if(isFeature_a || isFeature_b){
-            Toast.makeText(getContext(),getString(R.string.noti_month_selected),Toast.LENGTH_SHORT).show();
-
-            return false;
-        }
-
         return true;
-    }
-
-    public boolean isFutureDate(int year, int month) {
-        // Get the current date
-        Calendar currentDate = Calendar.getInstance();
-
-        // Create a calendar object for the given date
-        Calendar givenDate = Calendar.getInstance();
-        givenDate.set(Calendar.YEAR, year);
-        givenDate.set(Calendar.MONTH, month - 1); // Calendar.MONTH is zero-based (0 = January)
-
-        // Compare the dates
-        return givenDate.after(currentDate);
-    }
-
-    private void updateSpinnerYear(View view) {
-        ArrayList<Integer> year = new ArrayList<>();
-        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-
-        for(int i=2020;i<=currentYear;i++){
-            year.add(i);
-        }
-
-        ArrayAdapter<Integer> adapterYear = new ArrayAdapter<>(view.getContext(), R.layout.item_drop_down,year);
-        bYear.setAdapter(adapterYear);
-        aYear.setAdapter(adapterYear);
-
-        setDefaultYear(adapterYear);
-    }
-
-    private void setDefaultYear(ArrayAdapter<Integer> adapterYear) {
-        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-        boolean yearExists = false;
-        for (int i = 0; i < adapterYear.getCount(); i++) {
-            if (adapterYear.getItem(i) == currentYear) {
-                yearExists = true;
-                break;
-            }
-        }
-        if (!yearExists) {
-            adapterYear.add(currentYear);
-            adapterYear.notifyDataSetChanged();
-        }
-        aYear.setText(String.valueOf(currentYear),false);
-        bYear.setText(String.valueOf(currentYear),false);
     }
 
     private List<Custom> getListStatistic() {
@@ -243,8 +308,10 @@ public class CustomFragment extends Fragment {
         View view = getView();
         setOnClickListener(btn_search);
 
-        updateSpinnerYear(view);
-        updateSpinnerMonth(view);
+        updateSpinnerYear(view, aYear, aMonth);
+        updateSpinnerYear(view, bYear, bMonth);
+        updateSpinnerMonth(view, aYear, aMonth);
+        updateSpinnerMonth(view, bYear, bMonth);
 
         customAdapter = new CustomAdapter(view.getContext());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
@@ -254,30 +321,5 @@ public class CustomFragment extends Fragment {
 
         customAdapter.notifyDataSetChanged();
 
-        boolean check = checkData();
-    }
-
-    public boolean checkData(){
-        String selectedbYear = bYear.getText().toString();
-        int startYear = Integer.parseInt(selectedbYear);
-        String selectedbMonth = bMonth.getText().toString();
-        int startMonth = Integer.parseInt(selectedbMonth);
-        String selectedaYear = aYear.getText().toString();
-        int endYear = Integer.parseInt(selectedaYear);
-        String selectedaMonth = aMonth.getText().toString();
-        int endMonth = Integer.parseInt(selectedaMonth);
-
-        List<Entry> entryList = entryService.getOverallScoreCustom(startYear,startMonth,endYear,endMonth);
-        if(entryList.isEmpty()){
-            recyclerView.setVisibility(View.GONE);
-            tv_statistic_custom.setVisibility(View.VISIBLE);
-            tv_statistic_custom.setText(R.string.no_data_custom);
-            return false;
-        }
-        else{
-            recyclerView.setVisibility(View.VISIBLE);
-            tv_statistic_custom.setVisibility(View.GONE);
-            return true;
-        }
     }
 }
