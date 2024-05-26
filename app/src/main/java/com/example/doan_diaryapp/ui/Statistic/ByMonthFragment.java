@@ -39,7 +39,6 @@ public class ByMonthFragment extends Fragment {
     private AutoCompleteTextView act_mmonth;
     private AutoCompleteTextView act_myear;
     private EntryService entryService;
-    private TextView tv_statistic_month;
     private List<Entry>entryList;
     private int index = 1;
     private int prevMonth;
@@ -50,7 +49,6 @@ public class ByMonthFragment extends Fragment {
         View view =  lf.inflate(R.layout.fragment_by_month, container, false); //pass the correct layout name for the fragment
 
         recyclerView_month = view.findViewById(R.id.rcv_thong_ke_thang);
-        tv_statistic_month = view.findViewById(R.id.tv_statistic_month);
 
         act_mmonth = view.findViewById(R.id.act_mmonth);
         act_myear = view.findViewById(R.id.act_myear);
@@ -66,7 +64,6 @@ public class ByMonthFragment extends Fragment {
         monthStatisticAdapter.setData(getListStatistic());
         recyclerView_month.setAdapter(monthStatisticAdapter);
 
-        checkData();
 
         return view;
     }
@@ -100,16 +97,14 @@ public class ByMonthFragment extends Fragment {
         }
         else if(iYear == curYear && prevMonth > curMonth){
             act_mmonth.setText(String.valueOf(Calendar.getInstance().get(Calendar.MONTH) + 1),false);
-            checkData();
             monthStatisticAdapter.setData(getListStatistic());
         }
         act_mmonth.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    checkData();
-                    monthStatisticAdapter.setData(getListStatistic());
-                    String sMonth = act_mmonth.getText().toString();
-                    prevMonth = Integer.parseInt(sMonth);
+                monthStatisticAdapter.setData(getListStatistic());
+                String sMonth = act_mmonth.getText().toString();
+                prevMonth = Integer.parseInt(sMonth);
             }
         });
     }
@@ -130,7 +125,6 @@ public class ByMonthFragment extends Fragment {
         act_myear.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                checkData();
                 index = 2;
                 updateSpinnerMonth(container);
                 monthStatisticAdapter.setData(getListStatistic());
@@ -192,24 +186,5 @@ public class ByMonthFragment extends Fragment {
 
         monthStatisticAdapter.notifyDataSetChanged();
 
-        checkData();
-    }
-
-    public void checkData(){
-        String selectedYear = act_myear.getText().toString();
-        int year = Integer.parseInt(selectedYear);
-        String selectedMonth = act_mmonth.getText().toString();
-        int month = Integer.parseInt(selectedMonth);
-
-        entryList = entryService.getOverallScoreByMonthYear(month, year);
-        if(entryList.isEmpty()){
-            recyclerView_month.setVisibility(View.GONE);
-            tv_statistic_month.setVisibility(View.VISIBLE);
-            tv_statistic_month.setText(R.string.no_data_month);
-        }
-        else{
-            recyclerView_month.setVisibility(View.VISIBLE);
-            tv_statistic_month.setVisibility(View.GONE);
-        }
     }
 }
