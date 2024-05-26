@@ -2,12 +2,7 @@ package com.example.doan_diaryapp.Service;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
-import android.text.style.ImageSpan;
 
 import androidx.core.content.ContextCompat;
 
@@ -16,19 +11,11 @@ import com.example.doan_diaryapp.Models.EntryActivity;
 import com.example.doan_diaryapp.Models.EntryEmotion;
 import com.example.doan_diaryapp.Models.EntryPartner;
 import com.example.doan_diaryapp.Models.EntryPhoto;
-import com.example.doan_diaryapp.Models.EntryWeather;
-import com.example.doan_diaryapp.Models.ImportantDay;
-import com.example.doan_diaryapp.R;
-import com.example.doan_diaryapp.ui.home.MonthFragment;
-import com.example.doan_diaryapp.ui.home.SpecificDayDecorator;
-import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.example.doan_diaryapp.Models.ImportantEntry;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class EntryService extends BaseService{
     public EntryService(Context context) {
@@ -147,7 +134,7 @@ public class EntryService extends BaseService{
     EntryPartnerService entryPartnerService;
     EntryPhotoService entryPhotoService;
     EntryWeatherService entryWeatherService;
-    ImportantDayService importantDayService;
+    ImportantEntryService importantEntryService;
 
 
     public void deleteDiary(String DATE,Context context) {
@@ -176,10 +163,10 @@ public class EntryService extends BaseService{
                         //entryWeatherService=new EntryWeatherService(context);
                         //entryWeatherService.DeleteByEntryId(EntryWeather.class, id);
 
-                        importantDayService = new ImportantDayService(context);
-                        ImportantDay importantDay = importantDayService.FindByDate(new ImportantDay(),DATE);
-                        if (importantDay != null) {
-                            importantDayService.DeleteById(ImportantDay.class, importantDay.getId());
+                        importantEntryService = new ImportantEntryService(context);
+                        ImportantEntry importantEntry = importantEntryService.FindByDate(new ImportantEntry(),DATE);
+                        if (importantEntry != null) {
+                            importantEntryService.DeleteByEntryId(ImportantEntry.class, importantEntry.getEntryId());
                         }
                         db.delete("Entry", "Id = ?", new String[]{String.valueOf(id)});
                         return;

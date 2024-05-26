@@ -1,7 +1,6 @@
 package com.example.doan_diaryapp.Service;
 
 import android.app.IntentService;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
@@ -10,12 +9,12 @@ import android.os.Build;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
-import com.example.doan_diaryapp.Models.ImportantDay;
+import com.example.doan_diaryapp.Models.Entry;
+import com.example.doan_diaryapp.Models.ImportantEntry;
 import com.example.doan_diaryapp.NotificationHelper;
 import com.example.doan_diaryapp.R;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class ReminderService extends IntentService {
@@ -28,11 +27,14 @@ public class ReminderService extends IntentService {
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         if (intent != null) {
-            ImportantDayService importantDayService = new ImportantDayService(this);
-            List<ImportantDay> importantDates = importantDayService.GetAll(ImportantDay.class);
-            for (ImportantDay date : importantDates) {
-                if (shouldRemind(date.getDate())) {
-                    sendNotification(date.getDate());
+            ImportantEntryService importantEntryService = new ImportantEntryService(this);
+            EntryService entryService = new EntryService(this);
+            List<ImportantEntry> importantEntrys = importantEntryService.GetAll(ImportantEntry.class);
+            for (ImportantEntry importantEntry : importantEntrys) {
+                int id = importantEntry.getEntryId();
+                Entry entry = entryService.FindById(Entry.class, id);
+                if (shouldRemind(entry.getDate())) {
+                    sendNotification(entry.getDate());
                 }
             }
         }

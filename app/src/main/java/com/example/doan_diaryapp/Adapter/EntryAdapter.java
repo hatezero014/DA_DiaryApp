@@ -5,39 +5,29 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.icu.text.CaseMap;
 import android.net.Uri;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
-import android.text.style.ImageSpan;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import com.example.doan_diaryapp.Models.Entry;
-import com.example.doan_diaryapp.Models.ImportantDay;
+import com.example.doan_diaryapp.Models.ImportantEntry;
 import com.example.doan_diaryapp.Models.Language;
 import com.example.doan_diaryapp.R;
 import com.example.doan_diaryapp.Service.EntryPhotoService;
 import com.example.doan_diaryapp.Service.EntryService;
-import com.example.doan_diaryapp.Service.ImportantDayService;
-
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.example.doan_diaryapp.Service.ImportantEntryService;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -55,7 +45,7 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
 
     private OnFavoriteClickListener favoriteClickListener;
 
-    ImportantDayService importantDayService;
+    ImportantEntryService importantEntryService;
 
     EntryPhotoService entryPhotoService;
 
@@ -177,8 +167,8 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
 
         //actionFavorite.setImageResource(R.drawable.state_outlined_main_collection);
 
-        importantDayService=new ImportantDayService(getContext());
-        boolean checkAction = importantDayService.checkImportant(entry.getDate());
+        importantEntryService =new ImportantEntryService(getContext());
+        boolean checkAction = importantEntryService.checkImportant(entry.getDate());
         if (checkAction) {
             actionFavorite.setImageResource(R.drawable.state_filled_record_star);
         } else {
@@ -189,18 +179,18 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
         actionFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ImportantDay importantDay = importantDayService.FindByDate(new ImportantDay(),entry.getDate());
-                boolean isCheckFavorite = importantDayService.checkImportant(entry.getDate());
+                ImportantEntry importantEntry = importantEntryService.FindByDate(new ImportantEntry(),entry.getDate());
+                boolean isCheckFavorite = importantEntryService.checkImportant(entry.getDate());
                 if (isCheckFavorite) {
                     actionFavorite.setImageResource(R.drawable.state_outlined_record_star);
-                    if (importantDay != null) {
-                        importantDayService.DeleteById(ImportantDay.class, importantDay.getId());
+                    if (importantEntry != null) {
+                        importantEntryService.DeleteByEntryId(ImportantEntry.class, entry.getId());
                     }
                 }
                 else {
                     actionFavorite.setImageResource(R.drawable.state_filled_record_star);
-                    if (importantDay == null) {
-                        importantDayService.Add(new ImportantDay(entry.getDate()));
+                    if (importantEntry == null) {
+                        importantEntryService.Add(new ImportantEntry(entry.getId()));
                     }
                 }
 

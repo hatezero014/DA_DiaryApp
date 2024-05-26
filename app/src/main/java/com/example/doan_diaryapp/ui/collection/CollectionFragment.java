@@ -7,28 +7,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_diaryapp.Adapter.EntryAdapter;
 import com.example.doan_diaryapp.Models.Entry;
-import com.example.doan_diaryapp.Models.ImportantDay;
 import com.example.doan_diaryapp.Models.Notification;
 import com.example.doan_diaryapp.R;
 import com.example.doan_diaryapp.RecordActivity;
 import com.example.doan_diaryapp.Service.EntryPhotoService;
 import com.example.doan_diaryapp.Service.EntryService;
-import com.example.doan_diaryapp.Service.ImportantDayService;
+import com.example.doan_diaryapp.Service.ImportantEntryService;
 import com.example.doan_diaryapp.Service.NotificationService;
 import com.example.doan_diaryapp.YourImagesInApp;
 import com.example.doan_diaryapp.databinding.FragmentCollectionBinding;
@@ -36,7 +30,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class CollectionFragment extends Fragment {
     private FragmentCollectionBinding binding;
@@ -47,7 +40,7 @@ public class CollectionFragment extends Fragment {
     private EntryAdapter mAdapter;
 
     private EntryAdapter mAdapter1;
-    private ImportantDayService importantDayService;
+    private ImportantEntryService importantEntryService;
 
     private EntryPhotoService entryPhotoService;
 
@@ -106,8 +99,8 @@ public class CollectionFragment extends Fragment {
 
         tv_count_notification = view.findViewById(R.id.count_notification);
         mListView = view.findViewById(R.id.ListDayQT);
-        importantDayService = new ImportantDayService(getContext());
-        List<Entry> entryList = importantDayService.getEntriesFromDatabaseQT();
+        importantEntryService = new ImportantEntryService(getContext());
+        List<Entry> entryList = importantEntryService.getEntriesFromDatabaseQT();
         mAdapter = new EntryAdapter(getContext(), entryList);
         mListView.setAdapter(mAdapter);
 
@@ -130,7 +123,7 @@ public class CollectionFragment extends Fragment {
     }
 
     private void updateListView(View view) {
-        List<Entry> entryList = importantDayService.getEntriesFromDatabaseQT();
+        List<Entry> entryList = importantEntryService.getEntriesFromDatabaseQT();
         mAdapter.updateEntries1(entryList);
         TextView textView = view.findViewById(R.id.text3);
         if (entryList.size() == 0) {

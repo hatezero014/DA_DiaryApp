@@ -1,29 +1,21 @@
 package com.example.doan_diaryapp;
 
 import android.app.AlarmManager;
-import android.app.Dialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.TimePickerDialog;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,7 +25,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 import androidx.activity.OnBackPressedCallback;
 
@@ -60,7 +51,7 @@ import com.example.doan_diaryapp.Models.EntryEmotion;
 import com.example.doan_diaryapp.Models.EntryPartner;
 import com.example.doan_diaryapp.Models.EntryPhoto;
 import com.example.doan_diaryapp.Models.EntryWeather;
-import com.example.doan_diaryapp.Models.ImportantDay;
+import com.example.doan_diaryapp.Models.ImportantEntry;
 import com.example.doan_diaryapp.Models.Notification;
 import com.example.doan_diaryapp.Models.Partner;
 import com.example.doan_diaryapp.Models.Weather;
@@ -72,29 +63,21 @@ import com.example.doan_diaryapp.Service.EntryPartnerService;
 import com.example.doan_diaryapp.Service.EntryPhotoService;
 import com.example.doan_diaryapp.Service.EntryService;
 import com.example.doan_diaryapp.Service.EntryWeatherService;
-import com.example.doan_diaryapp.Service.ImportantDayService;
+import com.example.doan_diaryapp.Service.ImportantEntryService;
 import com.example.doan_diaryapp.Service.NotificationService;
 import com.example.doan_diaryapp.Service.PartnerService;
 import com.example.doan_diaryapp.Service.WeatherService;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.slider.Slider;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.timepicker.MaterialTimePicker;
-import com.google.android.material.timepicker.TimeFormat;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.lang.reflect.Field;
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 public class RecordActivity extends BaseActivity {
 
@@ -133,7 +116,7 @@ public class RecordActivity extends BaseActivity {
     EmotionService emotionService;
     PartnerService partnerService;
     WeatherService weatherService;
-    ImportantDayService importantDayService;
+    ImportantEntryService importantEntryService;
 
     RecyclerView recyclerView1, recyclerView2, recyclerView3, recyclerView4;
     String language;
@@ -179,7 +162,7 @@ public class RecordActivity extends BaseActivity {
         emotionService = new EmotionService(this);
         partnerService = new PartnerService(this);
         weatherService = new WeatherService(this);
-        importantDayService = new ImportantDayService(this);
+        importantEntryService = new ImportantEntryService(this);
 
         List<Integer> emotionGetAllIndex;
         List<String> emotionGetAllDesc;
@@ -462,8 +445,8 @@ public class RecordActivity extends BaseActivity {
             };
             textCount.setText(getResources().getString(R.string.record_title_add_image, countImage, 3));
 
-            ImportantDay importantDay = importantDayService.FindByDate(new ImportantDay(), date);
-            if (importantDay != null) {
+            ImportantEntry importantEntry = importantEntryService.FindByDate(new ImportantEntry(), date);
+            if (importantEntry != null) {
                 isCheckFavorite = true;
                 invalidateOptionsMenu();
             }
@@ -581,11 +564,11 @@ public class RecordActivity extends BaseActivity {
                     if (result == null) {
                         Entry entity = new Entry(title, notes, date, overallScore);
                         entryService.Add(entity);
+                        int id = entryService.FindByDate(new Entry(), date).getId();
                         if (isCheckFavorite) {
-                            importantDayService.Add(new ImportantDay(date));
+                            importantEntryService.Add(new ImportantEntry(id));
                         }
 
-                        int id = entryService.FindByDate(new Entry(), date).getId();
                         for (Integer imageId : selectedItems1) {
                             entryEmotionService.Add(new EntryEmotion(id, imageId));
                         }
@@ -636,7 +619,7 @@ public class RecordActivity extends BaseActivity {
                     else {
                         int id = result.getId();
                         Entry entity = new Entry(title, notes, date, overallScore);
-                        ImportantDay importantDay = importantDayService.FindByDate(new ImportantDay(),date);
+                        ImportantEntry importantEntry = importantEntryService.FindByDate(new ImportantEntry(),date);
                         entryService.UpdateById(entity, id);
                         entryPhotoService.DeleteByEntryId(EntryPhoto.class, id);
                         entryActivityService.DeleteByEntryId(EntryActivity.class, id);
@@ -644,13 +627,13 @@ public class RecordActivity extends BaseActivity {
                         entryPartnerService.DeleteByEntryId(EntryPartner.class, id);
                         entryWeatherService.DeleteByEntryId(EntryWeather.class, id);
                         if (isCheckFavorite) {
-                            if (importantDay == null) {
-                                importantDayService.Add(new ImportantDay(date));
+                            if (importantEntry == null) {
+                                importantEntryService.Add(new ImportantEntry(id));
                             }
                         }
                         else {
-                            if (importantDay != null) {
-                                importantDayService.DeleteById(ImportantDay.class, importantDay.getId());
+                            if (importantEntry != null) {
+                                importantEntryService.DeleteByEntryId(ImportantEntry.class, id);
                             }
                         }
 
