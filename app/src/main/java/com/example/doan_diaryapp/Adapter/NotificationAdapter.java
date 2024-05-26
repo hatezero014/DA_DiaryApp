@@ -130,10 +130,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             holder.textView.setText(R.string.notification_6);
         }
         else if(notification.getContent() == 7){
-            holder.textView.setText(R.string.notification_7);
+            String textNotification = context.getString(R.string.notification_7) + notification.getSub();
+            holder.textView.setText(textNotification);
         }
         else if(notification.getContent() == 8){
-            holder.textView.setText(R.string.notification_8);
+            String textNotification = context.getString(R.string.notification_8_1) + " " + notification.getSub() + " " + context.getString(R.string.notification_8_2);
+            holder.textView.setText(textNotification);
         }
 
         if(showCheckboxes) {
@@ -147,6 +149,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             @Override
             public boolean onLongClick(View v) {
                 setShowCheckboxes(true);
+//                holder.checkBox.setChecked(true);
                 return true;
             }
         });
@@ -169,7 +172,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             textView = itemView.findViewById(R.id.new_details);
             Date = itemView.findViewById(R.id.currrentTime);
             cardView = itemView.findViewById(R.id.card_view_notification);
-            checkBox = itemView.findViewById(R.id.checkBox);
+            checkBox = itemView.findViewById(R.id.checkbox);
         }
 
     }

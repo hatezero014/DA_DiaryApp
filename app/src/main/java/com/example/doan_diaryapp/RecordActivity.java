@@ -602,7 +602,7 @@ public class RecordActivity extends BaseActivity {
                         try {
                             if(isCheckFavorite) {
                                 NotificationService notificationService = new NotificationService(RecordActivity.this);
-                                notificationService.Add(new Notification(getCurrentTime(), getCurrentDay(), 2, null, 1 ));
+                                notificationService.Add(new Notification(getCurrentTime(), getCurrentDay(), 2, null , 1 ));
                             }
                             else {
                                 NotificationService notificationService = new NotificationService(RecordActivity.this);
@@ -671,10 +671,10 @@ public class RecordActivity extends BaseActivity {
                             NotificationService notificationService = new NotificationService(RecordActivity.this);
                             notificationService.DeleteById(Notification.class, id);
                             if(isCheckFavorite) {
-                                notificationService.Add(new Notification(getCurrentTime(), getCurrentDay(), 8, null, 1 ));
+                                notificationService.Add(new Notification(getCurrentTime(), getCurrentDay(), 8, date, 1 ));
                             }
                             else {
-                                notificationService.Add(new Notification(getCurrentTime(), getCurrentDay(), 7, null, 1));
+                                notificationService.Add(new Notification(getCurrentTime(), getCurrentDay(), 7, date, 1));
                             }
                         }
                         catch (Exception e) {
