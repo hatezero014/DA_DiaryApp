@@ -35,7 +35,7 @@ public class EntryActivityService extends BaseService{
             if (cursor != null && cursor.moveToFirst()) {
                 int dateColumnIndex = cursor.getColumnIndex("Date");
                 int iconColumnIndex = cursor.getColumnIndex("Icon");
-                int descEnColumnIndex = cursor.getColumnIndex("DescEn");
+                int descEnColumnIndex = cursor.getColumnIndex("Desc");
                 int descViColumnIndex = cursor.getColumnIndex("DescVi");
                 int isActiveColumnIndex = cursor.getColumnIndex("IsActive");
 
@@ -68,7 +68,7 @@ public class EntryActivityService extends BaseService{
             if (cursor != null && cursor.moveToFirst()) {
                 int dateColumnIndex = cursor.getColumnIndex("Date");
                 int iconColumnIndex = cursor.getColumnIndex("Icon");
-                int descEnColumnIndex = cursor.getColumnIndex("DescEn");
+                int descEnColumnIndex = cursor.getColumnIndex("Desc");
                 int descViColumnIndex = cursor.getColumnIndex("DescVi");
                 int isActiveColumnIndex = cursor.getColumnIndex("IsActive");
 
@@ -100,7 +100,7 @@ public class EntryActivityService extends BaseService{
             if (cursor != null && cursor.moveToFirst()) {
                 int dateColumnIndex = cursor.getColumnIndex("Date");
                 int iconColumnIndex = cursor.getColumnIndex("Icon");
-                int descEnColumnIndex = cursor.getColumnIndex("DescEn");
+                int descEnColumnIndex = cursor.getColumnIndex("Desc");
                 int descViColumnIndex = cursor.getColumnIndex("DescVi");
                 int isActiveColumnIndex = cursor.getColumnIndex("IsActive");
 
@@ -134,7 +134,7 @@ public class EntryActivityService extends BaseService{
             if (cursor != null && cursor.moveToFirst()) {
                 int dateColumnIndex = cursor.getColumnIndex("Date");
                 int iconColumnIndex = cursor.getColumnIndex("Icon");
-                int descEnColumnIndex = cursor.getColumnIndex("DescEn");
+                int descEnColumnIndex = cursor.getColumnIndex("Desc");
                 int descViColumnIndex = cursor.getColumnIndex("DescVi");
                 int isActiveColumnIndex = cursor.getColumnIndex("IsActive");
 
