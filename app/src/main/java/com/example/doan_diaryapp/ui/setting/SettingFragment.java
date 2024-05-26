@@ -6,6 +6,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -18,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.provider.Settings;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,7 +65,7 @@ public class SettingFragment extends Fragment {
     private AlarmManager alarmManager;
     private PendingIntent pendingIntent;
 
-    private LinearLayout layoutFeedback, layoutLanguage, layoutTheme;
+    private LinearLayout layoutFeedback, layoutLanguage, layoutTheme, reminderTime;
     TextView tv_count_notification;
 
     private final ActivityResultLauncher<Intent> requestExactAlarmPermissionLauncher =
@@ -108,6 +110,7 @@ public class SettingFragment extends Fragment {
         layoutLanguage = view.findViewById(R.id.layoutLanguage);
         layoutTheme = view.findViewById(R.id.layoutTheme);
         tv_count_notification = view.findViewById(R.id.count_notification3);
+        reminderTime = view.findViewById(R.id.remindertime);
 
         onLayoutThemeClick(layoutTheme);
         onLayoutLanguageClick(layoutLanguage);
@@ -133,6 +136,13 @@ public class SettingFragment extends Fragment {
         setupSwitchNotification();
         setUpSwitchSecurity();
         CountNotification();
+        reminderTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!switchNotification.isChecked()) return;
+                openDiaLog();
+            }
+        });
 
         return view;
     }
@@ -385,7 +395,6 @@ public class SettingFragment extends Fragment {
                 .setTitleText(R.string.select_reminder_time)
                 .setInputMode(MaterialTimePicker.INPUT_MODE_CLOCK)
                 .build();
-
         materialTimePicker.addOnPositiveButtonClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -410,6 +419,15 @@ public class SettingFragment extends Fragment {
         materialTimePicker.addOnNegativeButtonClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedPreferences1.edit();
+                editor.putBoolean("notification_switch_state", false);
+                editor.apply();
+                switchNotification.setChecked(false);
+            }
+        });
+        materialTimePicker.addOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
                 SharedPreferences.Editor editor = sharedPreferences1.edit();
                 editor.putBoolean("notification_switch_state", false);
                 editor.apply();

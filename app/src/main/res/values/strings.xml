@@ -134,16 +134,17 @@
     <string name="notification_reminder_time">Reminder time</string>
     <string name="notification_day">Day</string>
 
-    <string name="notification_1">You added your diary today!</string>
-    <string name="notification_2">You added your diary today and today is an important day!</string>
+    <string name="notification_1">You added your new diary today!</string>
+    <string name="notification_2">You added your new diary today and today is an important day!</string>
     <string name="notification_3_1">Your mood score for </string>
     <string name="notification_3_2"> is: </string>
     <string name="notification_4">You have set a password! If you were not the one who set it up, contact us for support!</string>
     <string name="notification_5">You have changed your password, please check again. If you did not make this change, contact us for support!</string>
     <string name="notification_6">You have deleted your password!</string>
     <string name="notification_null">No notifications!</string>
-    <string name="notification_7">You edited your diary today!</string>
-    <string name="notification_8">You edited today has diary and marked today has an important day!</string>
+    <string name="notification_7">You edited your diary:</string>
+    <string name="notification_8_1">You edited your diary </string>
+    <string name="notification_8_2">and marked this entry as an important journal </string>
 
 
     <!--   Month -->
@@ -224,5 +225,7 @@
     <string name="noti_month_selected">The value of the month you selected is greater than the current month value.</string>
 
     <string name="btn_search">Search</string>
+
+    <string name="your_image">Your Image</string>
 
 </resources>
