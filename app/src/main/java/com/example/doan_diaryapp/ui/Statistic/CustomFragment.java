@@ -159,7 +159,7 @@ public class CustomFragment extends Fragment {
             month.setText(String.valueOf(arrayMonth.get(arrayMonth.size() - 1)), false);
         }
         else{
-            if((iYear == curYear || bYear.getText().toString().equals(aYear.getText().toString())) && month == bMonth){
+            if((iYear == curYear || bYear.getText().toString().equals(aYear.getText().toString()))){
                 if(Integer.parseInt(bMonth.getText().toString()) > Integer.parseInt(aMonth.getText().toString())){
                     bMonth.setText(aMonth.getText().toString(), false);
                 }
@@ -184,7 +184,7 @@ public class CustomFragment extends Fragment {
                     String sBMonth = bMonth.getText().toString();
                     int bMonthValue = Integer.parseInt(sBMonth);
 
-                    if (iYear == afYear && afMonth < bMonthValue) {
+                    if (Integer.parseInt(bYear.getText().toString()) == afYear && afMonth < bMonthValue) {
                         bMonth.setText(String.valueOf(afMonth), false);
                     }
                 } else if (month == bMonth) {
