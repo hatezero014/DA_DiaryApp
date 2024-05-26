@@ -265,7 +265,7 @@ public class RecordActivity extends BaseActivity {
             emotionGetAllIcon.add(emotion.getIcon());
             int emotionIdR = getResources().getIdentifier(emotion.getIcon(), "drawable", getPackageName());
             emotionGetAllIndex.add(emotionIdR);
-            String desc = emotion.getDescEn();
+            String desc = emotion.getDesc();
             if (language.equals("vi"))
                 desc = emotion.getDescVi();
             emotionGetAllDesc.add(desc);
@@ -284,7 +284,7 @@ public class RecordActivity extends BaseActivity {
             activityGetAllIcon.add(activity.getIcon());
             int activityIdR = getResources().getIdentifier(activity.getIcon(), "drawable", getPackageName());
             activityGetAllIndex.add(activityIdR);
-            String desc = activity.getDescEn();
+            String desc = activity.getDesc();
             if (language.equals("vi"))
                 desc = activity.getDescVi();
             activityGetAllDesc.add(desc);
@@ -303,7 +303,7 @@ public class RecordActivity extends BaseActivity {
             partnerGetAllIcon.add(partner.getIcon());
             int partnerIdR = getResources().getIdentifier(partner.getIcon(), "drawable", getPackageName());
             partnerGetAllIndex.add(partnerIdR);
-            String desc = partner.getDescEn();
+            String desc = partner.getDesc();
             if (language.equals("vi"))
                 desc = partner.getDescVi();
             partnerGetAllDesc.add(desc);
@@ -322,7 +322,7 @@ public class RecordActivity extends BaseActivity {
             weatherGetAllIcon.add(weather.getIcon());
             int weatherIdR = getResources().getIdentifier(weather.getIcon(), "drawable", getPackageName());
             weatherGetAllIndex.add(weatherIdR);
-            String desc = weather.getDescEn();
+            String desc = weather.getDesc();
             if (language.equals("vi"))
                 desc = weather.getDescVi();
             weatherGetAllDesc.add(desc);
@@ -347,7 +347,7 @@ public class RecordActivity extends BaseActivity {
         for (Integer resourceId : imageMoodList) {
             String resourceName = getResourceName(resourceId);
             Emotion emotion = emotionService.FindByIcon(Emotion.class, resourceName);
-            String desc = emotion.getDescEn();
+            String desc = emotion.getDesc();
             if (language.equals("vi"))
                 desc = emotion.getDescVi();
             descMoodList.add(desc);
@@ -357,7 +357,7 @@ public class RecordActivity extends BaseActivity {
         for (Integer resourceId : imageActivityList) {
             String resourceName = getResourceName(resourceId);
             Activity activity = activityService.FindByIcon(Activity.class, resourceName);
-            String desc = activity.getDescEn();
+            String desc = activity.getDesc();
             if (language.equals("vi"))
                 desc = activity.getDescVi();
             descActivityList.add(desc);
@@ -367,7 +367,7 @@ public class RecordActivity extends BaseActivity {
         for (Integer resourceId : imageCompanionList) {
             String resourceName = getResourceName(resourceId);
             Partner partner = partnerService.FindByIcon(Partner.class, resourceName);
-            String desc = partner.getDescEn();
+            String desc = partner.getDesc();
             if (language.equals("vi"))
                 desc = partner.getDescVi();
             descPartnerList.add(desc);
@@ -377,7 +377,7 @@ public class RecordActivity extends BaseActivity {
         for (Integer resourceId : imageWeatherList) {
             String resourceName = getResourceName(resourceId);
             Weather weather = weatherService.FindByIcon(Weather.class, resourceName);
-            String desc = weather.getDescEn();
+            String desc = weather.getDesc();
             if (language.equals("vi"))
                 desc = weather.getDescVi();
             descWeatherList.add(desc);
@@ -797,7 +797,7 @@ public class RecordActivity extends BaseActivity {
             emotionGetAllIcon.add(emotion.getIcon());
             int emotionIdR = getResources().getIdentifier(emotion.getIcon(), "drawable", getPackageName());
             emotionGetAllIndex.add(emotionIdR);
-            String desc = emotion.getDescEn();
+            String desc = emotion.getDesc();
             if (language.equals("vi"))
                 desc = emotion.getDescVi();
             emotionGetAllDesc.add(desc);
@@ -814,7 +814,7 @@ public class RecordActivity extends BaseActivity {
         for (Integer resourceId : imageMoodList) {
             String resourceName = getResourceName(resourceId);
             Emotion emotion = emotionService.FindByIcon(Emotion.class, resourceName);
-            String desc = emotion.getDescEn();
+            String desc = emotion.getDesc();
             if (language.equals("vi"))
                 desc = emotion.getDescVi();
             descMoodList.add(desc);
@@ -842,7 +842,7 @@ public class RecordActivity extends BaseActivity {
             activityGetAllIcon.add(activity.getIcon());
             int activityIdR = getResources().getIdentifier(activity.getIcon(), "drawable", getPackageName());
             activityGetAllIndex.add(activityIdR);
-            String desc = activity.getDescEn();
+            String desc = activity.getDesc();
             if (language.equals("vi"))
                 desc = activity.getDescVi();
             activityGetAllDesc.add(desc);
@@ -859,7 +859,7 @@ public class RecordActivity extends BaseActivity {
         for (Integer resourceId : imageActivityList) {
             String resourceName = getResourceName(resourceId);
             Activity activity = activityService.FindByIcon(Activity.class, resourceName);
-            String desc = activity.getDescEn();
+            String desc = activity.getDesc();
             if (language.equals("vi"))
                 desc = activity.getDescVi();
             descActivityList.add(desc);
@@ -887,7 +887,7 @@ public class RecordActivity extends BaseActivity {
             partnerGetAllIcon.add(partner.getIcon());
             int partnerIdR = getResources().getIdentifier(partner.getIcon(), "drawable", getPackageName());
             partnerGetAllIndex.add(partnerIdR);
-            String desc = partner.getDescEn();
+            String desc = partner.getDesc();
             if (language.equals("vi"))
                 desc = partner.getDescVi();
             partnerGetAllDesc.add(desc);
@@ -904,7 +904,7 @@ public class RecordActivity extends BaseActivity {
         for (Integer resourceId : imageCompanionList) {
             String resourceName = getResourceName(resourceId);
             Partner partner = partnerService.FindByIcon(Partner.class, resourceName);
-            String desc = partner.getDescEn();
+            String desc = partner.getDesc();
             if (language.equals("vi"))
                 desc = partner.getDescVi();
             descPartnerList.add(desc);
@@ -932,7 +932,7 @@ public class RecordActivity extends BaseActivity {
             weatherGetAllIcon.add(weather.getIcon());
             int weatherIdR = getResources().getIdentifier(weather.getIcon(), "drawable", getPackageName());
             weatherGetAllIndex.add(weatherIdR);
-            String desc = weather.getDescEn();
+            String desc = weather.getDesc();
             if (language.equals("vi"))
                 desc = weather.getDescVi();
             weatherGetAllDesc.add(desc);
@@ -949,7 +949,7 @@ public class RecordActivity extends BaseActivity {
         for (Integer resourceId : imageWeatherList) {
             String resourceName = getResourceName(resourceId);
             Weather weather = weatherService.FindByIcon(Weather.class, resourceName);
-            String desc = weather.getDescEn();
+            String desc = weather.getDesc();
             if (language.equals("vi"))
                 desc = weather.getDescVi();
             descWeatherList.add(desc);
