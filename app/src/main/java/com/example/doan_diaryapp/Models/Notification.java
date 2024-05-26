@@ -9,14 +9,14 @@ public class Notification {
     String Sub;
 
     public int getIsRead() {
-        return isRead;
+        return IsRead;
     }
 
     public void setIsRead(int isRead) {
-        this.isRead = isRead;
+        this.IsRead = isRead;
     }
 
-    int isRead;
+    int IsRead;
 
     public String getSub() {
         return Sub;
@@ -34,7 +34,7 @@ public class Notification {
         Day = day;
         Content = content;
         Sub = sub;
-        isRead = read;
+        IsRead = read;
     }
 
     public int getId() {
