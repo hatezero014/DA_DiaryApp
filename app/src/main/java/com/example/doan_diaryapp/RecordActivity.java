@@ -445,7 +445,7 @@ public class RecordActivity extends BaseActivity {
             };
             textCount.setText(getResources().getString(R.string.record_title_add_image, countImage, 3));
 
-            ImportantEntry importantEntry = importantEntryService.FindByDate(new ImportantEntry(), date);
+            ImportantEntry importantEntry = importantEntryService.FindByEntryId(ImportantEntry.class, result.getId());
             if (importantEntry != null) {
                 isCheckFavorite = true;
                 invalidateOptionsMenu();
@@ -619,7 +619,7 @@ public class RecordActivity extends BaseActivity {
                     else {
                         int id = result.getId();
                         Entry entity = new Entry(title, notes, date, overallScore);
-                        ImportantEntry importantEntry = importantEntryService.FindByDate(new ImportantEntry(),date);
+                        ImportantEntry importantEntry = importantEntryService.FindByEntryId(ImportantEntry.class, id);
                         entryService.UpdateById(entity, id);
                         entryPhotoService.DeleteByEntryId(EntryPhoto.class, id);
                         entryActivityService.DeleteByEntryId(EntryActivity.class, id);
