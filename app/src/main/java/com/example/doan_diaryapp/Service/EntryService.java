@@ -11,6 +11,7 @@ import com.example.doan_diaryapp.Models.EntryActivity;
 import com.example.doan_diaryapp.Models.EntryEmotion;
 import com.example.doan_diaryapp.Models.EntryPartner;
 import com.example.doan_diaryapp.Models.EntryPhoto;
+import com.example.doan_diaryapp.Models.EntryWeather;
 import com.example.doan_diaryapp.Models.ImportantEntry;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
@@ -160,11 +161,11 @@ public class EntryService extends BaseService{
                         entryPartnerService=new EntryPartnerService(context);
                         entryPartnerService.DeleteByEntryId(EntryPartner.class, id);
 
-                        //entryWeatherService=new EntryWeatherService(context);
-                        //entryWeatherService.DeleteByEntryId(EntryWeather.class, id);
+                        entryWeatherService=new EntryWeatherService(context);
+                        entryWeatherService.DeleteByEntryId(EntryWeather.class, id);
 
                         importantEntryService = new ImportantEntryService(context);
-                        ImportantEntry importantEntry = importantEntryService.FindByDate(new ImportantEntry(),DATE);
+                        ImportantEntry importantEntry = importantEntryService.FindByEntryId(ImportantEntry.class, id);
                         if (importantEntry != null) {
                             importantEntryService.DeleteByEntryId(ImportantEntry.class, importantEntry.getEntryId());
                         }

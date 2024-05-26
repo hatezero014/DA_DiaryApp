@@ -179,7 +179,7 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
         actionFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ImportantEntry importantEntry = importantEntryService.FindByDate(new ImportantEntry(),entry.getDate());
+                ImportantEntry importantEntry = importantEntryService.FindByEntryId(ImportantEntry.class, entry.getId());
                 boolean isCheckFavorite = importantEntryService.checkImportant(entry.getDate());
                 if (isCheckFavorite) {
                     actionFavorite.setImageResource(R.drawable.state_outlined_record_star);
