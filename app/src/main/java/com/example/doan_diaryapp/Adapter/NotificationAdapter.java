@@ -144,7 +144,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             holder.checkBox.setVisibility(View.GONE);
         }
 
-        // Xử lý long click listener cho cardView để hiển thị checkbox
+        if(showCheckboxes) {
+            holder.checkBox.setVisibility(View.VISIBLE);
+        } else {
+            holder.checkBox.setVisibility(View.GONE);
+        }
+
         holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -173,6 +178,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             Date = itemView.findViewById(R.id.currrentTime);
             cardView = itemView.findViewById(R.id.card_view_notification);
             checkBox = itemView.findViewById(R.id.checkbox);
+
         }
 
     }

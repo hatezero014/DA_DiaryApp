@@ -49,7 +49,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         notificationAdapter.setData(category.getNotificationList());
         holder.rcv.setAdapter(notificationAdapter);
 
-        holder.rcv.setOnLongClickListener(new View.OnLongClickListener() {
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 // Thay đổi trạng thái hiển thị checkbox
