@@ -134,7 +134,10 @@
     <string name="notification_day">Ngày</string>
 
     <string name="notification_1">Bạn đã thêm nhật ký mới hôm nay!</string>
+    <string name="notification_1_1">Bạn đã thêm nhật ký mới cho ngày: </string>
     <string name="notification_2">Bạn đã thêm nhật ký mới hôm nay và đánh dấu nhật ký này là nhật ký quan trọng!</string>
+    <string name="notification_2_1">Bạn đã thêm nhật ký ngày:</string>
+    <string name="notification_2_2"> và đánh dấu nhật ký này là nhật ký quan trọng!</string>
     <string name="notification_3_1">Điểm số tâm trạng tháng </string>
     <string name="notification_3_2">của bạn là: </string>
     <string name="notification_4">Bạn đã thiết lập mật khẩu! Nếu bạn không phải là người thiết lập nó, hãy liên hệ với chúng tôi để được hỗ trợ!</string>

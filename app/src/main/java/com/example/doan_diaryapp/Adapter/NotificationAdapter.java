@@ -67,10 +67,23 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         holder.Date.setText(notification.getTime());
 
         if(notification.getContent() == 1){
-            holder.textView.setText(R.string.notification_1);
+            if(notification.getSub()==null){
+                holder.textView.setText(R.string.notification_1);
+            }
+            else {
+                String textNotification = context.getString(R.string.notification_1_1) + notification.getSub();
+                holder.textView.setText(textNotification);
+            }
         }
         else if(notification.getContent() == 2){
-            holder.textView.setText(R.string.notification_2);
+            if(notification.getSub() == null)
+            {
+                holder.textView.setText(R.string.notification_2);
+            }
+            else {
+                String textNotification = context.getString(R.string.notification_2_1) + notification.getSub() + context.getString(R.string.notification_2_2);
+                holder.textView.setText(textNotification);
+            }
         }
         else if(notification.getContent() == 3){
             String []sub = notification.getSub().split(";");
