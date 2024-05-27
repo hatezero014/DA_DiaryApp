@@ -135,7 +135,10 @@
     <string name="notification_day">Day</string>
 
     <string name="notification_1">You added your new diary today!</string>
+    <string name="notification_1_1">You have added a diary for the day:</string>
     <string name="notification_2">You added your new diary today and today is an important day!</string>
+    <string name="notification_2_1">You have added a new diary for the day</string>
+    <string name="notification_2_2"> and marked it as important!</string>
     <string name="notification_3_1">Your mood score for </string>
     <string name="notification_3_2"> is: </string>
     <string name="notification_4">You have set a password! If you were not the one who set it up, contact us for support!</string>
