@@ -45,7 +45,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, RecyclerView.VERTICAL,false);
         holder.rcv.setLayoutManager(linearLayoutManager);
 
-        NotificationAdapter notificationAdapter = new NotificationAdapter();
+        NotificationAdapter notificationAdapter = new NotificationAdapter(context);
         notificationAdapter.setData(category.getNotificationList());
         holder.rcv.setAdapter(notificationAdapter);
 
@@ -54,7 +54,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             @Override
             public boolean onLongClick(View v) {
                 // Thay đổi trạng thái hiển thị checkbox
-                notificationAdapter.setShowCheckboxes(true);
+                //notificationAdapter.setShowCheckboxes(true);
                 return true;
             }
         });

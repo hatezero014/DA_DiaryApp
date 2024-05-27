@@ -1,6 +1,7 @@
 package com.example.doan_diaryapp.Adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,16 +17,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_diaryapp.Models.Notification;
 import com.example.doan_diaryapp.R;
+import com.example.doan_diaryapp.Service.EntryService;
 import com.example.doan_diaryapp.Service.NotificationService;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.List;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotificationHolder> {
     List<Notification> notificationList;
-    private boolean showCheckboxes = false;
-    public void setShowCheckboxes(boolean show) {
-        showCheckboxes = show;
-        notifyDataSetChanged();
+    Context context;
+    public NotificationAdapter(Context context){
+        this.context = context;
     }
 
 
@@ -151,23 +153,14 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             holder.textView.setText(textNotification);
         }
 
-        if(showCheckboxes) {
-            holder.checkBox.setVisibility(View.VISIBLE);
-        } else {
-            holder.checkBox.setVisibility(View.GONE);
-        }
-
-        if(showCheckboxes) {
-            holder.checkBox.setVisibility(View.VISIBLE);
-        } else {
-            holder.checkBox.setVisibility(View.GONE);
-        }
 
         holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                setShowCheckboxes(true);
+            //    setShowCheckboxes(true);
 //                holder.checkBox.setChecked(true);
+                showAlertDialog(notification.getId());
+//                setData(notificationList);
                 return true;
             }
         });
@@ -200,6 +193,36 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public int getItemViewType(int position) {
         return super.getItemViewType(position);
     }
+
+    public void showAlertDialog(int id) {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
+        builder.setTitle(R.string.delete_diary)
+                .setMessage(R.string.deleteNotification)
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        NotificationService notificationService = new NotificationService(context);
+                        notificationService.DeleteById(Notification.class, id);
+
+                        for (int i = 0; i < notificationList.size(); i++) {
+                            if (notificationList.get(i).getId() == id) {
+                                notificationList.remove(i);
+                                notifyItemRemoved(i);
+                                break;
+                            }
+                        }
+                    }
+                });
+        notifyDataSetChanged();
+        builder.create().show();
+    }
+
+
 
 
 }

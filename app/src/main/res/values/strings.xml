@@ -194,6 +194,8 @@
 
     <string name="delete_diary">Notification</string>
     <string name="delete">Are you sure you want to delete this record?</string>
+    <string name="deleteNotification">Are you sure you want to delete this notification?</string>
+
     <string name="cancel">Cancel</string>
 
     <!-- Alarm Clock   -->
