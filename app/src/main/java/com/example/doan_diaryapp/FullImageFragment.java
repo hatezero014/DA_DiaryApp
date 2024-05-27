@@ -155,7 +155,8 @@ public class FullImageFragment extends Fragment {
         String day = days[1];
         timeAndDay = getResources().getString(R.string.fgm_Time) + " " + time + " " + day;
         strDetails = title + "\n" + note + "\n" + overall + "\n" + timeAndDay;
-        titleShare = "[" + entry.getTitle() + "]" + "\n" + entry.getNote();
+        String hashtag = "#PocketDiary";
+        titleShare = hashtag +"\n"+ "[" + entry.getTitle() + "]" + "\n" + entry.getNote();
 
         //tvDetails.setText(strDetails);
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
