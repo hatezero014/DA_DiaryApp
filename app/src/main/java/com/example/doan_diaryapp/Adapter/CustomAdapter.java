@@ -264,6 +264,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             BarDataSet barDataSet = new BarDataSet(barEntries, null);
             barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+            barDataSet.setValueTextColor(ContextCompat.getColor(mContext, R.color.md_theme_onSurfaceVariant));
 
             BarData barData = new BarData(barDataSet);
             barChart.setData(barData);
