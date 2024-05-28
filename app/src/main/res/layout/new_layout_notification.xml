@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     app:cardCornerRadius="16dp"
-    android:layout_height="70dp"
+    android:layout_height="90dp"
     android:id="@+id/card_view_notification"
     android:orientation="vertical"
     android:layout_marginTop="10dp"
@@ -17,11 +17,18 @@
 
         <LinearLayout
             android:layout_width="350dp"
-            android:layout_height="70dp"
+            android:layout_height="90dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            >
+            <CheckBox
+                android:id="@+id/checkbox"
+                android:layout_marginStart="10dp"
+                android:visibility="gone"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"/>
 
             <ImageView
                 android:id="@+id/new_icon_noti"

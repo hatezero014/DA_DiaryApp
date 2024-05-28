@@ -40,14 +40,15 @@ public class YourImagesInApp extends BaseActivity {
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.hide();
+            actionBar.setTitle(getString(R.string.your_image));
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        AppBarLayout appBarLayout = findViewById(R.id.ImageTopBar);
-        toolbar = appBarLayout.findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(v -> {
-            finish();
-        });
+//        AppBarLayout appBarLayout = findViewById(R.id.ImageTopBar);
+//        toolbar = appBarLayout.findViewById(R.id.toolbar);
+//        toolbar.setNavigationOnClickListener(v -> {
+//            finish();
+//        });
 
         recyclerView = findViewById(R.id.carousel_recycler_view1);
 

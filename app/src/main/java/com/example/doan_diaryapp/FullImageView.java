@@ -67,6 +67,7 @@ public class FullImageView extends BaseActivity implements FullImageFragment.OnP
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
+            actionBar.setTitle(getString(R.string.your_image));
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 

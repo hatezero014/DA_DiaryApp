@@ -133,16 +133,20 @@
     <string name="notification_reminder_time">Thời gian nhắc nhở</string>
     <string name="notification_day">Ngày</string>
 
-    <string name="notification_1">Bạn đã thêm nhật kí hôm nay!</string>
-    <string name="notification_2">Bạn đã thêm nhật kí hôm nay và đánh dấu hôm nay là ngày quan trọng!</string>
+    <string name="notification_1">Bạn đã thêm nhật ký mới hôm nay!</string>
+    <string name="notification_1_1">Bạn đã thêm nhật ký mới cho ngày: </string>
+    <string name="notification_2">Bạn đã thêm nhật ký mới hôm nay và đánh dấu nhật ký này là nhật ký quan trọng!</string>
+    <string name="notification_2_1">Bạn đã thêm nhật ký ngày:</string>
+    <string name="notification_2_2"> và đánh dấu nhật ký này là nhật ký quan trọng!</string>
     <string name="notification_3_1">Điểm số tâm trạng tháng </string>
     <string name="notification_3_2">của bạn là: </string>
     <string name="notification_4">Bạn đã thiết lập mật khẩu! Nếu bạn không phải là người thiết lập nó, hãy liên hệ với chúng tôi để được hỗ trợ!</string>
     <string name="notification_5">Bạn đã thay đổi mật khẩu, hãy kiểm tra lại. Nếu bạn không phải là người thay đổi, hãy liên hệ với chúng tôi để được hỗ trợ!</string>
     <string name="notification_6">Bạn đã xóa mật khẩu!</string>
     <string name="notification_null">Không có thông báo!</string>
-    <string name="notification_7">Bạn đã chỉnh sửa nhật kí hôm nay!</string>
-    <string name="notification_8">Bạn đã chỉnh sửa nhật kí hôm nay và đánh dấu hôm nay là ngày quan trọng!</string>
+    <string name="notification_7">Bạn đã chỉnh sửa nhật ký: </string>
+    <string name="notification_8_1">Bạn đã chỉnh sửa nhật ký </string>
+    <string name="notification_8_2">và đánh dấu nhật ký này là nhật ký quan trọng! </string>
 
     <!--   Month -->
     <string name="January">1</string>
@@ -188,6 +192,7 @@
 
     <string name="delete_diary">Thông báo</string>
     <string name="delete">Bạn có chắc muốn xóa nhật kí không?</string>
+    <string name="deleteNotification">Bạn có chắc muốn xóa nhật kí không?</string>
     <string name="cancel">Hủy</string>
 
 
@@ -222,5 +227,7 @@
     <string name="noti_custom_date">Ngày bắt đầu không thể lớn hơn ngày kết thúc.</string>
     <string name="noti_custom_distance">Khoảng cách giữa các giá trị không được vượt quá 13 tháng.</string>
     <string name="noti_month_selected">Giá trị tháng bạn chọn lớn hơn giá trị tháng hiện tại.</string>
+
+    <string name="your_image">Ảnh của bạn</string>
 
 </resources>

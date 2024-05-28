@@ -74,26 +74,6 @@ public class CustomFragment extends Fragment {
         customAdapter.setData(getListStatistic());
         recyclerView.setAdapter(customAdapter);
 
-        String selectedbYear = bYear.getText().toString();
-        int startYear = Integer.parseInt(selectedbYear);
-        String selectedbMonth = bMonth.getText().toString();
-        int startMonth = Integer.parseInt(selectedbMonth);
-        String selectedaYear = aYear.getText().toString();
-        int endYear = Integer.parseInt(selectedaYear);
-        String selectedaMonth = aMonth.getText().toString();
-        int endMonth = Integer.parseInt(selectedaMonth);
-
-        List<Entry> entryList = entryService.getOverallScoreCustom(startYear,startMonth,endYear,endMonth);
-        if(entryList.isEmpty()){
-            recyclerView.setVisibility(View.GONE);
-            tv_statistic_custom.setVisibility(View.VISIBLE);
-            tv_statistic_custom.setText(R.string.no_data_custom);
-        }
-        else{
-            recyclerView.setVisibility(View.VISIBLE);
-            tv_statistic_custom.setVisibility(View.GONE);
-        }
-
         return view;
     }
 
@@ -159,7 +139,7 @@ public class CustomFragment extends Fragment {
             month.setText(String.valueOf(arrayMonth.get(arrayMonth.size() - 1)), false);
         }
         else{
-            if((iYear == curYear || bYear.getText().toString().equals(aYear.getText().toString())) && month == bMonth){
+            if((iYear == curYear || bYear.getText().toString().equals(aYear.getText().toString()))){
                 if(Integer.parseInt(bMonth.getText().toString()) > Integer.parseInt(aMonth.getText().toString())){
                     bMonth.setText(aMonth.getText().toString(), false);
                 }
@@ -184,7 +164,7 @@ public class CustomFragment extends Fragment {
                     String sBMonth = bMonth.getText().toString();
                     int bMonthValue = Integer.parseInt(sBMonth);
 
-                    if (iYear == afYear && afMonth < bMonthValue) {
+                    if (Integer.parseInt(bYear.getText().toString()) == afYear && afMonth < bMonthValue) {
                         bMonth.setText(String.valueOf(afMonth), false);
                     }
                 } else if (month == bMonth) {

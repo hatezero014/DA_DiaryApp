@@ -553,6 +553,23 @@ public class RecordActivity extends BaseActivity {
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Boolean isChecked = false;
+                Calendar calendar1 = Calendar.getInstance();
+                int day = calendar1.get(Calendar.DAY_OF_MONTH);
+                String day1 =  String.format("%02d", day);
+                int month = calendar1.get(Calendar.MONTH) + 1;
+                String month1= String.format("%02d", month);
+                int year = calendar1.get(Calendar.YEAR);
+                String []date2 = date.split(" ");
+                String []date1 = date2[1].split("-");
+                while(true){
+                    if(day1.equals(date1[0]) && month1.equals(date1[1]) && date1[2].equals(String.valueOf(year))) {
+                        isChecked = true;
+                        break;
+                    }
+                    break;
+                }
+
                 try {
                     String notes = textNote.getText().toString();
                     String title = textTitle.getText().toString();
@@ -601,12 +618,28 @@ public class RecordActivity extends BaseActivity {
                         }
                         try {
                             if(isCheckFavorite) {
-                                NotificationService notificationService = new NotificationService(RecordActivity.this);
-                                notificationService.Add(new Notification(getCurrentTime(), getCurrentDay(), 2, null, 1 ));
+                                if(!isChecked)
+                                {
+                                    NotificationService notificationService = new NotificationService(RecordActivity.this);
+                                    notificationService.Add(new Notification(getCurrentTime(), getCurrentDay(), 2, date2[1], 1));
+                                }
+                                else
+                                {
+                                    NotificationService notificationService = new NotificationService(RecordActivity.this);
+                                    notificationService.Add(new Notification(getCurrentTime(), getCurrentDay(), 2, null, 1));
+                                }
                             }
                             else {
-                                NotificationService notificationService = new NotificationService(RecordActivity.this);
-                                notificationService.Add(new Notification(getCurrentTime(), getCurrentDay(), 1, null, 1));
+                                if(!isChecked)
+                                {
+                                    NotificationService notificationService = new NotificationService(RecordActivity.this);
+                                    notificationService.Add(new Notification(getCurrentTime(), getCurrentDay(), 1, date2[1], 1));
+                                }
+                                else
+                                {
+                                    NotificationService notificationService = new NotificationService(RecordActivity.this);
+                                    notificationService.Add(new Notification(getCurrentTime(), getCurrentDay(), 1, null, 1));
+                                }
                             }
                         }
 
@@ -671,10 +704,10 @@ public class RecordActivity extends BaseActivity {
                             NotificationService notificationService = new NotificationService(RecordActivity.this);
                             notificationService.DeleteById(Notification.class, id);
                             if(isCheckFavorite) {
-                                notificationService.Add(new Notification(getCurrentTime(), getCurrentDay(), 8, null, 1 ));
+                                notificationService.Add(new Notification(getCurrentTime(), getCurrentDay(), 8, date, 1 ));
                             }
                             else {
-                                notificationService.Add(new Notification(getCurrentTime(), getCurrentDay(), 7, null, 1));
+                                notificationService.Add(new Notification(getCurrentTime(), getCurrentDay(), 7, date, 1));
                             }
                         }
                         catch (Exception e) {

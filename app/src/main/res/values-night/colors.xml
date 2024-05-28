@@ -148,5 +148,7 @@
     <color name="md_theme_surfaceContainerHigh_highContrast">#252B28</color>
     <color name="md_theme_surfaceContainerHighest_highContrast">#303632</color>
     <color name="blue_notification">#0A89ED</color>
+    <color name="background_cardview_notification">#526467</color>
+
 
 </resources>
