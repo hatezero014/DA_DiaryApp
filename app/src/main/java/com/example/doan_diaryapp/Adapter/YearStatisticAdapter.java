@@ -228,8 +228,8 @@ public class YearStatisticAdapter extends RecyclerView.Adapter<RecyclerView.View
             tv_trungbinh.setText(itemView.getResources().getString(R.string.average_rating)+": "+String.format("%.2f",tb));
 
             BarDataSet dataSet = new BarDataSet(barEntries,null);
-            dataSet.setDrawValues(false); // tắt số trên điểm
             dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+            dataSet.setValueTextColor(ContextCompat.getColor(mContext, R.color.md_theme_onSurfaceVariant));
 
             BarData barData = new BarData(dataSet);
             barChart.setData(barData);
